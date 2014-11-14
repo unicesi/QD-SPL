@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="co.shift.pcs.authorization">
+        <wb-resource deploy-path="/" source-path="/src" tag="defaultRootSource"/>
+        <property name="java-output-path" value="/co.shift.pcs.authorization/build/classes"/>
+        <property name="ClientProject" value="co.shift.pcs.authorization.api"/>
+        <property name="ClientJARURI" value="co.shift.pcs.authorization.api.jar"/>
+    </wb-module>
+</project-modules>

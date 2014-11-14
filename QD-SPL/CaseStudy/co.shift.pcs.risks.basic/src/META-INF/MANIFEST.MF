@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Class-Path: co.shift.pcs.risks.basic.api.jar
+

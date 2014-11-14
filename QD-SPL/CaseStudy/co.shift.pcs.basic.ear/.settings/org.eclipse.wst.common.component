@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="co.shift.pcs.basic.ear">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="co.shift.pcs.to.jar" deploy-path="/lib" handle="module:/resource/co.shift.pcs.to/co.shift.pcs.to">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="co.shift.pcs.projects.basic.jar" deploy-path="/" handle="module:/resource/co.shift.pcs.projects.basic/co.shift.pcs.projects.basic">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="co.shift.pcs.projects.basic.api.jar" deploy-path="/" handle="module:/resource/co.shift.pcs.projects.basic.api/co.shift.pcs.projects.basic.api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="co.shift.pcs.users.basic.jar" deploy-path="/" handle="module:/resource/co.shift.pcs.users.basic/co.shift.pcs.users.basic">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="co.shift.pcs.users.basic.api.jar" deploy-path="/" handle="module:/resource/co.shift.pcs.users.basic.api/co.shift.pcs.users.basic.api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="co.shift.pcs.risks.basic.jar" deploy-path="/" handle="module:/resource/co.shift.pcs.risks.basic/co.shift.pcs.risks.basic">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="co.shift.pcs.risks.basic.api.jar" deploy-path="/" handle="module:/resource/co.shift.pcs.risks.basic.api/co.shift.pcs.risks.basic.api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="co.shift.pcs.authorization.jar" deploy-path="/" handle="module:/resource/co.shift.pcs.authorization/co.shift.pcs.authorization">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="co.shift.pcs.authorization.api.jar" deploy-path="/" handle="module:/resource/co.shift.pcs.authorization.api/co.shift.pcs.authorization.api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
