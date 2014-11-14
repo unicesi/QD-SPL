@@ -1,0 +1,85 @@
+package co.shift.pcs.user.boundary;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+
+import org.eclipse.persistence.exceptions.DatabaseException;
+import co.shift.pcs.user.control.IUserDAO;
+
+import co.shift.pcs.to.UserTO;
+
+import co.shift.pcs.user.control.IUserBasicFLR;
+
+
+import co.shift.pcs.user.control.PBECryptographyManager;
+
+			
+import co.shift.pcs.user.control.LockoutManager;
+
+
+import co.shift.pcs.user.entity.User;
+import co.shift.pcs.user.entity.ProjectUser;
+import co.shift.pcs.user.entity.ProjectUserPK;
+
+@Stateless
+public class UserManager implements IUserManager {
+	
+	@PersistenceContext(unitName = "co.shift.pcs.user")
+	private EntityManager em;
+	
+	@EJB
+	private IUserDAO userDAO;
+	
+	@EJB
+	private LockoutManager lockOut;
+	
+	
+	@EJB
+	private IUserBasicFLR basicFLR;
+	
+	@EJB
+	private PBECryptographyManager cManager;
+	
+	
+	public List<UserTO> getAllUsers() {
+	try {
+	return basicFLR.getAllUsers();
+	} catch (Exception e) {
+	return null;
+	}
+	}
+	
+	public UserTO getProjectManager(int projectId) {
+		
+		
+		return userDAO.getProjectManager(projectId);
+	}
+	public List<UserTO> getUserFromProject(int projectId) {
+	
+	
+	return userDAO.getUserFromProject(projectId);
+	}
+	public UserTO authenticate(String userCc, String password) throws Exception {
+		char[] eCcChars = cManager.doFinal(
+		PBECryptographyManager.ENCRYPT, userCc);
+		String eCc = new String(eCcChars);
+		userCc = eCc;
+		char[] ePasswordChars = cManager.doFinal(
+		PBECryptographyManager.ENCRYPT, password);
+		String ePassword = new String(ePasswordChars);
+		password = ePassword;
+		
+		
+		return lockOut.authenticate(userCc, password)
+		
+		;
+	}
+}
