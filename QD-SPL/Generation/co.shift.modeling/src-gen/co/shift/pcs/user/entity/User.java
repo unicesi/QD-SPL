@@ -16,7 +16,6 @@ import co.shift.pcs.to.UserTO;
 	@NamedQuery(name = "user.getAllUsers", query = "SELECT p FROM User p")
 })
 public class User implements Serializable {
-	
 	private static final long serialVersionUID = 1L;
 @Id
 private String cc;
@@ -56,17 +55,6 @@ public void setPassword(String password) {
 	this.password = password;
 }				
 	
-	
-	@OneToMany(mappedBy = "userBean", orphanRemoval = true)
-	private List<ProjectUser> projectUser;
-	
-	public List<ProjectUser> getProjectUser() {
-		return this.projectUser;
-	}
-	
-	public void setProjectUser(List<ProjectUser> projectUser) {
-		this.projectUser = projectUser;
-	}
 	
 	
 	@Override

@@ -12,11 +12,12 @@ import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import org.eclipse.persistence.exceptions.DatabaseException;
+import co.shift.pcs.risk.control.IRiskDAO;
 
 import co.shift.pcs.to.RiskTO;
 
 
-import co.shift.pcs.risk.control.PBECryptographyManager;
+import co.shift.pcs.security.PBECryptographyManager;
 
 			
 
@@ -25,9 +26,11 @@ import co.shift.pcs.risk.entity.Risk;
 @Stateless
 public class RiskManager implements IRiskManager {
 	
-	@PersistenceContext(unitName = "co.shift.pcs.risk")
+	@PersistenceContext(unitName = "pcs")
 	private EntityManager em;
 	
+	@EJB
+	private IRiskDAO riskDAO;
 	
 	
 	@EJB
@@ -55,7 +58,7 @@ public class RiskManager implements IRiskManager {
 			newRisk.setImpact(risk.getImpact());
 			newRisk.setName(risk.getName());
 			newRisk.setProbability(risk.getProbability());
-		
+			newRisk.setProject(risk.getProject());
 			try {
 				em.persist(newRisk);
 				em.flush();
@@ -85,6 +88,11 @@ public class RiskManager implements IRiskManager {
 			}
 		}
 	}
+	public RiskTO getProjectPriorityRisk(int projectId) {
+		
+		
+		return riskDAO.getProjectPriorityRisk(projectId);
+	}
 	public List<RiskTO> getRiskFromProject(int projectId) {
 	List<RiskTO> toRisks = new ArrayList<>();
 	TypedQuery<Risk> query = em.createNamedQuery("risk.getProjectRisk",
@@ -93,17 +101,21 @@ public class RiskManager implements IRiskManager {
 	try {
 		List<Risk> foundRisks = query.getResultList();
 		for (Risk risk : foundRisks) {
+			RiskTO to = new RiskTO();
+			to.setId(risk.getId());
 			char[] eDescriptionChars = cManager.doFinal(
 			PBECryptographyManager.DECRYPT, risk.getDescription());
 			String eDescription = new String(eDescriptionChars);
-			risk.setDescription(eDescription);
+			to.setDescription(eDescription);
+			to.setImpact(risk.getImpact());
 			char[] eNameChars = cManager.doFinal(
 			PBECryptographyManager.DECRYPT, risk.getName());
 			String eName = new String(eNameChars);
-			risk.setName(eName);
+			to.setName(eName);
+			to.setProbability(risk.getProbability());
 			
 			
-			toRisks.add(risk.toTO());
+			toRisks.add(to);
 		}
 		return toRisks;
 	} catch (NoResultException e) {

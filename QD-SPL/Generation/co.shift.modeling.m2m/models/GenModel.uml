@@ -1,0 +1,920 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<uml:Package xmi:version="20110701" xmlns:xmi="http://www.omg.org/spec/XMI/20110701" xmlns:uml="http://www.eclipse.org/uml2/4.0.0/UML" xmi:id="_5ylxUHs6EeSpdasVlvnbUQ" name="co.shift.pcs">
+  <packagedElement xmi:type="uml:Package" xmi:id="_5ylxUXs6EeSpdasVlvnbUQ" name="co.shift.pcs.user.entity">
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ylxUns6EeSpdasVlvnbUQ" name="User">
+      <ownedAttribute xmi:id="_5ylxU3s6EeSpdasVlvnbUQ" name="cc" type="_5ymYans6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ylxVHs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ylxVXs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ylxVns6EeSpdasVlvnbUQ" name="name" type="_5ymYans6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ylxV3s6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ylxWHs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ylxWXs6EeSpdasVlvnbUQ" name="cellphone" type="_5ymYans6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ylxWns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ylxW3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ylxXHs6EeSpdasVlvnbUQ" name="password" type="_5ymYans6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ylxXXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ylxXns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ylxX3s6EeSpdasVlvnbUQ" name="getCc">
+        <ownedParameter xmi:id="_5ylxYHs6EeSpdasVlvnbUQ" type="_5ymYans6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ylxYXs6EeSpdasVlvnbUQ" name="setCc">
+        <ownedParameter xmi:id="_5ylxYns6EeSpdasVlvnbUQ" name="cc" type="_5ymYans6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ylxY3s6EeSpdasVlvnbUQ" name="getName">
+        <ownedParameter xmi:id="_5ylxZHs6EeSpdasVlvnbUQ" type="_5ymYans6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ylxZXs6EeSpdasVlvnbUQ" name="setName">
+        <ownedParameter xmi:id="_5ylxZns6EeSpdasVlvnbUQ" name="name" type="_5ymYans6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ylxZ3s6EeSpdasVlvnbUQ" name="getCellphone">
+        <ownedParameter xmi:id="_5ylxaHs6EeSpdasVlvnbUQ" type="_5ymYans6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ylxaXs6EeSpdasVlvnbUQ" name="setCellphone">
+        <ownedParameter xmi:id="_5ylxans6EeSpdasVlvnbUQ" name="cellphone" type="_5ymYans6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymYYHs6EeSpdasVlvnbUQ" name="getPassword">
+        <ownedParameter xmi:id="_5ymYYXs6EeSpdasVlvnbUQ" type="_5ymYans6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymYYns6EeSpdasVlvnbUQ" name="setPassword">
+        <ownedParameter xmi:id="_5ymYY3s6EeSpdasVlvnbUQ" name="password" type="_5ymYans6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymYZHs6EeSpdasVlvnbUQ" name="equals">
+        <ownedParameter xmi:id="_5ymYZXs6EeSpdasVlvnbUQ" name="obj" type="_5ymYbns6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymYZns6EeSpdasVlvnbUQ" type="_5ymYa3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymYZ3s6EeSpdasVlvnbUQ" name="toTO">
+        <ownedParameter xmi:id="_5ymYaHs6EeSpdasVlvnbUQ" type="_5ymYb3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYaXs6EeSpdasVlvnbUQ" name="int"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYans6EeSpdasVlvnbUQ" name="string"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYa3s6EeSpdasVlvnbUQ" name="boolean"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYbHs6EeSpdasVlvnbUQ" name="date"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYbXs6EeSpdasVlvnbUQ" name="double"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYbns6EeSpdasVlvnbUQ" name="Object"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYb3s6EeSpdasVlvnbUQ" name="UserTO"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymYcHs6EeSpdasVlvnbUQ" name="Attempt">
+      <ownedAttribute xmi:id="_5ymYcXs6EeSpdasVlvnbUQ" name="user" type="_5ynAr3s6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ymYcns6EeSpdasVlvnbUQ" name="attempts" type="_5ynAsHs6EeSpdasVlvnbUQ"/>
+      <ownedOperation xmi:id="_5ymYc3s6EeSpdasVlvnbUQ" name="getUser">
+        <ownedParameter xmi:id="_5ymYdHs6EeSpdasVlvnbUQ" type="_5ynAr3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymYdXs6EeSpdasVlvnbUQ" name="setUser">
+        <ownedParameter xmi:id="_5ymYdns6EeSpdasVlvnbUQ" name="user" type="_5ynAr3s6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymYd3s6EeSpdasVlvnbUQ" name="getAttempts">
+        <ownedParameter xmi:id="_5ymYeHs6EeSpdasVlvnbUQ" type="_5ynAsHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymYeXs6EeSpdasVlvnbUQ" name="setAttempts">
+        <ownedParameter xmi:id="_5ymYens6EeSpdasVlvnbUQ" name="attempts" type="_5ynAsHs6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_5ymYe3s6EeSpdasVlvnbUQ" name="co.shift.pcs.security">
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymYfHs6EeSpdasVlvnbUQ" name="PBECryptographyManager">
+      <ownedAttribute xmi:id="_5ymYfXs6EeSpdasVlvnbUQ" name="pbeKeySpec" type="_5ymYqXs6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ymYfns6EeSpdasVlvnbUQ" name="pbeParamSpec" type="_5ymYqns6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ymYf3s6EeSpdasVlvnbUQ" name="keyFac" type="_5ymYq3s6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ymYgHs6EeSpdasVlvnbUQ" name="pbeKey" type="_5ymYrHs6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ymYgXs6EeSpdasVlvnbUQ" name="pbeCipher" type="_5ymYrXs6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ymYgns6EeSpdasVlvnbUQ" name="ENCRYPT" isStatic="true" type="_5ymYrns6EeSpdasVlvnbUQ" isReadOnly="true">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_5ymYg3s6EeSpdasVlvnbUQ" value="Cipher.ENCRYPT_MODE"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymYhHs6EeSpdasVlvnbUQ" name="DECRYPT" isStatic="true" type="_5ymYrns6EeSpdasVlvnbUQ" isReadOnly="true">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_5ymYhXs6EeSpdasVlvnbUQ" value="Cipher.DECRYPT_MODE"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymYhns6EeSpdasVlvnbUQ" name="salt" type="_5ymYr3s6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ymYh3s6EeSpdasVlvnbUQ" name="COUNT" isStatic="true" type="_5ymYrns6EeSpdasVlvnbUQ" isReadOnly="true">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_5ymYiHs6EeSpdasVlvnbUQ" value="20"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymYiXs6EeSpdasVlvnbUQ" name="" type="_5ymYs3s6EeSpdasVlvnbUQ" association="_5ymYxHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymYins6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymYi3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymYjHs6EeSpdasVlvnbUQ" name="" type="_5ymYxns6EeSpdasVlvnbUQ" association="_5ymY03s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymYjXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymYjns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymYj3s6EeSpdasVlvnbUQ" name="" type="_5ymY73s6EeSpdasVlvnbUQ" association="_5ymZD3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymYkHs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymYkXs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymYkns6EeSpdasVlvnbUQ" name="" type="_5ymZW3s6EeSpdasVlvnbUQ" association="_5ymZbHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymYk3s6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymYlHs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymYlXs6EeSpdasVlvnbUQ" name="" type="_5ymZbns6EeSpdasVlvnbUQ" association="_5ymZd3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymYlns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymYl3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymYmHs6EeSpdasVlvnbUQ" name="" type="_5ymZfns6EeSpdasVlvnbUQ" association="_5ymZmHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymYmXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymYmns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymYm3s6EeSpdasVlvnbUQ" name="" type="_5ym_1Hs6EeSpdasVlvnbUQ" association="_5ym_4ns6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymYnHs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymYnXs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymYnns6EeSpdasVlvnbUQ" name="" type="_5ym_5Hs6EeSpdasVlvnbUQ" association="_5ym_8Xs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymYn3s6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymYoHs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymYoXs6EeSpdasVlvnbUQ" name="" type="_5ym__ns6EeSpdasVlvnbUQ" association="_5ynAKns6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymYons6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymYo3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ymYpHs6EeSpdasVlvnbUQ" name="PBECryptographyManager"/>
+      <ownedOperation xmi:id="_5ymYpXs6EeSpdasVlvnbUQ" name="doFinal">
+        <ownedParameter xmi:id="_5ymYpns6EeSpdasVlvnbUQ" name="mode" type="_5ymYrns6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymYp3s6EeSpdasVlvnbUQ" name="text" type="_5ymYsHs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymYqHs6EeSpdasVlvnbUQ" type="_5ymYsXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYqXs6EeSpdasVlvnbUQ" name="PBEKeySpec"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYqns6EeSpdasVlvnbUQ" name="PBEParameterSpec"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYq3s6EeSpdasVlvnbUQ" name="SecretKeyFactory"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYrHs6EeSpdasVlvnbUQ" name="SecretKey"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYrXs6EeSpdasVlvnbUQ" name="Cipher"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYrns6EeSpdasVlvnbUQ" name="int"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYr3s6EeSpdasVlvnbUQ" name="byte[]"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYsHs6EeSpdasVlvnbUQ" name="string"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYsXs6EeSpdasVlvnbUQ" name="char[]"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_5ymYsns6EeSpdasVlvnbUQ" name="co.shift.pcs.user.control">
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymYs3s6EeSpdasVlvnbUQ" name="UserDAO">
+      <ownedAttribute xmi:id="_5ymYtHs6EeSpdasVlvnbUQ" name="em" type="_5ymYw3s6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ymYtXs6EeSpdasVlvnbUQ" name="cManager" type="_5ymYfHs6EeSpdasVlvnbUQ" association="_5ymYxHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymYtns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymYt3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymYuHs6EeSpdasVlvnbUQ" name="" type="_5ymY73s6EeSpdasVlvnbUQ" association="_5ymZEHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymYuXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymYuns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ymYu3s6EeSpdasVlvnbUQ" name="getProjectManager">
+        <ownedParameter xmi:id="_5ymYvHs6EeSpdasVlvnbUQ" name="project" type="_5ymYxXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymYvXs6EeSpdasVlvnbUQ" type="_5ymYwXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymYvns6EeSpdasVlvnbUQ" name="getUserFromProject">
+        <ownedParameter xmi:id="_5ymYv3s6EeSpdasVlvnbUQ" name="project" type="_5ymYxXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymYwHs6EeSpdasVlvnbUQ" type="_5ymYwns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYwXs6EeSpdasVlvnbUQ" name="UserTO"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYwns6EeSpdasVlvnbUQ" name="List&lt;UserTO>"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymYw3s6EeSpdasVlvnbUQ" name="EntityManager"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ymYxHs6EeSpdasVlvnbUQ" memberEnd="_5ymYtXs6EeSpdasVlvnbUQ _5ymYiXs6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymYxXs6EeSpdasVlvnbUQ" name="int"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymYxns6EeSpdasVlvnbUQ" name="UserAsyncWorker">
+      <ownedAttribute xmi:id="_5ymYx3s6EeSpdasVlvnbUQ" name="ds" type="_5ymY0ns6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ymYyHs6EeSpdasVlvnbUQ" name="cManager" type="_5ymYfHs6EeSpdasVlvnbUQ" association="_5ymY03s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymYyXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymYyns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymYy3s6EeSpdasVlvnbUQ" name="" type="_5ymY1Xs6EeSpdasVlvnbUQ" association="_5ymY3Hs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymYzHs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymYzXs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ymYzns6EeSpdasVlvnbUQ" name="getAllUsers">
+        <ownedParameter xmi:id="_5ymYz3s6EeSpdasVlvnbUQ" name="start" type="_5ymYxXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymY0Hs6EeSpdasVlvnbUQ" name="maxResults" type="_5ymYxXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymY0Xs6EeSpdasVlvnbUQ" type="_5ymY1Hs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymY0ns6EeSpdasVlvnbUQ" name="DataSource"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ymY03s6EeSpdasVlvnbUQ" memberEnd="_5ymYyHs6EeSpdasVlvnbUQ _5ymYjHs6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymY1Hs6EeSpdasVlvnbUQ" name="Future&lt;List&lt;UserTO>>"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymY1Xs6EeSpdasVlvnbUQ" name="UserParallelizer">
+      <ownedAttribute xmi:id="_5ymY1ns6EeSpdasVlvnbUQ" name="worker" type="_5ymYxns6EeSpdasVlvnbUQ" association="_5ymY3Hs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymY13s6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymY2Hs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ymY2Xs6EeSpdasVlvnbUQ" name="getAllUsers">
+        <ownedParameter xmi:id="_5ymY2ns6EeSpdasVlvnbUQ" name="pCount" type="_5ymY3Xs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymY23s6EeSpdasVlvnbUQ" type="_5ymYwns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ymY3Hs6EeSpdasVlvnbUQ" memberEnd="_5ymY1ns6EeSpdasVlvnbUQ _5ymYy3s6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymY3Xs6EeSpdasVlvnbUQ" name="long"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymY3ns6EeSpdasVlvnbUQ" name="UserLockoutManager">
+      <ownedAttribute xmi:id="_5ymY33s6EeSpdasVlvnbUQ" name="MAX_ATTEMPTS" isStatic="true" type="_5ymYxXs6EeSpdasVlvnbUQ" isReadOnly="true">
+        <defaultValue xmi:type="uml:LiteralString" xmi:id="_5ymY4Hs6EeSpdasVlvnbUQ" value="5"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymY4Xs6EeSpdasVlvnbUQ" name="em" type="_5ymYw3s6EeSpdasVlvnbUQ"/>
+      <ownedOperation xmi:id="_5ymY4ns6EeSpdasVlvnbUQ" name="authenticate">
+        <ownedParameter xmi:id="_5ymY43s6EeSpdasVlvnbUQ" name="cc" type="_5ymY7Hs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymY5Hs6EeSpdasVlvnbUQ" name="password" type="_5ymY7Xs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymY5Xs6EeSpdasVlvnbUQ" type="_5ymYwXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymY5ns6EeSpdasVlvnbUQ" name="getAttempts">
+        <ownedParameter xmi:id="_5ymY53s6EeSpdasVlvnbUQ" name="cc" type="_5ymY7Hs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymY6Hs6EeSpdasVlvnbUQ" type="_5ymYxXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymY6Xs6EeSpdasVlvnbUQ" name="setAttempts">
+        <ownedParameter xmi:id="_5ymY6ns6EeSpdasVlvnbUQ" name="cc" type="_5ymY7Hs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymY63s6EeSpdasVlvnbUQ" name="newAttempts" type="_5ymYxXs6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymY7Hs6EeSpdasVlvnbUQ" name="String"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymY7Xs6EeSpdasVlvnbUQ" name="string"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_5ymY7ns6EeSpdasVlvnbUQ" name="co.shift.pcs.user.boundary">
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymY73s6EeSpdasVlvnbUQ" name="UserManager">
+      <ownedAttribute xmi:id="_5ymY8Hs6EeSpdasVlvnbUQ" name="em" type="_5ymZDns6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymY8Xs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymY8ns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymY83s6EeSpdasVlvnbUQ" name="cManager" type="_5ymYfHs6EeSpdasVlvnbUQ" association="_5ymZD3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymY9Hs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymY9Xs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymY9ns6EeSpdasVlvnbUQ" name="userDAO" type="_5ymYs3s6EeSpdasVlvnbUQ" association="_5ymZEHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymY93s6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymY-Hs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymY-Xs6EeSpdasVlvnbUQ" name="userParallelizer" type="_5ymZFns6EeSpdasVlvnbUQ" association="_5ymZGns6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymY-ns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymY-3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymY_Hs6EeSpdasVlvnbUQ" name="userLockOut" type="_5ymZG3s6EeSpdasVlvnbUQ" association="_5ymZH3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymY_Xs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymY_ns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ymY_3s6EeSpdasVlvnbUQ" name="createUser">
+        <ownedParameter xmi:id="_5ymZAHs6EeSpdasVlvnbUQ" name="user" type="_5ymZEXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymZAXs6EeSpdasVlvnbUQ" type="_5ymZEns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZAns6EeSpdasVlvnbUQ" name="getAllUsers">
+        <ownedParameter xmi:id="_5ymZA3s6EeSpdasVlvnbUQ" type="_5ymZE3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZBHs6EeSpdasVlvnbUQ" name="getProjectManager">
+        <ownedParameter xmi:id="_5ymZBXs6EeSpdasVlvnbUQ" name="projectId" type="_5ymZFHs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymZBns6EeSpdasVlvnbUQ" type="_5ymZEXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZB3s6EeSpdasVlvnbUQ" name="getUserFromProject">
+        <ownedParameter xmi:id="_5ymZCHs6EeSpdasVlvnbUQ" name="projectId" type="_5ymZFHs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymZCXs6EeSpdasVlvnbUQ" type="_5ymZE3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZCns6EeSpdasVlvnbUQ" name="authenticate">
+        <ownedParameter xmi:id="_5ymZC3s6EeSpdasVlvnbUQ" name="userCc" type="_5ymZFXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymZDHs6EeSpdasVlvnbUQ" name="password" type="_5ymZFXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymZDXs6EeSpdasVlvnbUQ" type="_5ymZEXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymZDns6EeSpdasVlvnbUQ" name="EntityManager"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ymZD3s6EeSpdasVlvnbUQ" memberEnd="_5ymY83s6EeSpdasVlvnbUQ _5ymYj3s6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ymZEHs6EeSpdasVlvnbUQ" memberEnd="_5ymY9ns6EeSpdasVlvnbUQ _5ymYuHs6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZEXs6EeSpdasVlvnbUQ" name="UserTO"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZEns6EeSpdasVlvnbUQ" name="boolean"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZE3s6EeSpdasVlvnbUQ" name="List&lt;UserTO>"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZFHs6EeSpdasVlvnbUQ" name="int"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZFXs6EeSpdasVlvnbUQ" name="string"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZFns6EeSpdasVlvnbUQ" name="UserParallelizer">
+      <ownedAttribute xmi:id="_5ymZF3s6EeSpdasVlvnbUQ" name="" type="_5ymY73s6EeSpdasVlvnbUQ" association="_5ymZGns6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZGHs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZGXs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ymZGns6EeSpdasVlvnbUQ" memberEnd="_5ymY-Xs6EeSpdasVlvnbUQ _5ymZF3s6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZG3s6EeSpdasVlvnbUQ" name="UserLockoutManager">
+      <ownedAttribute xmi:id="_5ymZHHs6EeSpdasVlvnbUQ" name="" type="_5ymY73s6EeSpdasVlvnbUQ" association="_5ymZH3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZHXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZHns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ymZH3s6EeSpdasVlvnbUQ" memberEnd="_5ymY_Hs6EeSpdasVlvnbUQ _5ymZHHs6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZIHs6EeSpdasVlvnbUQ" name="PBECryptographyManager">
+      <ownedAttribute xmi:id="_5ymZIXs6EeSpdasVlvnbUQ" name="" type="_5ynAOXs6EeSpdasVlvnbUQ" association="_5ynAZXs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZIns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZI3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_5ymZJHs6EeSpdasVlvnbUQ" name="co.shift.pcs.risk.entity">
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymZJXs6EeSpdasVlvnbUQ" name="Risk">
+      <ownedAttribute xmi:id="_5ymZJns6EeSpdasVlvnbUQ" name="id" type="_5ymZU3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZJ3s6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZKHs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymZKXs6EeSpdasVlvnbUQ" name="description" type="_5ymZVHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZKns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZK3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymZLHs6EeSpdasVlvnbUQ" name="impact" type="_5ymZV3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZLXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZLns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymZL3s6EeSpdasVlvnbUQ" name="name" type="_5ymZVHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZMHs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZMXs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymZMns6EeSpdasVlvnbUQ" name="probability" type="_5ymZV3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZM3s6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZNHs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymZNXs6EeSpdasVlvnbUQ" name="project" type="_5ymZU3s6EeSpdasVlvnbUQ"/>
+      <ownedOperation xmi:id="_5ymZNns6EeSpdasVlvnbUQ" name="getId">
+        <ownedParameter xmi:id="_5ymZN3s6EeSpdasVlvnbUQ" type="_5ymZU3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZOHs6EeSpdasVlvnbUQ" name="setId">
+        <ownedParameter xmi:id="_5ymZOXs6EeSpdasVlvnbUQ" name="id" type="_5ymZU3s6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZOns6EeSpdasVlvnbUQ" name="getDescription">
+        <ownedParameter xmi:id="_5ymZO3s6EeSpdasVlvnbUQ" type="_5ymZVHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZPHs6EeSpdasVlvnbUQ" name="setDescription">
+        <ownedParameter xmi:id="_5ymZPXs6EeSpdasVlvnbUQ" name="description" type="_5ymZVHs6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZPns6EeSpdasVlvnbUQ" name="getImpact">
+        <ownedParameter xmi:id="_5ymZP3s6EeSpdasVlvnbUQ" type="_5ymZV3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZQHs6EeSpdasVlvnbUQ" name="setImpact">
+        <ownedParameter xmi:id="_5ymZQXs6EeSpdasVlvnbUQ" name="impact" type="_5ymZV3s6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZQns6EeSpdasVlvnbUQ" name="getName">
+        <ownedParameter xmi:id="_5ymZQ3s6EeSpdasVlvnbUQ" type="_5ymZVHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZRHs6EeSpdasVlvnbUQ" name="setName">
+        <ownedParameter xmi:id="_5ymZRXs6EeSpdasVlvnbUQ" name="name" type="_5ymZVHs6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZRns6EeSpdasVlvnbUQ" name="getProbability">
+        <ownedParameter xmi:id="_5ymZR3s6EeSpdasVlvnbUQ" type="_5ymZV3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZSHs6EeSpdasVlvnbUQ" name="setProbability">
+        <ownedParameter xmi:id="_5ymZSXs6EeSpdasVlvnbUQ" name="probability" type="_5ymZV3s6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZSns6EeSpdasVlvnbUQ" name="getProject">
+        <ownedParameter xmi:id="_5ymZS3s6EeSpdasVlvnbUQ" type="_5ymZU3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZTHs6EeSpdasVlvnbUQ" name="setProject">
+        <ownedParameter xmi:id="_5ymZTXs6EeSpdasVlvnbUQ" name="project" type="_5ymZU3s6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZTns6EeSpdasVlvnbUQ" name="equals">
+        <ownedParameter xmi:id="_5ymZT3s6EeSpdasVlvnbUQ" name="obj" type="_5ymZWHs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymZUHs6EeSpdasVlvnbUQ" type="_5ymZVXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZUXs6EeSpdasVlvnbUQ" name="toTO">
+        <ownedParameter xmi:id="_5ymZUns6EeSpdasVlvnbUQ" type="_5ymZWXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZU3s6EeSpdasVlvnbUQ" name="int"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZVHs6EeSpdasVlvnbUQ" name="string"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZVXs6EeSpdasVlvnbUQ" name="boolean"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZVns6EeSpdasVlvnbUQ" name="date"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZV3s6EeSpdasVlvnbUQ" name="double"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZWHs6EeSpdasVlvnbUQ" name="Object"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZWXs6EeSpdasVlvnbUQ" name="RiskTO"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_5ymZWns6EeSpdasVlvnbUQ" name="co.shift.pcs.risk.control">
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymZW3s6EeSpdasVlvnbUQ" name="RiskDAO">
+      <ownedAttribute xmi:id="_5ymZXHs6EeSpdasVlvnbUQ" name="em" type="_5ymZa3s6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ymZXXs6EeSpdasVlvnbUQ" name="cManager" type="_5ymYfHs6EeSpdasVlvnbUQ" association="_5ymZbHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZXns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZX3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymZYHs6EeSpdasVlvnbUQ" name="" type="_5ymZfns6EeSpdasVlvnbUQ" association="_5ymZmXs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZYXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZYns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ymZY3s6EeSpdasVlvnbUQ" name="getProjectPriorityRisk">
+        <ownedParameter xmi:id="_5ymZZHs6EeSpdasVlvnbUQ" name="project" type="_5ymZbXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymZZXs6EeSpdasVlvnbUQ" type="_5ymZaXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZZns6EeSpdasVlvnbUQ" name="getRiskFromProject">
+        <ownedParameter xmi:id="_5ymZZ3s6EeSpdasVlvnbUQ" name="project" type="_5ymZbXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymZaHs6EeSpdasVlvnbUQ" type="_5ymZans6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZaXs6EeSpdasVlvnbUQ" name="RiskTO"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZans6EeSpdasVlvnbUQ" name="List&lt;RiskTO>"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymZa3s6EeSpdasVlvnbUQ" name="EntityManager"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ymZbHs6EeSpdasVlvnbUQ" memberEnd="_5ymZXXs6EeSpdasVlvnbUQ _5ymYkns6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZbXs6EeSpdasVlvnbUQ" name="int"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymZbns6EeSpdasVlvnbUQ" name="RiskAsyncWorker">
+      <ownedAttribute xmi:id="_5ymZb3s6EeSpdasVlvnbUQ" name="ds" type="_5ymZdns6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ymZcHs6EeSpdasVlvnbUQ" name="cManager" type="_5ymYfHs6EeSpdasVlvnbUQ" association="_5ymZd3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZcXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZcns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymZc3s6EeSpdasVlvnbUQ" name="" type="_5ymZeHs6EeSpdasVlvnbUQ" association="_5ymZfHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZdHs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZdXs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZdns6EeSpdasVlvnbUQ" name="DataSource"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ymZd3s6EeSpdasVlvnbUQ" memberEnd="_5ymZcHs6EeSpdasVlvnbUQ _5ymYlXs6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymZeHs6EeSpdasVlvnbUQ" name="RiskParallelizer">
+      <ownedAttribute xmi:id="_5ymZeXs6EeSpdasVlvnbUQ" name="worker" type="_5ymZbns6EeSpdasVlvnbUQ" association="_5ymZfHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZens6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZe3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ymZfHs6EeSpdasVlvnbUQ" memberEnd="_5ymZeXs6EeSpdasVlvnbUQ _5ymZc3s6EeSpdasVlvnbUQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_5ymZfXs6EeSpdasVlvnbUQ" name="co.shift.pcs.risk.boundary">
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymZfns6EeSpdasVlvnbUQ" name="RiskManager">
+      <ownedAttribute xmi:id="_5ymZf3s6EeSpdasVlvnbUQ" name="em" type="_5ymZl3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZgHs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZgXs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymZgns6EeSpdasVlvnbUQ" name="cManager" type="_5ymYfHs6EeSpdasVlvnbUQ" association="_5ymZmHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZg3s6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZhHs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymZhXs6EeSpdasVlvnbUQ" name="riskDAO" type="_5ymZW3s6EeSpdasVlvnbUQ" association="_5ymZmXs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZhns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZh3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ymZiHs6EeSpdasVlvnbUQ" name="riskParallelizer" type="_5ym_cHs6EeSpdasVlvnbUQ" association="_5ym_dHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ymZiXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ymZins6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ymZi3s6EeSpdasVlvnbUQ" name="addRisk">
+        <ownedParameter xmi:id="_5ymZjHs6EeSpdasVlvnbUQ" name="risk" type="_5ymZmns6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymZjXs6EeSpdasVlvnbUQ" type="_5ymZm3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZjns6EeSpdasVlvnbUQ" name="removeRisk">
+        <ownedParameter xmi:id="_5ymZj3s6EeSpdasVlvnbUQ" name="risk" type="_5ymZmns6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymZkHs6EeSpdasVlvnbUQ" type="_5ymZm3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZkXs6EeSpdasVlvnbUQ" name="getProjectPriorityRisk">
+        <ownedParameter xmi:id="_5ymZkns6EeSpdasVlvnbUQ" name="projectId" type="_5ymZnHs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymZk3s6EeSpdasVlvnbUQ" type="_5ymZmns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ymZlHs6EeSpdasVlvnbUQ" name="getRiskFromProject">
+        <ownedParameter xmi:id="_5ymZlXs6EeSpdasVlvnbUQ" name="projectId" type="_5ymZnHs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ymZlns6EeSpdasVlvnbUQ" type="_5ymZnXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ymZl3s6EeSpdasVlvnbUQ" name="EntityManager"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ymZmHs6EeSpdasVlvnbUQ" memberEnd="_5ymZgns6EeSpdasVlvnbUQ _5ymYmHs6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ymZmXs6EeSpdasVlvnbUQ" memberEnd="_5ymZhXs6EeSpdasVlvnbUQ _5ymZYHs6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZmns6EeSpdasVlvnbUQ" name="RiskTO"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZm3s6EeSpdasVlvnbUQ" name="boolean"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZnHs6EeSpdasVlvnbUQ" name="int"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ymZnXs6EeSpdasVlvnbUQ" name="List&lt;RiskTO>"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_cHs6EeSpdasVlvnbUQ" name="RiskParallelizer">
+      <ownedAttribute xmi:id="_5ym_cXs6EeSpdasVlvnbUQ" name="" type="_5ymZfns6EeSpdasVlvnbUQ" association="_5ym_dHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ym_cns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ym_c3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ym_dHs6EeSpdasVlvnbUQ" memberEnd="_5ymZiHs6EeSpdasVlvnbUQ _5ym_cXs6EeSpdasVlvnbUQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_5ym_dXs6EeSpdasVlvnbUQ" name="co.shift.pcs.project.entity">
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ym_dns6EeSpdasVlvnbUQ" name="Project">
+      <ownedAttribute xmi:id="_5ym_d3s6EeSpdasVlvnbUQ" name="id" type="_5ym_pXs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ym_eHs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ym_eXs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ym_ens6EeSpdasVlvnbUQ" name="description" type="_5ym_pns6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ym_e3s6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ym_fHs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ym_fXs6EeSpdasVlvnbUQ" name="name" type="_5ym_pns6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ym_fns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ym_f3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ym_gHs6EeSpdasVlvnbUQ" name="startDate" type="_5ym_qHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ym_gXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ym_gns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ym_g3s6EeSpdasVlvnbUQ" name="manager" type="_5ym_qns6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ym_hHs6EeSpdasVlvnbUQ" name="priorityrisk" type="_5ym_pXs6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ym_hXs6EeSpdasVlvnbUQ" name="" type="_5ym_wHs6EeSpdasVlvnbUQ" association="_5ym_0Xs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ym_hns6EeSpdasVlvnbUQ"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ym_h3s6EeSpdasVlvnbUQ" value="10"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ym_iHs6EeSpdasVlvnbUQ" name="getId">
+        <ownedParameter xmi:id="_5ym_iXs6EeSpdasVlvnbUQ" type="_5ym_pXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_ins6EeSpdasVlvnbUQ" name="setId">
+        <ownedParameter xmi:id="_5ym_i3s6EeSpdasVlvnbUQ" name="id" type="_5ym_pXs6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_jHs6EeSpdasVlvnbUQ" name="getDescription">
+        <ownedParameter xmi:id="_5ym_jXs6EeSpdasVlvnbUQ" type="_5ym_pns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_jns6EeSpdasVlvnbUQ" name="setDescription">
+        <ownedParameter xmi:id="_5ym_j3s6EeSpdasVlvnbUQ" name="description" type="_5ym_pns6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_kHs6EeSpdasVlvnbUQ" name="getName">
+        <ownedParameter xmi:id="_5ym_kXs6EeSpdasVlvnbUQ" type="_5ym_pns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_kns6EeSpdasVlvnbUQ" name="setName">
+        <ownedParameter xmi:id="_5ym_k3s6EeSpdasVlvnbUQ" name="name" type="_5ym_pns6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_lHs6EeSpdasVlvnbUQ" name="getStartDate">
+        <ownedParameter xmi:id="_5ym_lXs6EeSpdasVlvnbUQ" type="_5ym_qHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_lns6EeSpdasVlvnbUQ" name="setStartDate">
+        <ownedParameter xmi:id="_5ym_l3s6EeSpdasVlvnbUQ" name="startdate" type="_5ym_qHs6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_mHs6EeSpdasVlvnbUQ" name="getManager">
+        <ownedParameter xmi:id="_5ym_mXs6EeSpdasVlvnbUQ" type="_5ym_qns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_mns6EeSpdasVlvnbUQ" name="setManager">
+        <ownedParameter xmi:id="_5ym_m3s6EeSpdasVlvnbUQ" name="manager" type="_5ym_qns6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_nHs6EeSpdasVlvnbUQ" name="getPriorityRisk">
+        <ownedParameter xmi:id="_5ym_nXs6EeSpdasVlvnbUQ" type="_5ym_pXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_nns6EeSpdasVlvnbUQ" name="setPriorityRisk">
+        <ownedParameter xmi:id="_5ym_n3s6EeSpdasVlvnbUQ" name="priorityrisk" type="_5ym_pXs6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_oHs6EeSpdasVlvnbUQ" name="equals">
+        <ownedParameter xmi:id="_5ym_oXs6EeSpdasVlvnbUQ" name="obj" type="_5ym_v3s6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ym_ons6EeSpdasVlvnbUQ" type="_5ym_p3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_o3s6EeSpdasVlvnbUQ" name="toTO">
+        <ownedParameter xmi:id="_5ym_pHs6EeSpdasVlvnbUQ" type="_5ym_0ns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_pXs6EeSpdasVlvnbUQ" name="int"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_pns6EeSpdasVlvnbUQ" name="string"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_p3s6EeSpdasVlvnbUQ" name="boolean"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_qHs6EeSpdasVlvnbUQ" name="date"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_qXs6EeSpdasVlvnbUQ" name="double"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_qns6EeSpdasVlvnbUQ" name="String"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ym_q3s6EeSpdasVlvnbUQ" name="ProjectUserPK">
+      <ownedAttribute xmi:id="_5ym_rHs6EeSpdasVlvnbUQ" name="projectId" type="_5ym_pXs6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ym_rXs6EeSpdasVlvnbUQ" name="userCc" type="_5ym_qns6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ym_rns6EeSpdasVlvnbUQ" name="" type="_5ym_wHs6EeSpdasVlvnbUQ" association="_5ym_0Hs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ym_r3s6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ym_sHs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ym_sXs6EeSpdasVlvnbUQ" name="ProjectUserPK"/>
+      <ownedOperation xmi:id="_5ym_sns6EeSpdasVlvnbUQ" name="getProjectId">
+        <ownedParameter xmi:id="_5ym_s3s6EeSpdasVlvnbUQ" type="_5ym_pXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_tHs6EeSpdasVlvnbUQ" name="setProjectId">
+        <ownedParameter xmi:id="_5ym_tXs6EeSpdasVlvnbUQ" name="projectId" type="_5ym_pXs6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_tns6EeSpdasVlvnbUQ" name="getUserCc">
+        <ownedParameter xmi:id="_5ym_t3s6EeSpdasVlvnbUQ" type="_5ym_qns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_uHs6EeSpdasVlvnbUQ" name="setUserCc">
+        <ownedParameter xmi:id="_5ym_uXs6EeSpdasVlvnbUQ" name="userCc" type="_5ym_qns6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_uns6EeSpdasVlvnbUQ" name="equals">
+        <ownedParameter xmi:id="_5ym_u3s6EeSpdasVlvnbUQ" name="obj" type="_5ym_v3s6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ym_vHs6EeSpdasVlvnbUQ" type="_5ym_p3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_vXs6EeSpdasVlvnbUQ" name="equals">
+        <ownedParameter xmi:id="_5ym_vns6EeSpdasVlvnbUQ" type="_5ym_pXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_v3s6EeSpdasVlvnbUQ" name="Object"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ym_wHs6EeSpdasVlvnbUQ" name="ProjectUser">
+      <ownedAttribute xmi:id="_5ym_wXs6EeSpdasVlvnbUQ" name="id" type="_5ym_q3s6EeSpdasVlvnbUQ" association="_5ym_0Hs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ym_wns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ym_w3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ym_xHs6EeSpdasVlvnbUQ" name="projectBean" type="_5ym_dns6EeSpdasVlvnbUQ" association="_5ym_0Xs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ym_xXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ym_xns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ym_x3s6EeSpdasVlvnbUQ" name="ProjectUser"/>
+      <ownedOperation xmi:id="_5ym_yHs6EeSpdasVlvnbUQ" name="getId">
+        <ownedParameter xmi:id="_5ym_yXs6EeSpdasVlvnbUQ" type="_5ym_q3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_yns6EeSpdasVlvnbUQ" name="setId">
+        <ownedParameter xmi:id="_5ym_y3s6EeSpdasVlvnbUQ" name="id" type="_5ym_q3s6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_zHs6EeSpdasVlvnbUQ" name="getProjectBean">
+        <ownedParameter xmi:id="_5ym_zXs6EeSpdasVlvnbUQ" type="_5ym_dns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ym_zns6EeSpdasVlvnbUQ" name="setProjectBean">
+        <ownedParameter xmi:id="_5ym_z3s6EeSpdasVlvnbUQ" name="projectBean" type="_5ym_dns6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ym_0Hs6EeSpdasVlvnbUQ" memberEnd="_5ym_wXs6EeSpdasVlvnbUQ _5ym_rns6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ym_0Xs6EeSpdasVlvnbUQ" memberEnd="_5ym_xHs6EeSpdasVlvnbUQ _5ym_hXs6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_0ns6EeSpdasVlvnbUQ" name="ProjectTO"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_5ym_03s6EeSpdasVlvnbUQ" name="co.shift.pcs.project.control">
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ym_1Hs6EeSpdasVlvnbUQ" name="ProjectDAO">
+      <ownedAttribute xmi:id="_5ym_1Xs6EeSpdasVlvnbUQ" name="em" type="_5ym_4Xs6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ym_1ns6EeSpdasVlvnbUQ" name="cManager" type="_5ymYfHs6EeSpdasVlvnbUQ" association="_5ym_4ns6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ym_13s6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ym_2Hs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ym_2Xs6EeSpdasVlvnbUQ" name="" type="_5ym__ns6EeSpdasVlvnbUQ" association="_5ynAK3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ym_2ns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ym_23s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ym_3Hs6EeSpdasVlvnbUQ" name="getProjectFromUser">
+        <ownedParameter xmi:id="_5ym_3Xs6EeSpdasVlvnbUQ" name="user" type="_5ym_43s6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ym_3ns6EeSpdasVlvnbUQ" type="_5ym_4Hs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_33s6EeSpdasVlvnbUQ" name="ProjectTO"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_4Hs6EeSpdasVlvnbUQ" name="List&lt;ProjectTO>"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ym_4Xs6EeSpdasVlvnbUQ" name="EntityManager"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ym_4ns6EeSpdasVlvnbUQ" memberEnd="_5ym_1ns6EeSpdasVlvnbUQ _5ymYm3s6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_43s6EeSpdasVlvnbUQ" name="string"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ym_5Hs6EeSpdasVlvnbUQ" name="ProjectAsyncWorker">
+      <ownedAttribute xmi:id="_5ym_5Xs6EeSpdasVlvnbUQ" name="ds" type="_5ym_8Hs6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ym_5ns6EeSpdasVlvnbUQ" name="cManager" type="_5ymYfHs6EeSpdasVlvnbUQ" association="_5ym_8Xs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ym_53s6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ym_6Hs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ym_6Xs6EeSpdasVlvnbUQ" name="" type="_5ym_9Hs6EeSpdasVlvnbUQ" association="_5ym_-3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ym_6ns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ym_63s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ym_7Hs6EeSpdasVlvnbUQ" name="getAllProjects">
+        <ownedParameter xmi:id="_5ym_7Xs6EeSpdasVlvnbUQ" name="start" type="_5ym_8ns6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ym_7ns6EeSpdasVlvnbUQ" name="maxResults" type="_5ym_8ns6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ym_73s6EeSpdasVlvnbUQ" type="_5ym_83s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_8Hs6EeSpdasVlvnbUQ" name="DataSource"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ym_8Xs6EeSpdasVlvnbUQ" memberEnd="_5ym_5ns6EeSpdasVlvnbUQ _5ymYnns6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_8ns6EeSpdasVlvnbUQ" name="int"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym_83s6EeSpdasVlvnbUQ" name="Future&lt;List&lt;ProjectTO>>"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ym_9Hs6EeSpdasVlvnbUQ" name="ProjectParallelizer">
+      <ownedAttribute xmi:id="_5ym_9Xs6EeSpdasVlvnbUQ" name="worker" type="_5ym_5Hs6EeSpdasVlvnbUQ" association="_5ym_-3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ym_9ns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ym_93s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ym_-Hs6EeSpdasVlvnbUQ" name="getAllProjects">
+        <ownedParameter xmi:id="_5ym_-Xs6EeSpdasVlvnbUQ" name="pCount" type="_5ym__Hs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ym_-ns6EeSpdasVlvnbUQ" type="_5ym_4Hs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ym_-3s6EeSpdasVlvnbUQ" memberEnd="_5ym_9Xs6EeSpdasVlvnbUQ _5ym_6Xs6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ym__Hs6EeSpdasVlvnbUQ" name="long"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_5ym__Xs6EeSpdasVlvnbUQ" name="co.shift.pcs.project.boundary">
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ym__ns6EeSpdasVlvnbUQ" name="ProjectManager">
+      <ownedAttribute xmi:id="_5ym__3s6EeSpdasVlvnbUQ" name="em" type="_5ynAKXs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ynAAHs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ynAAXs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ynAAns6EeSpdasVlvnbUQ" name="cManager" type="_5ymYfHs6EeSpdasVlvnbUQ" association="_5ynAKns6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ynAA3s6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ynABHs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ynABXs6EeSpdasVlvnbUQ" name="projectDAO" type="_5ym_1Hs6EeSpdasVlvnbUQ" association="_5ynAK3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ynABns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ynAB3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ynACHs6EeSpdasVlvnbUQ" name="projectParallelizer" type="_5ynAM3s6EeSpdasVlvnbUQ" association="_5ynAN3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ynACXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ynACns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ynAC3s6EeSpdasVlvnbUQ" name="removeUserFromProject">
+        <ownedParameter xmi:id="_5ynADHs6EeSpdasVlvnbUQ" name="user" type="_5ynALHs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynADXs6EeSpdasVlvnbUQ" name="projectId" type="_5ynALXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynADns6EeSpdasVlvnbUQ" type="_5ynALns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAD3s6EeSpdasVlvnbUQ" name="createProject">
+        <ownedParameter xmi:id="_5ynAEHs6EeSpdasVlvnbUQ" name="project" type="_5ynAL3s6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAEXs6EeSpdasVlvnbUQ" type="_5ynALns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAEns6EeSpdasVlvnbUQ" name="updateProject">
+        <ownedParameter xmi:id="_5ynAE3s6EeSpdasVlvnbUQ" name="project" type="_5ynAL3s6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAFHs6EeSpdasVlvnbUQ" type="_5ynALns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAFXs6EeSpdasVlvnbUQ" name="getAllProjects">
+        <ownedParameter xmi:id="_5ynAFns6EeSpdasVlvnbUQ" type="_5ynAMHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAF3s6EeSpdasVlvnbUQ" name="deleteProject">
+        <ownedParameter xmi:id="_5ynAGHs6EeSpdasVlvnbUQ" name="project" type="_5ynAL3s6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAGXs6EeSpdasVlvnbUQ" type="_5ynALns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAGns6EeSpdasVlvnbUQ" name="addUserToProject">
+        <ownedParameter xmi:id="_5ynAG3s6EeSpdasVlvnbUQ" name="user" type="_5ynALHs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAHHs6EeSpdasVlvnbUQ" name="projectId" type="_5ynALXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAHXs6EeSpdasVlvnbUQ" type="_5ynALns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAHns6EeSpdasVlvnbUQ" name="setProjectManager">
+        <ownedParameter xmi:id="_5ynAH3s6EeSpdasVlvnbUQ" name="manager" type="_5ynALHs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAIHs6EeSpdasVlvnbUQ" name="projectId" type="_5ynALXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAIXs6EeSpdasVlvnbUQ" type="_5ynALns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAIns6EeSpdasVlvnbUQ" name="setProjectPriorityRisk">
+        <ownedParameter xmi:id="_5ynAI3s6EeSpdasVlvnbUQ" name="priorityrisk" type="_5ynAMXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAJHs6EeSpdasVlvnbUQ" name="projectId" type="_5ynALXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAJXs6EeSpdasVlvnbUQ" type="_5ynALns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAJns6EeSpdasVlvnbUQ" name="getProjectFromUser">
+        <ownedParameter xmi:id="_5ynAJ3s6EeSpdasVlvnbUQ" name="userCc" type="_5ynAMns6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAKHs6EeSpdasVlvnbUQ" type="_5ynAMHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ynAKXs6EeSpdasVlvnbUQ" name="EntityManager"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ynAKns6EeSpdasVlvnbUQ" memberEnd="_5ynAAns6EeSpdasVlvnbUQ _5ymYoXs6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ynAK3s6EeSpdasVlvnbUQ" memberEnd="_5ynABXs6EeSpdasVlvnbUQ _5ym_2Xs6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynALHs6EeSpdasVlvnbUQ" name="UserTO"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynALXs6EeSpdasVlvnbUQ" name="int"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynALns6EeSpdasVlvnbUQ" name="boolean"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAL3s6EeSpdasVlvnbUQ" name="ProjectTO"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAMHs6EeSpdasVlvnbUQ" name="List&lt;ProjectTO>"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAMXs6EeSpdasVlvnbUQ" name="RiskTO"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAMns6EeSpdasVlvnbUQ" name="string"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAM3s6EeSpdasVlvnbUQ" name="ProjectParallelizer">
+      <ownedAttribute xmi:id="_5ynANHs6EeSpdasVlvnbUQ" name="" type="_5ym__ns6EeSpdasVlvnbUQ" association="_5ynAN3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ynANXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ynANns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ynAN3s6EeSpdasVlvnbUQ" memberEnd="_5ynACHs6EeSpdasVlvnbUQ _5ynANHs6EeSpdasVlvnbUQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_5ynAOHs6EeSpdasVlvnbUQ" name="co.shift.pcs.authorization.boundary">
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ynAOXs6EeSpdasVlvnbUQ" name="AuthorizationManager">
+      <ownedAttribute xmi:id="_5ynAOns6EeSpdasVlvnbUQ" name="em" type="_5ynAZHs6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ynAO3s6EeSpdasVlvnbUQ" name="cManager" type="_5ymZIHs6EeSpdasVlvnbUQ" association="_5ynAZXs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ynAPHs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ynAPXs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ynAPns6EeSpdasVlvnbUQ" name="getUserRoles">
+        <ownedParameter xmi:id="_5ynAP3s6EeSpdasVlvnbUQ" name="userCc" type="_5ynAZns6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAQHs6EeSpdasVlvnbUQ" type="_5ynAZ3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAQXs6EeSpdasVlvnbUQ" name="getAllRoles">
+        <ownedParameter xmi:id="_5ynAQns6EeSpdasVlvnbUQ" type="_5ynAZ3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAQ3s6EeSpdasVlvnbUQ" name="getAllServices">
+        <ownedParameter xmi:id="_5ynARHs6EeSpdasVlvnbUQ" type="_5ynAaHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynARXs6EeSpdasVlvnbUQ" name="getRoleServices">
+        <ownedParameter xmi:id="_5ynARns6EeSpdasVlvnbUQ" name="roleName" type="_5ynAaXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAR3s6EeSpdasVlvnbUQ" type="_5ynAaHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynASHs6EeSpdasVlvnbUQ" name="createRole">
+        <ownedParameter xmi:id="_5ynASXs6EeSpdasVlvnbUQ" name="role" type="_5ynAans6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynASns6EeSpdasVlvnbUQ" type="_5ynAa3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAS3s6EeSpdasVlvnbUQ" name="updateRole">
+        <ownedParameter xmi:id="_5ynATHs6EeSpdasVlvnbUQ" name="role" type="_5ynAans6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynATXs6EeSpdasVlvnbUQ" type="_5ynAa3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynATns6EeSpdasVlvnbUQ" name="deleteRole">
+        <ownedParameter xmi:id="_5ynAT3s6EeSpdasVlvnbUQ" name="role" type="_5ynAans6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAUHs6EeSpdasVlvnbUQ" type="_5ynAa3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAUXs6EeSpdasVlvnbUQ" name="addRoleToUser">
+        <ownedParameter xmi:id="_5ynAUns6EeSpdasVlvnbUQ" name="user" type="_5ynAZns6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAU3s6EeSpdasVlvnbUQ" name="role" type="_5ynAans6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAVHs6EeSpdasVlvnbUQ" type="_5ynAa3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAVXs6EeSpdasVlvnbUQ" name="removeRoleFromUser">
+        <ownedParameter xmi:id="_5ynAVns6EeSpdasVlvnbUQ" name="user" type="_5ynAZns6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAV3s6EeSpdasVlvnbUQ" name="role" type="_5ynAans6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAWHs6EeSpdasVlvnbUQ" type="_5ynAa3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAWXs6EeSpdasVlvnbUQ" name="addServiceToRole">
+        <ownedParameter xmi:id="_5ynAWns6EeSpdasVlvnbUQ" name="roleName" type="_5ynAaXs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAW3s6EeSpdasVlvnbUQ" name="service" type="_5ynAbHs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAXHs6EeSpdasVlvnbUQ" type="_5ynAa3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAXXs6EeSpdasVlvnbUQ" name="removeServiceFromRole">
+        <ownedParameter xmi:id="_5ynAXns6EeSpdasVlvnbUQ" name="role" type="_5ynAans6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAX3s6EeSpdasVlvnbUQ" name="service" type="_5ynAbHs6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAYHs6EeSpdasVlvnbUQ" type="_5ynAa3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAYXs6EeSpdasVlvnbUQ" name="getUserServices">
+        <ownedParameter xmi:id="_5ynAYns6EeSpdasVlvnbUQ" name="userCc" type="_5ynAZns6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAY3s6EeSpdasVlvnbUQ" type="_5ynAaHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAZHs6EeSpdasVlvnbUQ" name="EntityManager"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ynAZXs6EeSpdasVlvnbUQ" memberEnd="_5ynAO3s6EeSpdasVlvnbUQ _5ymZIXs6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAZns6EeSpdasVlvnbUQ" name="String"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAZ3s6EeSpdasVlvnbUQ" name="List&lt;RoleTO>"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAaHs6EeSpdasVlvnbUQ" name="List&lt;ServiceTO>"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAaXs6EeSpdasVlvnbUQ" name="string"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAans6EeSpdasVlvnbUQ" name="RoleTO"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAa3s6EeSpdasVlvnbUQ" name="boolean"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAbHs6EeSpdasVlvnbUQ" name="ServiceTO"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_5ynAbXs6EeSpdasVlvnbUQ" name="co.shift.pcs.authorization.entity">
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ynAbns6EeSpdasVlvnbUQ" name="Role">
+      <ownedAttribute xmi:id="_5ynAb3s6EeSpdasVlvnbUQ" name="name" type="_5ynAhHs6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ynAcHs6EeSpdasVlvnbUQ" name="description" type="_5ynAhHs6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ynAcXs6EeSpdasVlvnbUQ" name="" type="_5ynAsXs6EeSpdasVlvnbUQ" association="_5ynAxHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ynAcns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ynAc3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ynAdHs6EeSpdasVlvnbUQ" name="services" type="_5ynAhns6EeSpdasVlvnbUQ" association="_5ynAxXs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ynAdXs6EeSpdasVlvnbUQ"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ynAdns6EeSpdasVlvnbUQ" value="10"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ynAd3s6EeSpdasVlvnbUQ" name="userRoles" type="_5ynAsXs6EeSpdasVlvnbUQ" association="_5ynAxns6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ynAeHs6EeSpdasVlvnbUQ"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ynAeXs6EeSpdasVlvnbUQ" value="10"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ynAens6EeSpdasVlvnbUQ" name="getName">
+        <ownedParameter xmi:id="_5ynAe3s6EeSpdasVlvnbUQ" type="_5ynAhHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAfHs6EeSpdasVlvnbUQ" name="setName">
+        <ownedParameter xmi:id="_5ynAfXs6EeSpdasVlvnbUQ" name="name" type="_5ynAhHs6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAfns6EeSpdasVlvnbUQ" name="getDescription">
+        <ownedParameter xmi:id="_5ynAf3s6EeSpdasVlvnbUQ" type="_5ynAhHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAgHs6EeSpdasVlvnbUQ" name="setDescription">
+        <ownedParameter xmi:id="_5ynAgXs6EeSpdasVlvnbUQ" name="description" type="_5ynAhHs6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAgns6EeSpdasVlvnbUQ" name="toTO">
+        <ownedParameter xmi:id="_5ynAg3s6EeSpdasVlvnbUQ" type="_5ynAhXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAhHs6EeSpdasVlvnbUQ" name="string"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAhXs6EeSpdasVlvnbUQ" name="RoleTO"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ynAhns6EeSpdasVlvnbUQ" name="Service">
+      <ownedAttribute xmi:id="_5ynAh3s6EeSpdasVlvnbUQ" name="name" type="_5ynAhHs6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ynAiHs6EeSpdasVlvnbUQ" name="description" type="_5ynAhHs6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ynAiXs6EeSpdasVlvnbUQ" name="roles" type="_5ynAbns6EeSpdasVlvnbUQ" association="_5ynAxXs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ynAins6EeSpdasVlvnbUQ"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ynAi3s6EeSpdasVlvnbUQ" value="10"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ynAjHs6EeSpdasVlvnbUQ" name="getName">
+        <ownedParameter xmi:id="_5ynAjXs6EeSpdasVlvnbUQ" type="_5ynAhHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAjns6EeSpdasVlvnbUQ" name="setName">
+        <ownedParameter xmi:id="_5ynAj3s6EeSpdasVlvnbUQ" name="name" type="_5ynAhHs6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAkHs6EeSpdasVlvnbUQ" name="getDescription">
+        <ownedParameter xmi:id="_5ynAkXs6EeSpdasVlvnbUQ" type="_5ynAhHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAkns6EeSpdasVlvnbUQ" name="setDescription">
+        <ownedParameter xmi:id="_5ynAk3s6EeSpdasVlvnbUQ" name="description" type="_5ynAhHs6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAlHs6EeSpdasVlvnbUQ" name="toTO">
+        <ownedParameter xmi:id="_5ynAlXs6EeSpdasVlvnbUQ" type="_5ynAmXs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAlns6EeSpdasVlvnbUQ" name="equals">
+        <ownedParameter xmi:id="_5ynAl3s6EeSpdasVlvnbUQ" name="obj" type="_5ynAmns6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynAmHs6EeSpdasVlvnbUQ" type="_5ynAm3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAmXs6EeSpdasVlvnbUQ" name="ServiceTO"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAmns6EeSpdasVlvnbUQ" name="Object"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAm3s6EeSpdasVlvnbUQ" name="boolean"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ynAnHs6EeSpdasVlvnbUQ" name="UserRolePK">
+      <ownedAttribute xmi:id="_5ynAnXs6EeSpdasVlvnbUQ" name="user" type="_5ynAr3s6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ynAnns6EeSpdasVlvnbUQ" name="role" type="_5ynAhHs6EeSpdasVlvnbUQ"/>
+      <ownedAttribute xmi:id="_5ynAn3s6EeSpdasVlvnbUQ" name="" type="_5ynAsXs6EeSpdasVlvnbUQ" association="_5ynAw3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ynAoHs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ynAoXs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ynAons6EeSpdasVlvnbUQ" name="getUser">
+        <ownedParameter xmi:id="_5ynAo3s6EeSpdasVlvnbUQ" type="_5ynAr3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynApHs6EeSpdasVlvnbUQ" name="setUser">
+        <ownedParameter xmi:id="_5ynApXs6EeSpdasVlvnbUQ" name="user" type="_5ynAr3s6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynApns6EeSpdasVlvnbUQ" name="getRole">
+        <ownedParameter xmi:id="_5ynAp3s6EeSpdasVlvnbUQ" type="_5ynAhHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAqHs6EeSpdasVlvnbUQ" name="setRole">
+        <ownedParameter xmi:id="_5ynAqXs6EeSpdasVlvnbUQ" name="role" type="_5ynAhHs6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAqns6EeSpdasVlvnbUQ" name="equals">
+        <ownedParameter xmi:id="_5ynAq3s6EeSpdasVlvnbUQ" name="obj" type="_5ynAmns6EeSpdasVlvnbUQ"/>
+        <ownedParameter xmi:id="_5ynArHs6EeSpdasVlvnbUQ" type="_5ynAm3s6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynArXs6EeSpdasVlvnbUQ" name="hashCode">
+        <ownedParameter xmi:id="_5ynArns6EeSpdasVlvnbUQ" type="_5ynAsHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAr3s6EeSpdasVlvnbUQ" name="String"/>
+    <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_5ynAsHs6EeSpdasVlvnbUQ" name="int"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_5ynAsXs6EeSpdasVlvnbUQ" name="UserRole">
+      <ownedAttribute xmi:id="_5ynAsns6EeSpdasVlvnbUQ" name="id" type="_5ynAnHs6EeSpdasVlvnbUQ" association="_5ynAw3s6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ynAs3s6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ynAtHs6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ynAtXs6EeSpdasVlvnbUQ" name="roleBean" type="_5ynAbns6EeSpdasVlvnbUQ" association="_5ynAxHs6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ynAtns6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ynAt3s6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedAttribute xmi:id="_5ynAuHs6EeSpdasVlvnbUQ" name="" type="_5ynAbns6EeSpdasVlvnbUQ" association="_5ynAxns6EeSpdasVlvnbUQ">
+        <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_5ynAuXs6EeSpdasVlvnbUQ" value="1"/>
+        <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_5ynAuns6EeSpdasVlvnbUQ" value="1"/>
+      </ownedAttribute>
+      <ownedOperation xmi:id="_5ynAu3s6EeSpdasVlvnbUQ" name="getId">
+        <ownedParameter xmi:id="_5ynAvHs6EeSpdasVlvnbUQ" type="_5ynAnHs6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAvXs6EeSpdasVlvnbUQ" name="setId">
+        <ownedParameter xmi:id="_5ynAvns6EeSpdasVlvnbUQ" name="id" type="_5ynAnHs6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAv3s6EeSpdasVlvnbUQ" name="getRoleBean">
+        <ownedParameter xmi:id="_5ynAwHs6EeSpdasVlvnbUQ" type="_5ynAbns6EeSpdasVlvnbUQ" direction="return"/>
+      </ownedOperation>
+      <ownedOperation xmi:id="_5ynAwXs6EeSpdasVlvnbUQ" name="setRoleBean">
+        <ownedParameter xmi:id="_5ynAwns6EeSpdasVlvnbUQ" name="roleBean" type="_5ynAbns6EeSpdasVlvnbUQ"/>
+      </ownedOperation>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ynAw3s6EeSpdasVlvnbUQ" memberEnd="_5ynAsns6EeSpdasVlvnbUQ _5ynAn3s6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ynAxHs6EeSpdasVlvnbUQ" memberEnd="_5ynAtXs6EeSpdasVlvnbUQ _5ynAcXs6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ynAxXs6EeSpdasVlvnbUQ" memberEnd="_5ynAdHs6EeSpdasVlvnbUQ _5ynAiXs6EeSpdasVlvnbUQ"/>
+    <packagedElement xmi:type="uml:Association" xmi:id="_5ynAxns6EeSpdasVlvnbUQ" memberEnd="_5ynAd3s6EeSpdasVlvnbUQ _5ynAuHs6EeSpdasVlvnbUQ"/>
+  </packagedElement>
+</uml:Package>

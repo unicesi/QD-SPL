@@ -3,7 +3,7 @@ package co.shift.templates.ejb.basic
 import domainmetamodel.BusinessEntity
 import java.util.List
 import domainmetamodel.Association
-import co.shift.generators.domain.DomainCodeGenerator
+import co.shift.generators.domain.DomainCodeUtilities
 
 class DAOImplTemplate {
 	
@@ -22,36 +22,53 @@ class DAOImplTemplate {
 		import javax.persistence.Query;
 		
 		import co.shift.«packageName.toLowerCase()».to.«be.name.toFirstUpper»TO;
-		«DomainCodeGenerator.extendContribution("_r_2_10", DomainCodeGenerator.CONTRIBUTE_TO_IMPORT, packageName, be.name)»
-		
+«««		«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName, be.name)»
+		«val attribute2 = DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE)»
+		«IF (attribute2 != null && !attribute2.equals(""))»
+		import java.io.UnsupportedEncodingException;
+		import java.security.InvalidAlgorithmParameterException;
+		import java.security.InvalidKeyException;
+		import java.security.NoSuchAlgorithmException;
+		import java.security.spec.InvalidKeySpecException;
+		import javax.crypto.BadPaddingException;
+		import javax.crypto.Cipher;
+		import javax.crypto.IllegalBlockSizeException;
+		import javax.crypto.NoSuchPaddingException;
+		import javax.crypto.SecretKey;
+		import javax.crypto.SecretKeyFactory;
+		import javax.crypto.spec.PBEKeySpec;
+		import javax.crypto.spec.PBEParameterSpec;
+		import org.apache.commons.codec.binary.Base64;
+		«ENDIF»
+			
 		@Stateless
 		public class «be.name.toFirstUpper»DAO implements I«be.name.toFirstUpper»DAO {
 			
-			@PersistenceContext(unitName = "co.shift.pcs.«be.name.toLowerCase»")
+			@PersistenceContext(unitName = "«packageName»")
 			private EntityManager em;
 			
-			«val attribute2 = DomainCodeGenerator.extendContribution("_r_2_10", DomainCodeGenerator.CONTRIBUTE_TO_ATTRIBUTE)»
-			«IF (attribute2 != null && !attribute2.equals(""))»
-				«attribute2»
-			«ENDIF»
+«««			«IF (attribute2 != null && !attribute2.equals(""))»
+«««				«attribute2»
+«««			«ENDIF»
 		
-			«FOR association : DomainCodeGenerator.getDetailSimpleAssociations(be, associations)»
+			«FOR association : DomainCodeUtilities.getDetailSimpleAssociations(be, associations)»
 				«val container = association.eContainer as BusinessEntity»
-				«val type = DomainCodeGenerator.getID(container).dataType.literal»
-				public «be.name»TO get«container.name.toFirstUpper»«association.name.toFirstUpper»(«DomainCodeGenerator.getType(type)» «container.name.
-				toLowerCase»«DomainCodeGenerator.getID(container).name.toFirstUpper»){
+				«val type = DomainCodeUtilities.getID(container).dataType.literal»
+				public «be.name»TO get«container.name.toFirstUpper»«association.name.toFirstUpper»(«DomainCodeUtilities.getType(type)» «container.name.
+				toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper»){
+					«IF (attribute2 != null && !attribute2.equals(""))»PBECryptographyManager.init();«ENDIF»
 					Query query = em
-					.createNativeQuery("SELECT u.* FROM «be.name.toFirstUpper» u, «container.name.toFirstUpper» p WHERE p.«association.name.toLowerCase» = u.«DomainCodeGenerator.getID(be).name.toLowerCase» AND p.«DomainCodeGenerator.getID(container).name.toLowerCase» = "
-							+ «container.name.toLowerCase»«DomainCodeGenerator.getID(container).name.toFirstUpper»);
+					.createNativeQuery("SELECT u.* FROM «be.name.toFirstUpper» u, «container.name.toFirstUpper» p WHERE p.«association.name.toLowerCase» = u.«DomainCodeUtilities.getID(be).name.toLowerCase» AND p.«DomainCodeUtilities.getID(container).name.toLowerCase» = "
+							+ «container.name.toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper»);
 					try {
 						Object[] «association.name.toLowerCase» = (Object[]) query.getSingleResult();
 						«be.name.toFirstUpper»TO u = new «be.name.toFirstUpper»TO();
 						«var i=0»
 						«FOR attribute : be.attributes»
-							«DomainCodeGenerator.getType(attribute)» t«attribute.name.toFirstUpper» = («DomainCodeGenerator.getType(attribute)») «association.name.toLowerCase»[«i»];
+							«DomainCodeUtilities.getType(attribute)» t«attribute.name.toFirstUpper» = («DomainCodeUtilities.getType(attribute)») «association.name.toLowerCase»[«i»];
 							«var c = i++»
 						«ENDFOR»
-						«DomainCodeGenerator.extendContribution("_r_2_10", DomainCodeGenerator.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, 3)»
+						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, 3)»
 						«FOR attribute : be.attributes»
 						u.set«attribute.name.toFirstUpper»(t«attribute.name.toFirstUpper»);
 						«ENDFOR»
@@ -62,25 +79,36 @@ class DAOImplTemplate {
 				}
 			«ENDFOR»
 			
-			«FOR association : DomainCodeGenerator.getDetailMultipleAssociations(be, associations)»
+			«FOR association : DomainCodeUtilities.getDetailMultipleAssociations(be, associations)»
 				«val container = association.eContainer as BusinessEntity»
-				«val type = DomainCodeGenerator.getID(container).dataType.literal»
-				public List<«be.name.toFirstUpper»TO> get«be.name.toFirstUpper»From«container.name.toFirstUpper»(«DomainCodeGenerator.getType(type)» «container.name.
-				toLowerCase»«DomainCodeGenerator.getID(container).name.toFirstUpper»){
+				«var contType = DomainCodeUtilities.getType(DomainCodeUtilities.getID(container))»
+				«val type = DomainCodeUtilities.getID(container).dataType.literal»
+				public List<«be.name.toFirstUpper»TO> get«be.name.toFirstUpper»From«container.name.toFirstUpper»(«DomainCodeUtilities.getType(type)» «container.name.
+				toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper»){
 					List<«be.name.toFirstUpper»TO> «be.name.toLowerCase»s = new ArrayList<>();
-					Query query = em
-							.createNativeQuery("SELECT u.* FROM «be.name.toFirstUpper» u, «container.name.toFirstUpper»«be.name.toFirstUpper» pu WHERE u.«DomainCodeGenerator.getID(be).name.toLowerCase» = pu.«be.name.toLowerCase» AND pu.«container.name.toLowerCase» = "
-									+ «container.name.toLowerCase»«DomainCodeGenerator.getID(container).name.toFirstUpper»);
-					List<Object[]> found«be.name.toFirstUpper»s = query.getResultList();
+					Query query;
+					List<Object[]> found«be.name.toFirstUpper»s;
+					try {
+						query = em
+								.createNativeQuery("SELECT u.* FROM «be.name.toFirstUpper» u, «container.name.toFirstUpper»«be.name.toFirstUpper» pu WHERE u.«DomainCodeUtilities.getID(be).name.toLowerCase» = pu.«be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper» AND pu.«container.name.toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper» = «IF contType.equals("String")»'«ENDIF»"
+										+ «container.name.toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper»«IF contType.equals("String")»+"'"«ENDIF»);
+						found«be.name.toFirstUpper»s = query.getResultList();
+					} catch (Exception e) {
+						query = em
+								.createNativeQuery("SELECT u.* FROM «be.name.toFirstUpper» u, «be.name.toFirstUpper»«container.name.toFirstUpper» pu WHERE u.«DomainCodeUtilities.getID(be).name.toLowerCase» = pu.«be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper» AND pu.«container.name.toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper» = «IF contType.equals("String")»'«ENDIF»"
+										+ «container.name.toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper»«IF contType.equals("String")»+"'"«ENDIF»);
+						found«be.name.toFirstUpper»s = query.getResultList();
+					}
 					«be.name.toFirstUpper»TO u = null;
+					«IF (attribute2 != null && !attribute2.equals(""))»PBECryptographyManager.init();«ENDIF»
 					for (Object[] «be.name.toLowerCase» : found«be.name.toFirstUpper»s) {
 						u = new «be.name.toFirstUpper»TO();
 						«var i=0»
 						«FOR attribute : be.attributes»
-							«DomainCodeGenerator.getType(attribute)» t«attribute.name.toFirstUpper» = («DomainCodeGenerator.getType(attribute)») «be.name.toLowerCase»[«i»];
+							«DomainCodeUtilities.getType(attribute)» t«attribute.name.toFirstUpper» = («DomainCodeUtilities.getType(attribute)») «be.name.toLowerCase»[«i»];
 							«var c = i++»
 						«ENDFOR»
-						«DomainCodeGenerator.extendContribution("_r_2_10", DomainCodeGenerator.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, 3)»
+						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, 3)»
 						«FOR attribute : be.attributes»
 						u.set«attribute.name.toFirstUpper»(t«attribute.name.toFirstUpper»);
 						«ENDFOR»
@@ -90,5 +118,75 @@ class DAOImplTemplate {
 				}
 			«ENDFOR»
 			}
+«««			Esto se hace porque no se puede inyectar de nuevo el PBECryptographyManager, ya que se ha inyectado antes en el boundary y no se permiten dos inyecciones en una misma transaccion
+			«IF (attribute2 != null && !attribute2.equals(""))»
+			class PBECryptographyManager {
+			
+				private static PBEKeySpec pbeKeySpec;
+				private static PBEParameterSpec pbeParamSpec;
+				private static SecretKeyFactory keyFac;
+				private static SecretKey pbeKey;
+				private static Cipher pbeCipher;
+				
+				public static final int ENCRYPT = Cipher.ENCRYPT_MODE;
+				public static final int DECRYPT = Cipher.DECRYPT_MODE;
+				
+				// Salt
+				private static byte[] salt = { (byte) 0xc7, (byte) 0x73, (byte) 0x21, (byte) 0x8c,
+						(byte) 0x7e, (byte) 0xc8, (byte) 0xee, (byte) 0x99 };
+				
+				// Iteration count
+				private static final int COUNT = 20;
+				
+				public static void init() {
+					// Create PBE parameter set
+					pbeParamSpec = new PBEParameterSpec(salt, COUNT);
+				
+				pbeKeySpec = new PBEKeySpec("PCSUI".toCharArray());
+				try {
+					keyFac = SecretKeyFactory.getInstance("PBEWithMD5AndDES");
+					pbeKey = keyFac.generateSecret(pbeKeySpec);
+				
+					// Create PBE Cipher
+					pbeCipher = Cipher.getInstance("PBEWithMD5AndDES");
+				} catch (NoSuchAlgorithmException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvalidKeySpecException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoSuchPaddingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				}
+				
+				public static char[] doFinal(int mode, String text) {
+					try {
+						switch (mode) {
+						case ENCRYPT:
+							pbeCipher.init(Cipher.ENCRYPT_MODE, pbeKey, pbeParamSpec);
+							byte[] encryptedData = pbeCipher.doFinal(text.getBytes("UTF-8"));
+							return new String(Base64.encodeBase64(encryptedData)).toCharArray();
+						case DECRYPT:
+							byte[] decodedData = Base64.decodeBase64(text);
+							pbeCipher.init(Cipher.DECRYPT_MODE, pbeKey, pbeParamSpec);
+							byte[] utf8 = pbeCipher.doFinal(decodedData);
+							return new String(utf8, "UTF8").toCharArray();
+						default:
+							break;
+						}
+					} catch (InvalidKeyException | InvalidAlgorithmParameterException
+							| IllegalBlockSizeException | BadPaddingException  e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}catch (UnsupportedEncodingException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} 
+					return null;				
+				}
+			}
+			«ENDIF»
 	'''
 }

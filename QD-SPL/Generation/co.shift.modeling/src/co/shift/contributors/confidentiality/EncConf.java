@@ -1,6 +1,7 @@
 package co.shift.contributors.confidentiality;
 
 import co.shift.generators.domain.DomainCodeGenerator;
+import co.shift.generators.domain.DomainCodeUtilities;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.generator.IFileSystemAccess;
@@ -61,7 +62,7 @@ public class EncConf implements Contribution {
 		
 		//Detele Contracts
 		if (contract instanceof Delete) {
-			Attribute id = DomainCodeGenerator.getID(be);
+			Attribute id = DomainCodeUtilities.getID(be);
 			String name = Utilities.toFisrtUpper(id.getName());
 			if (id.getDataType().getName().equals("string")) {
 				return "char[] e"+name+"Chars = cManager.doFinal(" + "\n" +
@@ -75,7 +76,7 @@ public class EncConf implements Contribution {
 		//AddElement,DeleteElement Contracts
 		if (contract instanceof AddElement || contract instanceof DeleteElement) {
 			String text = "";
-			Attribute id = DomainCodeGenerator.getID(be);
+			Attribute id = DomainCodeUtilities.getID(be);
 			String name = Utilities.toFisrtUpper(id.getName());
 			if (id.getDataType().getName().equals("string")) {
 				text += "char[] e"+name+"Chars = cManager.doFinal(" + "\n" +
@@ -84,7 +85,7 @@ public class EncConf implements Contribution {
 				be.getName().toLowerCase()+""+name+" = e"+name+";\n";
 			}
 			
-			Attribute rId = DomainCodeGenerator.getID(rBe);
+			Attribute rId = DomainCodeUtilities.getID(rBe);
 			String rName = Utilities.toFisrtUpper(rId.getName());
 			if (rId.getDataType().getName().equals("string")) {
 				text += "char[] e"+rName+"Chars = cManager.doFinal(" + "\n" +
@@ -98,7 +99,7 @@ public class EncConf implements Contribution {
 		//Simple Associations
 		if (asso instanceof Simple) {
 			String text = "";
-			Attribute id = DomainCodeGenerator.getID(be);
+			Attribute id = DomainCodeUtilities.getID(be);
 			String name = Utilities.toFisrtUpper(id.getName());
 			if (id.getDataType().getName().equals("string")) {
 				text += "char[] e"+name+"Chars = cManager.doFinal(" + "\n" +
@@ -107,7 +108,7 @@ public class EncConf implements Contribution {
 				be.getName().toLowerCase()+""+name+" = e"+name+";\n";
 			}
 			
-			Attribute rId = DomainCodeGenerator.getID(rBe);
+			Attribute rId = DomainCodeUtilities.getID(rBe);
 			String rName = Utilities.toFisrtUpper(rId.getName());
 			if (rId.getDataType().getName().equals("string")) {
 				text += "char[] e"+rName+"Chars = cManager.doFinal(" + "\n" +
@@ -120,7 +121,7 @@ public class EncConf implements Contribution {
 		
 		//Associations for Detail Entities
 		if (multipleAssociation != null && multipleAssociation == 1) {
-			Attribute id = DomainCodeGenerator.getID(rBe);
+			Attribute id = DomainCodeUtilities.getID(rBe);
 			String name = Utilities.toFisrtUpper(id.getName());
 			if (id.getDataType().getName().equals("string")) {
 				return "char[] e"+name+"Chars = cManager.doFinal(" + "\n" +
@@ -134,19 +135,19 @@ public class EncConf implements Contribution {
 		//Authorization
 		if (isAuth != null && isAuth) {
 			String text = "";
-			Attribute id = DomainCodeGenerator.getID(be);
+			Attribute id = DomainCodeUtilities.getID(be);
 			String name = Utilities.toFisrtUpper(id.getName());
 			if (id.getDataType().getName().equals("string")) {
 				text += "char[] e"+name+"Chars = cManager.doFinal(" + "\n" +
 						"PBECryptographyManager.ENCRYPT, "+be.getName().toLowerCase()+""+name+");" + "\n" +
-				"String e"+name+" = new String(e"+name+"Chars);" + "\n" +
-				be.getName().toLowerCase()+""+name+" = e"+name+";\n";
+				"String e"+name+" = new String(e"+name+"Chars);";// + "\n" +
+//				be.getName().toLowerCase()+""+name+" = e"+name+";\n";
 			}
 			
 			text += "char[] ePasswordChars = cManager.doFinal(" + "\n" +
 						"PBECryptographyManager.ENCRYPT, password);" + "\n" +
-				"String ePassword = new String(ePasswordChars);" + "\n" +
-				"password = ePassword;\n";
+				"String ePassword = new String(ePasswordChars);";// + "\n" +
+//				"password = ePassword;\n";
 			return text;
 		}
 		
@@ -160,7 +161,10 @@ public class EncConf implements Contribution {
 					text +=	"char[] e"+name+"Chars = cManager.doFinal(" + "\n" +
 							"PBECryptographyManager.DECRYPT, "+be.getName().toLowerCase()+".get"+name+"());" + "\n" +
 					"String e"+name+" = new String(e"+name+"Chars);" + "\n" +
-					be.getName().toLowerCase()+".set"+name+"(e"+name+");\n";
+//					be.getName().toLowerCase()+".set"+name+"(e"+name+");\n";
+					"to.set"+name+"(e"+name+");\n";
+				}else{
+					text += "to.set"+name+"("+be.getName().toLowerCase()+".get"+name+"());\n";
 				}
 			}
 			return text;
@@ -189,7 +193,7 @@ public class EncConf implements Contribution {
 			for (Attribute attribute : attributes) {
 				String name = Utilities.toFisrtUpper(attribute.getName());
 				if (attribute.getDataType().getName().equals("string")) {
-					text +=	"char[] e"+name+"Chars = cManager.doFinal(" + "\n" +
+					text +=	"char[] e"+name+"Chars = PBECryptographyManager.doFinal(" + "\n" +
 					"PBECryptographyManager.DECRYPT, t"+name+");" + "\n" +
 					"String e"+name+" = new String(e"+name+"Chars);" + "\n" +
 					"t"+name+" = e"+name+";\n";
@@ -202,7 +206,7 @@ public class EncConf implements Contribution {
 	}
 
 	@Override
-	public String contributeToWeb(Object ... data) {
+	public String contributeToWebImpl(Object ... data) {
 		// TODO Auto-generated method stub
 		return "";
 	}
@@ -211,22 +215,32 @@ public class EncConf implements Contribution {
 	public void generate(Object ... data) {
 		IFileSystemAccess fsa = (IFileSystemAccess) data[0];
 		String appName = (String) data[1];
-		BusinessEntity be = (BusinessEntity) data[2];
-		fsa.generateFile("/co/shift/" + appName.toLowerCase() + "/" + be.getName().toLowerCase() + "/control/PBECryptographyManager.java",
-				PBECryptographyTemplate.generate(be, appName));
+		fsa.generateFile("/co/shift/" + appName.toLowerCase() + "/security/PBECryptographyManager.java",
+				PBECryptographyTemplate.generate(appName));
 	}
 
 	@Override
-	public String contributeToImport(Object... data) {
+	public String contributeToBusinessImport(Object... data) {
 		String packageName = (String) data[0];
-		String beName = (String) data[1];
-		return "import co.shift."+packageName.toLowerCase()+"."+beName.toLowerCase()+".control.PBECryptographyManager;";
+		return "import co.shift."+packageName.toLowerCase()+".security.PBECryptographyManager;";
 	}
 
 	@Override
-	public String contributeToAtribute(Object... data) {
+	public String contributeToBusinessAtribute(Object... data) {
 		return	"@EJB" + "\n" + 
 				"private PBECryptographyManager cManager;";
+	}
+
+	@Override
+	public String contributeToWebImport(Object... data) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String contributeToWebAttribute(Object... data) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

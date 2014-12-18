@@ -1,17 +1,11 @@
 package co.shift.templates.ejb.contributed.confidentiality
 
-import domainmetamodel.BusinessEntity
-
 class PBECryptographyTemplate {
 
-	def static generate(BusinessEntity be, String packageName) '''
-		package co.shift.«packageName.toLowerCase()».«be.name.toLowerCase».control;
+	def static generate(String packageName) '''
+		package co.shift.«packageName.toLowerCase()».security;
 		
-		import java.nio.ByteBuffer;
-		import java.nio.charset.CharacterCodingException;
-		import java.nio.charset.Charset;
-		import java.nio.charset.CharsetDecoder;
-		import java.nio.charset.CodingErrorAction;
+		import java.io.UnsupportedEncodingException;
 		import java.security.InvalidAlgorithmParameterException;
 		import java.security.InvalidKeyException;
 		import java.security.NoSuchAlgorithmException;
@@ -26,6 +20,7 @@ class PBECryptographyTemplate {
 		import javax.crypto.spec.PBEKeySpec;
 		import javax.crypto.spec.PBEParameterSpec;
 		import javax.ejb.Stateless;
+		import org.apache.commons.codec.binary.Base64;
 		
 		@Stateless
 		public class PBECryptographyManager {
@@ -70,33 +65,29 @@ class PBECryptographyTemplate {
 			}
 			
 			public char[] doFinal(int mode, String text) {
-				byte[] data = null;
-				CharsetDecoder decoder = Charset.forName("UTF-8").newDecoder();
-				   decoder.onMalformedInput(CodingErrorAction.REPLACE);
-				   decoder.onUnmappableCharacter(CodingErrorAction.REPLACE);
-				   decoder.replaceWith("?");
-				   
 				try {
 					switch (mode) {
 					case ENCRYPT:
 						pbeCipher.init(Cipher.ENCRYPT_MODE, pbeKey, pbeParamSpec);
-						break;
+						byte[] encryptedData = pbeCipher.doFinal(text.getBytes("UTF-8"));
+						return new String(Base64.encodeBase64(encryptedData)).toCharArray();
 					case DECRYPT:
+						byte[] decodedData = Base64.decodeBase64(text);
 						pbeCipher.init(Cipher.DECRYPT_MODE, pbeKey, pbeParamSpec);
-						break;
+						byte[] utf8 = pbeCipher.doFinal(decodedData);
+						return new String(utf8, "UTF8").toCharArray();
 					default:
 						break;
 					}
-					data = pbeCipher.doFinal(text.getBytes());
-					ByteBuffer bb = ByteBuffer.wrap(data);
-					return decoder.decode(bb).array();
 				} catch (InvalidKeyException | InvalidAlgorithmParameterException
-						| IllegalBlockSizeException | BadPaddingException | CharacterCodingException e) {
+						| IllegalBlockSizeException | BadPaddingException  e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-					return null;
-				}
-				
+				}catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} 
+				return null;				
 			}
 		}
 	'''

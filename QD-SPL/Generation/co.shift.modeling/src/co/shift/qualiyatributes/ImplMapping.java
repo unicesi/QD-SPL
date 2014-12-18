@@ -6,6 +6,7 @@ import co.shift.contributors.Contribution;
 import co.shift.contributors.authenticity.Authenticator;
 import co.shift.contributors.authenticity.Lockout;
 import co.shift.contributors.confidentiality.EncConf;
+import co.shift.contributors.confidentiality.UnencConf;
 import co.shift.contributors.timeexecution.FastAsyncTE;
 import co.shift.contributors.timeexecution.FastSyncTE;
 import co.shift.contributors.timeexecution.MediumTE;
@@ -27,7 +28,7 @@ public class ImplMapping {
 //		mapping.put("_r_2", null); // Security
 //		mapping.put("_r_2_10", null); // Confidentiality
 		mapping.put("_r_2_10_12_13", new EncConf()); // Data Encrypted
-		mapping.put("_r_2_10_12_14", null); // Data Unencrypted
+		mapping.put("_r_2_10_12_14", new UnencConf()); // Data Unencrypted
 //		mapping.put("_r_2_11", null); // Integrity and Authenticity
 		mapping.put("_r_2_11_15_16", new Authenticator()); // Authorization
 		mapping.put("_r_2_11_15_17", new Lockout()); // Authentication Lockout

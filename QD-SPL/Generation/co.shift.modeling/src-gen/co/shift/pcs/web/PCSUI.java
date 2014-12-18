@@ -3,7 +3,12 @@ package co.shift.pcs.web;
 import co.shift.pcs.web.client.ContentPanel;
 import co.shift.pcs.web.client.MenuPanel;
 
+import javax.servlet.annotation.WebServlet;
+
+import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.Notification;
@@ -26,7 +31,12 @@ public class PCSUI extends UI {
 	public static final String CONTENT_PANEL = "ContentPanel";
 
 	private Window subWindow;
-
+	
+	@WebServlet(value = "/*", asyncSupported = true)
+    @VaadinServletConfiguration(productionMode = false, ui = PCSUI.class)
+    public static class Servlet extends VaadinServlet {
+    }
+    
 	@Override
 	protected void init(VaadinRequest request) {
 		final VerticalLayout layout = new VerticalLayout();

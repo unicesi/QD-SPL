@@ -1,6 +1,7 @@
 package co.shift.templates.ejb.basic;
 
-import co.shift.generators.domain.DomainCodeGenerator;
+import co.shift.generators.domain.DomainCodeUtilities;
+import com.google.common.base.Objects;
 import domainmetamodel.Association;
 import domainmetamodel.Attribute;
 import domainmetamodel.BusinessEntity;
@@ -47,7 +48,7 @@ public class DTOTemplate {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("private ");
-        String _type = DomainCodeGenerator.getType(attribute);
+        String _type = DomainCodeUtilities.getType(attribute);
         _builder.append(_type, "\t");
         _builder.append(" ");
         String _name_1 = attribute.getName();
@@ -59,7 +60,7 @@ public class DTOTemplate {
         _builder.newLine();
         _builder.append("\t");
         _builder.append("public ");
-        String _type_1 = DomainCodeGenerator.getType(attribute);
+        String _type_1 = DomainCodeUtilities.getType(attribute);
         _builder.append(_type_1, "\t");
         _builder.append(" get");
         String _name_2 = attribute.getName();
@@ -85,7 +86,7 @@ public class DTOTemplate {
         String _firstUpper_2 = StringExtensions.toFirstUpper(_name_4);
         _builder.append(_firstUpper_2, "\t");
         _builder.append("(");
-        String _type_2 = DomainCodeGenerator.getType(attribute);
+        String _type_2 = DomainCodeUtilities.getType(attribute);
         _builder.append(_type_2, "\t");
         _builder.append(" ");
         String _name_5 = attribute.getName();
@@ -121,8 +122,8 @@ public class DTOTemplate {
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("private ");
-            Attribute _iD = DomainCodeGenerator.getID(relatedEntity);
-            String _type_3 = DomainCodeGenerator.getType(_iD);
+            Attribute _iD = DomainCodeUtilities.getID(relatedEntity);
+            String _type_3 = DomainCodeUtilities.getType(_iD);
             _builder.append(_type_3, "\t");
             _builder.append(" ");
             String _name_8 = ((Simple)association).getName();
@@ -134,8 +135,8 @@ public class DTOTemplate {
             _builder.newLine();
             _builder.append("\t");
             _builder.append("public ");
-            Attribute _iD_1 = DomainCodeGenerator.getID(relatedEntity);
-            String _type_4 = DomainCodeGenerator.getType(_iD_1);
+            Attribute _iD_1 = DomainCodeUtilities.getID(relatedEntity);
+            String _type_4 = DomainCodeUtilities.getType(_iD_1);
             _builder.append(_type_4, "\t");
             _builder.append(" get");
             String _name_9 = ((Simple)association).getName();
@@ -162,8 +163,8 @@ public class DTOTemplate {
             String _firstUpper_4 = StringExtensions.toFirstUpper(_name_11);
             _builder.append(_firstUpper_4, "\t");
             _builder.append("(");
-            Attribute _iD_2 = DomainCodeGenerator.getID(relatedEntity);
-            String _type_5 = DomainCodeGenerator.getType(_iD_2);
+            Attribute _iD_2 = DomainCodeUtilities.getID(relatedEntity);
+            String _type_5 = DomainCodeUtilities.getType(_iD_2);
             _builder.append(_type_5, "\t");
             _builder.append(" ");
             String _name_12 = ((Simple)association).getName();
@@ -193,19 +194,20 @@ public class DTOTemplate {
     _builder.append("\t");
     _builder.newLine();
     {
-      boolean _isDetail = DomainCodeGenerator.isDetail(be);
-      if (_isDetail) {
+      List<Association> _detailMultipleAssociations = DomainCodeUtilities.getDetailMultipleAssociations(be, associations);
+      boolean _notEquals = (!Objects.equal(_detailMultipleAssociations, null));
+      if (_notEquals) {
         {
-          List<Association> _detailMultipleAssociations = DomainCodeGenerator.getDetailMultipleAssociations(be, associations);
-          for(final Association association_1 : _detailMultipleAssociations) {
+          List<Association> _detailMultipleAssociations_1 = DomainCodeUtilities.getDetailMultipleAssociations(be, associations);
+          for(final Association association_1 : _detailMultipleAssociations_1) {
             _builder.append("\t");
             EObject _eContainer = association_1.eContainer();
             final BusinessEntity container = ((BusinessEntity) _eContainer);
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
             _builder.append("private ");
-            Attribute _iD_3 = DomainCodeGenerator.getID(container);
-            String _type_6 = DomainCodeGenerator.getType(_iD_3);
+            Attribute _iD_3 = DomainCodeUtilities.getID(container);
+            String _type_6 = DomainCodeUtilities.getType(_iD_3);
             _builder.append(_type_6, "\t");
             _builder.append(" ");
             String _name_15 = container.getName();
@@ -217,8 +219,8 @@ public class DTOTemplate {
             _builder.newLine();
             _builder.append("\t");
             _builder.append("public ");
-            Attribute _iD_4 = DomainCodeGenerator.getID(container);
-            String _type_7 = DomainCodeGenerator.getType(_iD_4);
+            Attribute _iD_4 = DomainCodeUtilities.getID(container);
+            String _type_7 = DomainCodeUtilities.getType(_iD_4);
             _builder.append(_type_7, "\t");
             _builder.append(" get");
             String _name_16 = container.getName();
@@ -245,8 +247,8 @@ public class DTOTemplate {
             String _firstUpper_6 = StringExtensions.toFirstUpper(_name_18);
             _builder.append(_firstUpper_6, "\t");
             _builder.append("(");
-            Attribute _iD_5 = DomainCodeGenerator.getID(container);
-            String _type_8 = DomainCodeGenerator.getType(_iD_5);
+            Attribute _iD_5 = DomainCodeUtilities.getID(container);
+            String _type_8 = DomainCodeUtilities.getType(_iD_5);
             _builder.append(_type_8, "\t");
             _builder.append(" ");
             String _name_19 = container.getName();
@@ -295,18 +297,18 @@ public class DTOTemplate {
     _builder.append("if (o != null)");
     _builder.newLine();
     {
-      Attribute _iD_6 = DomainCodeGenerator.getID(be);
-      String _type_9 = DomainCodeGenerator.getType(_iD_6);
+      Attribute _iD_6 = DomainCodeUtilities.getID(be);
+      String _type_9 = DomainCodeUtilities.getType(_iD_6);
       boolean _equals = _type_9.equals("String");
       if (_equals) {
         _builder.append("\t\t");
         _builder.append("return ");
-        Attribute _iD_7 = DomainCodeGenerator.getID(be);
+        Attribute _iD_7 = DomainCodeUtilities.getID(be);
         String _name_24 = _iD_7.getName();
         String _lowerCase_16 = _name_24.toLowerCase();
         _builder.append(_lowerCase_16, "\t\t");
         _builder.append(".equals(o.");
-        Attribute _iD_8 = DomainCodeGenerator.getID(be);
+        Attribute _iD_8 = DomainCodeUtilities.getID(be);
         String _name_25 = _iD_8.getName();
         String _lowerCase_17 = _name_25.toLowerCase();
         _builder.append(_lowerCase_17, "\t\t");
@@ -315,18 +317,18 @@ public class DTOTemplate {
       }
     }
     {
-      Attribute _iD_9 = DomainCodeGenerator.getID(be);
-      String _type_10 = DomainCodeGenerator.getType(_iD_9);
+      Attribute _iD_9 = DomainCodeUtilities.getID(be);
+      String _type_10 = DomainCodeUtilities.getType(_iD_9);
       boolean _equals_1 = _type_10.equals("int");
       if (_equals_1) {
         _builder.append("\t\t");
         _builder.append("return ");
-        Attribute _iD_10 = DomainCodeGenerator.getID(be);
+        Attribute _iD_10 = DomainCodeUtilities.getID(be);
         String _name_26 = _iD_10.getName();
         String _lowerCase_18 = _name_26.toLowerCase();
         _builder.append(_lowerCase_18, "\t\t");
         _builder.append(" == o.");
-        Attribute _iD_11 = DomainCodeGenerator.getID(be);
+        Attribute _iD_11 = DomainCodeUtilities.getID(be);
         String _name_27 = _iD_11.getName();
         String _lowerCase_19 = _name_27.toLowerCase();
         _builder.append(_lowerCase_19, "\t\t");
@@ -349,14 +351,14 @@ public class DTOTemplate {
     _builder.append("public String toString() {");
     _builder.newLine();
     {
-      Attribute _iD_12 = DomainCodeGenerator.getID(be);
-      String _type_11 = DomainCodeGenerator.getType(_iD_12);
+      Attribute _iD_12 = DomainCodeUtilities.getID(be);
+      String _type_11 = DomainCodeUtilities.getType(_iD_12);
       boolean _equals_2 = _type_11.equals("String");
       boolean _not = (!_equals_2);
       if (_not) {
         _builder.append("\t\t");
         _builder.append("return \"\" + ");
-        Attribute _iD_13 = DomainCodeGenerator.getID(be);
+        Attribute _iD_13 = DomainCodeUtilities.getID(be);
         String _name_28 = _iD_13.getName();
         String _lowerCase_20 = _name_28.toLowerCase();
         _builder.append(_lowerCase_20, "\t\t");
@@ -365,7 +367,7 @@ public class DTOTemplate {
       } else {
         _builder.append("\t\t");
         _builder.append("return ");
-        Attribute _iD_14 = DomainCodeGenerator.getID(be);
+        Attribute _iD_14 = DomainCodeUtilities.getID(be);
         String _name_29 = _iD_14.getName();
         String _lowerCase_21 = _name_29.toLowerCase();
         _builder.append(_lowerCase_21, "\t\t");

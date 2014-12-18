@@ -111,10 +111,9 @@ public class ParallelizerImplTemplate {
             _builder.append("for (int i = 0; i < iterations; i++) {");
             _builder.newLine();
             _builder.append("\t\t");
-            _builder.append("futures.add(worker.getAll");
-            String _name_10 = be.getName();
-            String _firstUpper_7 = StringExtensions.toFirstUpper(_name_10);
-            _builder.append(_firstUpper_7, "\t\t");
+            _builder.append("futures.add(worker.");
+            String _name_10 = ((ListAll)contract).getName();
+            _builder.append(_name_10, "\t\t");
             _builder.append("(start, maxResults));");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
@@ -126,8 +125,8 @@ public class ParallelizerImplTemplate {
             _builder.append("\t");
             _builder.append("for (Future<List<");
             String _name_11 = be.getName();
-            String _firstUpper_8 = StringExtensions.toFirstUpper(_name_11);
-            _builder.append(_firstUpper_8, "\t");
+            String _firstUpper_7 = StringExtensions.toFirstUpper(_name_11);
+            _builder.append(_firstUpper_7, "\t");
             _builder.append("TO>> future : futures) {");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");

@@ -1,6 +1,6 @@
 package co.shift.templates.ejb.contributed.authenticity;
 
-import co.shift.generators.domain.DomainCodeGenerator;
+import co.shift.generators.domain.DomainCodeUtilities;
 import domainmetamodel.Attribute;
 import domainmetamodel.BusinessEntity;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -47,7 +47,7 @@ public class AuthInterfaceTemplate {
     _builder.append("public interface IAuthorizationManager {");
     _builder.newLine();
     _builder.newLine();
-    Attribute authId = DomainCodeGenerator.getID(authEntity);
+    Attribute authId = DomainCodeUtilities.getID(authEntity);
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("public List<RoleTO> get");
@@ -55,7 +55,7 @@ public class AuthInterfaceTemplate {
     String _firstUpper_1 = StringExtensions.toFirstUpper(_name_1);
     _builder.append(_firstUpper_1, "\t");
     _builder.append("Roles(");
-    String _type = DomainCodeGenerator.getType(authId);
+    String _type = DomainCodeUtilities.getType(authId);
     _builder.append(_type, "\t");
     _builder.append(" ");
     String _name_2 = authId.getName();
@@ -100,7 +100,7 @@ public class AuthInterfaceTemplate {
     String _firstUpper_2 = StringExtensions.toFirstUpper(_name_3);
     _builder.append(_firstUpper_2, "\t");
     _builder.append(" (");
-    String _type_1 = DomainCodeGenerator.getType(authId);
+    String _type_1 = DomainCodeUtilities.getType(authId);
     _builder.append(_type_1, "\t");
     _builder.append(" user, RoleTO role) throws Exception;");
     _builder.newLineIfNotEmpty();
@@ -135,7 +135,7 @@ public class AuthInterfaceTemplate {
     String _firstUpper_5 = StringExtensions.toFirstUpper(_name_6);
     _builder.append(_firstUpper_5, "\t");
     _builder.append("Services (");
-    String _type_2 = DomainCodeGenerator.getType(authId);
+    String _type_2 = DomainCodeUtilities.getType(authId);
     _builder.append(_type_2, "\t");
     _builder.append(" ");
     String _name_7 = authId.getName();

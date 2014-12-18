@@ -14,10 +14,9 @@ import co.shift.pcs.to.ProjectTO;
 @Table(name = "Project")
 @NamedQueries({
 	@NamedQuery(name = "project.getAllProjects", query = "SELECT p FROM Project p"),
-	@NamedQuery(name = "project.deleteProject", query = "DELETE FROM Project p WHERE p.id=:id")
+	@NamedQuery(name = "project.deleteProject", query = "DELETE FROM Project p WHERE p.id=:id"),
 })
 public class Project implements Serializable {
-	
 	private static final long serialVersionUID = 1L;
 @Id
 private int id;
@@ -67,16 +66,25 @@ public void setStartDate(Date startdate) {
 	public void setManager(String manager) {
 		this.manager = manager;
 	}
+	private Integer priorityrisk;
 	
-	@OneToMany(mappedBy = "projectBean", orphanRemoval = true)
-	private List<UserProject> userProject;
-	
-	public List<UserProject> getUserProject() {
-		return this.userProject;
+	public Integer getPriorityRisk() {
+		return this.priorityrisk;
 	}
 	
-	public void setUserProject(List<UserProject> userProject) {
-		this.userProject = userProject;
+	public void setPriorityRisk(Integer priorityrisk) {
+		this.priorityrisk = priorityrisk;
+	}
+	
+	@OneToMany(mappedBy = "projectBean", orphanRemoval = true)
+	private List<ProjectUser> projectUser;
+	
+	public List<ProjectUser> getProjectUser() {
+		return this.projectUser;
+	}
+	
+	public void setProjectUser(List<ProjectUser> projectUser) {
+		this.projectUser = projectUser;
 	}
 	
 	

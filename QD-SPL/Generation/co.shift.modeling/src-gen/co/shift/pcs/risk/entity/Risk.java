@@ -18,7 +18,6 @@ import co.shift.pcs.to.RiskTO;
 	@NamedQuery(name = "risk.getProjectRisk", query = "SELECT r FROM Risk r WHERE r.project=:id")
 })
 public class Risk implements Serializable {
-	
 	private static final long serialVersionUID = 1L;
 @Id
 private int id;
@@ -93,6 +92,7 @@ public void setProbability(double probability) {
 		to.setImpact(impact);
 		to.setName(name);
 		to.setProbability(probability);
+		to.setProject(project);
 		return to;
 	}
 }

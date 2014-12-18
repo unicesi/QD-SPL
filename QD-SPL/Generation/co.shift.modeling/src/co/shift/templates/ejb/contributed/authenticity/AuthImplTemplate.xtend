@@ -1,7 +1,7 @@
 package co.shift.templates.ejb.contributed.authenticity
 
 import domainmetamodel.BusinessEntity
-import co.shift.generators.domain.DomainCodeGenerator
+import co.shift.generators.domain.DomainCodeUtilities
 
 class AuthImplTemplate {
 	
@@ -13,6 +13,7 @@ class AuthImplTemplate {
 		import java.util.List;
 		import java.util.Set;
 		
+		import javax.ejb.EJB;
 		import javax.ejb.Stateless;
 		import javax.persistence.EntityManager;
 		import javax.persistence.NoResultException;
@@ -28,22 +29,48 @@ class AuthImplTemplate {
 		import co.shift.«packageName.toLowerCase()».authorization.entity.Service;
 		import co.shift.«packageName.toLowerCase()».authorization.entity.«authEntity.name.toFirstUpper»Role;
 		import co.shift.«packageName.toLowerCase()».authorization.entity.«authEntity.name.toFirstUpper»RolePK;
+		«DomainCodeUtilities.extendContribution("_r_2_10_12_13", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName)»
 		
 		@Stateless
 		public class AuthorizationManager implements IAuthorizationManager {
 			
-			@PersistenceContext(unitName = "co.shift.«packageName.toLowerCase()».authorization")
+			@PersistenceContext(unitName = "«packageName»")
 			private EntityManager em;
 			
-		«var authId = DomainCodeGenerator.getID(authEntity)»
-			public List<RoleTO> get«authEntity.name.toFirstUpper»Roles(«DomainCodeGenerator.getType(authId)» «authId.name.toLowerCase») {
+			«val attribute2 = DomainCodeUtilities.extendContribution("_r_2_10_12_13", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE)»
+			«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
+				«attribute2»
+			«ENDIF»
+			
+		«var authId = DomainCodeUtilities.getID(authEntity)»
+			public List<RoleTO> get«authEntity.name.toFirstUpper»Roles(«DomainCodeUtilities.getType(authId)» «authId.name.toLowerCase») {
 				List<RoleTO> «authEntity.name.toLowerCase»Roles = new ArrayList<>();
 				TypedQuery<Role> query = em.createNamedQuery("auth.get«authEntity.name.toFirstUpper»Roles",
 						Role.class);
+				«IF DomainCodeUtilities.isQASelected("_r_2_10_12_13")»
+				char[] eCCChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, «authId.name.toLowerCase»);
+				String eCCName = new String(eCCChars);
+				«authId.name.toLowerCase» = eCCName;
+				«ENDIF»
 				query.setParameter("«authEntity.name.toLowerCase»id", «authId.name.toLowerCase»);
 				List<Role> found«authEntity.name.toFirstUpper»Roles = query.getResultList();
 				for (Role role : found«authEntity.name.toFirstUpper»Roles) {
-					«authEntity.name.toLowerCase»Roles.add(role.toTO());
+					RoleTO to = new RoleTO();
+					«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
+					char[] eNameChars = cManager.doFinal(
+					PBECryptographyManager.DECRYPT, role.getName());
+					String eName = new String(eNameChars);
+					to.setName(eName);
+					char[] eDesriptionChars = cManager.doFinal(
+					PBECryptographyManager.DECRYPT, role.getDescription());
+					String eDescription = new String(eDesriptionChars);
+					to.setDescription(eDescription);
+					«ELSE»
+					to.setName(role.getName());
+					to.setDescription(role.getDescription());
+					«ENDIF»
+					«authEntity.name.toLowerCase»Roles.add(to);
 				}
 				return «authEntity.name.toLowerCase»Roles;
 			}
@@ -54,7 +81,20 @@ class AuthImplTemplate {
 						Role.class);
 				List<Role> foundRoles = query.getResultList();
 				for (Role role : foundRoles) {
+					«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
+					RoleTO to = new RoleTO();
+					char[] eNameChars = cManager.doFinal(
+					PBECryptographyManager.DECRYPT, role.getName());
+					String eName = new String(eNameChars);
+					to.setName(eName);
+					char[] eDesriptionChars = cManager.doFinal(
+					PBECryptographyManager.DECRYPT, role.getDescription());
+					String eDescription = new String(eDesriptionChars);
+					to.setDescription(eDescription);
+					roles.add(to);
+					«ELSE»
 					roles.add(role.toTO());
+					«ENDIF»
 				}
 				return roles;
 			}
@@ -65,18 +105,50 @@ class AuthImplTemplate {
 						Service.class);
 				List<Service> foundServices = query.getResultList();
 				for (Service service : foundServices) {
+					«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
+					ServiceTO to = new ServiceTO();
+					char[] eNameChars = cManager.doFinal(
+					PBECryptographyManager.DECRYPT, service.getName());
+					String eName = new String(eNameChars);
+					to.setName(eName);
+					char[] eDesriptionChars = cManager.doFinal(
+					PBECryptographyManager.DECRYPT, service.getDescription());
+					String eDescription = new String(eDesriptionChars);
+					to.setDescription(eDescription);
+					services.add(to);
+					«ELSE»
 					services.add(service.toTO());
+					«ENDIF»
 				}
 				return services;
 			}
 			
 			public List<ServiceTO> getRoleServices(String roleName) {
 				List<ServiceTO> roleServices = new ArrayList<>();
+				«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
+				char[] eUNameChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, roleName);
+				String eUName = new String(eUNameChars);
+				roleName = eUName;
+				«ENDIF»
 				Role foundRole = em.find(Role.class, roleName);
 				if (foundRole != null) {
 					List<Service> foundServices = foundRole.getServices();
 					for (Service service : foundServices) {
+						«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
+						ServiceTO to = new ServiceTO();
+						char[] eNameChars = cManager.doFinal(
+						PBECryptographyManager.DECRYPT, service.getName());
+						String eName = new String(eNameChars);
+						to.setName(eName);
+						char[] eDesriptionChars = cManager.doFinal(
+						PBECryptographyManager.DECRYPT, service.getDescription());
+						String eDescription = new String(eDesriptionChars);
+						to.setDescription(eDescription);
+						roleServices.add(to);
+						«ELSE»
 						roleServices.add(service.toTO());
+						«ENDIF»
 					}
 				}
 				return roleServices;
@@ -84,6 +156,16 @@ class AuthImplTemplate {
 			
 			public boolean createRole (RoleTO role) throws Exception {
 				Role newRole = new Role();
+				«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
+				char[] eNameChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, role.getName());
+				String eName = new String(eNameChars);
+				role.setName(eName);
+				char[] eDesriptionChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, role.getDescription());
+				String eDescription = new String(eDesriptionChars);
+				role.setDescription(eDescription);
+				«ENDIF»
 				newRole.setDescription(role.getDescription());
 				newRole.setName(role.getName());
 				newRole.setServices(null);
@@ -99,6 +181,16 @@ class AuthImplTemplate {
 			}
 			
 			public boolean updateRole (RoleTO newRole) throws Exception {
+				«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
+				char[] eNameChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, newRole.getName());
+				String eName = new String(eNameChars);
+				newRole.setName(eName);
+				char[] eDesriptionChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, newRole.getDescription());
+				String eDescription = new String(eDesriptionChars);
+				newRole.setDescription(eDescription);
+				«ENDIF»
 				Role foundRole = em.find(Role.class, newRole.getName());
 				if (foundRole == null)
 					throw new Exception("Role Doesn't Exists");
@@ -116,6 +208,16 @@ class AuthImplTemplate {
 			}
 		
 			public boolean deleteRole (RoleTO role) throws Exception {
+				«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
+				char[] eNameChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, role.getName());
+				String eName = new String(eNameChars);
+				role.setName(eName);
+				char[] eDesriptionChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, role.getDescription());
+				String eDescription = new String(eDesriptionChars);
+				role.setDescription(eDescription);
+				«ENDIF»
 				Role foundRole = em.find(Role.class, role.getName());
 				if (foundRole == null)
 					throw new Exception("Role Doesn't Exists");
@@ -132,7 +234,19 @@ class AuthImplTemplate {
 				}
 			}
 			
-			public boolean addRoleTo«authEntity.name.toFirstUpper» («DomainCodeGenerator.getType(authId)» user, RoleTO role) throws Exception {
+			public boolean addRoleTo«authEntity.name.toFirstUpper» («DomainCodeUtilities.getType(authId)» user, RoleTO role) throws Exception {
+				«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
+				char[] eNameChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, role.getName());
+				String eName = new String(eNameChars);
+				role.setName(eName);
+				«IF DomainCodeUtilities.getType(authId).equals("String")»
+				char[] eUNameChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, user);
+				String eUName = new String(eUNameChars);
+				user = eUName;
+				«ENDIF»
+				«ENDIF»
 				Role foundRole = em.find(Role.class, role.getName());
 				«authEntity.name.toFirstUpper»RolePK pk = new «authEntity.name.toFirstUpper»RolePK();
 				pk.setRole(role.getName());
@@ -157,11 +271,23 @@ class AuthImplTemplate {
 			}
 			
 			public boolean removeRoleFrom«authEntity.name.toFirstUpper» («authEntity.name.toFirstUpper»TO user, RoleTO role) throws Exception {
+				«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
+				char[] eNameChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, role.getName());
+				String eName = new String(eNameChars);
+				role.setName(eName);
+				«IF DomainCodeUtilities.getType(authId).equals("String")»
+				char[] eUNameChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, user.get«DomainCodeUtilities.getID(authEntity).name.toFirstUpper»());
+				String eUName = new String(eUNameChars);
+				user.set«DomainCodeUtilities.getID(authEntity).name.toFirstUpper»(eUName);
+				«ENDIF»
+				«ENDIF»
 				Role foundRole = em.find(Role.class, role.getName());
 
 				«authEntity.name.toFirstUpper»RolePK pk = new «authEntity.name.toFirstUpper»RolePK();
 				pk.setRole(role.getName());
-				pk.set«authEntity.name.toFirstUpper»(«authEntity.name.toLowerCase».get«DomainCodeGenerator.getID(authEntity).name.toFirstUpper»());
+				pk.set«authEntity.name.toFirstUpper»(«authEntity.name.toLowerCase».get«DomainCodeUtilities.getID(authEntity).name.toFirstUpper»());
 				«authEntity.name.toFirstUpper»Role uR = em.find(«authEntity.name.toFirstUpper»Role.class, pk);
 				foundRole.get«authEntity.name.toFirstUpper»Roles().remove(uR);
 		
@@ -175,6 +301,16 @@ class AuthImplTemplate {
 			}
 			
 			public boolean addServiceToRole (String roleName, ServiceTO service) throws Exception {
+				«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
+				char[] eNameChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, roleName);
+				String eName = new String(eNameChars);
+				roleName = eName;
+				char[] eUNameChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, service.getName());
+				String eUName = new String(eUNameChars);
+				service.setName(eUName);
+				«ENDIF»
 				Role foundRole = em.find(Role.class, roleName);
 				Service foundService = em.find(Service.class, service.getName());
 		
@@ -193,6 +329,16 @@ class AuthImplTemplate {
 			}
 			
 			public boolean removeServiceFromRole (RoleTO role, ServiceTO service) throws Exception {
+				«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
+				char[] eNameChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, role.getName());
+				String eName = new String(eNameChars);
+				role.setName(eName);
+				char[] eUNameChars = cManager.doFinal(
+				PBECryptographyManager.ENCRYPT, service.getName());
+				String eUName = new String(eUNameChars);
+				service.setName(eUName);
+				«ENDIF»
 				Role foundRole = em.find(Role.class, role.getName());
 				Service foundService = em.find(Service.class, service.getName());
 		
@@ -210,7 +356,7 @@ class AuthImplTemplate {
 					throw new Exception("Service is not related to role");
 			}
 			
-			public List<ServiceTO> get«authEntity.name.toFirstUpper»Services («DomainCodeGenerator.getType(authId)» «authId.name.toLowerCase») {
+			public List<ServiceTO> get«authEntity.name.toFirstUpper»Services («DomainCodeUtilities.getType(authId)» «authId.name.toLowerCase») {
 				List<RoleTO> «authEntity.name.toLowerCase»Roles = get«authEntity.name.toFirstUpper»Roles(«authId.name.toLowerCase»);
 				Set<ServiceTO> «authEntity.name.toLowerCase»ServicesHash = new HashSet<>();
 				for (RoleTO roleTO : «authEntity.name.toLowerCase»Roles) {

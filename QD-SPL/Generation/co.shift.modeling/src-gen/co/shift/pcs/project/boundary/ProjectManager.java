@@ -16,22 +16,23 @@ import co.shift.pcs.project.control.IProjectDAO;
 
 import co.shift.pcs.to.ProjectTO;
 import co.shift.pcs.to.UserTO;
+import co.shift.pcs.to.RiskTO;
 
-import co.shift.pcs.project.control.IProjectBasicFLR;
+import co.shift.pcs.project.control.IProjectParallelizer;
 
 
-import co.shift.pcs.project.control.PBECryptographyManager;
+import co.shift.pcs.security.PBECryptographyManager;
 
 			
 
 import co.shift.pcs.project.entity.Project;
-import co.shift.pcs.project.entity.UserProject;
-import co.shift.pcs.project.entity.UserProjectPK;
+import co.shift.pcs.project.entity.ProjectUser;
+import co.shift.pcs.project.entity.ProjectUserPK;
 
 @Stateless
 public class ProjectManager implements IProjectManager {
 	
-	@PersistenceContext(unitName = "co.shift.pcs.project")
+	@PersistenceContext(unitName = "pcs")
 	private EntityManager em;
 	
 	@EJB
@@ -39,7 +40,7 @@ public class ProjectManager implements IProjectManager {
 	
 	
 	@EJB
-	private IProjectBasicFLR basicFLR;
+	private IProjectParallelizer parallelizer;
 	
 	@EJB
 	private PBECryptographyManager cManager;
@@ -65,7 +66,6 @@ public class ProjectManager implements IProjectManager {
 			newProject.setDescription(project.getDescription());
 			newProject.setName(project.getName());
 			newProject.setStartDate(project.getStartDate());
-		
 			try {
 				em.persist(newProject);
 				em.flush();
@@ -103,12 +103,11 @@ public class ProjectManager implements IProjectManager {
 		}
 	}
 	}
-	public List<ProjectTO> getAllProjects() {
-	try {
-	return basicFLR.getAllProjects();
-	} catch (Exception e) {
-	return null;
-	}
+	public List<ProjectTO> getAllProjects() throws Exception {
+	Query query = em
+	.createNativeQuery("SELECT COUNT(*) FROM Project p");
+	long pCount = (long) query.getSingleResult();
+	return parallelizer.getAllProjects(pCount);
 	}
 	
 	public boolean addUserToProject(UserTO user, int projectId) throws Exception {
@@ -119,16 +118,16 @@ public class ProjectManager implements IProjectManager {
 		
 		
 		Project project = em.find(Project.class, projectId);
-		UserProjectPK pk = new UserProjectPK();
-		pk.setId(projectId);
-		pk.setCc(user.getCc());
+		ProjectUserPK pk = new ProjectUserPK();
+		pk.setProjectId(projectId);
+		pk.setUserCc(user.getCc());
 
-		UserProject pU = em.find(UserProject.class, pk);
+		ProjectUser pU = em.find(ProjectUser.class, pk);
 		if (pU == null) {
-			pU = new UserProject();
+			pU = new ProjectUser();
 			pU.setId(pk);
 			pU.setProjectBean(project);
-			project.getUserProject().add(pU);
+			project.getProjectUser().add(pU);
 
 			try {
 				em.merge(project);
@@ -139,7 +138,7 @@ public class ProjectManager implements IProjectManager {
 			}
 		} else
 			throw new Exception("User alredy exists in project");
-	}
+	}					
 	public boolean deleteProject(ProjectTO project) throws Exception {
 		
 		
@@ -169,11 +168,11 @@ public class ProjectManager implements IProjectManager {
 		
 		Project project = em.find(Project.class, projectId);
 
-		UserProjectPK pk = new UserProjectPK();
-		pk.setId(projectId);
-		pk.setCc(user.getCc());
-		UserProject pU = em.find(UserProject.class, pk);
-		project.getUserProject().remove(pU);
+		ProjectUserPK pk = new ProjectUserPK();
+		pk.setProjectId(projectId);
+		pk.setUserCc(user.getCc());
+		ProjectUser pU = em.find(ProjectUser.class, pk);
+		project.getProjectUser().remove(pU);
 
 		try {
 			em.merge(project);
@@ -192,6 +191,20 @@ public class ProjectManager implements IProjectManager {
 		
 		Project project = em.find(Project.class, projectId);
 		project.setManager(manager.getCc());
+
+		try {
+			em.merge(project);
+			em.flush();
+			return true;
+		} catch (DatabaseException e) {
+			return false;
+		}
+	}
+	public boolean setProjectPriorityRisk(RiskTO priorityrisk, int projectId) throws Exception {
+		
+		
+		Project project = em.find(Project.class, projectId);
+		project.setPriorityRisk(priorityrisk.getId());
 
 		try {
 			em.merge(project);

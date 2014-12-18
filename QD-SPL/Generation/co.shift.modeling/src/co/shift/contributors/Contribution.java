@@ -8,11 +8,15 @@ public interface Contribution {
 
 	public String contributeToBusinessImpl(Object ... data);
 	
-	public String contributeToImport(Object ... data);
+	public String contributeToBusinessImport(Object ... data);
 	
-	public String contributeToAtribute(Object ... data);
-
-	public String contributeToWeb(Object ... data);
+	public String contributeToBusinessAtribute(Object ... data);
 
 	public void generate(Object ... data);
+	
+	public String contributeToWebImport(Object ... data);
+
+	public String contributeToWebAttribute(Object ... data);
+	
+	public String contributeToWebImpl(Object ... data);
 }

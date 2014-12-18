@@ -5,6 +5,7 @@ import javax.ejb.Remote;
 
 import co.shift.pcs.to.ProjectTO;
 import co.shift.pcs.to.UserTO;
+import co.shift.pcs.to.RiskTO;
 
 @Remote
 public interface IProjectManager {
@@ -13,7 +14,7 @@ public interface IProjectManager {
 	
 	public boolean updateProject(ProjectTO project) throws Exception;
 	
-	public List<ProjectTO> getAllProjects();
+	public List<ProjectTO> getAllProjects() throws Exception;
 	
 	
 	public boolean addUserToProject(UserTO user, int projectId) throws Exception;
@@ -23,8 +24,12 @@ public interface IProjectManager {
 	public boolean removeUserFromProject(UserTO user, int projectId) throws Exception;
 	
 	
+	
+	
 	public boolean setProjectManager(UserTO manager, int projectId) throws Exception;
 	
+	
+	public boolean setProjectPriorityRisk(RiskTO priorityrisk, int projectId) throws Exception;
 	
 	public List<ProjectTO> getProjectFromUser(String userCc);
 	

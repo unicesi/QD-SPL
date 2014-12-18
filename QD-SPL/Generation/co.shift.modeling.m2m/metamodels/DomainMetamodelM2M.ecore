@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="domainmetamodelm2m" nsURI="http://domainmetamodelm2m/1.0" nsPrefix="domainmetamodelm2m">
+  <eClassifiers xsi:type="ecore:EClass" name="Business">
+    <eOperations name="isQASelected" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="key" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    </eOperations>
+    <eOperations name="createCryptManager" lowerBound="1">
+      <eParameters name="pack" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EModelElement"/>
+    </eOperations>
+    <eOperations name="createAuthorizationBoundary" lowerBound="1">
+      <eParameters name="pack" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EModelElement"/>
+    </eOperations>
+    <eOperations name="createAuthorizationEntities" lowerBound="1">
+      <eParameters name="pack" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EModelElement"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entities" upperBound="-1"
+        eType="#//BusinessEntity" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="BusinessEntity">
+    <eOperations name="needsDAO" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean">
+      <eParameters name="b" lowerBound="1" eType="#//Business"/>
+    </eOperations>
+    <eOperations name="createDAO" lowerBound="1">
+      <eParameters name="b" lowerBound="1" eType="#//Business"/>
+      <eParameters name="dao" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EModelElement"/>
+    </eOperations>
+    <eOperations name="createEntity" lowerBound="1">
+      <eParameters name="b" lowerBound="1" eType="#//Business"/>
+      <eParameters name="entity" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EModelElement"/>
+    </eOperations>
+    <eOperations name="createBoundary" lowerBound="1">
+      <eParameters name="b" lowerBound="1" eType="#//Business"/>
+      <eParameters name="boundary" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EModelElement"/>
+    </eOperations>
+    <eOperations name="isAuthenticable" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eOperations name="configureMediumTE" lowerBound="1">
+      <eParameters name="pack" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EModelElement"/>
+      <eParameters name="b" lowerBound="1" eType="#//Business"/>
+    </eOperations>
+    <eOperations name="updateBoundaryAttributes" lowerBound="1">
+      <eParameters name="pack" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EModelElement"/>
+      <eParameters name="b" lowerBound="1" eType="#//Business"/>
+    </eOperations>
+    <eOperations name="configureSyncTE" lowerBound="1">
+      <eParameters name="pack" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EModelElement"/>
+      <eParameters name="b" lowerBound="1" eType="#//Business"/>
+    </eOperations>
+    <eOperations name="configureAsyncTE" lowerBound="1">
+      <eParameters name="pack" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EModelElement"/>
+      <eParameters name="b" lowerBound="1" eType="#//Business"/>
+    </eOperations>
+    <eOperations name="configureLockoutManager" lowerBound="1">
+      <eParameters name="pack" lowerBound="1" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EModelElement"/>
+      <eParameters name="b" lowerBound="1" eType="#//Business"/>
+    </eOperations>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isAuthenticable" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="attributes" upperBound="-1"
+        eType="#//Attribute" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="associations" upperBound="-1"
+        eType="#//Association" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="contracts" upperBound="-1"
+        eType="#//Contracts" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="DataType">
+    <eLiterals name="int" literal="int"/>
+    <eLiterals name="string" value="1" literal="string"/>
+    <eLiterals name="boolean" value="2" literal="boolean"/>
+    <eLiterals name="date" value="3" literal="date"/>
+    <eLiterals name="object" value="4" literal="object"/>
+    <eLiterals name="collection" value="5" literal="collection"/>
+    <eLiterals name="void" value="6" literal="void"/>
+    <eLiterals name="double" value="7" literal="double"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Attribute">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dataType" lowerBound="1"
+        eType="#//DataType"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isRequired" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="isDefault" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Association">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Simple" eSuperTypes="#//Association">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="relatedEntity" lowerBound="1"
+        eType="#//BusinessEntity"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Multiple" eSuperTypes="#//Association">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="entity" lowerBound="1"
+        eType="#//BusinessEntity"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Contracts" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Create" eSuperTypes="#//Contracts"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Update" eSuperTypes="#//Contracts"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Retrieve" eSuperTypes="#//Contracts"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Delete" eSuperTypes="#//Contracts"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ListAll" eSuperTypes="#//Contracts"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ContractElements" abstract="true" eSuperTypes="#//Contracts">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="association" lowerBound="1"
+        eType="#//Multiple"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ListElements" eSuperTypes="#//ContractElements"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AddElement" eSuperTypes="#//ContractElements"/>
+  <eClassifiers xsi:type="ecore:EClass" name="DeleteElement" eSuperTypes="#//ContractElements"/>
+</ecore:EPackage>

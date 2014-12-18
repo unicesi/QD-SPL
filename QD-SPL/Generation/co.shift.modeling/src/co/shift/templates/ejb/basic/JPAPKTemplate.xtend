@@ -4,7 +4,7 @@ import domainmetamodel.BusinessEntity
 import java.util.List
 import domainmetamodel.Association
 import org.eclipse.xtext.generator.IFileSystemAccess
-import co.shift.generators.domain.DomainCodeGenerator
+import co.shift.generators.domain.DomainCodeUtilities
 
 class JPAPKTemplate {
 	
@@ -15,54 +15,56 @@ class JPAPKTemplate {
 		import javax.persistence.*;
 		
 		@Embeddable
-		public class «relation.name.toFirstUpper»«be.name.toFirstUpper»PK implements Serializable {
+		public class «be.name.toFirstUpper»«relation.name.toFirstUpper»PK implements Serializable {
+		«DomainCodeUtilities.addEntityName("co.shift."+packageName.toLowerCase()+"."+be.name.toLowerCase+".entity."+relation.name.toFirstUpper+be.name.toFirstUpper)»
+		«DomainCodeUtilities.addEntityName("co.shift."+packageName.toLowerCase()+"."+be.name.toLowerCase+".entity."+relation.name.toFirstUpper+be.name.toFirstUpper+"PK")»
 			
 			private static final long serialVersionUID = 1L;
 
-			«var beId = DomainCodeGenerator.getID(be)»
-			private «DomainCodeGenerator.getType(beId)» «beId.name.toLowerCase»;
+			«var beId = DomainCodeUtilities.getID(be)»
+			private «DomainCodeUtilities.getWrapperType(beId)» «be.name.toLowerCase»«beId.name.toFirstUpper»;
 			
-			«var relationId = DomainCodeGenerator.getID(relation)»
-			private «DomainCodeGenerator.getType(relationId)» «relationId.name.toLowerCase»;
+			«var relationId = DomainCodeUtilities.getID(relation)»
+			private «DomainCodeUtilities.getWrapperType(relationId)» «relation.name.toLowerCase»«relationId.name.toFirstUpper»;
 			
-			public «relation.name.toFirstUpper»«be.name.toFirstUpper»PK() {
+			public «be.name.toFirstUpper»«relation.name.toFirstUpper»PK() {
 			}
 			
-			public «DomainCodeGenerator.getType(beId)» get«beId.name.toFirstUpper»() {
-				return this.«beId.name.toLowerCase»;
-			}
-		
-			public void set«beId.name.toFirstUpper»(«DomainCodeGenerator.getType(beId)» «beId.name.toLowerCase») {
-				this.«beId.name.toLowerCase» = «beId.name.toLowerCase»;
-			}
-			
-			public «DomainCodeGenerator.getType(relationId)» get«relationId.name.toFirstUpper»() {
-				return this.«relationId.name.toLowerCase»;
+			public «DomainCodeUtilities.getWrapperType(beId)» get«be.name.toFirstUpper»«beId.name.toFirstUpper»() {
+				return this.«be.name.toLowerCase»«beId.name.toFirstUpper»;
 			}
 		
-			public void set«relationId.name.toFirstUpper»(«DomainCodeGenerator.getType(relationId)» «relationId.name.toLowerCase») {
-				this.«relationId.name.toLowerCase» = «relationId.name.toLowerCase»;
+			public void set«be.name.toFirstUpper»«beId.name.toFirstUpper»(«DomainCodeUtilities.getWrapperType(beId)» «be.name.toLowerCase»«beId.name.toFirstUpper») {
+				this.«be.name.toLowerCase»«beId.name.toFirstUpper» = «be.name.toLowerCase»«beId.name.toFirstUpper»;
+			}
+			
+			public «DomainCodeUtilities.getWrapperType(relationId)» get«relation.name.toFirstUpper»«relationId.name.toFirstUpper»() {
+				return this.«relation.name.toLowerCase»«relationId.name.toFirstUpper»;
+			}
+		
+			public void set«relation.name.toFirstUpper»«relationId.name.toFirstUpper»(«DomainCodeUtilities.getWrapperType(relationId)» «relation.name.toLowerCase»«relationId.name.toFirstUpper») {
+				this.«relation.name.toLowerCase»«relationId.name.toFirstUpper» = «relation.name.toLowerCase»«relationId.name.toFirstUpper»;
 			}
 			
 			public boolean equals(Object other) {
 				if (this == other) {
 					return true;
 				}
-				if (!(other instanceof «relation.name.toFirstUpper»«be.name.toFirstUpper»PK)) {
+				if (!(other instanceof «be.name.toFirstUpper»«relation.name.toFirstUpper»PK)) {
 					return false;
 				}
-				«relation.name.toFirstUpper»«be.name.toFirstUpper»PK castOther = («relation.name.toFirstUpper»«be.name.toFirstUpper»PK)other;
+				«be.name.toFirstUpper»«relation.name.toFirstUpper»PK castOther = («be.name.toFirstUpper»«relation.name.toFirstUpper»PK)other;
 				return 
-					«IF DomainCodeGenerator.getType(beId).equals("String")»
-					this.«beId.name.toLowerCase».equals(castOther.«beId.name.toLowerCase»)
+					«IF DomainCodeUtilities.getType(beId).equals("String")»
+					this.«be.name.toLowerCase»«beId.name.toFirstUpper».equals(castOther.«be.name.toLowerCase»«beId.name.toFirstUpper»)
 					«ELSE»
-					this.«beId.name.toLowerCase» == castOther.«beId.name.toLowerCase»
+					this.«be.name.toLowerCase»«beId.name.toFirstUpper» == castOther.«be.name.toLowerCase»«beId.name.toFirstUpper»
 					«ENDIF»
 					&& 
-					«IF DomainCodeGenerator.getType(relationId).equals("String")»
-					this.«relationId.name.toLowerCase».equals(castOther.«relationId.name.toLowerCase»)
+					«IF DomainCodeUtilities.getType(relationId).equals("String")»
+					this.«relation.name.toLowerCase»«relationId.name.toFirstUpper».equals(castOther.«relation.name.toLowerCase»«relationId.name.toFirstUpper»)
 					«ELSE»
-					this.«relationId.name.toLowerCase» == castOther.«relationId.name.toLowerCase»
+					this.«relation.name.toLowerCase»«relationId.name.toFirstUpper» == castOther.«relation.name.toLowerCase»«relationId.name.toFirstUpper»
 					«ENDIF»
 					;
 			}
@@ -70,15 +72,15 @@ class JPAPKTemplate {
 			public int hashCode() {
 				final int prime = 31;
 				int hash = 17;
-				«IF DomainCodeGenerator.getType(beId).equals("String")»
-				hash = hash * prime + this.«beId.name.toLowerCase».hashCode();
+				«IF DomainCodeUtilities.getType(beId).equals("String")»
+				hash = hash * prime + this.«be.name.toLowerCase»«beId.name.toFirstUpper».hashCode();
 				«ELSE»
-				hash = hash * prime + this.«beId.name.toLowerCase»;
+				hash = hash * prime + this.«be.name.toLowerCase»«beId.name.toFirstUpper»;
 				«ENDIF»
-				«IF DomainCodeGenerator.getType(relationId).equals("String")»
-				hash = hash * prime + this.«relationId.name.toLowerCase».hashCode();
+				«IF DomainCodeUtilities.getType(relationId).equals("String")»
+				hash = hash * prime + this.«relation.name.toLowerCase»«relationId.name.toFirstUpper».hashCode();
 				«ELSE»
-				hash = hash * prime + this.«relationId.name.toLowerCase»;
+				hash = hash * prime + this.«relation.name.toLowerCase»«relationId.name.toFirstUpper»;
 				«ENDIF»
 				
 				return hash;

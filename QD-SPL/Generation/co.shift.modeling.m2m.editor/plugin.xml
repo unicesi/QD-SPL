@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated DomainMetamodelM2M -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="domainmetamodelm2m.presentation.Domainmetamodelm2mModelWizardID"
+            name="%_UI_Domainmetamodelm2mModelWizard_label"
+            class="domainmetamodelm2m.presentation.Domainmetamodelm2mModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/Domainmetamodelm2mModelFile.gif">
+         <description>%_UI_Domainmetamodelm2mModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated DomainMetamodelM2M -->
+      <editor
+            id="domainmetamodelm2m.presentation.Domainmetamodelm2mEditorID"
+            name="%_UI_Domainmetamodelm2mEditor_label"
+            icon="icons/full/obj16/Domainmetamodelm2mModelFile.gif"
+            extensions="domainmetamodelm2m"
+            class="domainmetamodelm2m.presentation.Domainmetamodelm2mEditor"
+            contributorClass="domainmetamodelm2m.presentation.Domainmetamodelm2mActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

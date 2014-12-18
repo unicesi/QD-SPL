@@ -14,7 +14,7 @@ import java.util.ArrayList
 import domainmetamodel.Association
 import java.util.List
 import domainmetamodel.Simple
-import co.shift.generators.domain.DomainCodeGenerator
+import co.shift.generators.domain.DomainCodeUtilities
 import org.eclipse.xtext.generator.IFileSystemAccess
 
 class BoundaryInterfaceTemplate {
@@ -46,15 +46,17 @@ class BoundaryInterfaceTemplate {
 					public boolean «(contract as Contracts).name»(«be.name»TO «be.name.toLowerCase()») throws Exception;
 				«ENDIF»
 				«IF (contract instanceof ListAll)»
-					«DomainCodeGenerator.extendContribution("_r_1", DomainCodeGenerator.CONTRIBUTE_TO_BI, contract, be)»
-					«DomainCodeGenerator.extendContribution("_r_1", DomainCodeGenerator.CONTRIBUTE_TO_GENERATION, fsa, packageName, be)»
+					«DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_BI, contract, be)»
+					«DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, packageName, be)»
 «««					 public List<«be.name»TO> «(contract as Contracts).name»();
 				«ENDIF»
 				«IF (contract instanceof AddElement || contract instanceof DeleteElement)»
 					«val relatedEntity = (contract as ContractElements).association.entity»
-					«val type = DomainCodeGenerator.getID(be).dataType.literal»
-					public boolean «(contract as ContractElements).name»(«relatedEntity.name»TO «relatedEntity.name.toLowerCase», «DomainCodeGenerator.getType(
-			type)» «be.name.toLowerCase»«DomainCodeGenerator.getID(be).name.toFirstUpper») throws Exception;
+					«IF !DomainCodeUtilities.hasZeroAssociations(relatedEntity)»
+					«val type = DomainCodeUtilities.getID(be).dataType.literal»
+					public boolean «(contract as ContractElements).name»(«relatedEntity.name»TO «relatedEntity.name.toLowerCase», «DomainCodeUtilities.getType(
+			type)» «be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper») throws Exception;
+					«ENDIF»
 				«ENDIF»
 «««				«IF (contract instanceof ListElements)»
 «««					«val relatedEntity = (contract as ListElements).association.entity»
@@ -67,29 +69,29 @@ class BoundaryInterfaceTemplate {
 				
 				«IF (association instanceof Simple)»
 					«val relatedEntity = association.relatedEntity»
-					«val type = DomainCodeGenerator.getID(be).dataType.literal»
+					«val type = DomainCodeUtilities.getID(be).dataType.literal»
 					public boolean set«be.name.toFirstUpper»«association.name.toFirstUpper»(«relatedEntity.name»TO «association.name.
-			toLowerCase», «DomainCodeGenerator.getType(type)» «be.name.toLowerCase»«DomainCodeGenerator.getID(be).name.toFirstUpper») throws Exception;
+			toLowerCase», «DomainCodeUtilities.getType(type)» «be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper») throws Exception;
 				«ENDIF»
 			«ENDFOR»
-			«FOR association : DomainCodeGenerator.getDetailSimpleAssociations(be, associations)»
+			«FOR association : DomainCodeUtilities.getDetailSimpleAssociations(be, associations)»
 				«val container = association.eContainer as BusinessEntity»
-				«val type = DomainCodeGenerator.getID(container).dataType.literal»
-				public «be.name»TO get«container.name.toFirstUpper»«association.name.toFirstUpper»(«DomainCodeGenerator.getType(type)» «container.name.
-			toLowerCase»«DomainCodeGenerator.getID(container).name.toFirstUpper»);
+				«val type = DomainCodeUtilities.getID(container).dataType.literal»
+				public «be.name»TO get«container.name.toFirstUpper»«association.name.toFirstUpper»(«DomainCodeUtilities.getType(type)» «container.name.
+			toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper»);
 			«ENDFOR»
 			
 «««			Siempre hay que mostrar todos los elementos del detalle. NO es necesario crear un ListElements
-			«FOR association : DomainCodeGenerator.getDetailMultipleAssociations(be, associations)»
+			«FOR association : DomainCodeUtilities.getDetailMultipleAssociations(be, associations)»
 				«val container = association.eContainer as BusinessEntity»
-				«val type = DomainCodeGenerator.getID(container).dataType.literal»
-				public List<«be.name»TO> get«be.name.toFirstUpper»From«container.name.toFirstUpper»(«DomainCodeGenerator.getType(type)» «container.name.
-			toLowerCase»«DomainCodeGenerator.getID(container).name.toFirstUpper»);
+				«val type = DomainCodeUtilities.getID(container).dataType.literal»
+				public List<«be.name»TO> get«be.name.toFirstUpper»From«container.name.toFirstUpper»(«DomainCodeUtilities.getType(type)» «container.name.
+			toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper»);
 			«ENDFOR»
 			
 			«IF (be.isIsAuthenticable)»
-				«val type = DomainCodeGenerator.getID(be).dataType.literal»
-				public «be.name»TO authenticate(«DomainCodeGenerator.getType(type)» «be.name.toLowerCase»«DomainCodeGenerator.getID(be).name.toFirstUpper», String password) throws Exception;
+				«val type = DomainCodeUtilities.getID(be).dataType.literal»
+				public «be.name»TO authenticate(«DomainCodeUtilities.getType(type)» «be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper», String password) throws Exception;
 			«ENDIF»
 		}
 	'''

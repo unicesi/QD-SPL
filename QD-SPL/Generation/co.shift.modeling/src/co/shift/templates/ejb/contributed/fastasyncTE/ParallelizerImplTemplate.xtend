@@ -33,7 +33,7 @@ class ParallelizerImplTemplate {
 					int maxResults = 1;
 					int iterations = (int) (pCount / maxResults);
 					for (int i = 0; i < iterations; i++) {
-						futures.add(worker.getAll«be.name.toFirstUpper»(start, maxResults));
+						futures.add(worker.«contract.name»(start, maxResults));
 						start += maxResults;
 					}
 					for (Future<List<«be.name.toFirstUpper»TO>> future : futures) {

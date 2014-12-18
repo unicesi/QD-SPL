@@ -1,6 +1,7 @@
 package co.shift.templates.ejb.contributed.authenticity
 
 import domainmetamodel.BusinessEntity
+import co.shift.generators.domain.DomainCodeUtilities
 
 class AuthJPATemplate {
 
@@ -22,6 +23,7 @@ class AuthJPATemplate {
 			@NamedQuery(name = "auth.deleteRole", query = "DELETE FROM Role r WHERE r.name=:rid"),
 			@NamedQuery(name = "auth.getAllRoles", query = "SELECT r FROM Role r")})
 		public class Role implements Serializable {
+		«DomainCodeUtilities.addEntityName("co.shift."+packageName.toLowerCase()+".authorization.entity.Role")»
 			private static final long serialVersionUID = 1L;
 		
 			@Id
@@ -103,6 +105,7 @@ class AuthJPATemplate {
 		@Table(name = "Services")
 		@NamedQueries({ @NamedQuery(name = "auth.getAllServices", query = "SELECT s FROM Service s") })
 		public class Service implements Serializable {
+		«DomainCodeUtilities.addEntityName("co.shift."+packageName.toLowerCase()+".authorization.entity.Service")»
 			private static final long serialVersionUID = 1L;
 		
 			@Id
@@ -168,6 +171,7 @@ class AuthJPATemplate {
 		
 		@Entity
 		public class «authEntity.name.toFirstUpper»Role implements Serializable {
+		«DomainCodeUtilities.addEntityName("co.shift."+packageName.toLowerCase()+".authorization.entity."+authEntity.name.toFirstUpper+"Role")»
 			private static final long serialVersionUID = 1L;
 		
 			@EmbeddedId
@@ -208,6 +212,7 @@ class AuthJPATemplate {
 		
 		@Embeddable
 		public class «authEntity.name.toFirstUpper»RolePK implements Serializable {
+		«DomainCodeUtilities.addEntityName("co.shift."+packageName.toLowerCase()+".authorization.entity."+authEntity.name.toFirstUpper+"RolePK")»
 			//default serial version id, required for serializable classes.
 			private static final long serialVersionUID = 1L;
 		

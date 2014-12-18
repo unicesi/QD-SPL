@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domainmetamodelm2m:Business xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:domainmetamodelm2m="http://domainmetamodelm2m/1.0" name="pcs">
+  <entities name="User" isAuthenticable="true">
+    <attributes name="cc" dataType="string" isRequired="true" isDefault="true"/>
+    <attributes name="name" dataType="string" isRequired="true"/>
+    <attributes name="cellphone" dataType="string" isRequired="true"/>
+    <attributes name="password" dataType="string" isRequired="true"/>
+    <associations xsi:type="domainmetamodelm2m:Multiple" name="projects" entity="//@entities.2"/>
+    <contracts xsi:type="domainmetamodelm2m:Create" name="createUser"/>
+    <contracts xsi:type="domainmetamodelm2m:ListAll" name="getAllUsers"/>
+  </entities>
+  <entities name="Risk">
+    <attributes name="id" isRequired="true" isDefault="true"/>
+    <attributes name="description" dataType="string" isRequired="true"/>
+    <attributes name="impact" dataType="double" isRequired="true"/>
+    <attributes name="name" dataType="string" isRequired="true"/>
+    <attributes name="probability" dataType="double" isRequired="true"/>
+    <contracts xsi:type="domainmetamodelm2m:Create" name="addRisk"/>
+    <contracts xsi:type="domainmetamodelm2m:Delete" name="removeRisk"/>
+  </entities>
+  <entities name="Project">
+    <attributes name="id" isRequired="true" isDefault="true"/>
+    <attributes name="description" dataType="string" isRequired="true"/>
+    <attributes name="name" dataType="string" isRequired="true"/>
+    <attributes name="startDate" dataType="date" isRequired="true"/>
+    <associations xsi:type="domainmetamodelm2m:Multiple" name="users" entity="//@entities.0"/>
+    <associations xsi:type="domainmetamodelm2m:Simple" name="manager" relatedEntity="//@entities.0"/>
+    <associations xsi:type="domainmetamodelm2m:Multiple" name="risks" entity="//@entities.1"/>
+    <associations xsi:type="domainmetamodelm2m:Simple" name="priorityRisk" relatedEntity="//@entities.1"/>
+    <contracts xsi:type="domainmetamodelm2m:DeleteElement" name="removeUserFromProject" association="//@entities.2/@associations.0"/>
+    <contracts xsi:type="domainmetamodelm2m:DeleteElement" name="deleteRiskFromProject" association="//@entities.2/@associations.2"/>
+    <contracts xsi:type="domainmetamodelm2m:AddElement" name="addRiskToProject" association="//@entities.2/@associations.2"/>
+    <contracts xsi:type="domainmetamodelm2m:Create" name="createProject"/>
+    <contracts xsi:type="domainmetamodelm2m:Update" name="updateProject"/>
+    <contracts xsi:type="domainmetamodelm2m:ListAll" name="getAllProjects"/>
+    <contracts xsi:type="domainmetamodelm2m:Delete" name="deleteProject"/>
+    <contracts xsi:type="domainmetamodelm2m:AddElement" name="addUserToProject" association="//@entities.2/@associations.0"/>
+  </entities>
+</domainmetamodelm2m:Business>

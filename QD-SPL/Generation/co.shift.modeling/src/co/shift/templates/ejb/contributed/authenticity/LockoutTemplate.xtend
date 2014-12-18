@@ -1,7 +1,7 @@
 package co.shift.templates.ejb.contributed.authenticity
 
 import domainmetamodel.BusinessEntity
-import co.shift.generators.domain.DomainCodeGenerator
+import co.shift.generators.domain.DomainCodeUtilities
 
 class LockoutTemplate {
 	
@@ -21,11 +21,11 @@ class LockoutTemplate {
 		
 			private static final int MAX_ATTEMPTS = 5;
 		
-			@PersistenceContext(unitName = "co.shift.«packageName.toLowerCase()».«be.name.toLowerCase»")
+			@PersistenceContext(unitName = "«packageName.toLowerCase()»")
 			private EntityManager em;
 		
-			«var beId = DomainCodeGenerator.getID(be)»
-			public «be.name.toFirstUpper»TO authenticate(«DomainCodeGenerator.getType(beId)» «beId.name.toLowerCase»ID, String password) throws Exception {
+			«var beId = DomainCodeUtilities.getID(be)»
+			public «be.name.toFirstUpper»TO authenticate(«DomainCodeUtilities.getType(beId)» «beId.name.toLowerCase»ID, String password) throws Exception {
 				int attempts = getAttempts(«beId.name.toLowerCase»ID);
 				if (attempts < MAX_ATTEMPTS) {
 					«be.name.toFirstUpper» found«be.name.toFirstUpper» = em.find(«be.name.toFirstUpper».class, «beId.name.toLowerCase»ID);
@@ -47,7 +47,7 @@ class LockoutTemplate {
 							"Your account has been locked due too many attempts");
 			}
 		
-			private int getAttempts(«DomainCodeGenerator.getType(beId)» «beId.name.toLowerCase»ID) {
+			private int getAttempts(«DomainCodeUtilities.getType(beId)» «beId.name.toLowerCase»ID) {
 				Attempt attempts = em.find(Attempt.class, «beId.name.toLowerCase»ID);
 				if (attempts == null) {
 					Attempt newAttempt = new Attempt();
@@ -60,7 +60,7 @@ class LockoutTemplate {
 					return attempts.getAttempts();
 			}
 		
-			private void setAttempts(«DomainCodeGenerator.getType(beId)» «beId.name.toLowerCase»ID, int newAttempts) {
+			private void setAttempts(«DomainCodeUtilities.getType(beId)» «beId.name.toLowerCase»ID, int newAttempts) {
 				Attempt attempts = em.find(Attempt.class, «beId.name.toLowerCase»ID);
 				attempts.setAttempts(newAttempts);
 				em.merge(attempts);

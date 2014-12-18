@@ -8,6 +8,7 @@ import co.shift.pcs.web.ext.authenticator.LoginController;
 import co.shift.pcs.web.client.MenuPanel;
 import co.shift.pcs.to.UserTO;
 import co.shift.pcs.web.ext.project.ProjectController;
+import co.shift.pcs.web.ext.user.UserController;
 import co.shift.pcs.web.ext.risk.RiskController;
 import co.shift.pcs.web.ext.authorizer.AuthorizerController;
 import co.shift.pcs.to.ServiceTO;
@@ -25,6 +26,7 @@ public class UIController implements UIContributor {
 		LoginController.getInstance().showLoginForm();
 
 		ProjectController.getInstance();
+		UserController.getInstance();
 		RiskController.getInstance();
 		AuthorizerController authController = AuthorizerController
 				.getInstance();
@@ -35,6 +37,8 @@ public class UIController implements UIContributor {
 
 		// Adds authorization check for every action
 		ProjectController.getInstance().addContributor(
+				AuthorizerController.ID, authController);
+		UserController.getInstance().addContributor(
 				AuthorizerController.ID, authController);
 		RiskController.getInstance().addContributor(
 				AuthorizerController.ID, authController);
@@ -51,16 +55,13 @@ public class UIController implements UIContributor {
 			throws Exception {
 		UserTO user = Registry.get(PCSUI.USER);
 		
-		List<ServiceTO> userServices = AuthorizerController.getInstance()
-				.getUserServices(user.getCc());
-		Registry.register(PCSUI.USER_SERVICES, userServices);
 		MenuPanel menu = (MenuPanel) component;
 		ProjectController.getInstance().showProjectForm();
 		menu.addMenu("Project", ProjectController.getInstance()
 				.getProjectCommand(), true);
 		menu.addMenu("User", UserController.getInstance()
 				.getUserCommand(), true);
-		if (AuthorizerController.getInstance().hasAdminRole(user.Cc())) {
+		if (AuthorizerController.getInstance().hasAdminRole(user.getCc())) {
 			menu.addMenu("Authorizer", AuthorizerController.getInstance()
 					.getAuthCommand(), true);	
 		}

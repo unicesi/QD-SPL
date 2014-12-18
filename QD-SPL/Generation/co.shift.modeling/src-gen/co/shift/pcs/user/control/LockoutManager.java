@@ -13,7 +13,7 @@ public class LockoutManager {
 
 	private static final int MAX_ATTEMPTS = 5;
 
-	@PersistenceContext(unitName = "co.shift.pcs.user")
+	@PersistenceContext(unitName = "pcs")
 	private EntityManager em;
 
 	public UserTO authenticate(String ccID, String password) throws Exception {

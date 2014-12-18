@@ -1,6 +1,6 @@
 package co.shift.templates.ejb.contributed.mediumTE;
 
-import co.shift.generators.domain.DomainCodeGenerator;
+import co.shift.generators.domain.DomainCodeUtilities;
 import com.google.common.base.Objects;
 import domainmetamodel.Attribute;
 import domainmetamodel.BusinessEntity;
@@ -58,7 +58,7 @@ public class FLRImplTemplate {
     _builder.append("TO;");
     _builder.newLineIfNotEmpty();
     String _name_2 = be.getName();
-    String _extendContribution = DomainCodeGenerator.extendContribution("_r_2_10", DomainCodeGenerator.CONTRIBUTE_TO_IMPORT, packageName, _name_2);
+    String _extendContribution = DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName, _name_2);
     _builder.append(_extendContribution, "");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -83,7 +83,7 @@ public class FLRImplTemplate {
     _builder.append("private DataSource ds;");
     _builder.newLine();
     _builder.newLine();
-    final String attribute2 = DomainCodeGenerator.extendContribution("_r_2_10", DomainCodeGenerator.CONTRIBUTE_TO_ATTRIBUTE);
+    final String attribute2 = DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE);
     _builder.newLineIfNotEmpty();
     {
       boolean _and = false;
@@ -174,14 +174,14 @@ public class FLRImplTemplate {
               EList<Attribute> _attributes = be.getAttributes();
               for(final Attribute attribute : _attributes) {
                 _builder.append("\t\t\t");
-                String _type = DomainCodeGenerator.getType(attribute);
+                String _type = DomainCodeUtilities.getType(attribute);
                 _builder.append(_type, "\t\t\t");
                 _builder.append(" t");
                 String _name_12 = attribute.getName();
                 String _firstUpper_8 = StringExtensions.toFirstUpper(_name_12);
                 _builder.append(_firstUpper_8, "\t\t\t");
                 _builder.append(" = resultSet.get");
-                String _type_1 = DomainCodeGenerator.getType(attribute);
+                String _type_1 = DomainCodeUtilities.getType(attribute);
                 String _firstUpper_9 = StringExtensions.toFirstUpper(_type_1);
                 _builder.append(_firstUpper_9, "\t\t\t");
                 _builder.append("(");
@@ -194,7 +194,7 @@ public class FLRImplTemplate {
               }
             }
             _builder.append("\t\t\t");
-            String _extendContribution_1 = DomainCodeGenerator.extendContribution("_r_2_10", DomainCodeGenerator.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, Integer.valueOf(2));
+            String _extendContribution_1 = DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, Integer.valueOf(2));
             _builder.append(_extendContribution_1, "\t\t\t");
             _builder.newLineIfNotEmpty();
             {

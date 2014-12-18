@@ -1,6 +1,6 @@
 package co.shift.templates.ejb.basic;
 
-import co.shift.generators.domain.DomainCodeGenerator;
+import co.shift.generators.domain.DomainCodeUtilities;
 import domainmetamodel.Association;
 import domainmetamodel.Attribute;
 import domainmetamodel.BusinessEntity;
@@ -49,14 +49,14 @@ public class DAOInterfaceTemplate {
     _builder.append("\t");
     _builder.newLine();
     {
-      List<Association> _detailSimpleAssociations = DomainCodeGenerator.getDetailSimpleAssociations(be, associations);
+      List<Association> _detailSimpleAssociations = DomainCodeUtilities.getDetailSimpleAssociations(be, associations);
       for(final Association association : _detailSimpleAssociations) {
         _builder.append("\t");
         EObject _eContainer = association.eContainer();
         final BusinessEntity container = ((BusinessEntity) _eContainer);
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
-        Attribute _iD = DomainCodeGenerator.getID(container);
+        Attribute _iD = DomainCodeUtilities.getID(container);
         DataType _dataType = _iD.getDataType();
         final String type = _dataType.getLiteral();
         _builder.newLineIfNotEmpty();
@@ -72,13 +72,13 @@ public class DAOInterfaceTemplate {
         String _firstUpper_3 = StringExtensions.toFirstUpper(_name_5);
         _builder.append(_firstUpper_3, "\t");
         _builder.append("(");
-        String _type = DomainCodeGenerator.getType(type);
+        String _type = DomainCodeUtilities.getType(type);
         _builder.append(_type, "\t");
         _builder.append(" ");
         String _name_6 = container.getName();
         String _lowerCase_3 = _name_6.toLowerCase();
         _builder.append(_lowerCase_3, "\t");
-        Attribute _iD_1 = DomainCodeGenerator.getID(container);
+        Attribute _iD_1 = DomainCodeUtilities.getID(container);
         String _name_7 = _iD_1.getName();
         String _firstUpper_4 = StringExtensions.toFirstUpper(_name_7);
         _builder.append(_firstUpper_4, "\t");
@@ -89,14 +89,14 @@ public class DAOInterfaceTemplate {
     _builder.append("\t");
     _builder.newLine();
     {
-      List<Association> _detailMultipleAssociations = DomainCodeGenerator.getDetailMultipleAssociations(be, associations);
+      List<Association> _detailMultipleAssociations = DomainCodeUtilities.getDetailMultipleAssociations(be, associations);
       for(final Association association_1 : _detailMultipleAssociations) {
         _builder.append("\t");
         EObject _eContainer_1 = association_1.eContainer();
         final BusinessEntity container_1 = ((BusinessEntity) _eContainer_1);
         _builder.newLineIfNotEmpty();
         _builder.append("\t");
-        Attribute _iD_2 = DomainCodeGenerator.getID(container_1);
+        Attribute _iD_2 = DomainCodeUtilities.getID(container_1);
         DataType _dataType_1 = _iD_2.getDataType();
         final String type_1 = _dataType_1.getLiteral();
         _builder.newLineIfNotEmpty();
@@ -113,13 +113,13 @@ public class DAOInterfaceTemplate {
         String _firstUpper_6 = StringExtensions.toFirstUpper(_name_10);
         _builder.append(_firstUpper_6, "\t");
         _builder.append("(");
-        String _type_1 = DomainCodeGenerator.getType(type_1);
+        String _type_1 = DomainCodeUtilities.getType(type_1);
         _builder.append(_type_1, "\t");
         _builder.append(" ");
         String _name_11 = container_1.getName();
         String _lowerCase_4 = _name_11.toLowerCase();
         _builder.append(_lowerCase_4, "\t");
-        Attribute _iD_3 = DomainCodeGenerator.getID(container_1);
+        Attribute _iD_3 = DomainCodeUtilities.getID(container_1);
         String _name_12 = _iD_3.getName();
         String _firstUpper_7 = StringExtensions.toFirstUpper(_name_12);
         _builder.append(_firstUpper_7, "\t");

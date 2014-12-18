@@ -4,6 +4,7 @@ import domainmetamodel.BusinessEntity
 import java.util.List
 import domainmetamodel.Association
 import org.eclipse.xtext.generator.IFileSystemAccess
+import co.shift.generators.domain.DomainCodeUtilities
 
 class JPAPKEncapTemplate {
 	
@@ -22,7 +23,7 @@ class JPAPKEncapTemplate {
 			private «className»PK id;
 			
 			@ManyToOne
-			@JoinColumn(name="«be.name.toLowerCase»", insertable=false, updatable=false)
+			@JoinColumn(name="«be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper»", insertable=false, updatable=false)
 			private «be.name.toFirstUpper» «be.name.toLowerCase»Bean;
 			
 			public «className»() {

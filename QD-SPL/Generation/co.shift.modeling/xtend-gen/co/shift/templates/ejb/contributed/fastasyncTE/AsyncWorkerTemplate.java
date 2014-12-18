@@ -1,6 +1,6 @@
 package co.shift.templates.ejb.contributed.fastasyncTE;
 
-import co.shift.generators.domain.DomainCodeGenerator;
+import co.shift.generators.domain.DomainCodeUtilities;
 import com.google.common.base.Objects;
 import domainmetamodel.Attribute;
 import domainmetamodel.BusinessEntity;
@@ -47,6 +47,8 @@ public class AsyncWorkerTemplate {
     _builder.newLine();
     _builder.append("import javax.ejb.Asynchronous;");
     _builder.newLine();
+    _builder.append("import javax.ejb.EJB;");
+    _builder.newLine();
     _builder.append("import javax.ejb.Stateless;");
     _builder.newLine();
     _builder.append("import javax.sql.DataSource;");
@@ -62,7 +64,7 @@ public class AsyncWorkerTemplate {
     _builder.append("TO;");
     _builder.newLineIfNotEmpty();
     String _name_2 = be.getName();
-    String _extendContribution = DomainCodeGenerator.extendContribution("_r_2_10", DomainCodeGenerator.CONTRIBUTE_TO_IMPORT, packageName, _name_2);
+    String _extendContribution = DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName, _name_2);
     _builder.append(_extendContribution, "");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -83,7 +85,7 @@ public class AsyncWorkerTemplate {
     _builder.append("private DataSource ds;");
     _builder.newLine();
     _builder.newLine();
-    final String attribute2 = DomainCodeGenerator.extendContribution("_r_2_10", DomainCodeGenerator.CONTRIBUTE_TO_ATTRIBUTE);
+    final String attribute2 = DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE);
     _builder.newLineIfNotEmpty();
     {
       boolean _and = false;
@@ -106,6 +108,8 @@ public class AsyncWorkerTemplate {
       for(final Contracts contract : _contracts) {
         {
           if ((contract instanceof ListAll)) {
+            _builder.append("@Asynchronous");
+            _builder.newLine();
             _builder.append("public Future<List<");
             String _name_4 = be.getName();
             String _firstUpper_2 = StringExtensions.toFirstUpper(_name_4);
@@ -183,15 +187,16 @@ public class AsyncWorkerTemplate {
               EList<Attribute> _attributes = be.getAttributes();
               for(final Attribute attribute : _attributes) {
                 _builder.append("\t\t\t");
-                String _type = DomainCodeGenerator.getType(attribute);
+                String _type = DomainCodeUtilities.getType(attribute);
                 _builder.append(_type, "\t\t\t");
                 _builder.append(" t");
                 String _name_11 = attribute.getName();
                 String _firstUpper_7 = StringExtensions.toFirstUpper(_name_11);
                 _builder.append(_firstUpper_7, "\t\t\t");
                 _builder.append(" = resultSet.get");
-                String _type_1 = DomainCodeGenerator.getType(attribute);
-                _builder.append(_type_1, "\t\t\t");
+                String _type_1 = DomainCodeUtilities.getType(attribute);
+                String _firstUpper_8 = StringExtensions.toFirstUpper(_type_1);
+                _builder.append(_firstUpper_8, "\t\t\t");
                 _builder.append("(");
                 _builder.append(i, "\t\t\t");
                 _builder.append(");");
@@ -202,7 +207,7 @@ public class AsyncWorkerTemplate {
               }
             }
             _builder.append("\t\t\t");
-            String _extendContribution_1 = DomainCodeGenerator.extendContribution("_r_2_10", DomainCodeGenerator.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, Integer.valueOf(2));
+            String _extendContribution_1 = DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, Integer.valueOf(2));
             _builder.append(_extendContribution_1, "\t\t\t");
             _builder.newLineIfNotEmpty();
             {
@@ -211,12 +216,12 @@ public class AsyncWorkerTemplate {
                 _builder.append("\t\t\t");
                 _builder.append("p.set");
                 String _name_12 = attribute_1.getName();
-                String _firstUpper_8 = StringExtensions.toFirstUpper(_name_12);
-                _builder.append(_firstUpper_8, "\t\t\t");
+                String _firstUpper_9 = StringExtensions.toFirstUpper(_name_12);
+                _builder.append(_firstUpper_9, "\t\t\t");
                 _builder.append("(t");
                 String _name_13 = attribute_1.getName();
-                String _firstUpper_9 = StringExtensions.toFirstUpper(_name_13);
-                _builder.append(_firstUpper_9, "\t\t\t");
+                String _firstUpper_10 = StringExtensions.toFirstUpper(_name_13);
+                _builder.append(_firstUpper_10, "\t\t\t");
                 _builder.append(");");
                 _builder.newLineIfNotEmpty();
               }
@@ -236,8 +241,8 @@ public class AsyncWorkerTemplate {
             _builder.append("\t\t");
             _builder.append("return new AsyncResult<List<");
             String _name_15 = be.getName();
-            String _firstUpper_10 = StringExtensions.toFirstUpper(_name_15);
-            _builder.append(_firstUpper_10, "\t\t");
+            String _firstUpper_11 = StringExtensions.toFirstUpper(_name_15);
+            _builder.append(_firstUpper_11, "\t\t");
             _builder.append("TO>>(");
             String _name_16 = be.getName();
             String _lowerCase_6 = _name_16.toLowerCase();

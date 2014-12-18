@@ -58,7 +58,25 @@ public class ProjectTO implements Serializable {
 	public void setManager(String manager) {
 		this.manager = manager;
 	}
+	private int priorityrisk;
 	
+	public int getPriorityRisk() {
+		return this.priorityrisk;
+	}
+	
+	public void setPriorityRisk(int priorityrisk) {
+		this.priorityrisk = priorityrisk;
+	}
+	
+	private String user;
+	
+	public String getUser() {
+		return this.user;
+	}
+	
+	public void setUser(String user) {
+		this.user = user;
+	}
 	
 	@Override
 	public boolean equals(Object obj) {

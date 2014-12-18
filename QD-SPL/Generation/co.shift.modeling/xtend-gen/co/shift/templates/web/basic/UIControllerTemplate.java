@@ -1,15 +1,15 @@
 package co.shift.templates.web.basic;
 
-import co.shift.generators.domain.DomainCodeGenerator;
+import co.shift.generators.domain.DomainCodeUtilities;
 import domainmetamodel.Attribute;
 import domainmetamodel.BusinessEntity;
-import java.util.List;
+import java.util.HashSet;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class UIControllerTemplate {
-  public static CharSequence generate(final String packageName, final BusinessEntity authEntity, final List<BusinessEntity> bes) {
+  public static CharSequence generate(final String packageName, final BusinessEntity authEntity, final HashSet<BusinessEntity> bes) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append("package co.shift.");
     String _lowerCase = packageName.toLowerCase();
@@ -42,6 +42,8 @@ public class UIControllerTemplate {
     _builder.append(_firstUpper, "");
     _builder.append("TO;");
     _builder.newLineIfNotEmpty();
+    boolean e = bes.add(authEntity);
+    _builder.newLineIfNotEmpty();
     {
       for(final BusinessEntity be : bes) {
         _builder.append("import co.shift.");
@@ -59,7 +61,7 @@ public class UIControllerTemplate {
         _builder.newLineIfNotEmpty();
       }
     }
-    boolean authorizerSelected = DomainCodeGenerator.isQASelected("_r_2_11_15_16");
+    boolean authorizerSelected = DomainCodeUtilities.isQASelected("_r_2_11_15_16");
     _builder.newLineIfNotEmpty();
     {
       if (authorizerSelected) {
@@ -199,32 +201,6 @@ public class UIControllerTemplate {
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.newLine();
-    {
-      if (authorizerSelected) {
-        _builder.append("\t\t");
-        _builder.append("List<ServiceTO> userServices = AuthorizerController.getInstance()");
-        _builder.newLine();
-        _builder.append("\t\t");
-        _builder.append("\t\t");
-        _builder.append(".get");
-        String _name_6 = authEntity.getName();
-        String _firstUpper_5 = StringExtensions.toFirstUpper(_name_6);
-        _builder.append(_firstUpper_5, "\t\t\t\t");
-        _builder.append("Services(user.get");
-        Attribute _iD = DomainCodeGenerator.getID(authEntity);
-        String _name_7 = _iD.getName();
-        String _firstUpper_6 = StringExtensions.toFirstUpper(_name_7);
-        _builder.append(_firstUpper_6, "\t\t\t\t");
-        _builder.append("());");
-        _builder.newLineIfNotEmpty();
-        _builder.append("\t\t");
-        _builder.append("Registry.register(");
-        String _upperCase_1 = packageName.toUpperCase();
-        _builder.append(_upperCase_1, "\t\t");
-        _builder.append("UI.USER_SERVICES, userServices);");
-        _builder.newLineIfNotEmpty();
-      }
-    }
     _builder.append("\t\t");
     _builder.append("MenuPanel menu = (MenuPanel) component;");
     _builder.newLine();
@@ -237,18 +213,18 @@ public class UIControllerTemplate {
     {
       for(final BusinessEntity be_3 : bes) {
         {
-          boolean _isMaster = DomainCodeGenerator.isMaster(be_3);
+          boolean _isMaster = DomainCodeUtilities.isMaster(be_3);
           if (_isMaster) {
             {
               if ((isFirst == 0)) {
                 _builder.append("\t\t");
-                String _name_8 = be_3.getName();
-                String _firstUpper_7 = StringExtensions.toFirstUpper(_name_8);
-                _builder.append(_firstUpper_7, "\t\t");
+                String _name_6 = be_3.getName();
+                String _firstUpper_5 = StringExtensions.toFirstUpper(_name_6);
+                _builder.append(_firstUpper_5, "\t\t");
                 _builder.append("Controller.getInstance().show");
-                String _name_9 = be_3.getName();
-                String _firstUpper_8 = StringExtensions.toFirstUpper(_name_9);
-                _builder.append(_firstUpper_8, "\t\t");
+                String _name_7 = be_3.getName();
+                String _firstUpper_6 = StringExtensions.toFirstUpper(_name_7);
+                _builder.append(_firstUpper_6, "\t\t");
                 _builder.append("Form();");
                 _builder.newLineIfNotEmpty();
                 _builder.append("\t\t");
@@ -258,21 +234,21 @@ public class UIControllerTemplate {
             }
             _builder.append("\t\t");
             _builder.append("menu.addMenu(\"");
-            String _name_10 = be_3.getName();
-            String _firstUpper_9 = StringExtensions.toFirstUpper(_name_10);
-            _builder.append(_firstUpper_9, "\t\t");
+            String _name_8 = be_3.getName();
+            String _firstUpper_7 = StringExtensions.toFirstUpper(_name_8);
+            _builder.append(_firstUpper_7, "\t\t");
             _builder.append("\", ");
-            String _name_11 = be_3.getName();
-            String _firstUpper_10 = StringExtensions.toFirstUpper(_name_11);
-            _builder.append(_firstUpper_10, "\t\t");
+            String _name_9 = be_3.getName();
+            String _firstUpper_8 = StringExtensions.toFirstUpper(_name_9);
+            _builder.append(_firstUpper_8, "\t\t");
             _builder.append("Controller.getInstance()");
             _builder.newLineIfNotEmpty();
             _builder.append("\t\t");
             _builder.append("\t\t");
             _builder.append(".get");
-            String _name_12 = be_3.getName();
-            String _firstUpper_11 = StringExtensions.toFirstUpper(_name_12);
-            _builder.append(_firstUpper_11, "\t\t\t\t");
+            String _name_10 = be_3.getName();
+            String _firstUpper_9 = StringExtensions.toFirstUpper(_name_10);
+            _builder.append(_firstUpper_9, "\t\t\t\t");
             _builder.append("Command(), true);");
             _builder.newLineIfNotEmpty();
           }
@@ -283,10 +259,10 @@ public class UIControllerTemplate {
       if (authorizerSelected) {
         _builder.append("\t\t");
         _builder.append("if (AuthorizerController.getInstance().hasAdminRole(user.get");
-        Attribute _iD_1 = DomainCodeGenerator.getID(authEntity);
-        String _name_13 = _iD_1.getName();
-        String _firstUpper_12 = StringExtensions.toFirstUpper(_name_13);
-        _builder.append(_firstUpper_12, "\t\t");
+        Attribute _iD = DomainCodeUtilities.getID(authEntity);
+        String _name_11 = _iD.getName();
+        String _firstUpper_10 = StringExtensions.toFirstUpper(_name_11);
+        _builder.append(_firstUpper_10, "\t\t");
         _builder.append("())) {");
         _builder.newLineIfNotEmpty();
         _builder.append("\t\t");

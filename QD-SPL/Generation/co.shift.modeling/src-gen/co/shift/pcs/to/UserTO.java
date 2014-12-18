@@ -50,6 +50,15 @@ public class UserTO implements Serializable {
 	}				
 	
 	
+	private int project;
+	
+	public int getProject() {
+		return this.project;
+	}
+	
+	public void setProject(int project) {
+		this.project = project;
+	}
 	
 	@Override
 	public boolean equals(Object obj) {

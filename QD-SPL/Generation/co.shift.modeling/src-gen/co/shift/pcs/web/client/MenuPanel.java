@@ -1,4 +1,4 @@
-package co.shift.pcs.web;
+package co.shift.pcs.web.client;
 
 import java.util.ArrayList;
 import java.util.List;

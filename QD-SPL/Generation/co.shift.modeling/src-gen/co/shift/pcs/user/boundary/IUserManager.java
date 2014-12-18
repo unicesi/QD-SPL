@@ -8,8 +8,10 @@ import co.shift.pcs.to.UserTO;
 @Remote
 public interface IUserManager {
 	
-	public List<UserTO> getAllUsers();
+	public List<UserTO> getAllUsers() throws Exception;
 	
+	
+	public boolean createUser(UserTO user) throws Exception;
 	
 	public UserTO getProjectManager(int projectId);
 	

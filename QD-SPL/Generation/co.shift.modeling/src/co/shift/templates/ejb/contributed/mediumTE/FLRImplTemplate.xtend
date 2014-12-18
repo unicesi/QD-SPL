@@ -2,7 +2,7 @@ package co.shift.templates.ejb.contributed.mediumTE
 
 import domainmetamodel.BusinessEntity
 import domainmetamodel.ListAll
-import co.shift.generators.domain.DomainCodeGenerator
+import co.shift.generators.domain.DomainCodeUtilities
 
 class FLRImplTemplate {
 	
@@ -23,7 +23,7 @@ class FLRImplTemplate {
 		import javax.sql.DataSource;
 		
 		import co.shift.«packageName.toLowerCase()».to.«be.name.toFirstUpper»TO;
-		«DomainCodeGenerator.extendContribution("_r_2_10", DomainCodeGenerator.CONTRIBUTE_TO_IMPORT, packageName, be.name)»
+		«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName, be.name)»
 		
 		@Stateless
 		public class «be.name.toFirstUpper»BasicFLR implements I«be.name.toFirstUpper»BasicFLR {
@@ -31,7 +31,7 @@ class FLRImplTemplate {
 		@Resource(name = "«packageName.toLowerCase()»")
 		private DataSource ds;
 		
-		«val attribute2 = DomainCodeGenerator.extendContribution("_r_2_10", DomainCodeGenerator.CONTRIBUTE_TO_ATTRIBUTE)»
+		«val attribute2 = DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE)»
 		«IF (attribute2 != null && !attribute2.equals(""))»
 			«attribute2»
 		«ENDIF»
@@ -52,10 +52,10 @@ class FLRImplTemplate {
 							p = new «be.name.toFirstUpper»TO();
 							«var i=1»
 							«FOR attribute : be.attributes»
-								«DomainCodeGenerator.getType(attribute)» t«attribute.name.toFirstUpper» = resultSet.get«DomainCodeGenerator.getType(attribute).toFirstUpper»(«i»);
+								«DomainCodeUtilities.getType(attribute)» t«attribute.name.toFirstUpper» = resultSet.get«DomainCodeUtilities.getType(attribute).toFirstUpper»(«i»);
 								«var c = i++»
 							«ENDFOR»
-							«DomainCodeGenerator.extendContribution("_r_2_10", DomainCodeGenerator.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, 2)»
+							«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, 2)»
 							«FOR attribute : be.attributes»
 								p.set«attribute.name.toFirstUpper»(t«attribute.name.toFirstUpper»);
 							«ENDFOR»

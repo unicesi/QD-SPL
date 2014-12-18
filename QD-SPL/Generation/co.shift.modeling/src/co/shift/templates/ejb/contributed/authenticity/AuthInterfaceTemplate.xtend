@@ -1,7 +1,7 @@
 package co.shift.templates.ejb.contributed.authenticity
 
 import domainmetamodel.BusinessEntity
-import co.shift.generators.domain.DomainCodeGenerator
+import co.shift.generators.domain.DomainCodeUtilities
 
 class AuthInterfaceTemplate {
 	
@@ -19,8 +19,8 @@ class AuthInterfaceTemplate {
 		@Remote
 		public interface IAuthorizationManager {
 		
-		«var authId = DomainCodeGenerator.getID(authEntity)»
-			public List<RoleTO> get«authEntity.name.toFirstUpper»Roles(«DomainCodeGenerator.getType(authId)» «authId.name.toLowerCase»);
+		«var authId = DomainCodeUtilities.getID(authEntity)»
+			public List<RoleTO> get«authEntity.name.toFirstUpper»Roles(«DomainCodeUtilities.getType(authId)» «authId.name.toLowerCase»);
 			
 			public List<RoleTO> getAllRoles();
 			
@@ -34,7 +34,7 @@ class AuthInterfaceTemplate {
 		
 			public boolean deleteRole (RoleTO role) throws Exception;
 			
-			public boolean addRoleTo«authEntity.name.toFirstUpper» («DomainCodeGenerator.getType(authId)» user, RoleTO role) throws Exception;
+			public boolean addRoleTo«authEntity.name.toFirstUpper» («DomainCodeUtilities.getType(authId)» user, RoleTO role) throws Exception;
 			
 			public boolean removeRoleFrom«authEntity.name.toFirstUpper» («authEntity.name.toFirstUpper»TO user, RoleTO role) throws Exception;
 			
@@ -42,7 +42,7 @@ class AuthInterfaceTemplate {
 			
 			public boolean removeServiceFromRole (RoleTO role, ServiceTO service) throws Exception;
 			
-			public List<ServiceTO> get«authEntity.name.toFirstUpper»Services («DomainCodeGenerator.getType(authId)» «authId.name.toLowerCase»);
+			public List<ServiceTO> get«authEntity.name.toFirstUpper»Services («DomainCodeUtilities.getType(authId)» «authId.name.toLowerCase»);
 		}
 	'''
 }

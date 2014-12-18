@@ -1,0 +1,251 @@
+-- @nsURI DomainMetaModel=http://domainmetamodelm2m/1.0
+-- @nsURI UML2=http://www.eclipse.org/uml2/4.0.0/UML
+
+
+module DomainMetaModel2UML2;
+create OUT: UML2 from IN: DomainMetaModel;
+
+--rule name {
+--	from
+--		d: DomainMetaModel!Business
+--	to
+--		u: UML2!Class (
+--		)
+--	do {
+--		if(d.isQASelected('_r_1'))
+--			u.name <- d.name;
+--		else
+--			u.name <- 'not';
+--	}
+--}
+
+rule Business2Package {
+	from
+		b: DomainMetaModel!Business
+	using {
+		boundaryPackage: UML2!Package = OclUndefined;
+	}
+	to
+		p: UML2!Package (
+			name <- 'co.shift.' + b.name
+		)
+	do {
+		for(be in b.entities) {
+			thisModule.BusinessEntity2EntityPackage(be, p, b);
+			if (b.isQASelected('_r_2_10_12_13')) then
+					thisModule.BusinessEntity2SecurityPakage(p, b)
+				else
+					OclUndefined
+				endif;
+			if (be.needsDAO(b) or b.isQASelected('_r_1_3_5') or b.
+					isQASelected('_r_1_3_6_7_8') or b.isQASelected('_r_1_3_6_7_9') or (b.
+					isQASelected('_r_2_11_15_17') and be.isAuthenticable())) then
+					thisModule.BusinessEntity2ControlPackage(be, p, b)
+				else
+					OclUndefined
+				endif;
+			boundaryPackage <- thisModule.BusinessEntity2BoundaryPackage(be, p,
+					b);
+			be.updateBoundaryAttributes(p, b);
+		}
+		if (b.isQASelected('_r_2_11_15_16')) then
+			thisModule.createAuthorizationBoundary(p, b)
+		else
+			OclUndefined
+		endif;
+	}
+}
+
+unique lazy rule createAuthorizationBoundary {
+	from
+		p: UML2!Package,
+		b: DomainMetaModel!Business
+	to
+		c: UML2!Package (
+			name <- p.name + '.authorization.boundary',
+			nestingPackage <- p
+		)
+	do {
+		b.createAuthorizationBoundary(c);
+		thisModule.createAuthorizationEntities(p, b);
+	}
+}
+
+unique lazy rule createAuthorizationEntities {
+	from
+		p: UML2!Package,
+		b: DomainMetaModel!Business
+	to
+		c: UML2!Package (
+			name <- p.name + '.authorization.entity',
+			nestingPackage <- p
+		)
+	do {
+		b.createAuthorizationEntities(c);
+	}
+}
+
+unique lazy rule BusinessEntity2BoundaryPackage {
+	from
+		be: DomainMetaModel!BusinessEntity,
+		p: UML2!Package,
+		b: DomainMetaModel!Business
+	to
+		c: UML2!Package (
+			name <- p.name + '.' + be.name.toLower() + '.boundary',
+			nestingPackage <- p
+		)
+	do {
+		thisModule.BusinessEntity2Boundary(be, c, b); 
+	}
+}
+
+unique lazy rule BusinessEntity2SecurityPakage {
+	from
+		p: UML2!Package,
+		b: DomainMetaModel!Business
+	to
+		c: UML2!Package (
+			name <- p.name + '.security',
+			nestingPackage <- p
+		)
+	do {
+		b.createCryptManager(c); 
+	}
+}
+
+unique lazy rule BusinessEntity2ControlPackage {
+	from
+		be: DomainMetaModel!BusinessEntity,
+		p: UML2!Package,
+		b: DomainMetaModel!Business
+	to
+		c: UML2!Package (
+			name <- p.name + '.' + be.name.toLower() + '.control',
+			nestingPackage <- p
+		)
+	do {
+		if (be.needsDAO(b)) then
+				thisModule.createDAO(be, c, b)
+			else
+				OclUndefined
+			endif; 
+		if (b.isQASelected('_r_1_3_5')) then
+				--MediumTE
+				be.configureMediumTE(c, b)
+			else
+				OclUndefined
+			endif; 
+		if (b.isQASelected('_r_1_3_6_7_8')) then
+				--SyncTE
+				be.configureSyncTE(c, b)
+			else
+				OclUndefined
+			endif; 
+		if (b.isQASelected('_r_1_3_6_7_9')) then
+				--AsyncTE
+				be.configureAsyncTE(c, b)
+			else
+				OclUndefined
+			endif; 
+		if (b.isQASelected('_r_2_11_15_17') and be.isAuthenticable()) then
+				--Lockout
+				be.configureLockoutManager(c, b)
+			else
+				OclUndefined
+			endif; 
+	}
+}
+
+unique lazy rule createDAO {
+	from
+		be: DomainMetaModel!BusinessEntity,
+		p: UML2!Package,
+		b: DomainMetaModel!Business
+	to
+		c: UML2!Class (
+			name <- be.name + 'DAO',
+			package <- p
+		)
+	do {
+		be.createDAO(b, c); 
+	}
+}
+
+unique lazy rule BusinessEntity2EntityPackage {
+	from
+		be: DomainMetaModel!BusinessEntity,
+		p: UML2!Package,
+		b: DomainMetaModel!Business
+	to
+		c: UML2!Package (
+			name <- p.name + '.' + be.name.toLower() + '.entity',
+			nestingPackage <- p
+		)
+	do {
+		thisModule.BusinessEntity2Entity(be, c, b); 
+	}
+}
+
+helper context DomainMetaModel!Attribute def: getType(): Integer =
+	if (self.dataType.toString() = 'int') then
+		2
+	else
+		if (self.dataType.toString() = 'string') then
+			3
+		else
+			if (self.dataType.toString() = 'boolean') then
+				4
+			else
+				if (self.dataType.toString() = 'date') then
+					5
+				else
+					if (self.dataType.toString() = 'double') then
+						6
+					else
+						-1
+					endif
+				endif
+			endif
+		endif
+	endif;
+
+unique lazy rule BusinessEntity2Boundary {
+	from
+		be: DomainMetaModel!BusinessEntity,
+		p: UML2!Package,
+		b: DomainMetaModel!Business
+	to
+		c: UML2!Class (
+			name <- be.name + 'Manager',
+			package <- p
+		)
+	do {
+		c.package.createOwnedClass('EntityManager', false); 
+		c.createOwnedAttribute('em', c.package.ownedType.at(2), 1, 1); 
+		be.createBoundary(b, c); 
+	}
+}
+
+unique lazy rule BusinessEntity2Entity {
+	from
+		be: DomainMetaModel!BusinessEntity,
+		p: UML2!Package,
+		b: DomainMetaModel!Business
+	to
+		c: UML2!Class (
+			name <- be.name,
+			package <- p
+		)
+	do {
+		c.package.createOwnedPrimitiveType('int'); 
+		c.package.createOwnedPrimitiveType('string'); 
+		c.package.createOwnedPrimitiveType('boolean'); 
+		c.package.createOwnedPrimitiveType('date'); 
+		c.package.createOwnedPrimitiveType('double'); 
+		for(a in be.attributes) {
+			c.createOwnedAttribute(a.name, c.package.ownedType.at(a.getType()), 1, 1);
+		}
+		be.createEntity(b, c); 
+	}
+}

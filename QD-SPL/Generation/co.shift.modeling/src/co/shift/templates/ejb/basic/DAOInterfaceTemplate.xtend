@@ -3,7 +3,7 @@ package co.shift.templates.ejb.basic
 import domainmetamodel.BusinessEntity
 import java.util.List
 import domainmetamodel.Association
-import co.shift.generators.domain.DomainCodeGenerator
+import co.shift.generators.domain.DomainCodeUtilities
 
 class DAOInterfaceTemplate {
 	
@@ -17,18 +17,18 @@ class DAOInterfaceTemplate {
 		@Remote
 		public interface I«be.name.toFirstUpper»DAO {
 			
-			«FOR association : DomainCodeGenerator.getDetailSimpleAssociations(be, associations)»
+			«FOR association : DomainCodeUtilities.getDetailSimpleAssociations(be, associations)»
 				«val container = association.eContainer as BusinessEntity»
-				«val type = DomainCodeGenerator.getID(container).dataType.literal»
-				public «be.name»TO get«container.name.toFirstUpper»«association.name.toFirstUpper»(«DomainCodeGenerator.getType(type)» «container.name.
-			toLowerCase»«DomainCodeGenerator.getID(container).name.toFirstUpper»);
+				«val type = DomainCodeUtilities.getID(container).dataType.literal»
+				public «be.name»TO get«container.name.toFirstUpper»«association.name.toFirstUpper»(«DomainCodeUtilities.getType(type)» «container.name.
+			toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper»);
 			«ENDFOR»
 			
-			«FOR association : DomainCodeGenerator.getDetailMultipleAssociations(be, associations)»
+			«FOR association : DomainCodeUtilities.getDetailMultipleAssociations(be, associations)»
 				«val container = association.eContainer as BusinessEntity»
-				«val type = DomainCodeGenerator.getID(container).dataType.literal»
-				public List<«be.name»TO> get«be.name.toFirstUpper»From«container.name.toFirstUpper»(«DomainCodeGenerator.getType(type)» «container.name.
-			toLowerCase»«DomainCodeGenerator.getID(container).name.toFirstUpper»);
+				«val type = DomainCodeUtilities.getID(container).dataType.literal»
+				public List<«be.name»TO> get«be.name.toFirstUpper»From«container.name.toFirstUpper»(«DomainCodeUtilities.getType(type)» «container.name.
+			toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper»);
 			«ENDFOR»
 		}
 	'''

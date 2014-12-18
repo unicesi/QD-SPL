@@ -1,6 +1,6 @@
 package co.shift.templates.ejb.contributed.authenticity;
 
-import co.shift.generators.domain.DomainCodeGenerator;
+import co.shift.generators.domain.DomainCodeUtilities;
 import domainmetamodel.Attribute;
 import domainmetamodel.BusinessEntity;
 import org.eclipse.xtend2.lib.StringConcatenation;
@@ -24,6 +24,8 @@ public class AuthImplTemplate {
     _builder.newLine();
     _builder.append("import java.util.Set;");
     _builder.newLine();
+    _builder.newLine();
+    _builder.append("import javax.ejb.EJB;");
     _builder.newLine();
     _builder.append("import javax.ejb.Stateless;");
     _builder.newLine();
@@ -86,6 +88,9 @@ public class AuthImplTemplate {
     _builder.append(_firstUpper_2, "");
     _builder.append("RolePK;");
     _builder.newLineIfNotEmpty();
+    String _extendContribution = DomainCodeUtilities.extendContribution("_r_2_10_12_13", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName);
+    _builder.append(_extendContribution, "");
+    _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("@Stateless");
     _builder.newLine();
@@ -94,17 +99,29 @@ public class AuthImplTemplate {
     _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
-    _builder.append("@PersistenceContext(unitName = \"co.shift.");
-    String _lowerCase_8 = packageName.toLowerCase();
-    _builder.append(_lowerCase_8, "\t");
-    _builder.append(".authorization\")");
+    _builder.append("@PersistenceContext(unitName = \"");
+    _builder.append(packageName, "\t");
+    _builder.append("\")");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("private EntityManager em;");
     _builder.newLine();
     _builder.append("\t");
     _builder.newLine();
-    Attribute authId = DomainCodeGenerator.getID(authEntity);
+    _builder.append("\t");
+    final String attribute2 = DomainCodeUtilities.extendContribution("_r_2_10_12_13", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE);
+    _builder.newLineIfNotEmpty();
+    {
+      boolean _isQASelected = DomainCodeUtilities.isQASelected("_r_2_10_12_13");
+      if (_isQASelected) {
+        _builder.append("\t");
+        _builder.append(attribute2, "\t");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.append("\t");
+    _builder.newLine();
+    Attribute authId = DomainCodeUtilities.getID(authEntity);
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
     _builder.append("public List<RoleTO> get");
@@ -112,19 +129,19 @@ public class AuthImplTemplate {
     String _firstUpper_3 = StringExtensions.toFirstUpper(_name_3);
     _builder.append(_firstUpper_3, "\t");
     _builder.append("Roles(");
-    String _type = DomainCodeGenerator.getType(authId);
+    String _type = DomainCodeUtilities.getType(authId);
     _builder.append(_type, "\t");
     _builder.append(" ");
     String _name_4 = authId.getName();
-    String _lowerCase_9 = _name_4.toLowerCase();
-    _builder.append(_lowerCase_9, "\t");
+    String _lowerCase_8 = _name_4.toLowerCase();
+    _builder.append(_lowerCase_8, "\t");
     _builder.append(") {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("List<RoleTO> ");
     String _name_5 = authEntity.getName();
-    String _lowerCase_10 = _name_5.toLowerCase();
-    _builder.append(_lowerCase_10, "\t\t");
+    String _lowerCase_9 = _name_5.toLowerCase();
+    _builder.append(_lowerCase_9, "\t\t");
     _builder.append("Roles = new ArrayList<>();");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -137,45 +154,108 @@ public class AuthImplTemplate {
     _builder.append("\t\t\t\t");
     _builder.append("Role.class);");
     _builder.newLine();
+    {
+      boolean _isQASelected_1 = DomainCodeUtilities.isQASelected("_r_2_10_12_13");
+      if (_isQASelected_1) {
+        _builder.append("\t\t");
+        _builder.append("char[] eCCChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("PBECryptographyManager.ENCRYPT, ");
+        String _name_7 = authId.getName();
+        String _lowerCase_10 = _name_7.toLowerCase();
+        _builder.append(_lowerCase_10, "\t\t");
+        _builder.append(");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
+        _builder.append("String eCCName = new String(eCCChars);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        String _name_8 = authId.getName();
+        String _lowerCase_11 = _name_8.toLowerCase();
+        _builder.append(_lowerCase_11, "\t\t");
+        _builder.append(" = eCCName;");
+        _builder.newLineIfNotEmpty();
+      }
+    }
     _builder.append("\t\t");
     _builder.append("query.setParameter(\"");
-    String _name_7 = authEntity.getName();
-    String _lowerCase_11 = _name_7.toLowerCase();
-    _builder.append(_lowerCase_11, "\t\t");
-    _builder.append("id\", ");
-    String _name_8 = authId.getName();
-    String _lowerCase_12 = _name_8.toLowerCase();
+    String _name_9 = authEntity.getName();
+    String _lowerCase_12 = _name_9.toLowerCase();
     _builder.append(_lowerCase_12, "\t\t");
+    _builder.append("id\", ");
+    String _name_10 = authId.getName();
+    String _lowerCase_13 = _name_10.toLowerCase();
+    _builder.append(_lowerCase_13, "\t\t");
     _builder.append(");");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("List<Role> found");
-    String _name_9 = authEntity.getName();
-    String _firstUpper_5 = StringExtensions.toFirstUpper(_name_9);
+    String _name_11 = authEntity.getName();
+    String _firstUpper_5 = StringExtensions.toFirstUpper(_name_11);
     _builder.append(_firstUpper_5, "\t\t");
     _builder.append("Roles = query.getResultList();");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("for (Role role : found");
-    String _name_10 = authEntity.getName();
-    String _firstUpper_6 = StringExtensions.toFirstUpper(_name_10);
+    String _name_12 = authEntity.getName();
+    String _firstUpper_6 = StringExtensions.toFirstUpper(_name_12);
     _builder.append(_firstUpper_6, "\t\t");
     _builder.append("Roles) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
-    String _name_11 = authEntity.getName();
-    String _lowerCase_13 = _name_11.toLowerCase();
-    _builder.append(_lowerCase_13, "\t\t\t");
-    _builder.append("Roles.add(role.toTO());");
+    _builder.append("RoleTO to = new RoleTO();");
+    _builder.newLine();
+    {
+      boolean _isQASelected_2 = DomainCodeUtilities.isQASelected("_r_2_10_12_13");
+      if (_isQASelected_2) {
+        _builder.append("\t\t\t");
+        _builder.append("char[] eNameChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("PBECryptographyManager.DECRYPT, role.getName());");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("String eName = new String(eNameChars);");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("to.setName(eName);");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("char[] eDesriptionChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("PBECryptographyManager.DECRYPT, role.getDescription());");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("String eDescription = new String(eDesriptionChars);");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("to.setDescription(eDescription);");
+        _builder.newLine();
+      } else {
+        _builder.append("\t\t\t");
+        _builder.append("to.setName(role.getName());");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("to.setDescription(role.getDescription());");
+        _builder.newLine();
+      }
+    }
+    _builder.append("\t\t\t");
+    String _name_13 = authEntity.getName();
+    String _lowerCase_14 = _name_13.toLowerCase();
+    _builder.append(_lowerCase_14, "\t\t\t");
+    _builder.append("Roles.add(to);");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("}");
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return ");
-    String _name_12 = authEntity.getName();
-    String _lowerCase_14 = _name_12.toLowerCase();
-    _builder.append(_lowerCase_14, "\t\t");
+    String _name_14 = authEntity.getName();
+    String _lowerCase_15 = _name_14.toLowerCase();
+    _builder.append(_lowerCase_15, "\t\t");
     _builder.append("Roles;");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -201,9 +281,45 @@ public class AuthImplTemplate {
     _builder.append("\t\t");
     _builder.append("for (Role role : foundRoles) {");
     _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("roles.add(role.toTO());");
-    _builder.newLine();
+    {
+      boolean _isQASelected_3 = DomainCodeUtilities.isQASelected("_r_2_10_12_13");
+      if (_isQASelected_3) {
+        _builder.append("\t\t\t");
+        _builder.append("RoleTO to = new RoleTO();");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("char[] eNameChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("PBECryptographyManager.DECRYPT, role.getName());");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("String eName = new String(eNameChars);");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("to.setName(eName);");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("char[] eDesriptionChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("PBECryptographyManager.DECRYPT, role.getDescription());");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("String eDescription = new String(eDesriptionChars);");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("to.setDescription(eDescription);");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("roles.add(to);");
+        _builder.newLine();
+      } else {
+        _builder.append("\t\t\t");
+        _builder.append("roles.add(role.toTO());");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t\t");
     _builder.append("}");
     _builder.newLine();
@@ -233,9 +349,45 @@ public class AuthImplTemplate {
     _builder.append("\t\t");
     _builder.append("for (Service service : foundServices) {");
     _builder.newLine();
-    _builder.append("\t\t\t");
-    _builder.append("services.add(service.toTO());");
-    _builder.newLine();
+    {
+      boolean _isQASelected_4 = DomainCodeUtilities.isQASelected("_r_2_10_12_13");
+      if (_isQASelected_4) {
+        _builder.append("\t\t\t");
+        _builder.append("ServiceTO to = new ServiceTO();");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("char[] eNameChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("PBECryptographyManager.DECRYPT, service.getName());");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("String eName = new String(eNameChars);");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("to.setName(eName);");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("char[] eDesriptionChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("PBECryptographyManager.DECRYPT, service.getDescription());");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("String eDescription = new String(eDesriptionChars);");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("to.setDescription(eDescription);");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append("services.add(to);");
+        _builder.newLine();
+      } else {
+        _builder.append("\t\t\t");
+        _builder.append("services.add(service.toTO());");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t\t");
     _builder.append("}");
     _builder.newLine();
@@ -253,6 +405,23 @@ public class AuthImplTemplate {
     _builder.append("\t\t");
     _builder.append("List<ServiceTO> roleServices = new ArrayList<>();");
     _builder.newLine();
+    {
+      boolean _isQASelected_5 = DomainCodeUtilities.isQASelected("_r_2_10_12_13");
+      if (_isQASelected_5) {
+        _builder.append("\t\t");
+        _builder.append("char[] eUNameChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("PBECryptographyManager.ENCRYPT, roleName);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("String eUName = new String(eUNameChars);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("roleName = eUName;");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t\t");
     _builder.append("Role foundRole = em.find(Role.class, roleName);");
     _builder.newLine();
@@ -265,9 +434,45 @@ public class AuthImplTemplate {
     _builder.append("\t\t\t");
     _builder.append("for (Service service : foundServices) {");
     _builder.newLine();
-    _builder.append("\t\t\t\t");
-    _builder.append("roleServices.add(service.toTO());");
-    _builder.newLine();
+    {
+      boolean _isQASelected_6 = DomainCodeUtilities.isQASelected("_r_2_10_12_13");
+      if (_isQASelected_6) {
+        _builder.append("\t\t\t\t");
+        _builder.append("ServiceTO to = new ServiceTO();");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("char[] eNameChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("PBECryptographyManager.DECRYPT, service.getName());");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("String eName = new String(eNameChars);");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("to.setName(eName);");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("char[] eDesriptionChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("PBECryptographyManager.DECRYPT, service.getDescription());");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("String eDescription = new String(eDesriptionChars);");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("to.setDescription(eDescription);");
+        _builder.newLine();
+        _builder.append("\t\t\t\t");
+        _builder.append("roleServices.add(to);");
+        _builder.newLine();
+      } else {
+        _builder.append("\t\t\t\t");
+        _builder.append("roleServices.add(service.toTO());");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t\t\t");
     _builder.append("}");
     _builder.newLine();
@@ -288,6 +493,35 @@ public class AuthImplTemplate {
     _builder.append("\t\t");
     _builder.append("Role newRole = new Role();");
     _builder.newLine();
+    {
+      boolean _isQASelected_7 = DomainCodeUtilities.isQASelected("_r_2_10_12_13");
+      if (_isQASelected_7) {
+        _builder.append("\t\t");
+        _builder.append("char[] eNameChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("PBECryptographyManager.ENCRYPT, role.getName());");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("String eName = new String(eNameChars);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("role.setName(eName);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("char[] eDesriptionChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("PBECryptographyManager.ENCRYPT, role.getDescription());");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("String eDescription = new String(eDesriptionChars);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("role.setDescription(eDescription);");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t\t");
     _builder.append("newRole.setDescription(role.getDescription());");
     _builder.newLine();
@@ -299,8 +533,8 @@ public class AuthImplTemplate {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("newRole.set");
-    String _name_13 = authEntity.getName();
-    String _firstUpper_7 = StringExtensions.toFirstUpper(_name_13);
+    String _name_15 = authEntity.getName();
+    String _firstUpper_7 = StringExtensions.toFirstUpper(_name_15);
     _builder.append(_firstUpper_7, "\t\t");
     _builder.append("Roles(null);");
     _builder.newLineIfNotEmpty();
@@ -334,6 +568,35 @@ public class AuthImplTemplate {
     _builder.append("\t");
     _builder.append("public boolean updateRole (RoleTO newRole) throws Exception {");
     _builder.newLine();
+    {
+      boolean _isQASelected_8 = DomainCodeUtilities.isQASelected("_r_2_10_12_13");
+      if (_isQASelected_8) {
+        _builder.append("\t\t");
+        _builder.append("char[] eNameChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("PBECryptographyManager.ENCRYPT, newRole.getName());");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("String eName = new String(eNameChars);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("newRole.setName(eName);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("char[] eDesriptionChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("PBECryptographyManager.ENCRYPT, newRole.getDescription());");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("String eDescription = new String(eDesriptionChars);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("newRole.setDescription(eDescription);");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t\t");
     _builder.append("Role foundRole = em.find(Role.class, newRole.getName());");
     _builder.newLine();
@@ -381,6 +644,35 @@ public class AuthImplTemplate {
     _builder.append("\t");
     _builder.append("public boolean deleteRole (RoleTO role) throws Exception {");
     _builder.newLine();
+    {
+      boolean _isQASelected_9 = DomainCodeUtilities.isQASelected("_r_2_10_12_13");
+      if (_isQASelected_9) {
+        _builder.append("\t\t");
+        _builder.append("char[] eNameChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("PBECryptographyManager.ENCRYPT, role.getName());");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("String eName = new String(eNameChars);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("role.setName(eName);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("char[] eDesriptionChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("PBECryptographyManager.ENCRYPT, role.getDescription());");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("String eDescription = new String(eDesriptionChars);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("role.setDescription(eDescription);");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t\t");
     _builder.append("Role foundRole = em.find(Role.class, role.getName());");
     _builder.newLine();
@@ -430,24 +722,59 @@ public class AuthImplTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public boolean addRoleTo");
-    String _name_14 = authEntity.getName();
-    String _firstUpper_8 = StringExtensions.toFirstUpper(_name_14);
+    String _name_16 = authEntity.getName();
+    String _firstUpper_8 = StringExtensions.toFirstUpper(_name_16);
     _builder.append(_firstUpper_8, "\t");
     _builder.append(" (");
-    String _type_1 = DomainCodeGenerator.getType(authId);
+    String _type_1 = DomainCodeUtilities.getType(authId);
     _builder.append(_type_1, "\t");
     _builder.append(" user, RoleTO role) throws Exception {");
     _builder.newLineIfNotEmpty();
+    {
+      boolean _isQASelected_10 = DomainCodeUtilities.isQASelected("_r_2_10_12_13");
+      if (_isQASelected_10) {
+        _builder.append("\t\t");
+        _builder.append("char[] eNameChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("PBECryptographyManager.ENCRYPT, role.getName());");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("String eName = new String(eNameChars);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("role.setName(eName);");
+        _builder.newLine();
+        {
+          String _type_2 = DomainCodeUtilities.getType(authId);
+          boolean _equals = _type_2.equals("String");
+          if (_equals) {
+            _builder.append("\t\t");
+            _builder.append("char[] eUNameChars = cManager.doFinal(");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("PBECryptographyManager.ENCRYPT, user);");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("String eUName = new String(eUNameChars);");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("user = eUName;");
+            _builder.newLine();
+          }
+        }
+      }
+    }
     _builder.append("\t\t");
     _builder.append("Role foundRole = em.find(Role.class, role.getName());");
     _builder.newLine();
     _builder.append("\t\t");
-    String _name_15 = authEntity.getName();
-    String _firstUpper_9 = StringExtensions.toFirstUpper(_name_15);
+    String _name_17 = authEntity.getName();
+    String _firstUpper_9 = StringExtensions.toFirstUpper(_name_17);
     _builder.append(_firstUpper_9, "\t\t");
     _builder.append("RolePK pk = new ");
-    String _name_16 = authEntity.getName();
-    String _firstUpper_10 = StringExtensions.toFirstUpper(_name_16);
+    String _name_18 = authEntity.getName();
+    String _firstUpper_10 = StringExtensions.toFirstUpper(_name_18);
     _builder.append(_firstUpper_10, "\t\t");
     _builder.append("RolePK();");
     _builder.newLineIfNotEmpty();
@@ -456,19 +783,19 @@ public class AuthImplTemplate {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("pk.set");
-    String _name_17 = authEntity.getName();
-    String _firstUpper_11 = StringExtensions.toFirstUpper(_name_17);
+    String _name_19 = authEntity.getName();
+    String _firstUpper_11 = StringExtensions.toFirstUpper(_name_19);
     _builder.append(_firstUpper_11, "\t\t");
     _builder.append("(user);");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.append("\t\t");
-    String _name_18 = authEntity.getName();
-    String _firstUpper_12 = StringExtensions.toFirstUpper(_name_18);
+    String _name_20 = authEntity.getName();
+    String _firstUpper_12 = StringExtensions.toFirstUpper(_name_20);
     _builder.append(_firstUpper_12, "\t\t");
     _builder.append("Role uR = em.find(");
-    String _name_19 = authEntity.getName();
-    String _firstUpper_13 = StringExtensions.toFirstUpper(_name_19);
+    String _name_21 = authEntity.getName();
+    String _firstUpper_13 = StringExtensions.toFirstUpper(_name_21);
     _builder.append(_firstUpper_13, "\t\t");
     _builder.append("Role.class, pk);");
     _builder.newLineIfNotEmpty();
@@ -477,8 +804,8 @@ public class AuthImplTemplate {
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("uR = new ");
-    String _name_20 = authEntity.getName();
-    String _firstUpper_14 = StringExtensions.toFirstUpper(_name_20);
+    String _name_22 = authEntity.getName();
+    String _firstUpper_14 = StringExtensions.toFirstUpper(_name_22);
     _builder.append(_firstUpper_14, "\t\t\t");
     _builder.append("Role();");
     _builder.newLineIfNotEmpty();
@@ -490,8 +817,8 @@ public class AuthImplTemplate {
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("foundRole.get");
-    String _name_21 = authEntity.getName();
-    String _firstUpper_15 = StringExtensions.toFirstUpper(_name_21);
+    String _name_23 = authEntity.getName();
+    String _firstUpper_15 = StringExtensions.toFirstUpper(_name_23);
     _builder.append(_firstUpper_15, "\t\t\t");
     _builder.append("Roles().add(uR);");
     _builder.newLineIfNotEmpty();
@@ -522,9 +849,9 @@ public class AuthImplTemplate {
     _builder.newLine();
     _builder.append("\t\t\t");
     _builder.append("throw new Exception(\"Role alredy related to ");
-    String _name_22 = authEntity.getName();
-    String _lowerCase_15 = _name_22.toLowerCase();
-    _builder.append(_lowerCase_15, "\t\t\t");
+    String _name_24 = authEntity.getName();
+    String _lowerCase_16 = _name_24.toLowerCase();
+    _builder.append(_lowerCase_16, "\t\t\t");
     _builder.append("\");");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");
@@ -534,27 +861,72 @@ public class AuthImplTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public boolean removeRoleFrom");
-    String _name_23 = authEntity.getName();
-    String _firstUpper_16 = StringExtensions.toFirstUpper(_name_23);
+    String _name_25 = authEntity.getName();
+    String _firstUpper_16 = StringExtensions.toFirstUpper(_name_25);
     _builder.append(_firstUpper_16, "\t");
     _builder.append(" (");
-    String _name_24 = authEntity.getName();
-    String _firstUpper_17 = StringExtensions.toFirstUpper(_name_24);
+    String _name_26 = authEntity.getName();
+    String _firstUpper_17 = StringExtensions.toFirstUpper(_name_26);
     _builder.append(_firstUpper_17, "\t");
     _builder.append("TO user, RoleTO role) throws Exception {");
     _builder.newLineIfNotEmpty();
+    {
+      boolean _isQASelected_11 = DomainCodeUtilities.isQASelected("_r_2_10_12_13");
+      if (_isQASelected_11) {
+        _builder.append("\t\t");
+        _builder.append("char[] eNameChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("PBECryptographyManager.ENCRYPT, role.getName());");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("String eName = new String(eNameChars);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("role.setName(eName);");
+        _builder.newLine();
+        {
+          String _type_3 = DomainCodeUtilities.getType(authId);
+          boolean _equals_1 = _type_3.equals("String");
+          if (_equals_1) {
+            _builder.append("\t\t");
+            _builder.append("char[] eUNameChars = cManager.doFinal(");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("PBECryptographyManager.ENCRYPT, user.get");
+            Attribute _iD = DomainCodeUtilities.getID(authEntity);
+            String _name_27 = _iD.getName();
+            String _firstUpper_18 = StringExtensions.toFirstUpper(_name_27);
+            _builder.append(_firstUpper_18, "\t\t");
+            _builder.append("());");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t\t");
+            _builder.append("String eUName = new String(eUNameChars);");
+            _builder.newLine();
+            _builder.append("\t\t");
+            _builder.append("user.set");
+            Attribute _iD_1 = DomainCodeUtilities.getID(authEntity);
+            String _name_28 = _iD_1.getName();
+            String _firstUpper_19 = StringExtensions.toFirstUpper(_name_28);
+            _builder.append(_firstUpper_19, "\t\t");
+            _builder.append("(eUName);");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
     _builder.append("\t\t");
     _builder.append("Role foundRole = em.find(Role.class, role.getName());");
     _builder.newLine();
     _builder.newLine();
     _builder.append("\t\t");
-    String _name_25 = authEntity.getName();
-    String _firstUpper_18 = StringExtensions.toFirstUpper(_name_25);
-    _builder.append(_firstUpper_18, "\t\t");
+    String _name_29 = authEntity.getName();
+    String _firstUpper_20 = StringExtensions.toFirstUpper(_name_29);
+    _builder.append(_firstUpper_20, "\t\t");
     _builder.append("RolePK pk = new ");
-    String _name_26 = authEntity.getName();
-    String _firstUpper_19 = StringExtensions.toFirstUpper(_name_26);
-    _builder.append(_firstUpper_19, "\t\t");
+    String _name_30 = authEntity.getName();
+    String _firstUpper_21 = StringExtensions.toFirstUpper(_name_30);
+    _builder.append(_firstUpper_21, "\t\t");
     _builder.append("RolePK();");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -562,35 +934,35 @@ public class AuthImplTemplate {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("pk.set");
-    String _name_27 = authEntity.getName();
-    String _firstUpper_20 = StringExtensions.toFirstUpper(_name_27);
-    _builder.append(_firstUpper_20, "\t\t");
+    String _name_31 = authEntity.getName();
+    String _firstUpper_22 = StringExtensions.toFirstUpper(_name_31);
+    _builder.append(_firstUpper_22, "\t\t");
     _builder.append("(");
-    String _name_28 = authEntity.getName();
-    String _lowerCase_16 = _name_28.toLowerCase();
-    _builder.append(_lowerCase_16, "\t\t");
+    String _name_32 = authEntity.getName();
+    String _lowerCase_17 = _name_32.toLowerCase();
+    _builder.append(_lowerCase_17, "\t\t");
     _builder.append(".get");
-    Attribute _iD = DomainCodeGenerator.getID(authEntity);
-    String _name_29 = _iD.getName();
-    String _firstUpper_21 = StringExtensions.toFirstUpper(_name_29);
-    _builder.append(_firstUpper_21, "\t\t");
+    Attribute _iD_2 = DomainCodeUtilities.getID(authEntity);
+    String _name_33 = _iD_2.getName();
+    String _firstUpper_23 = StringExtensions.toFirstUpper(_name_33);
+    _builder.append(_firstUpper_23, "\t\t");
     _builder.append("());");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
-    String _name_30 = authEntity.getName();
-    String _firstUpper_22 = StringExtensions.toFirstUpper(_name_30);
-    _builder.append(_firstUpper_22, "\t\t");
+    String _name_34 = authEntity.getName();
+    String _firstUpper_24 = StringExtensions.toFirstUpper(_name_34);
+    _builder.append(_firstUpper_24, "\t\t");
     _builder.append("Role uR = em.find(");
-    String _name_31 = authEntity.getName();
-    String _firstUpper_23 = StringExtensions.toFirstUpper(_name_31);
-    _builder.append(_firstUpper_23, "\t\t");
+    String _name_35 = authEntity.getName();
+    String _firstUpper_25 = StringExtensions.toFirstUpper(_name_35);
+    _builder.append(_firstUpper_25, "\t\t");
     _builder.append("Role.class, pk);");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("foundRole.get");
-    String _name_32 = authEntity.getName();
-    String _firstUpper_24 = StringExtensions.toFirstUpper(_name_32);
-    _builder.append(_firstUpper_24, "\t\t");
+    String _name_36 = authEntity.getName();
+    String _firstUpper_26 = StringExtensions.toFirstUpper(_name_36);
+    _builder.append(_firstUpper_26, "\t\t");
     _builder.append("Roles().remove(uR);");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
@@ -623,6 +995,35 @@ public class AuthImplTemplate {
     _builder.append("\t");
     _builder.append("public boolean addServiceToRole (String roleName, ServiceTO service) throws Exception {");
     _builder.newLine();
+    {
+      boolean _isQASelected_12 = DomainCodeUtilities.isQASelected("_r_2_10_12_13");
+      if (_isQASelected_12) {
+        _builder.append("\t\t");
+        _builder.append("char[] eNameChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("PBECryptographyManager.ENCRYPT, roleName);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("String eName = new String(eNameChars);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("roleName = eName;");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("char[] eUNameChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("PBECryptographyManager.ENCRYPT, service.getName());");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("String eUName = new String(eUNameChars);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("service.setName(eUName);");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t\t");
     _builder.append("Role foundRole = em.find(Role.class, roleName);");
     _builder.newLine();
@@ -672,6 +1073,35 @@ public class AuthImplTemplate {
     _builder.append("\t");
     _builder.append("public boolean removeServiceFromRole (RoleTO role, ServiceTO service) throws Exception {");
     _builder.newLine();
+    {
+      boolean _isQASelected_13 = DomainCodeUtilities.isQASelected("_r_2_10_12_13");
+      if (_isQASelected_13) {
+        _builder.append("\t\t");
+        _builder.append("char[] eNameChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("PBECryptographyManager.ENCRYPT, role.getName());");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("String eName = new String(eNameChars);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("role.setName(eName);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("char[] eUNameChars = cManager.doFinal(");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("PBECryptographyManager.ENCRYPT, service.getName());");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("String eUName = new String(eUNameChars);");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("service.setName(eUName);");
+        _builder.newLine();
+      }
+    }
     _builder.append("\t\t");
     _builder.append("Role foundRole = em.find(Role.class, role.getName());");
     _builder.newLine();
@@ -720,51 +1150,51 @@ public class AuthImplTemplate {
     _builder.newLine();
     _builder.append("\t");
     _builder.append("public List<ServiceTO> get");
-    String _name_33 = authEntity.getName();
-    String _firstUpper_25 = StringExtensions.toFirstUpper(_name_33);
-    _builder.append(_firstUpper_25, "\t");
+    String _name_37 = authEntity.getName();
+    String _firstUpper_27 = StringExtensions.toFirstUpper(_name_37);
+    _builder.append(_firstUpper_27, "\t");
     _builder.append("Services (");
-    String _type_2 = DomainCodeGenerator.getType(authId);
-    _builder.append(_type_2, "\t");
+    String _type_4 = DomainCodeUtilities.getType(authId);
+    _builder.append(_type_4, "\t");
     _builder.append(" ");
-    String _name_34 = authId.getName();
-    String _lowerCase_17 = _name_34.toLowerCase();
-    _builder.append(_lowerCase_17, "\t");
+    String _name_38 = authId.getName();
+    String _lowerCase_18 = _name_38.toLowerCase();
+    _builder.append(_lowerCase_18, "\t");
     _builder.append(") {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("List<RoleTO> ");
-    String _name_35 = authEntity.getName();
-    String _lowerCase_18 = _name_35.toLowerCase();
-    _builder.append(_lowerCase_18, "\t\t");
-    _builder.append("Roles = get");
-    String _name_36 = authEntity.getName();
-    String _firstUpper_26 = StringExtensions.toFirstUpper(_name_36);
-    _builder.append(_firstUpper_26, "\t\t");
-    _builder.append("Roles(");
-    String _name_37 = authId.getName();
-    String _lowerCase_19 = _name_37.toLowerCase();
+    String _name_39 = authEntity.getName();
+    String _lowerCase_19 = _name_39.toLowerCase();
     _builder.append(_lowerCase_19, "\t\t");
+    _builder.append("Roles = get");
+    String _name_40 = authEntity.getName();
+    String _firstUpper_28 = StringExtensions.toFirstUpper(_name_40);
+    _builder.append(_firstUpper_28, "\t\t");
+    _builder.append("Roles(");
+    String _name_41 = authId.getName();
+    String _lowerCase_20 = _name_41.toLowerCase();
+    _builder.append(_lowerCase_20, "\t\t");
     _builder.append(");");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("Set<ServiceTO> ");
-    String _name_38 = authEntity.getName();
-    String _lowerCase_20 = _name_38.toLowerCase();
-    _builder.append(_lowerCase_20, "\t\t");
+    String _name_42 = authEntity.getName();
+    String _lowerCase_21 = _name_42.toLowerCase();
+    _builder.append(_lowerCase_21, "\t\t");
     _builder.append("ServicesHash = new HashSet<>();");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
     _builder.append("for (RoleTO roleTO : ");
-    String _name_39 = authEntity.getName();
-    String _lowerCase_21 = _name_39.toLowerCase();
-    _builder.append(_lowerCase_21, "\t\t");
+    String _name_43 = authEntity.getName();
+    String _lowerCase_22 = _name_43.toLowerCase();
+    _builder.append(_lowerCase_22, "\t\t");
     _builder.append("Roles) {");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t\t");
-    String _name_40 = authEntity.getName();
-    String _lowerCase_22 = _name_40.toLowerCase();
-    _builder.append(_lowerCase_22, "\t\t\t");
+    String _name_44 = authEntity.getName();
+    String _lowerCase_23 = _name_44.toLowerCase();
+    _builder.append(_lowerCase_23, "\t\t\t");
     _builder.append("ServicesHash.addAll(getRoleServices(roleTO.getName()));");
     _builder.newLineIfNotEmpty();
     _builder.append("\t\t");
@@ -772,9 +1202,9 @@ public class AuthImplTemplate {
     _builder.newLine();
     _builder.append("\t\t");
     _builder.append("return new ArrayList<>(");
-    String _name_41 = authEntity.getName();
-    String _lowerCase_23 = _name_41.toLowerCase();
-    _builder.append(_lowerCase_23, "\t\t");
+    String _name_45 = authEntity.getName();
+    String _lowerCase_24 = _name_45.toLowerCase();
+    _builder.append(_lowerCase_24, "\t\t");
     _builder.append("ServicesHash);");
     _builder.newLineIfNotEmpty();
     _builder.append("\t");

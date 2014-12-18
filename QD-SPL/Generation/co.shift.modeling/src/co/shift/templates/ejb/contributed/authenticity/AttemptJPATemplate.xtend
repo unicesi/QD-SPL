@@ -1,7 +1,7 @@
 package co.shift.templates.ejb.contributed.authenticity
 
 import domainmetamodel.BusinessEntity
-import co.shift.generators.domain.DomainCodeGenerator
+import co.shift.generators.domain.DomainCodeUtilities
 
 class AttemptJPATemplate {
 	
@@ -14,21 +14,22 @@ class AttemptJPATemplate {
 		@Entity
 		@Table(name="Attempts")
 		public class Attempt implements Serializable {
+		«DomainCodeUtilities.addEntityName("co.shift."+packageName.toLowerCase()+"."+be.name.toLowerCase+".entity.Attempt")»
 			private static final long serialVersionUID = 1L;
-		«var beId = DomainCodeGenerator.getID(be)»
+		«var beId = DomainCodeUtilities.getID(be)»
 			@Id
-			private «DomainCodeGenerator.getType(beId)» «be.name.toLowerCase»;
+			private «DomainCodeUtilities.getType(beId)» «be.name.toLowerCase»;
 		
 			private int attempts;
 		
 			public Attempt() {
 			}
 		
-			public «DomainCodeGenerator.getType(beId)» get«be.name.toFirstUpper»() {
+			public «DomainCodeUtilities.getType(beId)» get«be.name.toFirstUpper»() {
 				return this.«be.name.toLowerCase»;
 			}
 		
-			public void set«be.name.toFirstUpper»(«DomainCodeGenerator.getType(beId)» «be.name.toLowerCase») {
+			public void set«be.name.toFirstUpper»(«DomainCodeUtilities.getType(beId)» «be.name.toLowerCase») {
 				this.user = «be.name.toLowerCase»;
 			}
 		

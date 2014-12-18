@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <!-- @generated DomainMetamodelM2M -->
+      <package
+            uri="http://domainmetamodelm2m/1.0"
+            class="domainmetamodelm2m.Domainmetamodelm2mPackage"
+            genModel="metamodels/DomainMetamodelM2M.genmodel"/>
+   </extension>
+
+</plugin>
