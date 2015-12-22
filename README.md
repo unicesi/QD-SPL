@@ -1,4 +1,4 @@
-SHIFT
+QD-SPL
 =====
 
-SHIFT Project Repository
+Quality-Driven Software Product Lines project repository
