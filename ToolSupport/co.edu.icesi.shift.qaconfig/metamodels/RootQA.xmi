@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<qasvariabilitymodel:RootQA
+    xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:qasvariabilitymodel="http://qasvariabilitymodel/qasvariabilitymodel"
+    xsi:schemaLocation="http://qasvariabilitymodel/qasvariabilitymodel QAsConfig.ecore"
+    name="SHIFT QAs"
+    selected="true">
+  <children
+      xsi:type="qasvariabilitymodel:QAGroup"
+      name="TimeExec"
+      min="1">
+    <children
+        name="Normal"/>
+    <children
+        name="Medium"/>
+    <children
+        name="Fast">
+      <children
+          xsi:type="qasvariabilitymodel:QAGroup">
+        <children
+            name="Sync"/>
+        <children
+            name="Async"/>
+      </children>
+    </children>
+  </children>
+  <children
+      xsi:type="qasvariabilitymodel:QAGroup"
+      name="Security">
+    <children
+        name="Confidentiallity">
+      <children
+          xsi:type="qasvariabilitymodel:SolitaryQA"
+          name="Data Encrypted"/>
+      <children
+          xsi:type="qasvariabilitymodel:SolitaryQA"
+          name="Data Unencrypted"/>
+    </children>
+  </children>
+</qasvariabilitymodel:RootQA>

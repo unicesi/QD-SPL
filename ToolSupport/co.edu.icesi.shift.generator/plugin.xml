@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+         <menu
+               id="co.edu.icesi.shift.generator.menushift"
+               label="SHIFT">
+            <command
+                  commandId="co.edu.icesi.shift.generator.command1"
+                  label="Generate Enterprise App"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.views.ContentOutline?after=additions">
+         <command
+               commandId="co.edu.icesi.shift.generator.command1"
+               icon="icons/generator.gif"
+               label="Generate Enterprise App"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="co.edu.icesi.shift.generator.handlers.WorkflowHandler"
+            id="co.edu.icesi.shift.generator.command1"
+            name="command_name">
+      </command>
+   </extension>
+
+</plugin>

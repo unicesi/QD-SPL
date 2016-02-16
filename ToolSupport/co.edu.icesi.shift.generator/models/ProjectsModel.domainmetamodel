@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<domainmetamodel:Business xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:domainmetamodel="http://domainmetamodel/1.0" name="pcs">
+  <entities name="Project">
+    <attributes name="id" isRequired="true" isDefault="true"/>
+    <attributes name="description" dataType="string" isRequired="true"/>
+    <attributes name="name" dataType="string" isRequired="true"/>
+    <attributes name="startDate" dataType="date" isRequired="true"/>
+    <contracts xsi:type="domainmetamodel:Create" name="createProject"/>
+    <contracts xsi:type="domainmetamodel:Update" name="updateProject"/>
+    <contracts xsi:type="domainmetamodel:ListAll" name="getAllProjects"/>
+    <contracts xsi:type="domainmetamodel:AddElement" name="addUserToProject" association="//@entities.0/@associations.0"/>
+    <contracts xsi:type="domainmetamodel:Delete" name="deleteProject"/>
+    <contracts xsi:type="domainmetamodel:DeleteElement" name="removeUserFromProject" association="//@entities.0/@associations.0"/>
+    <contracts xsi:type="domainmetamodel:DeleteElement" name="deleteRiskFromProject" association="//@entities.0/@associations.2"/>
+    <contracts xsi:type="domainmetamodel:AddElement" name="addRiskToProject" association="//@entities.0/@associations.2"/>
+    <associations xsi:type="domainmetamodel:Multiple" associatedEntity="//@entities.1" name="users" entity="//@entities.1"/>
+    <associations xsi:type="domainmetamodel:Simple" associatedEntity="//@entities.1" name="manager" relatedEntity="//@entities.1"/>
+    <associations xsi:type="domainmetamodel:Multiple" associatedEntity="//@entities.2" name="risks" entity="//@entities.2"/>
+    <associations xsi:type="domainmetamodel:Simple" associatedEntity="//@entities.2" name="priorityRisk" relatedEntity="//@entities.2"/>
+  </entities>
+  <entities name="User" isAuthenticable="true">
+    <attributes name="cc" dataType="string" isRequired="true" isDefault="true"/>
+    <attributes name="name" dataType="string" isRequired="true"/>
+    <attributes name="cellphone" dataType="string" isRequired="true"/>
+    <attributes name="password" dataType="string" isRequired="true"/>
+    <contracts xsi:type="domainmetamodel:ListAll" name="getAllUsers"/>
+    <contracts xsi:type="domainmetamodel:Create" name="createUser"/>
+    <associations xsi:type="domainmetamodel:Multiple" associatedEntity="//@entities.0" name="projects" entity="//@entities.0"/>
+  </entities>
+  <entities name="Risk">
+    <attributes name="id" isRequired="true" isDefault="true"/>
+    <attributes name="description" dataType="string" isRequired="true"/>
+    <attributes name="impact" dataType="double" isRequired="true"/>
+    <attributes name="name" dataType="string" isRequired="true"/>
+    <attributes name="probability" dataType="double" isRequired="true"/>
+    <contracts xsi:type="domainmetamodel:Create" name="addRisk"/>
+    <contracts xsi:type="domainmetamodel:Delete" name="removeRisk"/>
+  </entities>
+</domainmetamodel:Business>

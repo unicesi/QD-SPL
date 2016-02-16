@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/co.edu.icesi.shift.qaconfig/src" modelPluginID="co.edu.icesi.shift.qaconfig"
+    modelName="Qaconfig" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>QAsConfig.ecore</foreignModel>
+  <genPackages prefix="Qasvariabilitymodel" disposableProviderFactory="true" ecorePackage="QAsConfig.ecore#/">
+    <genClasses ecoreClass="QAsConfig.ecore#//QA">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QAsConfig.ecore#//QA/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QAsConfig.ecore#//QA/selected"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QAsConfig.ecore#//QA/children"/>
+    </genClasses>
+    <genClasses ecoreClass="QAsConfig.ecore#//ContainableByQA">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference QAsConfig.ecore#//ContainableByQA/parentQA"/>
+    </genClasses>
+    <genClasses ecoreClass="QAsConfig.ecore#//RootQA"/>
+    <genClasses ecoreClass="QAsConfig.ecore#//GroupedQA">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference QAsConfig.ecore#//GroupedQA/parentFeature"/>
+    </genClasses>
+    <genClasses ecoreClass="QAsConfig.ecore#//SolitaryQA"/>
+    <genClasses ecoreClass="QAsConfig.ecore#//QAGroup">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QAsConfig.ecore#//QAGroup/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QAsConfig.ecore#//QAGroup/min"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute QAsConfig.ecore#//QAGroup/max"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference QAsConfig.ecore#//QAGroup/children"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

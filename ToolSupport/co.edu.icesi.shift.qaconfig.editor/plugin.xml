@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated qaconfig -->
+      <wizard
+            id="qasvariabilitymodel.presentation.QasvariabilitymodelModelWizardID"
+            name="%_UI_QasvariabilitymodelModelWizard_label"
+            class="qasvariabilitymodel.presentation.QasvariabilitymodelModelWizard"
+            category="co.edu.icesi.shift.common.shiftcategory"
+            icon="icons/reltopics_co.gif">
+         <description>%_UI_QasvariabilitymodelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated qaconfig -->
+      <editor
+            id="qasvariabilitymodel.presentation.QasvariabilitymodelEditorID"
+            name="%_UI_QasvariabilitymodelEditor_label"
+            icon="icons/full/obj16/QasvariabilitymodelModelFile.gif"
+            extensions="qasvariabilitymodel"
+            class="qasvariabilitymodel.presentation.QasvariabilitymodelEditor"
+            contributorClass="qasvariabilitymodel.presentation.QasvariabilitymodelActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

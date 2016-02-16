@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="co.edu.icesi.shift.common.shiftcategory"
+            class="domainmetamodel.presentation.DomainmetamodelModelWizard"
+            icon="icons/edtsrclkup_co.gif"
+            id="domainmodel.presentation.DomainmetamodelModelWizardID"
+            name="EA Domain Model">
+         <description>
+            Starts a New Enterprise Application Domain Model Wizard.
+         </description>
+         <selection
+               class="org.eclipse.core.resources.IResource">
+         </selection>
+      </wizard>
+   </extension>
+
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated DomainMetamodel -->
+      <editor
+            id="domainmetamodel.presentation.DomainmetamodelEditorID"
+            name="%_UI_DomainmetamodelEditor_label"
+            icon="icons/full/obj16/DomainmetamodelModelFile.gif"
+            extensions="domainmetamodel"
+            class="domainmetamodel.presentation.DomainmetamodelEditor"
+            contributorClass="domainmetamodel.presentation.DomainmetamodelActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

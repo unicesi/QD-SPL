@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="qasvariabilitymodel" nsURI="http://qasvariabilitymodel/qasvariabilitymodel"
+    nsPrefix="qasvariabilitymodel">
+  <eClassifiers xsi:type="ecore:EClass" name="QA">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="selected" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//ContainableByQA" containment="true" eOpposite="#//ContainableByQA/parentQA"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ContainableByQA">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentQA" lowerBound="1"
+        eType="#//QA" eOpposite="#//QA/children"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RootQA" eSuperTypes="#//QA"/>
+  <eClassifiers xsi:type="ecore:EClass" name="GroupedQA" eSuperTypes="#//QA">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentFeature" lowerBound="1"
+        eType="#//QAGroup" changeable="false" eOpposite="#//QAGroup/children"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SolitaryQA" eSuperTypes="#//QA #//ContainableByQA"/>
+  <eClassifiers xsi:type="ecore:EClass" name="QAGroup" eSuperTypes="#//ContainableByQA">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="min" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="max" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="children" upperBound="-1"
+        eType="#//GroupedQA" containment="true" eOpposite="#//GroupedQA/parentFeature"/>
+  </eClassifiers>
+</ecore:EPackage>

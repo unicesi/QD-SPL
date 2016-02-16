@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="co.edu.icesi.shift.common.shiftcategory"
+            class="co.edu.icesi.shift.domainmodel.creator.DomainmetamodelModelWizard"
+            icon="icons/full/obj16/DomainmetamodelModelFile.gif"
+            id="co.edu.icesi.shift.domainmodel.dmmcreator.DomainModelWizard"
+            name="EA Domain Model">
+         <description>
+            Starts a New Enterprise Application Domain Model Wizard.
+         </description>
+         <selection
+               class="org.eclipse.core.resources.IResource">
+         </selection>
+      </wizard>
+   </extension>
+
+</plugin>

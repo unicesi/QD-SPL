@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/co.shift.modeling/src" modelPluginID="co.shift.modeling"
+    modelName="DomainMetamodel" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false"
+    operationReflection="true" importOrganizing="true">
+  <foreignModel>DomainMetamodel.ecore</foreignModel>
+  <genPackages prefix="Domainmetamodel" disposableProviderFactory="true" ecorePackage="DomainMetamodel.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="DomainMetamodel.ecore#//DataType">
+      <genEnumLiterals ecoreEnumLiteral="DomainMetamodel.ecore#//DataType/int"/>
+      <genEnumLiterals ecoreEnumLiteral="DomainMetamodel.ecore#//DataType/string"/>
+      <genEnumLiterals ecoreEnumLiteral="DomainMetamodel.ecore#//DataType/boolean"/>
+      <genEnumLiterals ecoreEnumLiteral="DomainMetamodel.ecore#//DataType/date"/>
+      <genEnumLiterals ecoreEnumLiteral="DomainMetamodel.ecore#//DataType/object"/>
+      <genEnumLiterals ecoreEnumLiteral="DomainMetamodel.ecore#//DataType/collection"/>
+      <genEnumLiterals ecoreEnumLiteral="DomainMetamodel.ecore#//DataType/void"/>
+      <genEnumLiterals ecoreEnumLiteral="DomainMetamodel.ecore#//DataType/double"/>
+    </genEnums>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//Business">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DomainMetamodel.ecore#//Business/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DomainMetamodel.ecore#//Business/entities"/>
+    </genClasses>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//BusinessEntity">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DomainMetamodel.ecore#//BusinessEntity/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DomainMetamodel.ecore#//BusinessEntity/attributes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DomainMetamodel.ecore#//BusinessEntity/contracts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference DomainMetamodel.ecore#//BusinessEntity/associations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DomainMetamodel.ecore#//BusinessEntity/isAuthenticable"/>
+    </genClasses>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//Attribute">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DomainMetamodel.ecore#//Attribute/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DomainMetamodel.ecore#//Attribute/dataType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DomainMetamodel.ecore#//Attribute/isRequired"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DomainMetamodel.ecore#//Attribute/isDefault"/>
+    </genClasses>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//Association">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference DomainMetamodel.ecore#//Association/associatedEntity"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DomainMetamodel.ecore#//Association/name"/>
+    </genClasses>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//Simple">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference DomainMetamodel.ecore#//Simple/relatedEntity"/>
+    </genClasses>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//Multiple">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference DomainMetamodel.ecore#//Multiple/entity"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="DomainMetamodel.ecore#//Contracts">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute DomainMetamodel.ecore#//Contracts/name"/>
+    </genClasses>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//Create"/>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//Update"/>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//Retrieve"/>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//Delete"/>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//ListAll"/>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//Authenticate"/>
+    <genClasses image="false" ecoreClass="DomainMetamodel.ecore#//ContractElements">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference DomainMetamodel.ecore#//ContractElements/association"/>
+    </genClasses>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//ListElements"/>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//AddElement"/>
+    <genClasses ecoreClass="DomainMetamodel.ecore#//DeleteElement"/>
+  </genPackages>
+</genmodel:GenModel>
