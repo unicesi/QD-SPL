@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cheatsheet title="Creating an oAW generator project">
+   <intro>
+      <description>
+         This cheat sheet will guide you through the process of creating a new oAW-based MDSD generator.
+<br/>
+<br/>
+You will create a new oAW project with a sample metamodel and try it out.
+<br/>
+<br/>
+Let&apos;s get started!
+      </description>
+   </intro>
+   <item title="Open the openArchitectureWare perspective" dialog="true" skip="false">
+      <description>
+         If you&apos;re not already in the openArchitectureWare perspective, in the main menu select &quot;Window &gt; Open Perspective &gt; Other... &gt; openArchitectureWare&quot; or click on the &quot;Click to Perform&quot; link below.
+      </description>
+      <command serialization="org.eclipse.ui.perspectives.showPerspective(org.eclipse.ui.perspectives.showPerspective.perspectiveId=org.openarchitectureware.base.oAWPerspective)" confirm="false">
+      </command>
+   </item>
+   <item title="Create a new oAW project" dialog="true" skip="false">
+      <description>
+         Metamodel definitions and model transformations must reside in special openArchitectureWare projects. In the main toolbar, click in the &quot;New&quot;  button and select &quot;openArchitectureWare Project&quot; from the list, or click on the link below. Enter &quot;HelloGenerator&quot; for the project name. Make sure you have ticked the &quot;Create a sample model&quot; check box, then click &quot;Finish&quot;.
+      </description>
+      <command serialization="org.eclipse.ui.newWizard(newWizardId=org.openarchitectureware.wizards.OawProjectWizard)" confirm="false">
+      </command>
+   </item>
+   <item title="Running the generator" dialog="true" skip="false">
+      <description>
+         The oAW wizard has created a new project containing a sample metamodel, a sample model, some templates and a workflow file.
+<br/>
+The workflow file &quot;workflow.oaw&quot;, located in &quot;src/workflow&quot; controls the bahaviour of the generator. In the next step, you&apos;ll run the generator using the workflow definition.
+<br/>
+To do so, select the workflow file in the package explorer and start the workflow by selecting &quot;Run As &gt; oAW Workflow&quot; from the context menu.
+      </description>
+   </item>
+</cheatsheet>

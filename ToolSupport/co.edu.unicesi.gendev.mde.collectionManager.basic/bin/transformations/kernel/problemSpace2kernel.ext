@@ -1,0 +1,25 @@
+import problemSpaceMetamodel;
+import kernelMetamodel;
+
+create kernelMetamodel::Kernel problemSpace2kernel(problemSpaceMetamodel::ProblemSpace element):
+	createSystem(this, element) ->
+	this;
+
+create kernelMetamodel::System createSystem(kernelMetamodel::Kernel kernel, problemSpaceMetamodel::ProblemSpace element):
+	setName(element.name) ->
+	entity2element(this, element.entity) ->
+	kernel.setSystem(this) ->
+	this;
+
+create kernelMetamodel::Element entity2element(kernelMetamodel::System system, problemSpaceMetamodel::Entity entity):
+	// TODO entity-to-element transformation
+
+create kernelMetamodel::Attribute characteristic2attribute(problemSpaceMetamodel::Characteristic characteristic, kernelMetamodel::Element element, kernelMetamodel::System system):
+	// TODO characteristic-to-attribute transformation
+
+create kernelMetamodel::Sort createBubbleSort(kernelMetamodel::Attribute attribute, kernelMetamodel::System system):
+	// TODO bubble sort transformation
+
+create kernelMetamodel::Sort createInsertionSort(kernelMetamodel::Attribute attribute, kernelMetamodel::System system):
+	// TODO insertion sort transformation
+	

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.openarchitectureware.adapter.rsdp.feature"
+      label="%featureName"
+      version="4.3.0.20080508-1430PRD"
+      provider-name="%providerName"
+      plugin="org.openarchitectureware.adapter.rsdp.plugin">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://http://oaw.pluginbuilder.org/nightly/updateSite/site.xml"/>
+      <discovery label="%updateSiteName" url="http://www.openarchitectureware.org/updatesite/milestone"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.debug.ui"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.jdt.launching"/>
+      <import plugin="org.openarchitectureware.workflow"/>
+      <import plugin="org.openarchitectureware.core.emftools"/>
+      <import plugin="org.openarchitectureware.uml2.adapter"/>
+      <import plugin="org.eclipse.uml2.uml"/>
+      <import plugin="org.openarchitectureware.base"/>
+      <import plugin="org.apache.commons.logging"/>
+      <import plugin="org.openarchitectureware.core.workflow"/>
+      <import plugin="org.openarchitectureware.core.expressions"/>
+   </requires>
+
+   <plugin
+         id="org.openarchitectureware.adapter.rsdp"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+   <plugin
+         id="org.openarchitectureware.adapter.rsdp.plugin"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+</feature>

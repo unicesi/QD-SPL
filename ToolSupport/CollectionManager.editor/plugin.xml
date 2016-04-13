@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated ProblemSpaceMetamodel -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="domainmetamodel.presentation.DomainmetamodelModelWizardID"
+            name="%_UI_DomainmetamodelModelWizard_label"
+            class="domainmetamodel.presentation.DomainmetamodelModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/DomainmetamodelModelFile.gif">
+         <description>%_UI_DomainmetamodelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated ProblemSpaceMetamodel -->
+      <editor
+            id="domainmetamodel.presentation.DomainmetamodelEditorID"
+            name="%_UI_DomainmetamodelEditor_label"
+            icon="icons/full/obj16/DomainmetamodelModelFile.gif"
+            extensions="domainmetamodel"
+            class="domainmetamodel.presentation.DomainmetamodelEditor"
+            contributorClass="domainmetamodel.presentation.DomainmetamodelActionBarContributor">
+      </editor>
+   </extension>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated KernelMetamodel -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="kernelmetamodel.presentation.KernelmetamodelModelWizardID"
+            name="%_UI_KernelmetamodelModelWizard_label"
+            class="kernelmetamodel.presentation.KernelmetamodelModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/KernelmetamodelModelFile.gif">
+         <description>%_UI_KernelmetamodelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated KernelMetamodel -->
+      <editor
+            id="kernelmetamodel.presentation.KernelmetamodelEditorID"
+            name="%_UI_KernelmetamodelEditor_label"
+            icon="icons/full/obj16/KernelmetamodelModelFile.gif"
+            extensions="kernelmetamodel"
+            class="kernelmetamodel.presentation.KernelmetamodelEditor"
+            contributorClass="kernelmetamodel.presentation.KernelmetamodelActionBarContributor">
+      </editor>
+   </extension>
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated GUIMetamodel -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="guimetamodel.presentation.GuimetamodelModelWizardID"
+            name="%_UI_GuimetamodelModelWizard_label"
+            class="guimetamodel.presentation.GuimetamodelModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/GuimetamodelModelFile.gif">
+         <description>%_UI_GuimetamodelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated GUIMetamodel -->
+      <editor
+            id="guimetamodel.presentation.GuimetamodelEditorID"
+            name="%_UI_GuimetamodelEditor_label"
+            icon="icons/full/obj16/GuimetamodelModelFile.gif"
+            extensions="guimetamodel"
+            class="guimetamodel.presentation.GuimetamodelEditor"
+            contributorClass="guimetamodel.presentation.GuimetamodelActionBarContributor">
+      </editor>
+   </extension>
+</plugin>

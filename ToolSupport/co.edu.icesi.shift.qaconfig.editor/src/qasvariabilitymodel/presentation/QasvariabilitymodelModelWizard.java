@@ -597,6 +597,7 @@ public class QasvariabilitymodelModelWizard extends Wizard implements INewWizard
 				GridData data = new GridData();
 				data.horizontalAlignment = GridData.FILL;
 				bdefaultQAModel.setLayoutData(data);
+				bdefaultQAModel.setSelection(true);
 			}
 			bdefaultQAModel.setText(QaconfigEditorPlugin.INSTANCE.getString("_UI_DefaultQAModel"));
 			//Fin modificación

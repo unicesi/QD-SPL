@@ -1,0 +1,109 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>EMF State Machine</title><link rel="stylesheet" href="../book.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="openArchitectureWare User Guide"><link rel="up" href="samples.html" title="Part&nbsp;III.&nbsp;Samples"><link rel="prev" href="using_the_emfatic_ecore_editor.html" title="Using the Emfatic Ecore Editor"><link rel="next" href="m2m_uml2_example.html" title="Model-To-Model with UML2 Example"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="emf_state_machine"></a>EMF State Machine</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="emf_state_machine.html#emf_state_machine_introduction">Introduction</a></span></dt><dt><span class="section"><a href="emf_state_machine.html#emf_state_machine_installation">Installation</a></span></dt><dt><span class="section"><a href="emf_state_machine.html#emf_state_machine_metamodel">Metamodel</a></span></dt><dt><span class="section"><a href="emf_state_machine.html#emf_state_machine_example_statemachine">Example Statemachine</a></span></dt><dt><span class="section"><a href="emf_state_machine.html#emf_state_machine_the_generator">The Generator</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="emf_state_machine_introduction"></a>Introduction</h2></div></div></div><p>This example shows how to implement a state machine generator using
+    EMF and openArchitectureWare. Note that the implementation of the state
+    machine in Java is probably the slowest and clumsiest way to implement a
+    state machine. The focus was not on optimizing the performance of the
+    state machine implementation.</p><p>This tutorial does not explain too much, it is rather a guide
+    through the example code. We expect that you know how to work with
+    openArchitectureWare and EMF. If that is not the case, you should read and
+    play with the <span class="emphasis"><em>emfHelloWorld</em></span> example first (the
+    tutorial entitled <span class="emphasis"><em>Generating Code from EMF Models</em></span>
+    ).</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="emf_state_machine_installation"></a>Installation</h2></div></div></div><p>You need to have openArchitectureWare 4.3 installed. Please consider
+    <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://www.eclipse.org/gmt/oaw/download/" target="_top">http://www.eclipse.org/gmt/oaw/download/</a> for
+    details.</p><p>You can also install the code for the tutorial. It can be downloaded
+    from the URL above, it is part of the the EMF samples ZIP file. Installing
+    the demos is easy: Just add the projects to your workspace. Note that in
+    the openArchitectureWare preferences (either globally for the workspace,
+    or specific for the sample projects, you have to select <span class="emphasis"><em>EMF
+    metamodels</em></span> for these examples to work.</p><p>In the emf examples package, you can find the following three
+    projects:</p><div class="itemizedlist"><ul type="disc"><li><p><code class="classname">oaw4.demo.emf.statemachine</code>: contains the
+        metamodel</p></li><li><p><code class="classname">oaw4.demo.emf.statemachine.generator</code>:
+        contains the code generator</p></li><li><p><code class="classname">oaw4.demo.emf.statemachine.example</code>:
+        contains an example state machine as well as a manually written unit
+        test</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="emf_state_machine_metamodel"></a>Metamodel</h2></div></div></div><p>The metamodel looks more or less as you would expect from a state
+    machine metamodel. The following is the representation of the metamodel in
+    Emfatic syntax. You can find it in the
+    <code class="classname">oaw4.demo.emf.statemachine/model</code> package.</p><pre class="programlisting">@namespace(uri="http://oaw/statemachine",
+prefix="statemachine")
+package statemachine;
+
+abstract class Named {
+	attr String name;
+}
+
+class State extends AbstractState {
+	val Action entryAction;
+	val Action exitAction;
+}
+
+class StartState extends AbstractState {
+}
+
+class StopState extends AbstractState {
+}
+
+class Transition extends Named {
+	ref AbstractState[1] target;
+	val Action action;
+	ref Event event;
+}
+
+class Action extends Named {
+}
+
+class Event extends Named {
+}
+
+class CompositeEvent extends Event {
+	val Event[*] children;
+}
+
+class StateMachine extends Named {
+	val AbstractState[*] states;
+	val Event[*] events;
+}
+
+abstract class AbstractState extends Named {
+	val Transition[*] transition;
+}</pre><p>From the .ecore file, you have to generate the implementation
+    classes, as it is usual with EMF.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="emf_state_machine_example_statemachine"></a>Example Statemachine</h2></div></div></div><p>In the <code class="filename">oaw4.demo.emf.statemachine.example/src</code>
+    folder, you can find an <code class="filename">example.statemachine</code> file
+    that contains a simple example state machine. You can view it as an EMF
+    tree view after generating the EMF editors.</p><p>To generate code from it, run the example.oaw workflow file right
+    next to it. It looks as follows:</p><pre class="programlisting">&lt;workflow&gt;
+	&lt;cartridge file="workflow.oaw"&gt;
+		&lt;modelFile value="example.statemachine"/&gt;
+		&lt;srcGenPath value="src-gen"/&gt;
+		&lt;appProject	value="oaw4.demo.emf.statemachine.example"/&gt;
+		&lt;srcPath value="man-src"/&gt;
+	&lt;/cartridge&gt;
+&lt;/workflow&gt;</pre><p>As you can see, it only defines a number of parameters and calls
+    another workflow file &#8211; the one in the generator project. We will take a
+    look at it below.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="emf_state_machine_example_statemachine_running_the_example"></a>Running the example</h3></div></div></div><p>... is achieved by running the <code class="filename">example.oaw</code>
+      file. It creates an implementation of the state machine in the
+      <span class="emphasis"><em>src-gen</em></span> folder in the example project. Take a look
+      at the file to understand the implementation of the state
+      machine.</p><p>In the <span class="emphasis"><em>man-src</em></span> folder, there is a manually
+      written subclass that implements the actions referenced from the state
+      machine. There is also a unit test that you can run to verify that it
+      works. It also shows you how to use the generated state machine.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="emf_state_machine_the_generator"></a>The Generator</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="emf_state_machine_the_generator_workflow"></a>Workflow</h3></div></div></div><p>The workflow file in
+      <code class="classname">oaw4.demo.emf.statemachine.generator/src</code> has four
+      steps: </p><div class="itemizedlist"><ul type="disc"><li>
+             first it reads the model from the XMI file 
+          </li><li>
+             then it verifies a number of constraints 
+          </li><li>
+             then it generates the code 
+          </li><li>
+             and finally it creates a recipes file 
+          </li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="emf_state_machine_the_generator_constraints"></a>Constraints</h3></div></div></div><p>A number of constraints are defined. Take a look at their
+      definition in <span class="emphasis"><em>structure.chk</em></span> to learn about the
+      constraints check language.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="emf_state_machine_the_generator_transformation"></a>Transformation</h3></div></div></div><p>There is a transformation called <span class="emphasis"><em>trafo.ext</em></span> in
+      the <code class="filename">src</code> folder which adds an emergency stop
+      transition to each state.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="emf_state_machine_the_generator_templates"></a>Templates</h3></div></div></div><p>In the <code class="filename">src/templates</code> folder you can find the
+      code generation templates.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="emf_state_machine_the_generator_recipe_creation"></a>Recipe Creation</h3></div></div></div><p>In <code class="filename">src/recipe</code>, there is an
+      <span class="emphasis"><em>SMRecipeCreator</em></span> workflow component that creates
+      recipes for the manual implementation of the state machine.Recipe
+      Creation</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="emf_state_machine_the_generator_acknowledgements"></a>Acknowledgements</h3></div></div></div><p>Thanks to the folks at <span class="emphasis"><em>Rohde &amp; Schwarz Bick
+      Mobilfunk</em></span> for letting us use this example.</p></div></div></div></body></html>

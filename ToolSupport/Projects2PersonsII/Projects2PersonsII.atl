@@ -1,0 +1,51 @@
+-- @path PersonsMM=/Projects2PersonsII/Persons.ecore
+-- @path ProjectsMM=/Projects2PersonsII/Projects.ecore
+
+module Projects2PersonsII;
+create OUT : PersonsMM from IN : ProjectsMM;
+
+helper context ProjectsMM!Member def: isInternal(): Boolean =
+	if not self.projectChief.oclIsUndefined() or not self.projectDeveloper.oclIsUndefined() then
+		true
+	else
+		false
+	endif;
+
+helper context ProjectsMM!Member def: projectName(): String =
+	if not self.projectChief.oclIsUndefined() then
+		self.projectChief.name
+	else 
+		if not self.projectClient.oclIsUndefined() then
+			self.projectClient.name
+		else 
+			if not self.projectDeveloper.oclIsUndefined() then
+				self.projectDeveloper.name
+			else 
+				if not self.projectUser.oclIsUndefined() then
+					self.projectUser.name
+				else
+					'undefined'
+				endif
+			endif
+		endif
+	endif;
+
+
+rule MemberToExternal{
+	from
+		m: ProjectsMM!Member (not m.isInternal())
+	to
+		e: PersonsMM!External(
+			name <-  m.projectName() + ':' + m.firstName
+		)
+}
+
+rule MemberToInternal{
+	from
+		m: ProjectsMM!Member (m.isInternal())
+	to
+		e: PersonsMM!Internal(
+			name <- m.projectName() + ':' + m.firstName
+		)
+}
+

@@ -1,0 +1,657 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Xtext Reference (from oAW 4.2)</title><link rel="stylesheet" href="../book.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="openArchitectureWare User Guide"><link rel="up" href="reference.html" title="Part&nbsp;II.&nbsp;Reference"><link rel="prev" href="core_reference.html" title="Check / Xtend / Xpand Reference"><link rel="next" href="generic_editor.html" title="Generic Editor"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="xtext_reference"></a><span class="emphasis"><em>Xtext</em></span> Reference (from oAW 4.2)</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="xtext_reference.html#xtext_reference_introduction">Introduction</a></span></dt><dt><span class="section"><a href="xtext_reference.html#xtext_reference_installation">Installation</a></span></dt><dt><span class="section"><a href="xtext_reference.html#xtext_reference_migration">Migrating from Xtext 4.2 to Xtext 4.3</a></span></dt><dt><span class="section"><a href="xtext_reference.html#xtext_reference_getting_started">Getting started</a></span></dt><dt><span class="section"><a href="xtext_reference.html#xtext_reference_grammar_language">The Grammar Language</a></span></dt><dt><span class="section"><a href="xtext_reference.html#xtext_reference_grammar_language_tokens">Lexer Rules</a></span></dt><dt><span class="section"><a href="xtext_reference.html#xtext_reference_the_generator">The Generator</a></span></dt><dt><span class="section"><a href="xtext_reference.html#xtext_reference_future_enhancements">Pimping the editor</a></span></dt><dt><span class="section"><a href="xtext_reference.html#d0e8896">Cookbook</a></span></dt><dt><span class="section"><a href="xtext_reference.html#r80_section_experimental_features">Experimental Features</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xtext_reference_introduction"></a>Introduction</h2></div></div></div><p>Does this sound familiar to you?</p><p><span class="emphasis"><em>Oh, I need to rename this misspelled property within our
+    domain model. Ok, so let's startup this big UML tool... and by the way
+    let's get a new cup of coffee. Cool, it has been started up already.
+    Grabbing the mouse, clicking through the different diagrams and graph
+    visualizations... Ahhh, there is the name of the property right down there
+    in the properties view. Let's change it, export it to XMI (...drinking
+    coffee), starting the oAW generator (in a jiffy ;-)). Oh, it's not allowed
+    for the property to be named that way, a constraint says that properties
+    names should start with a lower case letter. Ok, let's change that and
+    again reexport... </em></span></p><p><span class="emphasis"><em>Some moments later, everything seems to works (tests are
+    green). Ok let's check it in! </em></span></p><p><span class="emphasis"><em>Oh someone else has also modified the model!
+    Aaarrrgggh....</em></span></p><p>Think of this:</p><p><span class="emphasis"><em>Want to change a properties name? Ok, open the respective
+    text file, rename the properties name and save it. The editor complains
+    about a violated constraint. Ok fix the issue, save again and generate.
+    Check the changes into SVN (CVS). Oh, there is a conflict, ok, let's
+    simply merge it using Diff. </em></span></p><p><span class="emphasis"><em>And now? Let's have a cup of coffee :-)</em></span></p><p>Xtext is a textual DSL development framework. Providing the ability
+    to describe your DSL using a simple EBNF notation. Xtext will create a
+    parser, a metamodel and a specific Eclipse text editor for you!</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xtext_reference_installation"></a>Installation</h2></div></div></div><p>Xtext is part of the openArchitectureWare SDK. An easy way
+    to install is to download and unzip the "<span class="emphasis"><em>Eclipse 3.3 for
+    RCP/Plug-in Developers</em></span>" from the download site of Eclipse
+    (<a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://www.eclipse.org/downloads/" target="_top">http://www.eclipse.org/downloads/</a>).</p><p>Afterwards, download the
+    <code class="filename">org.openarchitectureware.all_in_one_feature-4.3.0.*.zip</code>
+    release from our website and extract it to the directory where you have unzipped the
+    Eclipse release (i.e. the Eclipse installation directory).</p><p>Make sure that you start Eclipse with a Java VM Version greater than
+    5.0.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xtext_reference_migration"></a>Migrating from Xtext 4.2 to Xtext 4.3</h2></div></div></div><p>If you have been using Xtext prior to version 4.3, you need to re-generate your DSL editors
+  	in order to use the updated version 4.3. To do this, please perform the followng steps:</p><div class="itemizedlist"><ul type="disc"><li><p>In your DSL project, open <code class="filename">generate.properties</code> and enable 
+				overwriting of plug-in resource by setting <code class="varname">overwrite.pluginresources</code>
+				to <code class="literal">true</code></p></li><li><p>Open your grammar definition. From the context menu, select 
+				<span class="bold"><strong>Generate Xtext Artifacts</strong></span> in order to re-generate 
+				the DSL and the DSL editor.</p></li><li><p>Finally, open the context menu of your DSL project and select 
+				<span class="bold"><strong>PDE Tools &gt; Update classpath...</strong></span>. Tick all your DSL 
+				projects and click <span class="bold"><strong>Finish</strong></span>.</p></li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xtext_reference_getting_started"></a>Getting started</h2></div></div></div><p>If you didn't already do so, you should have a look at the ???.
+    This will give you a good overview of how <span class="emphasis"><em>Xtext</em></span>
+    basically works. Come back to this document to find out about additional
+    details.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xtext_reference_grammar_language"></a>The Grammar Language</h2></div></div></div><p>At the heart of <span class="emphasis"><em>Xtext</em></span> lies its grammar
+    language. It is a lot like an extended Backus-Naur-Form, but it not only
+    describes the concrete syntax, but can also be used to describe the abstract syntax
+    (metamodel).</p><p>A grammar file consists of a list of so called
+    <span class="emphasis"><em>Rules</em></span>.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xtext_reference_grammar_language_example"></a>Example</h3></div></div></div><p>This is an example of a rule, describing something called an
+      <span class="emphasis"><em>entity</em></span>:</p><pre class="programlisting">Entity :
+	"entity" name=ID "{"
+		(features+=Feature)+
+	"}";</pre><p><span class="type">Entity</span> is both the name of the rule and the name of
+      the metatype corresponding to this rule. After the colon, the
+      description of the rule follows. A description is made up of
+      <span class="emphasis"><em>tokens</em></span>. The first token is a
+      <span class="emphasis"><em>keyword</em></span> token which says that a description of an
+      entity starts with the keyword <code class="literal">entity</code>. A so-called
+      <span class="emphasis"><em>Assignment</em></span> follows (<code class="code">name=ID</code>).</p><p>The left-hand side refers to a property of the metatype (in this
+      case it is the property <code class="varname">name</code> of type
+      <span class="type">Entity</span>). The right-hand side is a call to the built-in
+      token <code class="literal">ID</code>. Which means Identifier and allows character
+      sequences of the form (<code class="literal">'a-zA-Z_' ('a-zA-Z_0-9)*)</code>. The
+      parser will assign ('<code class="literal">=</code>') the Identifier to the
+      specified property (name).</p><p>Then (enclosed in curly brackets, both are essentially keyword
+      tokens) one or more features can be declared
+      <code class="code">(features+=Feature)+</code>. This one, again, is an assignment.
+      This time, the token points to another rule (called
+      <span class="type">Feature</span>) and each feature is added (note
+      <code class="literal">+=</code> operator) to the reference of the entity called
+      <code class="literal">features</code>.</p><p>The <span class="type">Feature</span> rule itself could be described like
+      this:</p><pre class="programlisting">Feature :
+	type=ID name=ID ";";</pre><p>so, that the following description of an entity would be valid
+      according to the grammar: </p><pre class="programlisting">entity Customer {
+	String name;
+	String street;
+	Integer age;
+	Boolean isPremiumCustomer;
+}</pre><p>Note that the types (<span class="type">String</span>, <span class="type">Integer</span>,
+      <span class="type">Boolean</span>) used in this description of a customer, are simple
+      identifiers, they do not have been mapped to e.g. Java types or
+      something else. So, according to the grammar, this would also be valid,
+      so far: </p><pre class="programlisting">entity X {
+	X X;
+	X X;
+	X X;
+	cjbdlfjerifuerfijerf dkjdhferifheirhf;
+}</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xtext_reference_parsers"></a>How the parsers work in general</h3></div></div></div><p>As stated before, the grammar is not only used as input for the
+      parser generator, but it is also used to compute a metamodel for your
+      DSL. We will first talk about how an <span class="emphasis"><em>Xtext</em></span> parser
+      works in general, before we look at how a metamodel is being
+      constructed.</p><p>The analysis of text is divided in two separate tasks: the lexing
+      and the parsing.</p><p>The lexer is responsible of creating a sequence of tokens from a
+      character stream. Such tokens are identifiers, keywords, whitespace,
+      comments, operators, etc. <span class="emphasis"><em>Xtext</em></span> comes with a set of
+      built-in lexer rules which can be extended or overwritten if necessary.
+      You have already seen some of them (e.g. <code class="literal">ID</code>).</p><p>The parser gets the stream of tokens and creates a parse tree out
+      of them. The type rules from the example are essentially parser
+      rules.</p><p>Now, let us have a look at how the metamodel is
+      constructed.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e7839"></a>Type Rules</h3></div></div></div><p>We have already seen, how type rules work in general. The name of
+      the rule is used as name for the metatype generated by
+      <span class="emphasis"><em>Xtext</em></span>.</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e7847"></a>Assignment tokens / Properties</h4></div></div></div><p>Each assignment token within an <span class="emphasis"><em>Xtext</em></span>
+        grammar is not only used to create a corresponding assignment action
+        in the parser but also to compute the properties of the current
+        metatype.</p><p>Properties can refer to the simple types such as
+        <span class="type">String</span>, <span class="type">Boolean</span> or <span class="type">Integer</span> as
+        well as to other complex metatypes (i.e. other rules). It depends on
+        the assignment operator and the type of the token on the right, what
+        the type actually is.</p><p>There are three different assignment operators:</p><div class="itemizedlist"><ul type="disc"><li><p>Standard assignment '<code class="literal">=</code>' : The type will
+            be computed from the token on the right.</p></li><li><p>Boolean assignment '<code class="literal">?=</code>' : The type will
+            be <span class="type">Boolean</span>.</p></li><li><p>Add assignment '<code class="literal">+=</code>' : The type will be
+            <span class="type">List</span>. The inner type of the list depends on the type
+            returned by the token on the right.</p></li></ul></div><p>Example:</p><pre class="programlisting">Entity :
+	(isAbstract?="abstract")? "entity" name=ID "{"
+		 (features+=Feature)*
+	"}";
+ </pre><p>The metatype <span class="type">Entity</span> will have three
+        properties:</p><div class="orderedlist"><ol type="1"><li><p><code class="classname">Boolean</code>
+            <code class="methodname">isAbstract</code></p></li><li><p><code class="classname">String</code>
+            <code class="methodname">name</code></p></li><li><p><code class="classname">List[Feature]</code>
+            <code class="methodname">features</code></p></li></ol></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e7924"></a>Cross References</h4></div></div></div><p>Parsers construct parse trees not graphs. This means that the
+        outcome of a parser has no crossreferences only so called containment
+        references (composition).</p><p>In order to implement crosslinks in the model, one usually has
+        to add third task: the linking. However, <span class="emphasis"><em>Xtext</em></span>
+        supports specifying the linking information in the grammar, so that
+        the metamodel contains cross references and the generated linker links
+        the model elements automatically (for most cases). Linking semantic
+        can be arbitrary complex. <span class="emphasis"><em>Xtext</em></span> generates a
+        default semantic (find by id) which can be selectively overwritten. We
+        will see, how this can be done, later in this document.</p><p>Let us now see in detail, what the grammar language
+        supports:</p><pre class="programlisting">Entity :
+	"entity" name=ID ("extends" superType=[Entity])?
+	"{"
+		 (features+=Feature)*
+	"}";</pre><p>Have a look at the optional <code class="literal">extends</code>
+        clause. The rule name <span class="type">Entity</span> on the right is surrounded
+        by squared parenthesis. That's it.</p><p>By default, the parser expects an <code class="literal">ID</code> to point
+        to the referred element. If you want another kind of token to act as a
+        reference, you can optionally specify the type of token you want to
+        use, separated by a vertical bar:</p><pre class="programlisting"> ... ("extends" superType=[Entity|MyComplexTokenRule])? ...</pre><p>Where
+        <span class="type">MyComplexTokenRule</span> must be either a
+        <span class="type">NativeLexerRule</span> or a <span class="type">StringRule</span> (explanation
+        follows).</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e7967"></a>Metatype Inheritance</h4></div></div></div><p>We have seen how to define simple concrete metatypes and its
+        features. One can also define type hierarchies using the grammar
+        language of <span class="emphasis"><em>Xtext</em></span>. Sometimes you want to abstract
+        rules, in order to let a feature contain elements of different
+        types.</p><p>We have seen the <span class="type">Feature</span> rule in the example. If
+        you would like to have two different kinds of <span class="type">Feature</span>
+        (e.g. <span class="type">Attribute</span> and <span class="type">Reference</span>), you could
+        create an abstract type rule like this: </p><pre class="programlisting">Feature :
+	Attribute | Reference;
+
+Attribute :
+	type=ID name=ID ";";
+
+Reference :
+	"ref" (containment?="+")? type=ID name=ID ("&lt;-&gt;" oppositeName=ID)? ";";</pre><p>The transformation creating the metamodel automatically
+        normalizes the type hierarchy. This means that properties defined in
+        all subtypes will automatically be moved to the common supertype. In
+        this case, the abstract type <span class="type">Feature</span> would be created
+        containing the two features (<code class="varname">name</code> and
+        <code class="varname">type</code>). <span class="type">Attribute</span> and
+        <span class="type">Reference</span> would be subtypes of <span class="type">Feature</span>,
+        inheriting those properties.</p><p>It is also possible to define concrete supertypes like
+        this:</p><pre class="programlisting">
+Feature :
+	type=ID name=ID ";" | Reference;
+
+Reference :
+	"ref" (containment?="+")? type=ID name=ID ("&lt;-&gt;" oppositeName=ID)? ";";
+ </pre><p>In this case <span class="type">Feature</span> would not be abstract, but it
+        would be the supertype of <span class="type">Reference</span>.</p><p>If you need multiple inheritance you can simply add an abstract
+        rule. Such a rule must not be called from another rule.</p><p>Example:</p><pre class="programlisting">Model : TypeA TypeA TypeC;
+
+TypeA : "A" | TypeB;
+TypeB : "B";
+TypeC : "C";
+
+CommonSuper : TypeB | TypeC; // just for the type hierarchy
+ </pre><p>The resulting type hierarchy will look like this:</p><p>- Model</p><p>- <span class="type">TypeA</span></p><p>- <span class="type">TypeB</span> extends <span class="type">TypeA</span>,
+        <span class="type">CommonSuper</span></p><p>- <span class="type">TypeC</span> extends <span class="type">CommonSuper</span></p><p>- <span class="type">CommonSuper</span></p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xtext_reference_grammar_language_rules_enum_rule"></a>Enum Rule</h3></div></div></div><p>The enum rule is used to define enumerations. For example, if you
+      would like to hardwire the possible data types for attributes into the
+      language, you could just write: </p><pre class="programlisting">
+Attribute :
+	type=DataType name=ID ";";
+
+Enum DataType :
+	String="string" | Integer="int" | Boolean="bool";
+ </pre><p>In this case, this would be valid: </p><pre class="programlisting">entity Customer {
+	string name;
+	string street;
+	int age;
+	bool isPremiumCustomer;
+}</pre><p>However, this would not be valid:</p><pre class="programlisting">entity Customer {
+	X name; // type X is not known
+	String street; // type String is not known (case sensitivity!)
+}</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xtext_reference_grammar_language_rules_string_rule"></a>String Rule</h3></div></div></div><p><span class="emphasis"><em>Xtext</em></span> provides built-in tokens. We have
+      already seen the <span class="type">IdentifierToken </span>and the
+      <span class="type">KeywordToken</span>.</p><p>Sometimes, this is not sufficient, so we might want to create our
+      own tokens. Therefore, we have the so-called <code class="literal">String</code>
+      rule , which is implemented as a parser rule (it is not a lexer
+      rule).</p><p>Example </p><pre class="programlisting">String JavaIdentifier :
+	ID ("." ID)*;</pre><p>The contents of the <code class="literal">String</code> rule is simply
+      concatenated and returned as a string. One can refer to a
+      <code class="literal">String</code> rule in the same manner we refer to any other
+      rule.</p><p>So, just in case you want to declare data types using your DSL and
+      therein specify how it is mapped to Java (not platform independent, of
+      course, but expressive and pragmatic), you could do so using the
+      following rules:</p><pre class="programlisting">Attribute :
+	type=DataType name=ID ";";
+
+DataType :
+	"datatype" name=ID "mappedto" javaType=JavaIdentifier;
+
+String JavaIdentifier :
+	ID ("." ID)*;</pre><p>A respective model could look like this: </p><pre class="programlisting">entity Customer {
+	string name;
+	string street;
+	int age;
+	bool isPremiumCustomer;
+}
+
+datatype string mappedto java.util.String
+datatype int mappedto int
+datatype bool mappedto boolean</pre><p>You could of course point to a custom type mapping implementation,
+      if you need to support multiple platforms (like e.g. SQL, WSDL,
+      Java,...). Additionally, you should consider to define the data types in
+      a separate file, so the users of your DSL can import and use
+      them.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xtext_reference_grammar_language_tokens"></a>Lexer Rules</h2></div></div></div><p>As mentioned before we <span class="emphasis"><em>Xtext</em></span> provides some
+    common built-in lexer rules. Let us start with the two simplest
+    ones.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xtext_reference_grammar_language_tokens_keyword_token"></a>Keyword Tokens</h3></div></div></div><p>All static characters or words, known as
+      <span class="emphasis"><em>keywords</em></span>, can be specified directly in the grammar
+      using the usual string literal syntax. We never need the value of
+      keyword because we already know it since it is static. But sometimes,
+      there are optional keywords like e.g. the modifiers in Java. The
+      existence of a keyword can be assigned using the boolean assignment
+      operator "<code class="literal">?=</code>". However, if you want to assign the
+      value of the keyword to a property just use the assignment operator
+      '<code class="literal">=</code>'.</p></div><p>Example: </p><pre class="programlisting">Entity :
+	(abstract?="abstract")? "entity" name=ID ("&lt;" extends=ID)?
+	"{"
+		(features+=Feature)*
+	"}";</pre><p>With this the type <span class="type">Entity</span> will have the boolean
+    property <code class="varname">abstract</code>, which is set to
+    <code class="varname">true</code> if the respective keyword has been specified for
+    an entity. (The <code class="literal">extends</code> part is added, because an
+    abstract entity would not make sense without inheritance).</p><p>Note that operators such as '<code class="literal">&lt;</code>' in the example
+    are keywords, too.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xtext_reference_grammar_language_tokens_identifier_token"></a>The <code class="literal">ID</code> Token</h3></div></div></div><p>We also have seen the identifier token (<code class="literal">ID</code>).
+      This is the token rule expressed in AntLR grammar syntax:
+      </p><pre class="programlisting">('^')?('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*</pre><p>So, an identifier is a word starting with a character or an
+      underscore, optionally followed by further characters, underscores, or
+      digits. The return value of the <code class="literal">ID</code> token is a
+      <code class="classname">String</code>. So, if you use the usual assignment
+      operator "<code class="literal">=</code>", the feature the value is assigned to
+      will be of type <code class="classname">String</code>. You could also use the
+      boolean operator (<code class="literal">?=</code>) and the type will be
+      <code class="classname">Boolean</code>.</p><p>If an identifier conflicts with a keyword or another lexer rule,
+      it can be escaped with the " <code class="literal">^</code> " character.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xtext_reference_grammar_language_tokens_string_token"></a>The <code class="classname">String</code> Token</h3></div></div></div><p>There is also a built-in <span class="type">String</span> Token. Here is an
+      example: </p><pre class="programlisting">Attribute :
+	 type=DataType name=ID (description=STRING)? ";";</pre><p>With this token, one can optionally specify a description for an
+      entity like this: </p><pre class="programlisting">entity Customer {
+	string name ;
+	string street "should include the street number, too.";
+	int age;
+	bool isPremiumCustomer;
+}</pre><p>By default, the two string literal syntaxes "my text" and 'my
+      text' are supported. Note that, unlike in Java, also multi-line strings
+      are supported: </p><pre class="programlisting">entity Customer {
+	string name ;
+	string street "should include the street number, too.
+								 And if you do not want to specify it, you
+								 should consider specifying it somewhere else.";
+	int age;
+	bool isPremiumCustomer;
+}</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xtext_reference_grammar_language_tokens_single_line_token"></a>The <code class="literal">INT</code> Token</h3></div></div></div><p>Sometimes, you want to assign Integers. Xtext supports it with the
+      built-in lexer rule INT.</p><pre class="programlisting">Index:
+	"#" index=INT;</pre><p>The default pattern is:</p><pre class="programlisting">('-')?('0'..'9')+</pre><p>It can be
+      overwritten (see next section), but you have to take care, that the
+      coercion (<span class="emphasis"><em>Integer.valueOf(String)</em></span> is used)
+      works.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xtext_reference_grammar_language_tokens_uri_token"></a>The <code class="literal">URI</code> Token</h3></div></div></div><p>If you want to allow inclusion of and references to other models, 
+      use the <code class="literal">URI</code> token, e.g. 
+      
+      </p><pre class="programlisting">Import: 
+     'import' model=URI ';';</pre><p>
+
+      From the parser's point of view, an <code class="literal">URI</code> 
+      token is just a String literal enclosed in quotes. The Runtime interprets 
+      this string as the Uniform Resource Identifier (URI) 
+      of another model file whose elements can be referenced from the importing model.
+      With the above grammar rule example, you can allow references to elements of the 
+      model file <code class="literal">refModel.model</code> by adding a line  
+
+      </p><pre class="programlisting">import "platform:/resource/myproject/model/refModel.model";</pre><p>
+      
+      in your model.
+      
+      See <a href="xtext_reference.html#r80_section_cross_resource_references_same_metamodel" title="Cross-References to Models of the Same DSL/Metamodel">the section called &#8220;Cross-References to Models of the Same DSL/Metamodel&#8221;</a> 
+      and 
+      <a href="xtext_reference.html#r80_section_cross_resource_references_different_metamodel" title="Cross-references to Models of a Different DSL/Metamodel">the section called &#8220;Cross-references to Models of a Different DSL/Metamodel&#8221;</a> 
+      for examples on model import.
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xtext_reference_grammar_language_comments"></a>Comments</h3></div></div></div><p>There are two different kinds of comments automatically available
+      in any <span class="emphasis"><em>Xtext</em></span> language. </p><pre class="programlisting">	// single-line comments and
+
+	/*
+		mutli-line comments
+	*/</pre><p>Note that those comments are ignored by the language parser by
+      default (i.e. they are not contained in the AST returned from the
+      parser).</p><p>If you do not want ignored comments, or you want to have a
+      different syntax, you need to overwrite the default implementation (The
+      name of the corresponding comment rule is <code class="literal">SL_COMMENT</code>
+      for single-line comments, i.e. <code class="literal">ML_COMMENT</code> for
+      multi-line comments).</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xtext_reference_grammar_language_whitespace"></a>Whitespace</h3></div></div></div><p>Every textual model contains whitespace. As most languages simply
+      ignore whitespace, <span class="emphasis"><em>Xtext</em></span> does so by default, too.
+      If you want to have semantic whitespace in your language (like e.g.
+      Python), you have to overwrite the built-in whitespace rule (its name is
+      <code class="literal">WS</code>).</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xtext_reference_grammar_language_native_rules"></a>Native rules / Overwriting built-in lexer rules</h3></div></div></div><p>If you want to overwrite one or more of the built-in lexer rules
+      or add an additional one, the so-called <span class="emphasis"><em>native rule</em></span>
+      is your friend.</p><p>Example:</p><p>
+        </p><pre class="programlisting">// overwriting SL_COMMENTS we do not want Java syntax (//) but bash syntax (#)
+Native SL_COMMENT :
+	"'#' ~('\n'|'\r')* '\r'? '\n' {$channel=HIDDEN;}";
+
+// fully qualified names as a lexer rule
+Native FQN :
+	"ID ('.' ID)*";</pre><p>
+      </p><p>The syntax is :</p><pre class="programlisting">"Native" ID ":"
+	 STRING // The string contains a valid ANTLR 3 lexer rule expression 
+	 ";"    // (see http://www.antlr.org/wiki/display/ANTLR3/ANTLR+v3+documentation)</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xtext_reference_the_generator"></a>The Generator</h2></div></div></div><p>It is assumed that you have used the <span class="emphasis"><em>Xtext</em></span>
+    project wizard, and that you have successfully written an
+    <span class="emphasis"><em>Xtext</em></span> grammar file describing your little language.
+    Next up you need to start the generator of Xtext in order to get a parser,
+    a metamodel and an editor. To do so. just right-click the workflow file
+    <code class="filename">(*.oaw)</code> located next to the grammar file and choose
+    <span class="guiicon">Run As</span>+<span class="guimenu">oAW workflow</span> (in Eclipse, of course). The generator will read the
+    grammar file in and create a bunch of files. Some of them located in the
+    <code class="filename">src-gen</code> directories others located in the
+    <code class="filename">src</code> directory.</p><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Important</h3><p>IMPORTANT : You should now (after first generation) open the
+        *.properties file and set the "overwritePluginRes=true" option to
+        false!</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e8344"></a>Configuring the Generator</h3></div></div></div><p>The generator can be configured with the following properties
+      defined in
+      <code class="filename"><code class="literal">generate.properties</code></code>:</p><div class="informaltable"><table cellspacing="0" cellpadding="10" border="0" style="border-collapse: collapse;border-bottom: 0.5pt solid ; "><colgroup><col align="left"><col align="left"></colgroup><thead><tr align="center"><th style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="center">property name (default)</th><th style="border-bottom: 2 solid #000000; " align="center">description</th></tr></thead><tbody><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">grammar</td><td style="border-bottom: 2 solid #000000; " align="left">The grammar file to generate the code from.</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">debug.grammar (false)</td><td style="border-bottom: 2 solid #000000; " align="left">Specifies whether a debug grammar should be generated. A
+              debug grammar is an AntLR grammar without any action code, so it
+              can be interpreted within AntLRWorks.</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">language.name</td><td style="border-bottom: 2 solid #000000; " align="left">The name of the DSL. Is used throughout the generated
+              code</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">language.nsURI
+              ("http://www.oaw.org/xtext/dsl/${language.name}")</td><td style="border-bottom: 2 solid #000000; " align="left">A unique URI used within the derived ecore
+              package.</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">language.fileextension ("${language.name}")</td><td style="border-bottom: 2 solid #000000; " align="left">The file extension the generated editor is configured
+              for.</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">overwrite.pluginresources ("false")</td><td style="border-bottom: 2 solid #000000; " align="left">If this is set to true the plugin resources
+              (META-INF/MANIFEST.MF, plugin.xml) will be overwritten by the
+              generator!!!</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">wipeout.src-gen ("true")</td><td style="border-bottom: 2 solid #000000; " align="left">Specifies whether the src-gen folders should be deleted
+              before generation.</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">generator.project.name ("")</td><td style="border-bottom: 2 solid #000000; " align="left">If this property is set to something, a project wizard
+              will be generated referencing the generator project.</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">workspace.dir</td><td style="border-bottom: 2 solid #000000; " align="left">The root of the workspace.</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">core.project.name</td><td style="border-bottom: 2 solid #000000; " align="left">name of the main project</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">core.project.src ("src/")</td><td style="border-bottom: 2 solid #000000; " align="left">src folder of the main project</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">core.project.src.gen ("src-gen/")</td><td style="border-bottom: 2 solid #000000; " align="left">src-gen folder of the main project</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">editor.generate ("true")</td><td style="border-bottom: 2 solid #000000; " align="left">should an editor be generated at all</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">editor.project.name
+              ("${core.project.name}.editor")</td><td style="border-bottom: 2 solid #000000; " align="left">name of the editor project</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">editor.project.src ("${core.project.src}")</td><td style="border-bottom: 2 solid #000000; " align="left">src folder of the editor project</td></tr><tr><td style="border-right: 2 solid #000000; " align="left">editor.project.src.gen
+              ("${core.project.src.gen}")</td><td style="" align="left">src-gen folder of the editor project</td></tr></tbody></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xtext_reference_the_generator_generated_and_manual_code"></a>Generated and manual code</h3></div></div></div><p>Any textual artifacts located in the <code class="filename">src</code>
+      directory (of any project) will always stay untouched. The generator
+      just creates them the first time when they do not exist.</p><p>Files generated to the <code class="filename">src-gen</code> directory
+      should never be touched! The whole directory will be wiped out the next
+      time one starts the generator.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="xtext_reference_the_generator_diffrent_projects"></a>The different projects and artifacts</h3></div></div></div><p><span class="emphasis"><em>Xtext</em></span> generates artifact into two different
+      projects.</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="xtext_reference_the_generator_diffrent_projects_main"></a>The main project</h4></div></div></div><p>The name of the main project can be specified in the wizard.
+        This project contains the main language artifacts and is 100% eclipse
+        independent. The default locations of the most important resources
+        are: </p><div class="table"><a name="d0e8469"></a><p class="title"><b>Table&nbsp;23.&nbsp;Resources of the main project</b></p><div class="table-contents"><table summary="Resources of the main project" cellspacing="0" cellpadding="10" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; "><colgroup><col align="left"><col align="left"></colgroup><thead><tr><th style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="center">Location</th><th style="border-bottom: 2 solid #000000; " align="center">Description</th></tr></thead><tbody><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><p>src/[dslname].xtxt</p></td><td style="border-bottom: 2 solid #000000; " align="left"><p>The grammar file, containing the grammar rules
+                  describing your DSL</p></td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><p>src/generate.oaw</p></td><td style="border-bottom: 2 solid #000000; " align="left"><p>The workflow file for the Xtext
+                  generator.</p></td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><p>src/generator.properties</p></td><td style="border-bottom: 2 solid #000000; " align="left"><p>Properties passed to the Xtext
+                  generator</p></td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><p>src/[base.package.name]/Checks.chk</p></td><td style="border-bottom: 2 solid #000000; " align="left"><p>The Check-file used by the parser and within
+                  the editor. Used to add semantic constraints to your
+                  language.</p></td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><p>src-gen/[base.package.name]/GenChecks.chk</p></td><td style="border-bottom: 2 solid #000000; " align="left"><p>The generated Check-file contains checks
+                  automatically derived from the grammar.</p></td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><p>src/[base.package.name]/Extensions.ext</p></td><td style="border-bottom: 2 solid #000000; " align="left"><p>The Extension-file is used (imported) by all
+                  another extensions and check files. It reexports the
+                  extensions from <code class="filename">GenExtensions.ext</code>
+                  (contained in src-gen/). You can specify (use more concrete
+                  parameter types) or overwrite (use the same signature) the
+                  extensions from <code class="filename">GenExtensions.ext</code>
+                  here.</p></td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><p>src-gen/[base.package.name]/GenExtensions.ext</p></td><td style="border-bottom: 2 solid #000000; " align="left"><p>generated extensions (reexported by
+                  <code class="filename">Extensions.ext</code>).</p></td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><p>src/[base.package.name]/Linking.ext</p></td><td style="border-bottom: 2 solid #000000; " align="left"><p>Used by <code class="filename">Linker.ext</code> from
+                  <em class="replaceable"><code>src-gen/[base.package.name]/parser/Linker.ext</code></em>
+                  Default linking semantic is generated in
+                  <code class="filename">GenLinking.ext </code>(src.gen/) and can be
+                  overwritten here.</p></td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><p>src-gen/[base.package.name]/GenLinking.ext</p></td><td style="border-bottom: 2 solid #000000; " align="left"><p>Contains the default linking semantic for each
+                  cross
+                  reference.</p><p>Example:</p><pre class="programlisting">	Void link_featureName(my::MetaType this) :
+		 (let ents = this.allVisibleElements().typeSelect(my::ReferredType) :
+		 this.setFeatureName(ents.select(e|e.id()
+			 == this.parsed_featureName).first()) );</pre><p>This
+                  code means the following:</p><p><span class="emphasis"><em>Get all
+                  instances of the referred type using the
+                  <span class="emphasis"><em>allVisibleElements()</em></span> extension. Select the
+                  first one where the <span class="emphasis"><em>id()</em></span> equals the
+                  parsed value (by default an
+                  identifier).</em></span></p><p>Both extensions,
+                  <span class="emphasis"><em>id()</em></span> and
+                  <span class="emphasis"><em>allVisibleElements()</em></span>) can be overwritten or
+                  specialized in the <code class="filename">Extensions.ext</code> file.
+                  The <span class="emphasis"><em>link_[featurename]() </em></span>extension can
+                  be overwritten in
+                  <code class="filename">Linking.ext</code></p></td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><p>src-gen/[base.package.name]/[dslname].ecore</p></td><td style="border-bottom: 2 solid #000000; " align="left"><p>Metamodel derived from the
+                  grammar</p></td></tr><tr><td style="border-right: 2 solid #000000; " align="left"><p>src-gen/[base.package.name]/parser/*</p></td><td style="" align="left"><p>Generated AntLR parser artifacts</p></td></tr></tbody></table></div></div><p><br class="table-break"></p><p></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="xtext_reference_the_generator_different_projects_editor"></a>The editor project</h4></div></div></div><p>The name of the editor project is derived from the name of the
+        main project by appending the suffix <code class="filename">.editor</code> to
+        it. The editor project contains the informations specific to the
+        Eclipse text editor. Note that it uses a generic xtext.editor plugin,
+        which does most of the job. These are the most important resources:
+        </p><div class="table"><a name="d0e8618"></a><p class="title"><b>Table&nbsp;24.&nbsp;Resources of the editor</b></p><div class="table-contents"><table summary="Resources of the editor" cellspacing="0" cellpadding="10" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; "><colgroup><col align="left"><col align="left"></colgroup><thead><tr><th style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="center">Location</th><th style="border-bottom: 2 solid #000000; " align="center">Description</th></tr></thead><tbody><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><p>src/[base.package.name]/[dslname]EditorExtensions.ext</p></td><td style="border-bottom: 2 solid #000000; " align="left"><p>The Xtend-file is used by the outline view. If
+                  you want to customize the labels of the outline view, you
+                  can do that here.</p></td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><p>src-gen/[base.package.name]/[dslname]Utilities.java</p></td><td style="border-bottom: 2 solid #000000; " align="left"><p>Contains all the important DSL-specific
+                  information. You should subclass it in order to overwrite
+                  the default behaviours.</p></td></tr><tr><td style="border-right: 2 solid #000000; " align="left"><p>src/[base.package.name]/[dslname]EditorPlugin.java</p></td><td style="" align="left"><p>If you have subclassed the *Utilities class,
+                  make sure to change the respective instantiation
+                  here.</p></td></tr></tbody></table></div></div><p><br class="table-break"></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="xtext_reference_the_generator_different_projects_generator"></a>The generator project</h4></div></div></div><p>The name of the generator project is derived from the name of the main project
+					by appending the suffix <code class="filename">.generator</code> to it. The generator
+					project is intended to contain all needed generator resources such as
+					<span class="emphasis"><em>Xpand</em></span> templates, platform-specific
+					<span class="emphasis"><em>Xtend</em></span> files etc..</p><p>These are the most important resources:
+					</p><div class="table"><a name="d0e8668"></a><p class="title"><b>Table&nbsp;25.&nbsp;Resources of the generator</b></p><div class="table-contents"><table summary="Resources of the generator" cellspacing="0" cellpadding="10" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; "><colgroup><col align="left"><col align="left"></colgroup><thead><tr><th style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="center">Location</th><th style="border-bottom: 2 solid #000000; " align="center">Description</th></tr></thead><tbody><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">
+										<p>src/[base.package.name]/generator.oaw</p>
+									</td><td style="border-bottom: 2 solid #000000; " align="left">
+										<p>The generators workflow preconfigured with the generated
+											DSL parser and the Xpand component. As this is just a proposal, feel
+											free to change/add the workflow as you see fit.</p>
+									</td></tr><tr><td style="border-right: 2 solid #000000; " align="left">
+										<p>src-gen/[base.package.name]/Main.xpt</p>
+									</td><td style="" align="left">
+										<p>The proposed <span class="emphasis"><em>Xpand</em></span> template
+											file.</p>
+									</td></tr></tbody></table></div></div><p><br class="table-break"></p></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="xtext_reference_future_enhancements"></a>Pimping the editor</h2></div></div></div><p>The generated editor supports a number of features known from other
+    eclipse editors. Although most of them have a decent default
+    implementation, we will see how to tweak and enhance each of them.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e8711"></a>Code Completion</h3></div></div></div><p>Code Completion is controlled using oAW extensions. The default
+      implementation provides keyword proposals as well as proposals for cross
+      references.</p><p>Have a look at the extension file
+      <code class="filename">ContentAssist.ext</code>. A comment in this file describes
+      how to customize the default behaviour:</p><pre class="programlisting">/*
+ * There are two types of extensions one can define
+ *
+ * 1) completeMetaType_feature(ModelElement ele, String prefix)
+ * This one is called for assignments only. It gets the underlying Modelelement and the current
+ * prefix passed in.
+ *
+ * 2) completeMetaType(xtext::Element grammarEle, ModelElement ele, String prefix)
+ * This one gets the grammarElement which should be completed passed in as the first parameter.
+ * an xtext::Element can be of the following types :
+ *  - xtext::RuleName (a call to a lexer rule (e.g. ID)),
+ *  - xtext::Keyword,
+ *  - xtext::Assignment
+ *
+ * Overwrite rules are as follows:
+ * 1) if the first one returns null for a given xtext::Assignment or does not exist the second one
+ *    is called.
+ * 2) if the second one returns null for a given xtext::Keyword or does not exist a default keyword
+ *    proposal will be added.
+ *
+ * Note that only propals with wich match (case-in-sensitive) the current prefix will be proposed
+ * in the editor
+ */</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e8724"></a>Navigation</h3></div></div></div><p>The implementation for the navigation actions is implemented via
+      extensions, too. As for Code completion the same pattern applies: There
+      is a <code class="filename">GenNavigation.ext</code> extension file in the
+      <code class="filename">src-gen</code> folder which can be overwritten or
+      specialized using the <code class="filename">Navigation.ext</code> file in the
+      <code class="filename">src</code> folder (reexporting the generated
+      extensions).</p><p>There are two different actions supported by
+      <span class="emphasis"><em>Xtext</em></span>:</p><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e8746"></a>Find References</h4></div></div></div><p>This action can be invoked via <span><strong class="keycap">Ctrl</strong></span>-<span><strong class="keycap">Shift</strong></span>-<span><strong class="keycap">G</strong></span> or via the corresponding action context menu. The
+        default implementation returns the cross references for a model
+        element.</p><p>The signature to overwrite / specialize is:</p><pre class="programlisting">List[UIContentNode] findReferences(String s, Object grammarelement, Object element) : ...;</pre><p>A
+        <code class="classname">UIContentNode</code> is a metaclass used by
+        <span class="emphasis"><em>Xtext</em></span>. An UIContentNode represents an element
+        visualized in Eclipse.</p><p>Here is the declaration of <code class="classname">UIContentNode</code>
+        (pseudo code):</p><pre class="programlisting">package tree;
+
+eclass UIContentNode {
+	 UIContentNode parent;
+	 UIContentNode[] children;
+	 String label;
+	 String image;
+	 emf::EObject context;
+}</pre><p>A content node can have children and / or a parent (the tree
+        structure is not used for find references). The label is used for the
+        label in Eclipse, and the image points to an image relative to the
+        <code class="filename">icons</code> folder in the editor project. The icon
+        instances are automatically cached and managed.</p><p>The context points to the actual model element. This is used to
+        get the file, line and offset of the declaration. If you do not fill
+        it, you cannot click on the item, in order to get to it.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="d0e8785"></a>Go to Declaration</h4></div></div></div><p>This action can be invoked via <span><strong class="keycap">F3</strong></span> as well as by
+        holding <span><strong class="keycap">CTRL</strong></span>, hovering over an identifier and left
+        click the mouse.</p><p>The default implementation goes to the declaration of a cross
+        reference. You can implement or overwrite this action for all grammar
+        elements.</p><pre class="programlisting">emf::EObject findDeclaration(String identifier, emf::EObject grammarElement,
+	 emf::EObject modelElement) : ...;</pre><p>Have a look at the
+        generated extensions, to see how it works.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e8802"></a>Outline View</h3></div></div></div><p>The outline view is constructed using a tree of
+      <code class="classname">UIContentNode</code> objects (see above).</p><p>Each time the outline view is created, the following extension is
+      called:</p><pre class="programlisting">UIContentNode outlineTree(emf::EObject model)</pre><p>It
+      is expected to be declared in <code class="filename">Outline.ext</code>, which by
+      default exports a generic implementation from
+      <code class="filename">GenOutline.ext</code> (the same pattern again).</p><p>You can either reuse the generic extension and just provide a
+      <span class="emphasis"><em>label() </em></span>and <span class="emphasis"><em>image()</em></span> extension
+      for your model elements (should be added in
+      <code class="filename">EditorExtensions.ext</code>).</p><p>However, if you want to control the structure of the outline tree
+      you can overwrite the extension <span class="emphasis"><em>outlineTree(emf::EObject
+      model)</em></span> in <code class="filename">Outline.ext</code>.</p><p>You can define multiple outlines for a single DSL, each representing
+      a different viewpoint on your model. Each viewpoint needs has a unique name. 
+      Override the <code class="methodname">getViewpoints()</code> extension to return a
+      list of all viewpoint names. You can customize each viewpoint using the same 
+      extensions as above suffixed with the viewpoint's name (spaces are replaced 
+      by underscores. Example:
+      </p><pre class="programlisting">List[String] viewpoints() : { "Entities Only" };
+
+UIContentNode outlineTree_Entities_Only(emf::EObject model) :
+	let x = model.createContentNode() : 
+		x.children.addAll(model.eContents.outlineTree_Entities_Only())
+		// return the node, not its children
+		-&gt; x;  
+
+UIContentNode outlineTree_Entities_Only(Model model) :
+	let x = model.createContentNode() :
+		// add child nodes for elements of type Entity only  
+		x.children.addAll(model.types.typeSelect(Entity).outlineTree_Entities())
+		-&gt; x;
+
+create UIContentNode createContentNode(emf::EObject model) :
+	setLabel(model.label()) -&gt;
+	setImage(model.image()) -&gt;
+	setContext(model);
+</pre><p>
+      You can switch the viewpoints in the running editor by means of the 
+      drop-down menu behind the small triangle symbol in the action bar of the 
+      outline view.
+      </p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e8849"></a>Syntax Highlighting</h3></div></div></div><p>The default syntax highlighting distinguishes between comments,
+      string literals, keywords, and the rest.</p><p>You can adjust the specific display styles for keywords with regard 
+	  to the context they appear in by overriding the 
+	  <code class="classname">fontstyle(String keyword, EObject metaClassName)</code> extension
+	  in the <code class="filename">Style.ext</code> extension file. The predefined method 
+	  <code class="classname">createFontstyle</code> will help you creating the 
+	  <code class="classname">FontStyle</code> object, e.g.
+	  </p><pre class="programlisting">FontStyle fontstyle(String keyword, Node node) :
+	node.eContainer.metaType==Node 
+		? createFontStyle(true, false, false, false, 
+			createColor(200,200,200), createColor(255,255,255))
+		: createFontStyle(true, false, false, false, 
+			createColor(255,0,0), createColor(255,255,255))
+;</pre><p>If you just want to specify which words to be coloured as keywords
+      you can extend the
+      <code class="filename">[basepackage.][Languagename]Utilities.java</code> class
+      from the editor plugin. You need to overwrite the following
+      method.</p><pre class="programlisting">public String[] allKeywords()</pre><div class="important" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Important</h3><p>Do not change the <code class="classname">Utilities</code> class
+          directly, because it will be overwritten the next time your start
+          the generator.</p></div><p>Each <code class="classname">String</code> returned by the method
+      represents a keyword.</p><p>The utilities method is created within the
+      <code class="filename">[LanguageName]EditorPlugin.java</code>. So, make sure that
+      you change the following lines, as well:</p><pre class="programlisting"> // OLD -&gt; private MyLangUtilities utilities = new MyLangUtilities();
+	private MyCustomUtilities utilities = new MyCustomUtilities();
+	public LanguageUtilities getUtilities() {
+			return utilities;
+	}</pre></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="d0e8896"></a>Cookbook</h2></div></div></div><p>This part of the documentation deals with the discussion and
+    solution of different requirements and problems.</p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="r80_section_cross_resource_references_same_metamodel"></a>Cross-References to Models of the Same DSL/Metamodel</h3></div></div></div><p>Since version 4.3, Xtext provides first class support for 
+	  cross-references to elements in other model files. This allows to spread
+	  a single model across several files or to reuse parts of a model by 
+	  referencing it. The former mechanism using the built-in model registry 
+	  does not work any longer.</p><p>The following example illustrates how to implement cross-resource 
+	  references to models of the same DSL. Referencing elements of a foreign 
+	  DSLs is shown in 
+	  <a href="xtext_reference.html#r80_section_cross_resource_references_different_metamodel" title="Cross-references to Models of a Different DSL/Metamodel">the section called &#8220;Cross-references to Models of a Different DSL/Metamodel&#8221;</a>. First of all, 
+	  you have to enable model import in your DSLs grammar. This is achieved 
+	  by declaring a rule that matches the <code class="literal">URI</code> token.
+	  
+	  </p><pre class="programlisting">Model:
+	(imports+=Import)* 
+	(elements+=Element)*;
+		
+// declare an import statement by means of a rule matching the URI token
+Import:   
+	'import' model=URI;
+
+Element:
+	'element' name=ID '{' 
+		(ref+=Reference)*
+	'}';
+		
+Reference:
+	'ref' element=[Element];</pre><p>
+	  
+	  This way, we can use the <code class="literal">import</code> keyword followed by a URI 
+	  in our models to enable referencing. Note that <code class="literal">import</code> is 
+	  just an arbitrary keyword and all the magic comes with the 
+	  <code class="literal">URI</code> Token. It loads all elements from the given model and
+	  makes them available in the <code class="literal">allVisibleElements()</code> extension.
+	  
+	  And how does it look like on the model level? Consider the following model 
+	  file:
+   	  </p><pre class="programlisting">// refModel.dsl
+Element externalElement {
+} </pre><p>
+	  To reference the element <code class="literal">externalElement</code> in another file
+	  you'll just have to import the <code class="filename">refModel.dsl</code> and then reference 
+	  </p><pre class="programlisting">// model.dsl
+// import the model to be referenced by matching the URI token 
+import "platform:/resource/myplugin/model/refModel.dsl"
+
+Element internalElement {
+}
+
+Element myElement {
+	ref internalElement  // reference by ID 
+	ref externalElement  // reference by ID, as if it was in the same file
+} </pre><p>
+	  </p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="r80_section_experimental_features"></a>Experimental Features</h2></div></div></div>
+  	The features described in this section are mainly intended for advanced users. 
+  	They are likely to change in the future.
+  	
+  	<div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="r80_section_instantiate_existing_metamodels"></a>Instantiate Existing Metamodels</h3></div></div></div><p>
+  	In some cases you may want to use Xtext to create a new concrete textual syntax for an
+  	existing Ecore model. You'll have to provide a way to make Xtext's rules instantiate 
+  	existing EClasses rather than the generated ones. 
+  	</p><p>
+	The Ecore model to be referenced must reside in a plug-in that is deployed in your eclipse.
+	This plug-in must register the Ecore model to the 
+  	<code class="classname">org.eclipse.emf.ecore.generated_package</code> or 
+  	<code class="classname">org.eclipse.emf.ecore.dynamic_package</code> extension. Additionally, 
+  	load the imported metamodel to the generation workflow using the 
+  	<code class="classname">StandaloneSetup</code> component:
+  	
+	</p><pre class="programlisting">&lt;workflow&gt;
+   &lt;property file='generate.properties'/&gt;
+   &lt;bean class="org.eclipse.mwe.emf.StandaloneSetup"&gt;
+      &lt;registerGeneratedEPackage value="my.MyPackage"/&gt;
+   &lt;/bean&gt;
+   &lt;component file='org/openarchitectureware/xtext/Generator.oaw' inheritAll='true'/&gt;
+&lt;/workflow&gt;
+  	</pre><p>
+  	</p><p>
+  	The next step is to make the existing Ecore model available to your Xtext plug-in.
+  	Use the <code class="literal">importModel</code> statement followed by the nsURI of the model for that
+  	purpose, e.g.
+  	
+  	</p><pre class="programlisting">importMetamodel "http://www.oaw.org/entity" as refModel;</pre><p>
+  	
+  	imports <code class="literal">entity</code> and makes its elements available in the namespace 
+  	alias <code class="literal">refModel</code>.  
+  	</p><p>
+  	Now you make a parser rule instantiate an EClass from the imported model by adding the 
+  	qualified class name in brackets after the rule name. Assuming you want to instantiate
+  	an EClass named <code class="classname">Entity</code> which has an attribute 
+  	<code class="methodname">name</code>, simply write 
+  	
+  	</p><pre class="programlisting">MyRule [refModel::Entity] :
+	name=ID;</pre><p>
+  	</p><p>
+  	If all rules in your grammar instantiate foreign EClasses, the automatic
+  	generation of the Ecore model becomes obsolete. Switch it off using the 
+  	<code class="literal">preventMMGeneration</code> directive at the beginning of your 
+  	grammar file:
+  	
+  	</p><pre class="programlisting">preventMMGeneration
+importMetamodel "http://www.oaw.org/entity" as refModel;
+  	</pre><p>
+  	</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="r80_section_cross_resource_references_different_metamodel"></a>Cross-references to Models of a Different DSL/Metamodel</h3></div></div></div><p>
+  	These are the steps to take, if you want to implement cross-references to 
+  	models that comply to a DSL that is different from the referencing model's 
+  	DSL.</p><p>Follow the above instructions to make the referenced metamodel/DSL 
+  	available in your grammar. The outgoing reference is defined - analogous to
+  	the instantiation of foreign model element - using brackets, e.g.
+  	</p><pre class="programlisting">Referer :
+	(entities+=[refModel::Entity])*;
+  	</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="d0e9005"></a>Extension/Partitioning of Grammars</h3></div></div></div><p>
+  	If you want to extend an existing grammar or split a large grammar into multiple pieces, you
+  	can use the <code class="literal">importGrammar</code> statement, e.g.
+  	</p><pre class="programlisting">importGrammar "platform:/resouce/my.dsl/src/mydsl.xtxt"</pre><p>
+  	Imported rules can be overridden simply by redefinition. Note that for the Xtext artifact 
+  	generation to succeed, the input grammar combined with its imported grammars must not contain 
+  	unused rules.  
+  	</p></div></div></div></body></html>

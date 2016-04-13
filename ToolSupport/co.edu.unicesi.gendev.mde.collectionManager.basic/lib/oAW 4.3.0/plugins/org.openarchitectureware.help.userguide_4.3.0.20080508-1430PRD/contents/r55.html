@@ -1,0 +1,100 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>RSM/RSA Adapter</title><link rel="stylesheet" href="../book.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="openArchitectureWare User Guide"><link rel="up" href="reference.html" title="Part&nbsp;II.&nbsp;Reference"><link rel="prev" href="r52.html" title="EMF Validation Adapter"><link rel="next" href="recipe.html" title="Recipe Framework"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="r55"></a>RSM/RSA Adapter</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="r55.html#r55_introduction">Introduction</a></span></dt><dt><span class="section"><a href="r55.html#r55_installation">Installation</a></span></dt><dt><span class="section"><a href="r55.html#r55_setup_rsa">Setting up IBM Rational Software Architect / Modeller</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="r55_introduction"></a>Introduction</h2></div></div></div><p>The IBM Rational Software Architect / Modeler (RSA/RSM) is a UML
+    modeling tool. It is based on Eclipse and the UML 2.0 project. The UML
+    models stored in a special file format. These model files have the file
+    extension <code class="filename">.emx</code>, UML profiles are stored in files with
+    the extension <code class="filename">.epx</code>. The files from version 6.0 of
+    RSA/RSM can be opened with a special API only. With the introduction of
+    version 7.0, the models and profiles can be opened directly with the UML2
+    2.0 framework.</p><p>Usually RSA/RSM profiles are deployed in plugins, the referenced to
+    these profiles are written with a special URI called pathmap (people
+    working with Rational Rose might know this).</p><p>The RSA/RSM adapter brings the functionality of the UML2 adapter
+    written by Sven to RSA/RSM. The adapter for oAW is available since version
+    4.1. It is based upon the UML2 2.0 framework and provides a type mapping
+    from the UML 2.1 metamodel implementation to the oAW type system. Hence,
+    one can access the whole UML2 metamodel from <span class="emphasis"><em>Check</em></span>,
+    <span class="emphasis"><em>Xtend</em></span>, and <span class="emphasis"><em>Xpand</em></span>. Additionally,
+    and more important, the adapter dynamically maps stereotypes, stored in
+    RSA/RSM specific model files (<code class="filename">.epx</code>), which are
+    applied to model elements, to oAW types. Furthermore, stereotype
+    properties (tagged values) are mapped to oAW properties. You do not have
+    to implement additional Java classes anymore. Just export your models and
+    applied profiles. That's all!</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="r55_installation"></a>Installation</h2></div></div></div><p>Using the RSA/RSM adapter with Eclipse, you first need to install
+    the UML2 feature from eclipse.org.</p><p><a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://download.eclipse.org/tools/uml2/updates/site-interim.xml" target="_top">http://download.eclipse.org/tools/uml2/updates/site-interim.xml</a></p><p>The oAW uml2adapter is available from the oAW update site:</p><p><a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://www.openarchitectureware.org/updatesite/milestone/site.xml" target="_top">http://www.openarchitectureware.org/updatesite/milestone/site.xml</a></p><p>(Go to the home page of the project and find the current location if
+    either of the sites do not work)</p><p>Restart your Eclipse workbench when Eclipse asks you to do
+    so.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="r55_setup_rsa"></a>Setting up IBM Rational Software Architect / Modeller</h2></div></div></div><p>You need to configure your project (or the whole workspace) to use
+    the RSA/RSM adapter.</p><p>Right click on the project and choose
+    '<span class="emphasis"><em>properties</em></span>' from the pop-up menu. Open the
+    '<span class="emphasis"><em>openArchitectureWare</em></span>' tab, activate the check boxes
+    (<span class="emphasis"><em>nature</em></span> and <span class="emphasis"><em>specific metamodel
+    contributors</em></span>) and add the <span class="emphasis"><em>RSA/RSM Profiles</em></span>
+    metamodel contributor.</p><p>All profiles installed in plugins using the
+    <code class="classname">com.ibm.xtools.uml2.msl.UMLProfiles</code> extension point
+    are added as metamodels (for more information about creating your own
+    profiles with RSA/RSM see help for "Extending Rational Software Modeler
+    functionality") .</p><div class="figure"><a name="r55_metamodelContributor"></a><p class="title"><b>Figure&nbsp;34.&nbsp;Project properties with RSA/RSM profiles added</b></p><div class="figure-contents"><div class="mediaobject"><img src="images/r55_rsxadapter_reference/metamodelContributor.png" alt="Project properties with RSA/RSM profiles added"></div></div></div><p><br class="figure-break"></p><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="r55_runtime_configuration"></a>Runtime Configuration</h3></div></div></div><p>At runtime, you just need the
+      <code class="filename">org.openarchitectureware.rsdp.adapter-4.1.0.jar</code> (or
+      later). You can use the dependency of Eclipse mechanism from the PDE, or
+      copy or reference the respective JAR file directly. It does not matter,
+      you just have to take care that it is on the classpath.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="r55_workflow_profiles_from_plugins"></a>Workflow using profiles from plugins</h3></div></div></div><p>If you have written some <span class="emphasis"><em>Check</em></span>,
+      <span class="emphasis"><em>Xtend</em></span> or <span class="emphasis"><em>Xpand</em></span> files and now
+      want to execute them you have to provide the right configuration.</p><p>You need to configure the UML2 metamodel and a profile metamodel
+      for each profile you used directly. A typical configuration looks like
+      this:</p><pre class="programlisting">&lt;workflow&gt;
+	&lt;property
+		name="umlmda.profile.plugin.path"
+		value="C:/winapp/eclipse/v3.3.2/UMLMDA/eclipse/plugins/org.umlmda.u
+ml2.profile_2.0.0"/&gt;
+	&lt;!-- initializes resourcemaps, urimaps, etc. --&gt;
+	&lt;component
+		 class="org.openarchitectureware.rsdp.workflow.RSASetup" &gt;
+		&lt;pathMapEntry&gt;
+			&lt;alias value="UMLMDA_PROFILE"/&gt;
+			&lt;path value="${umlmda.profile.plugin.path}/profiles"/&gt;
+		&lt;/pathMapEntry&gt;
+		&lt;init value="true"/&gt;
+	&lt;/component&gt;
+	&lt;component class="oaw.emf.XmiReader"&gt;
+		 ...
+	&lt;/component&gt;
+	&lt;component class="oaw.xpand2.Generator"&gt;
+		&lt;metaModel class="oaw.uml2.UML2MetaModel"/&gt;
+		&lt;metaModel class="oaw.uml2.profile.ProfileMetaModel"&gt;
+			&lt;profile value="pathmap://UMLMDA_PROFILE/UMLMDAProfile.epx"/&gt;
+		&lt;/metaModel&gt;
+				...
+	&lt;/component&gt;
+&lt;workflow&gt;</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="r55_workflow_profiles_from_projects"></a>Workflow using profiles from workspace projects</h3></div></div></div><p>If the RSA/RSM profiles are installed in a workspace project
+      rather in a plugin, it can be accessed with a workflow below:</p><pre class="programlisting">&lt;workflow&gt;
+	&lt;property
+		name="umlmda.profile.project.path"
+		value="C:/devel/umlmda.rsm7/org.umlmda.uml2.profile"/&gt;
+	&lt;!-- initializes resourcemaps, urimaps, etc. --&gt;
+	&lt;component
+		class="org.openarchitectureware.rsdp.workflow.RSASetup" &gt;
+		&lt;umlExtensionProject
+			class="org.openarchitectureware.rsdp.workflow.UmlExtensionProje
+ct"&gt;
+			&lt;projectName value="UMLMDAProfile"/&gt;
+			&lt;path value="${umlmda.profile.project.path}"/&gt;
+		&lt;/umlExtensionProject&gt;
+		&lt;init value="true"/&gt;
+	&lt;/component&gt;
+	&lt;component class="oaw.emf.XmiReader"&gt;
+		&lt;modelFile value="${model}"/&gt;
+		&lt;outputSlot value="model"/&gt;
+	 &lt;/component&gt;
+	&lt;component class="oaw.xpand2.Generator" skipOnErrors="true"&gt;
+		&lt;metaModel class="oaw.type.emf.EmfMetaModel"
+			metaModelPackage="org.eclipse.emf.ecore.EcorePackage"/&gt;
+		&lt;metaModel class="oaw.uml2.UML2MetaModel"/&gt;
+		&lt;metaModel class="oaw.uml2.profile.ProfileMetaModel"&gt;
+			&lt;profile
+				value="file://${umlmda.profile.project.path}/profiles/UMLMDAP
+rofile.epx"/&gt;
+		&lt;/metaModel&gt;
+		...
+	&lt;/component&gt;</pre></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="r55_future_enhancements"></a>Future enhancements</h3></div></div></div><p>The next version of the RSA/RSM adapter will support profiles
+      found in the classpath of the generator project. In addition, profiles
+      can be added more selectively.</p></div></div></div></body></html>

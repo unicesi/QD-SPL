@@ -7,6 +7,7 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -18,6 +19,11 @@ import co.shift.contributors.Contribution;
 public class QAParser {
 
 	private Document doc;
+	private static String qaFullPath;
+
+	public static void setQaFullPath(String s) {
+		qaFullPath = s;
+	}
 
 	public QAParser() {
 		init();
@@ -32,8 +38,9 @@ public class QAParser {
 			// Using factory get an instance of document builder
 			DocumentBuilder db = dbf.newDocumentBuilder();
 			// parse using builder to get DOM representation of the XML file
-			doc = db.parse(new FileInputStream("models/QAsConfig.xml"));
-
+			//doc = db.parse(new FileInputStream("models/QAsConfig.xml"));
+			doc = db.parse(new FileInputStream(qaFullPath));
+			//doc = db.parse(new FileInputStream("/Users/daviddurangiraldo/Dropbox/JulianC/Maestria/201502/FabricasDeSoftware/152/runtime-EclipseApplication/David/models/QAsConfig.xml"));
 		} catch (ParserConfigurationException pce) {
 			pce.printStackTrace();
 		} catch (SAXException se) {

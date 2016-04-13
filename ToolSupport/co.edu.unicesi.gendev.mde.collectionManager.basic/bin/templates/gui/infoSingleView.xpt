@@ -1,0 +1,72 @@
+«DEFINE PanelInfoSingle(String systemName, kernelMetamodel::System system) FOR guiMetamodel::InfoView»
+	«LET systemName.trim().toFirstUpper() AS systemNameVar»
+		«FILE "/unicesi/driso/gui/PanelInfoSingle.java"»
+			package unicesi.driso.gui;
+			
+			import java.awt.BorderLayout;
+			import java.awt.Color;
+			import java.awt.GridLayout;
+			import javax.swing.JLabel;
+			import javax.swing.JPanel;
+			import javax.swing.border.TitledBorder;
+			import java.util.Observable;
+			import java.util.Observer;
+			
+			import unicesi.driso.«systemNameVar.toLowerCase()».kernel.*;
+			
+			public class PanelInfoSingle extends JPanel implements Observer
+			{
+				private static final long serialVersionUID = 1L;
+				
+				private JPanel panelInformation;
+				«FOREACH system.element.attributes.collect(e | e.name).toSet() AS attributeName»
+					private JLabel label«attributeName.toFirstUpper()»;
+				«ENDFOREACH»
+				private «systemNameVar» facadeSystem;
+				
+				public PanelInfoSingle()
+				{
+					facadeSystem = «systemNameVar».getInstance();
+			        facadeSystem.addObserver(this);
+			        setLayout(new BorderLayout());
+			        setBorder(new TitledBorder("«title»"));
+			        panelInformation = new JPanel();
+			        initPanelInformation();
+			        add(panelInformation, BorderLayout.NORTH);
+				}
+				
+				private void initPanelInformation( ){
+			        GridLayout layout = new GridLayout(7, 2);
+			        layout.setVgap(7);
+			        panelInformation.setLayout(layout);
+			        panelInformation.setBackground(Color.WHITE);
+					initializeComponents();
+			    }
+			    
+			    private void initializeComponents()
+			    {
+					«FOREACH system.element.attributes.collect(e | e.name).toSet() AS attributeName»
+						label«attributeName.toFirstUpper()» = new JLabel("«attributeName.toFirstUpper()»:");
+					    panelInformation.add(label«attributeName.toFirstUpper()»);
+					«ENDFOREACH»
+				}
+				
+				@Override
+				public void update(Observable o, Object arg) {
+					updateInfo();
+				}
+				
+				public void updateInfo()
+				{
+			    	«system.element.name.trim().toFirstUpper()» value = facadeSystem.getSelectedElement();
+			    	if (value != null)
+			    	{
+						«FOREACH system.element.attributes.collect(e | e.name).toSet() AS attributeName»
+							    label«attributeName.toFirstUpper()».setText("«attributeName»: " + value.get«attributeName.toFirstUpper()»());
+						«ENDFOREACH»	    	
+			    	}
+			    }
+			}
+		«ENDFILE»
+	«ENDLET»
+«ENDDEFINE»

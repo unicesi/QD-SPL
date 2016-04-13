@@ -1,0 +1,32 @@
+«DEFINE dataListElement(String systemName) FOR kernelMetamodel::Element»
+	«LET systemName.trim().toFirstUpper() AS systemNameVar»
+		«FILE "/unicesi/driso/gui/DataListElement.java"»
+			package unicesi.driso.gui;
+			
+			import unicesi.driso.«systemNameVar.toLowerCase()».kernel.*;
+			
+			public class DataListElement
+			{
+				private «name.trim().toFirstUpper()» element;
+				
+				public DataListElement(«name.trim().toFirstUpper()» element)
+				{
+					this.element = element;
+				}
+				
+				public «name.trim().toFirstUpper()» getElement()
+				{
+					return this.element;
+				}
+				
+				public String toString()
+				{
+					String result = «FOREACH attributes.select(e | e.isIdentifier == true) AS attribute SEPARATOR ' + "," + ' -»
+					element.get«attribute.name.toFirstUpper() -»()
+					«ENDFOREACH -»;
+					return result;
+				}
+			}
+		«ENDFILE»
+	«ENDLET»
+«ENDDEFINE»

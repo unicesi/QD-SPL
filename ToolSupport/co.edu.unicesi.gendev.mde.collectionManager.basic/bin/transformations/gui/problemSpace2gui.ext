@@ -1,0 +1,36 @@
+import problemSpaceMetamodel;
+import guiMetamodel;
+
+create guiMetamodel::GUI problemSpace2gui(problemSpaceMetamodel::ProblemSpace element):
+	this.setSystemName(element.name) ->
+	createMainView(this) ->
+	this;
+
+create guiMetamodel::MainView createMainView(guiMetamodel::GUI gui):
+	this.setTitle(gui.systemName) ->
+	createListView(this) ->
+	createInfoSingleView(this) ->
+	createOrderView(this) ->
+	gui.setMainView(this) ->
+	this;
+
+create guiMetamodel::ListView createListView(guiMetamodel::MainView mainView):
+	this.setTitle('Songs') ->
+	createAddView(this) ->
+	mainView.setListView(this) ->
+	this;
+
+create guiMetamodel::CreateView createAddView(guiMetamodel::ListView listView):
+	this.setTitle('Add Song') ->
+	listView.setCreateView(this) ->
+	this;
+
+create guiMetamodel::InfoSingleView createInfoSingleView(guiMetamodel::MainView mainView):
+	this.setTitle('Song Information')->
+	mainView.setInfoView(this) ->
+	this;
+
+create guiMetamodel::OrderView createOrderView(guiMetamodel::MainView mainView):
+	this.setTitle('Order By') ->
+	mainView.setOrderView(this) ->
+	this;

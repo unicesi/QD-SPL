@@ -1,0 +1,112 @@
+«EXTENSION templates::javaKernel»
+
+«DEFINE kernel2text FOR kernelMetamodel::Kernel»
+	«LET system.name.trim().toFirstUpper() AS systemName»
+		«LET system.element.name.trim().toFirstUpper() AS elementName»
+			«FILE "/unicesi/driso/" + systemName.toLowerCase() + "/kernel/" + systemName + ".java"»
+				package unicesi.driso.«systemName.toLowerCase()».kernel;
+				
+				import java.util.Observable;
+				import java.util.ArrayList;
+				import java.util.Iterator;
+				import java.util.Arrays;
+				
+				public class «systemName» extends Observable
+				{
+					
+					private ArrayList<«elementName»> elements;
+					private «elementName» selectedElement;
+					private static «systemName» instance;
+					
+					private «systemName»()
+					{
+						this.selectedElement = null;
+						this.elements = new ArrayList<«elementName»>();
+					}
+					
+					public static «systemName» getInstance()
+					{
+						if (instance == null)
+						{
+							instance = new «systemName»();
+						}
+						return instance;
+					}
+					
+					public boolean add(«elementName» value)
+					{
+						boolean result = false;
+						if (find«elementName»ByID(value) == null)
+						{
+							this.elements.add(value);
+							result = true;
+						}
+						setChanged();
+						notifyObservers();
+						return result;
+					}
+					
+					public ArrayList<«elementName»> getElements()
+					{
+						ArrayList<«elementName»> elementsCopy = new ArrayList<«elementName»>(elements);
+						return elementsCopy;
+					}
+					
+					public void setSelectedElement(«elementName» selectedElement)
+					{
+						this.selectedElement = selectedElement;
+						setChanged();
+						notifyObservers();
+					}
+					
+					public «elementName» getSelectedElement()
+					{
+						return this.selectedElement;
+					}
+					
+					«EXPAND findElementByID FOR system.element»
+					
+					«EXPAND bubbleSort FOR system»
+					«EXPAND insertionSort FOR system»
+					
+				}
+			«ENDFILE»
+		«ENDLET»
+	«ENDLET»
+	«EXPAND element::element(system.name) FOR system.element»
+«ENDDEFINE»
+
+«DEFINE findElementByID FOR kernelMetamodel::Element»
+	«LET name.trim().toFirstUpper() AS elementName»
+		public «elementName» find«elementName»ByID(«elementName» searchedElement)
+		{
+			boolean found = false;
+			«elementName» element = null;
+			«IF attributes.select(e | e.isIdentifier == true).size > 0 -»
+				for (Iterator<«elementName»> iterator = elements.iterator(); iterator.hasNext() && !found;)
+				{
+					element = iterator.next();
+					if («FOREACH attributes.select(e | e.isIdentifier == true) AS attribute SEPARATOR ' && ' -»
+					element.«attribute.getterName()».equals(searchedElement.«attribute.getterName()»)
+					«ENDFOREACH -»)
+					{
+						found = true;
+					}
+				}
+			«ENDIF»
+			if (!found)
+			{
+				element = null;
+			}
+			return element;
+		}
+	«ENDLET»
+«ENDDEFINE»
+
+«DEFINE bubbleSort FOR kernelMetamodel::System»
+	«REM»TODO bubble sort template«ENDREM»
+«ENDDEFINE»
+
+«DEFINE insertionSort FOR kernelMetamodel::System»
+	«REM»TODO insertion sort template«ENDREM»
+«ENDDEFINE»

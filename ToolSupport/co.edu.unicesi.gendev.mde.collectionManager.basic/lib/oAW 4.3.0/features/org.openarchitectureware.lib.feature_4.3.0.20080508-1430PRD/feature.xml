@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.openarchitectureware.lib.feature"
+      label="%featureName"
+      version="4.3.0.20080508-1430PRD"
+      provider-name="%providerName"
+      plugin="org.antlr.runtime">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://http://oaw.pluginbuilder.org/nightly/updateSite/site.xml"/>
+      <discovery label="%updateSiteName" url="http://www.openarchitectureware.org/updatesite/milestone"/>
+   </url>
+
+   <plugin
+         id="org.antlr"
+         download-size="0"
+         install-size="0"
+         version="3.0.0"/>
+
+   <plugin
+         id="org.apache.commons.cli"
+         download-size="0"
+         install-size="0"
+         version="1.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.logging"
+         download-size="0"
+         install-size="0"
+         version="1.0.4.v200701082340"/>
+
+   <plugin
+         id="org.apache.log4j"
+         download-size="0"
+         install-size="0"
+         version="1.2.8.v200704240447"/>
+
+   <plugin
+         id="org.antlr.runtime"
+         download-size="0"
+         install-size="0"
+         version="3.0.0"/>
+
+   <plugin
+         id="org.apache.xerces"
+         download-size="0"
+         install-size="0"
+         version="2.8.0.20080508-1430PRD"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.xml.resolver"
+         download-size="0"
+         install-size="0"
+         version="1.1.0.20080508-1430PRD"
+         unpack="false"/>
+
+</feature>

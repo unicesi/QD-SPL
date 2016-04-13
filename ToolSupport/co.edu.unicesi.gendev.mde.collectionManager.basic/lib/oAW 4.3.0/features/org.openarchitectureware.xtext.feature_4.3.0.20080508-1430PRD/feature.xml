@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.openarchitectureware.xtext.feature"
+      label="%featureName"
+      version="4.3.0.20080508-1430PRD"
+      provider-name="%providerName"
+      plugin="org.openarchitectureware.xtext.ui">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://http://oaw.pluginbuilder.org/nightly/updateSite/site.xml"/>
+      <discovery label="%updateSiteName" url="http://www.openarchitectureware.org/updatesite"/>
+   </url>
+
+   <requires>
+      <import plugin="org.openarchitectureware.core.workflow"/>
+      <import plugin="org.openarchitectureware.core.expressions"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.openarchitectureware.core.emftools"/>
+      <import plugin="org.eclipse.ui.editors"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.ui.workbench.texteditor"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.ui.ide"/>
+      <import plugin="org.openarchitectureware.base"/>
+      <import plugin="org.apache.commons.logging"/>
+      <import plugin="org.antlr" version="3.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.ecore.xmi"/>
+      <import plugin="org.eclipse.jface"/>
+      <import plugin="org.eclipse.ui.workbench"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+   </requires>
+
+   <plugin
+         id="org.openarchitectureware.xtext.core"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+   <plugin
+         id="org.openarchitectureware.xtext.editor"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+   <plugin
+         id="org.openarchitectureware.xtext.editor.base"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+   <plugin
+         id="org.openarchitectureware.xtext.ui"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+   <plugin
+         id="org.openarchitectureware.xtext.core.base"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+   <plugin
+         id="org.openarchitectureware.xtext.generator"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+</feature>

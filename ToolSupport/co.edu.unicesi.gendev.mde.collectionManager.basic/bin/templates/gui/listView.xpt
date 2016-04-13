@@ -1,0 +1,111 @@
+«DEFINE PanelList(String systemName, kernelMetamodel::System system) FOR guiMetamodel::ListView»
+	«LET systemName.trim().toFirstUpper() AS systemNameVar»
+		«FILE "/unicesi/driso/gui/PanelList.java"»
+			package unicesi.driso.gui;
+			
+			import java.awt.BorderLayout;
+			import java.awt.event.ActionEvent;
+			import java.awt.event.ActionListener;
+			import java.util.ArrayList;
+			import java.util.Iterator;
+			import java.util.Observable;
+			import java.util.Observer;
+			
+			import javax.swing.JButton;
+			import javax.swing.JList;
+			import javax.swing.JPanel;
+			import javax.swing.border.TitledBorder;
+			import javax.swing.event.ListSelectionEvent;
+			import javax.swing.event.ListSelectionListener;
+			
+			import unicesi.driso.«systemNameVar.toLowerCase()».kernel.*;
+			
+			public class PanelList extends JPanel implements ActionListener, ListSelectionListener, Observer
+			{
+				private static final long serialVersionUID = 1L;
+				
+				private final static String ADD = "Add «system.element.name.trim().toFirstUpper()»";
+				private SystemGUI gui;
+				private JList list;
+				
+				«IF createView != null»
+				    private JButton buttonAdd;
+			    «ENDIF»
+			    
+			    private «systemNameVar» facadeSystem;
+			    
+			    public PanelList(SystemGUI gui)
+			    {
+			    	this.gui = gui;
+			    	facadeSystem = «systemNameVar».getInstance();
+			        facadeSystem.addObserver(this);
+			        setLayout(new BorderLayout());
+			        TitledBorder border = new TitledBorder("«system.element.name.trim().toFirstUpper()»s");
+					JPanel listPanel = new JPanel();
+					listPanel.setBorder(border);
+					listPanel.setLayout(new BorderLayout());
+					list = new JList();
+					list.addListSelectionListener(this);
+					listPanel.add(list, BorderLayout.CENTER);
+			        «IF createView != null»
+						buttonAdd = new JButton(ADD);
+						buttonAdd.setActionCommand(ADD);
+						buttonAdd.addActionListener(this);
+						buttonAdd.setPreferredSize(new java.awt.Dimension(284, 35));
+						listPanel.add(buttonAdd, BorderLayout.SOUTH);
+					«ENDIF»
+					add(listPanel, BorderLayout.CENTER);
+			    }
+			    
+			    @Override
+				public void update(Observable o, Object arg) {
+					updateList();
+				}
+				
+				«EXPAND updateList FOR system.element»
+				
+				@Override
+			    public void actionPerformed(ActionEvent e)
+			    {
+			        String command = e.getActionCommand();
+			
+			        if (command.equals(ADD))
+			        {
+			            DialogCreate dialogCreate = new DialogCreate(gui);
+				        dialogCreate.setVisible(true);
+			        }			
+			    }
+			    
+			    @Override
+			    public void valueChanged(ListSelectionEvent e){
+			    	JList list = (JList) e.getSource();
+					Object[] dataList = list.getSelectedValues();
+					if (dataList != null && dataList.length > 0)
+					{
+						DataListElement selected = (DataListElement) dataList[0];
+						facadeSystem.setSelectedElement(selected.getElement());
+					}
+			    }
+			}
+		«ENDFILE»
+	«ENDLET»
+	«EXPAND dataListElement::dataListElement(systemName) FOR system.element»
+	«IF createView != null»
+		«EXPAND createView::DialogCreate(systemName, system) FOR createView»
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE updateList FOR kernelMetamodel::Element»
+	private void updateList()
+	{
+	   	ArrayList<«name.trim().toFirstUpper()»> values = facadeSystem.getElements();
+		DataListElement[] elements = new DataListElement[values.size()];
+		int i = 0;
+		for (Iterator<«name.trim().toFirstUpper()»> iterator = values.iterator(); iterator.hasNext(); i++) {
+			«name.trim().toFirstUpper()» element = iterator.next();
+			DataListElement data = new DataListElement(element);
+			elements[i] = data;
+		}
+	    list.setListData(elements);
+	}
+«ENDDEFINE»

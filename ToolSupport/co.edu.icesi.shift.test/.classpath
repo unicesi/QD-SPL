@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="/Applications/EclipseModeling_Mars/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.xtext_2.8.4.v201508050135.jar" sourcepath="/Applications/EclipseModeling_Mars/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.xtext_2.8.4.v201508050135.jar">
+		<accessrules>
+			<accessrule kind="accessible" pattern="org/eclipse/xtext/generator/*"/>
+			<accessrule ignoreifbetter="true" kind="nonaccessible" pattern="**/*"/>
+		</accessrules>
+	</classpathentry>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

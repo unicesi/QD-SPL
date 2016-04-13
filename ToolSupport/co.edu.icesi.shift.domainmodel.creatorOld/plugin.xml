@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated DomainMetamodel -->
+      <wizard
+            category="co.edu.icesi.shift.common.shiftcategory"
+            class="co.edu.icesi.shift.domainmodel.creator.DomainmetamodelModelWizard"
+            icon="icons/full/obj16/DomainmetamodelModelFile.gif"
+            id="co.edu.icesi.shift.domainmodel.create.domainmodelwizard"
+            name="EA Domain Metamodel">
+         <description>%_UI_DomainmetamodelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+
+</plugin>

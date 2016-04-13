@@ -43,6 +43,10 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -56,7 +60,9 @@ import org.w3c.dom.Text;
 
 @SuppressWarnings("all")
 public class DomainCodeUtilities {
-  private final static String GENERATION_DIR = "/Users/daviddurangiraldo/Desktop/";
+  public static String GENERATION_DIR = "";
+  
+  public static String SRC_DIR = "";
   
   public final static String CONTRIBUTE_TO_BI = "BusinessInterface";
   
@@ -551,7 +557,12 @@ public class DomainCodeUtilities {
   
   public static void runScript(final String packageName) {
     try {
-      String basePath = System.getProperty("user.dir");
+      IWorkspace _workspace = ResourcesPlugin.getWorkspace();
+      IWorkspaceRoot _root = _workspace.getRoot();
+      IPath _location = _root.getLocation();
+      String _string = _location.toString();
+      String basePath = (_string + "/../workspace/co.edu.icesi.shift.generator");
+      System.err.println(("workspace: " + basePath));
       File _file = new File((basePath + "/files/rootProject.sh"));
       FileWriter _fileWriter = new FileWriter(_file);
       BufferedWriter rootProjectWriter = new BufferedWriter(_fileWriter);
@@ -1132,8 +1143,7 @@ public class DomainCodeUtilities {
     }
     
     try {
-      String _property = System.getProperty("user.dir");
-      String basePath = (_property + "/src-gen");
+      String basePath = DomainCodeUtilities.SRC_DIR;
       File folder = new File((DomainCodeUtilities.GENERATION_DIR + "/co.shift.root/co.shift.ejb/src/main/java"));
       DomainCodeUtilities.deleteFolder(folder);
       final Path srcDir = Paths.get(basePath);

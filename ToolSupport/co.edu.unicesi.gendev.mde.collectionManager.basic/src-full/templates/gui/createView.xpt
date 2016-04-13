@@ -1,0 +1,117 @@
+«DEFINE DialogCreate(String systemName, kernelMetamodel::System system) FOR guiMetamodel::CreateView»
+	«LET systemName.trim().toFirstUpper() AS systemNameVar»
+		«FILE "/unicesi/driso/gui/DialogCreate.java"»
+			package unicesi.driso.gui;
+			
+			import java.awt.BorderLayout;
+			import java.awt.Dimension;
+			import java.awt.GridLayout;
+			import java.awt.event.ActionEvent;
+			import java.awt.event.ActionListener;
+			
+			import javax.swing.JButton;
+			import javax.swing.JDialog;
+			import javax.swing.JLabel;
+			import javax.swing.JOptionPane;
+			import javax.swing.JPanel;
+			import javax.swing.JTextField;
+			import javax.swing.UIManager;
+			import javax.swing.border.TitledBorder;
+		
+			import unicesi.driso.«systemNameVar.toLowerCase()».kernel.*;
+			
+			public class DialogCreate extends JDialog implements ActionListener
+			{
+				
+				{
+					try
+					{
+						javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+					}
+					catch (Exception e)
+					{
+						e.printStackTrace();
+					}
+				}
+				
+				private static final long serialVersionUID = 1L;
+				
+				private final static String ADD = "Create «system.element.name.trim().toFirstUpper()»";
+				
+				«FOREACH system.element.attributes.collect(e | e.name).toSet() AS attributeName»
+					private JLabel label«attributeName.toFirstUpper()»;
+					private JTextField textField«attributeName.toFirstUpper()»;
+					
+				«ENDFOREACH»
+				
+				private JPanel panelData;
+				
+			    private JButton buttonAdd;
+
+			    private «systemNameVar» facadeSystem;
+			    
+			    public DialogCreate(SystemGUI gui)
+			    {
+			    	super(gui, true);
+					facadeSystem = «systemNameVar».getInstance();
+			        setTitle("Create «system.element.name.trim().toFirstUpper()»");
+			        setLayout(new java.awt.BorderLayout());
+			        panelData = new JPanel();
+			        panelData.setBorder(new TitledBorder("Information"));
+					panelData.setLayout(new GridLayout(«system.element.attributes.collect(e|e.name).toSet().size», 2));
+					add(panelData, BorderLayout.NORTH);
+					«FOREACH system.element.attributes.collect(e | e.name).toSet() AS attributeName»
+						label«attributeName.toFirstUpper()» = new JLabel("«attributeName.toFirstUpper()»:");
+				        panelData.add(label«attributeName.toFirstUpper()»);
+				        textField«attributeName.toFirstUpper()» = new JTextField();
+				        panelData.add(textField«attributeName.toFirstUpper()»);
+					«ENDFOREACH»
+					panelData.setPreferredSize(new Dimension(200, 40 * «system.element.attributes.size»));
+			        buttonAdd = new JButton(ADD);
+			        buttonAdd.setActionCommand(ADD);
+			        buttonAdd.addActionListener(this);
+			        add(buttonAdd, BorderLayout.SOUTH);
+			        buttonAdd.setPreferredSize(new java.awt.Dimension(200, 28));
+			        pack();
+			        setLocationRelativeTo(null);
+			    }
+			    
+			    public boolean add«system.element.name.trim().toFirstUpper()»(«system.element.name.trim().toFirstUpper()» value)
+			    { 
+			        return facadeSystem.add(value);
+			    }
+			    
+			    @Override
+			    public void actionPerformed(ActionEvent e)
+			    {
+			        if (e.getActionCommand().equals(ADD))
+			        {
+			            try
+			            {
+			            	«system.element.name.trim().toFirstUpper()» value = new «system.element.name.trim().toFirstUpper()»();
+						    «FOREACH system.element.attributes.collect(e | e.name).toSet() AS attributeName»
+						        String n«attributeName.toFirstUpper()» = textField«attributeName.toFirstUpper()».getText( );
+						        value.set«attributeName.toFirstUpper()»(n«attributeName.toFirstUpper()»);
+							«ENDFOREACH»
+			                if (add«system.element.name.trim().toFirstUpper()»(value))
+			                {
+			                	dispose( );
+			                }
+			                else
+			                {
+			                    JOptionPane.showMessageDialog(this, "Record already exists.", "Create «title»", JOptionPane.ERROR_MESSAGE);
+			                }
+			                return;
+			            }
+			            catch(NumberFormatException ne)
+			            {
+			                JOptionPane.showMessageDialog(this, "Not a valid number format.", "Create «title»", JOptionPane.ERROR_MESSAGE);
+			                return;
+			            }
+			        }
+			    }
+			    
+			}
+		«ENDFILE»
+	«ENDLET»
+«ENDDEFINE»

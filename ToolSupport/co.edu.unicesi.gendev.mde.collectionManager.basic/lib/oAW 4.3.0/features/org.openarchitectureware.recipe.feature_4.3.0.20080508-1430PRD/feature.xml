@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.openarchitectureware.recipe.feature"
+      label="%featureName"
+      version="4.3.0.20080508-1430PRD"
+      provider-name="%providerName"
+      plugin="org.openarchitectureware.recipe">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://http://oaw.pluginbuilder.org/nightly/updateSite/site.xml"/>
+      <discovery label="%updateSiteName" url="http://www.openarchitectureware.org/updatesite/milestone"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.core.resources"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.apache.ant"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.jface.text"/>
+      <import plugin="org.eclipse.text"/>
+      <import plugin="org.openarchitectureware.core.workflow"/>
+      <import plugin="org.openarchitectureware.core.expressions"/>
+      <import plugin="org.apache.commons.logging"/>
+   </requires>
+
+   <plugin
+         id="org.openarchitectureware.recipe"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+   <plugin
+         id="org.openarchitectureware.recipe.core"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+   <plugin
+         id="org.openarchitectureware.recipe.eclipseChecks"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+   <plugin
+         id="org.openarchitectureware.recipe.workflow"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+   <plugin
+         id="org.openarchitectureware.recipe.simpleChecks"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+</feature>

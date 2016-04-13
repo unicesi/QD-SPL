@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin
+>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <wizard
+            category="co.edu.icesi.shift.common.shiftcategory"
+            class="co.edu.icesi.shift.qaconfig.creator.QAConfigWizard"
+            icon="icons/reltopics_co.gif"
+            id="co.edu.icesi.shift.qaconfig.create.qaconfigwizard"
+            name="New QA Configuration"
+            project="false">
+      </wizard>
+   </extension>
+   <extension
+         id="browserSupportID1"
+         point="org.eclipse.ui.browserSupport">
+      <support
+            class="co.edu.icesi.shift.qaconfig.creator.AbstractWorkbenchBrowserSupport1"
+            default="true">
+      </support>
+   </extension>
+</plugin>

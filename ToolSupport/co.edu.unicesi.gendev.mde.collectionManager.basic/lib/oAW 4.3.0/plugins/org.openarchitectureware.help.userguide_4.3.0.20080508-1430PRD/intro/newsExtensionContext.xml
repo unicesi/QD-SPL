@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<introContent>
+  <extensionContent id="oaw_whatsnew_extension" name="openArchitectureWare" path="whatsnew/@">
+     <group id="oaw_whatsnew_group" style-id="content-group">
+    	<link label="openArchitectureWare development tools" url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.openarchitectureware.help.userguide/contents/whatsnew.html" id="oaw_whatsnew_link" style-id="content-link">
+           <text>Find out about significant changes made to the openArchitectureWare development tools</text>
+        </link>
+     </group>
+  </extensionContent>
+</introContent>

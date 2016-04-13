@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: %bundleName
+Bundle-SymbolicName: org.apache.commons.logging
+Bundle-Version: 1.0.4.v200701082340
+Bundle-ClassPath: org.apache.commons.logging_1.0.4.v200701082340.jar
+Bundle-Vendor: %bundleProvider
+Bundle-Localization: plugin
+Export-Package: org.apache.commons.logging,org.apache.commons.logging.impl
+Bundle-RequiredExecutionEnvironment: CDC-1.0/Foundation-1.0,J2SE-1.3

@@ -1,0 +1,96 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Model-To-Model with UML2 Example</title><link rel="stylesheet" href="../book.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="openArchitectureWare User Guide"><link rel="up" href="samples.html" title="Part&nbsp;III.&nbsp;Samples"><link rel="prev" href="emf_state_machine.html" title="EMF State Machine"><link rel="next" href="whatsnew.html" title="New and Noteworthy"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="m2m_uml2_example"></a>Model-To-Model with UML2 Example</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="m2m_uml2_example.html#m2m_uml2_example_introduction">Introduction</a></span></dt><dt><span class="section"><a href="m2m_uml2_example.html#m2m_uml2_example_why_this_example">Why this example?</a></span></dt><dt><span class="section"><a href="m2m_uml2_example.html#m2m_uml2_example_setting_up_eclipse">Setting up Eclipse</a></span></dt><dt><span class="section"><a href="m2m_uml2_example.html#m2m_uml2_example_the_building_blocks_of_the_transformer">The Building Blocks of the Transformer</a></span></dt><dt><span class="section"><a href="m2m_uml2_example.html#m2m_uml2_example_using_the_transformer">Using the transformer</a></span></dt><dt><span class="section"><a href="m2m_uml2_example.html#m2m_uml2_example_testing_an_m2m_transformation">Testing an M2M transformation</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="m2m_uml2_example_introduction"></a>Introduction</h2></div></div></div><p>This tutorial introduces various somewhat advanced topics of working
+    with openArchitecureWare. We do not generate code, we transform models.
+    Specifically, the tutorial covers the following: </p><div class="itemizedlist"><ul type="disc"><li>
+           real model-to-model transformations 
+        </li><li>
+           how to test model-to-model transformations 
+        </li><li>
+           working with Eclipse UML2 (specifically, transforming away from it) 
+        </li><li>
+           using global variables 
+        </li><li>
+           implementing JAVA extensions 
+        </li></ul></div><p>Note that this tutorial actually documents the
+    <span class="emphasis"><em>uml2ecore</em></span> utility, that can be used to transform
+    metamodels drawn with an UML2 tool into an Ecore instance. This tool is
+    available for download as a plugin on the oAW download page <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://www.eclipse.org/gmt/oaw/download" target="_top">http://www.eclipse.org/gmt/oaw/download</a>.</p><p>Please make sure that you first read the <span class="emphasis"><em><a href="uml2ecore_reference.html" title="UML2Ecore Reference">UML2Ecore reference</a></em></span> reference. That document
+			explains what to tool does &#8211; this is more or less a precondition to making sense
+			<span class="emphasis"><em>how</em></span> the tool does it (which is what this document
+			explains).</p><p>Also note that many of the gory details are actually documented as
+    code comments in the various oAW files of the example. So, make sure you
+    have the code available as you read this document.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="m2m_uml2_example_why_this_example"></a>Why this example?</h2></div></div></div><p>In general, we needed an example for real model-to-model
+    transformations. And obviously, since we already had the
+    <span class="emphasis"><em>uml2ecore</em></span> tool, it makes sense to document this one.
+    Also, including some information of working with UML2 is also important.
+    However, there is one really good reason why looking at this example is
+    important.</p><p>If you work with UML2 models, you will soon realize that the UML2
+    metamodel is very intricate, non-intuitive and complicated. Therefore, it
+    is very good practice to transform away from the UML2 model as early as
+    possible. Especially, if you want to enhance your model using model
+    modifications (remember the emergency-stop feature in the state machine
+    example?) this approach is recommended. While read access to UML2 models
+    is tedious, write access is almost impossible to get correct, and in some
+    aspects also impossible with generic EMF tools such as oAW.</p><p>Therefore, if you work with a UML2 model, you should <span class="bold"><strong>always</strong></span> begin by transforming into your own
+    domain-specific metamodel.</p><p>In this example, we transform into an instance of Ecore in order to
+    get the metamodel (since the <span class="emphasis"><em>uml2ecore</em></span> tool is used
+    for EMF metamodelling in UML tools). So, in your application projects, the
+    transformation would not create an instance of Ecore, but an instance of
+    your domain-specific metamodel (which, in turn, might have been created
+    with uml2ecore). The only difference to the example given here is that you
+    would use as a metamodel not Ecore, but rather your own one. This has
+    effects on the metamodel declarations in the workflow file; everything
+    else is similar.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="m2m_uml2_example_setting_up_eclipse"></a>Setting up Eclipse</h2></div></div></div><p>You need an installation of oAW 4.3 including the UML2 support. Run
+    the UML2 example (available for download on the oAW download page <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://www.eclipse.org/gmt/oaw/download" target="_top">http://www.eclipse.org/gmt/oaw/download</a>) to
+    verify that you have all the UML2 stuff installed.</p><p>Then download the sample code for this tutorial and put the project
+    into your workspace. It should look something like this:</p><div class="mediaobject"><img src="images/m2m_uml2_example/project.png"></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="m2m_uml2_example_the_building_blocks_of_the_transformer"></a>The Building Blocks of the Transformer</h2></div></div></div><p>The first thing you should look at (<span class="emphasis"><em>after</em></span>
+    reading the uml2ecore user guide!), is the workflow file. It reads the
+    UML2 model, checks a couple of constraints against it and then invokes the
+    transformation. Then, we write the result of the transformation out to an
+    <code class="filename">.ecore</code> file.</p><p><code class="filename">src/org/openarchitectureware/uml2ecore/uml2ecoreWorkflow.oaw</code></p><p>You could now take a look at the constraints against the UML model.
+    There are currently quite few of them in the code, but at least it shows
+    how to write constraints against UML2 models</p><p><code class="filename">src/org/openarchitectureware/uml2ecore/uml2Constraints.chk</code></p><p>The transformation itself is located in
+    <code class="filename">uml2ecore.ext</code>. While the transformation is not too
+    complicated, it is also not trivial and illustrates many of the facets of
+    the <span class="emphasis"><em>Xtend</em></span> transformation language.</p><p><code class="filename">src/org/openarchitectureware/uml2ecore/uml2ecore.ext</code></p><p>To see how global variables are used, take a look at the
+    &lt;globalvar ... /&gt; declaration in the workflow file, as well as the
+    <code class="classname">nsUri()</code> function in
+    <code class="filename">uml2exore.ext</code> .</p><p>To see JAVA extensions in action, take a look at
+    <code class="filename">io.ext</code> and
+    <code class="filename">IOExtensions.java</code></p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="m2m_uml2_example_using_the_transformer"></a>Using the transformer</h2></div></div></div><p>Usage of the transformer can be seen from the uml2ecore users guide
+    mentioned a couple of times already. However, you can also take a look at
+    the stuff in the testing section.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="m2m_uml2_example_testing_an_m2m_transformation"></a>Testing an M2M transformation</h2></div></div></div><p>M2M transformations can become quite intricate, especially if UML2
+    is involved. Therefore, testing such a transformation is essential. Note
+    that you should resist the temptation to write tests in the form of
+    generic constraints such as</p><p><span class="emphasis"><em>For each Class in the UML2 model there has to be an EClass
+    in the Ecore model</em></span></p><p>While this statement is true, it is also on the same level of
+    genericity as the transformation itself. It is therefore not much less
+    complex, and therefore as error prone as the transformation itself.</p><p>Instead what you should do is the following: </p><div class="itemizedlist"><ul type="disc"><li>
+           Define a reference model. This model should contain all the possible alternatives of creating input models, i.e. should cover the complete variability of the metamodel. 
+        </li><li>
+           Then run the transformation on that reference model 
+        </li><li>
+           Finally, write 
+
+          <span class="emphasis"><em>model-specific</em></span>
+
+           constraints that verify the particular result of the transformation. 
+        </li></ul></div><p>So in our example, we have a small metamodel modelled in UML using
+    abstract and non-abstract classes, inheritance, attributes, 1:n and 1:1
+    references, bidirectional and unidirectional. The model, in our case, is
+    drawn with MagicDraw 11.5 and exported as an UML2 model. You find all the
+    model contents in the following location.</p><p><code class="filename">test/org/openarchitectureware/uml2ecore/test/data</code></p><p>Here is a screenshot of the model: </p><div class="figure"><a name="m2m_uml2_example_model"></a><p class="title"><b>Figure&nbsp;63.&nbsp;Model example</b></p><div class="figure-contents"><div class="mediaobject"><img src="images/m2m_uml2_example/model.jpg" alt="Model example"></div></div></div><p><br class="figure-break"></p><p>You now run the transformation using a workflow file that looks as
+    follows:</p><p><code class="filename"> test/org/openarchitectureware/uml2ecore/test/runtests.oaw
+    </code></p><p>This workflow basically just invokes the transformation just as any
+    other user of the transformation. However, in addition, after the
+    transformation has finished, we validate test-specific constraints. This
+    is what the additional constraint checker component is good for in the
+    above mentioned workflow.</p><p>Now comes the point: The test constraints are not generic! Instead
+    they do have knowledge about the input model (which generic constraints
+    don't, they just operate with knowledge about the metamodel). So this file
+    contains constraints such as</p><p><span class="emphasis"><em> There has to be a class called Entity in the resulting
+    model. </em></span></p><p>Or:</p><p><span class="emphasis"><em> There must be an EReference owned by Attribute called
+    type, pointing to the class called PrimitiveType. </em></span></p><p>Make sure that the constraints &#8211; again: coverage! &#8211; check all
+    relevant aspects of the transformation.</p><p><code class="filename"> test/org/openarchitectureware/uml2ecore/test/tests.chk
+    </code></p></div></div></body></html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<introContent>
+    <extensionContent id="oaw_overviewExtension"
+        name="openArchitectureWare Overview"
+        style="css/overview.css"
+        path="overview/@">
+        <group id="oaw_overview_group"
+            label="openArchitectureWare"
+            style-id="content-group">
+            <text style-id="group-description">
+				openArchitectureWare (oAW) is a modular MDSD generator framework. It supports parsing of arbitrary 
+				models, and a language family to check and transform models as well as generate 
+				code based on them.
+			</text>
+            <link label="oAW development"
+                style-id="content-link"
+                url="http://org.eclipse.ui.intro/showHelpTopic?id=/org.openarchitectureware.help.userguide/contents/index.html"
+                id="oaw_overview_link2">
+                <text>Learn how to use openArchitectureWare</text>
+            </link>
+        </group>
+   </extensionContent>
+</introContent>

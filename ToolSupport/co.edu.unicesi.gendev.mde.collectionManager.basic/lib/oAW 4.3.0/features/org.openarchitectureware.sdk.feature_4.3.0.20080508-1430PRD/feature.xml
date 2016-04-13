@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.openarchitectureware.sdk.feature"
+      label="%featureName"
+      version="4.3.0.20080508-1430PRD"
+      provider-name="%providerName"
+      plugin="org.openarchitectureware.help.userguide">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://www.openarchitectureware.org/updatesite/milestone"/>
+      <discovery label="%updateSiteName" url="http://www.openarchitectureware.org/updatesite/milestone"/>
+   </url>
+
+   <includes
+         id="org.openarchitectureware.core.feature.source"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.plugins.feature.source"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.recipe.feature.source"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.uml2.adapter.source"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.adapter.rsdp.feature.source"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.util.stdlib.feature.source"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.util.uml2ecore.feature.source"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.xtext.feature.source"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.core.feature"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.plugins.feature"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.recipe.feature"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.uml2.adapter"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.adapter.rsdp.feature"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.util.stdlib.feature"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.util.uml2ecore.feature"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.xtext.feature"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.lib.feature"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <includes
+         id="org.openarchitectureware.util.ple_feature"
+         version="4.3.0.20080508-1430PRD"/>
+
+   <plugin
+         id="org.openarchitectureware.dependencies"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+   <plugin
+         id="org.openarchitectureware.help.userguide"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"/>
+
+</feature>

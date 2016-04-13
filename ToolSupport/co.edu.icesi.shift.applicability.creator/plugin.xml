@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            id="co.edu.icesi.shift.appmodel.creator"
+            name="Sample Wizards_Cambiar">
+      </category>
+      <wizard
+            category="co.edu.icesi.shift.common.shiftcategory"
+            class="co.edu.icesi.shift.appmodel.creator.NewAppModelWizard"
+            icon="icons/sample.gif"
+            id="co.edu.icesi.shift.appmodel.creator.AppModelWizard"
+            name="New Applicability Model">
+      </wizard>
+   </extension>
+
+</plugin>

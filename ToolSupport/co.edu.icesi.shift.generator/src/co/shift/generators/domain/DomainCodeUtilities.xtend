@@ -46,10 +46,14 @@ import java.util.TreeSet
 import java.io.BufferedReader
 import java.io.FileReader
 import java.nio.file.CopyOption
+import org.eclipse.core.resources.IWorkspace
+import org.eclipse.core.resources.ResourcesPlugin
+import org.eclipse.ui.handlers.HandlerUtil
 
 class DomainCodeUtilities {
 	
-	private val final static GENERATION_DIR = "/Users/daviddurangiraldo/Desktop/"
+	public static String GENERATION_DIR = ""; // = "/Users/daviddurangiraldo/Desktop/"
+	public static String SRC_DIR = ""; // = "/Users/daviddurangiraldo/Desktop/"
 
 	public val final static CONTRIBUTE_TO_BI = "BusinessInterface";
 	public val final static CONTRIBUTE_TO_BIMPL = "BusinessImplementation";
@@ -409,7 +413,10 @@ class DomainCodeUtilities {
 //	}
 
 	def static void runScript(String packageName) {
-		var basePath = System.getProperty("user.dir")
+		//JC: Se modifica temporalmente porque el valoro obtenido aquí no funciona
+		//var basePath = System.getProperty("user.dir")
+		var basePath = ResourcesPlugin.workspace.root.location.toString+"/../workspace/co.edu.icesi.shift.generator"
+		System.err.println("workspace: "+basePath)
 		//VaadinProject Generation
 		var BufferedWriter rootProjectWriter = new BufferedWriter(new FileWriter(new File(basePath+"/files/rootProject.sh")))
 		rootProjectWriter.write("#!/bin/bash");
@@ -1025,7 +1032,9 @@ class DomainCodeUtilities {
 	}
 	
 	def private static void copySourceCode(String packageName) {
-		var basePath = System.getProperty("user.dir")+"/src-gen"
+		//var basePath = System.getProperty("user.dir")+"/src-gen"
+		var basePath = SRC_DIR
+		//System.err.println("basepath en copysourcecode: "+basePath);
 //		var Path source = Paths.get(basePath) 
 //		var Path target = Paths.get(GENERATION_DIR+"/co.shift.root/co.shift.ejb/src") 
 		
@@ -1058,6 +1067,8 @@ class DomainCodeUtilities {
 		var File persistenceOPath = new File(basePath+"/co/shift/"+packageName+"/ejb/persistence/persistence.xml")
 		var File persistencePath = new File(GENERATION_DIR+"/co.shift.root/co.shift.ejb/src/main/resources/META-INF/persistence.xml")
 		copyFileUsingFileStreams(persistenceOPath, persistencePath)
+//JCifuentes: cambio aquí porque meparece que los parametros estan en orden incorrecto
+//		copyFileUsingFileStreams(persistencePath, persistenceOPath)
 		deleteFolder(targetFile, "/ejb", true)
 		
 		

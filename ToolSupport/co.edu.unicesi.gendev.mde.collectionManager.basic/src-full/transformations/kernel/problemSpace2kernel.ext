@@ -1,0 +1,40 @@
+import problemSpaceMetamodel;
+import kernelMetamodel;
+
+create kernelMetamodel::Kernel problemSpace2kernel(problemSpaceMetamodel::ProblemSpace element):
+	createSystem(this, element) ->
+	this;
+
+create kernelMetamodel::System createSystem(kernelMetamodel::Kernel kernel, problemSpaceMetamodel::ProblemSpace element):
+	setName(element.name) ->
+	entity2element(this, element.entity) ->
+	kernel.setSystem(this) ->
+	this;
+
+create kernelMetamodel::Element entity2element(kernelMetamodel::System system, problemSpaceMetamodel::Entity entity):
+	this.setName(entity.name) ->
+	entity.characteristics.characteristic2attribute(this, system) ->
+	system.setElement(this) ->
+	this;
+
+create kernelMetamodel::Attribute characteristic2attribute(problemSpaceMetamodel::Characteristic characteristic, kernelMetamodel::Element element, kernelMetamodel::System system):
+	this.setName(characteristic.name) ->
+	characteristic.name.matches('name') ? this.setIsIdentifier(true) : this.setIsIdentifier(false) ->
+	createBubbleSort(this, system) ->
+	createInsertionSort(this, system) ->
+	element.attributes.add(this) ->
+	this;
+
+create kernelMetamodel::Sort createBubbleSort(kernelMetamodel::Attribute attribute, kernelMetamodel::System system):
+	setAlgorithm(SortAlgorithm::BUBBLE) ->
+	setName(attribute.name) ->
+	setAttribute(attribute) ->
+	system.sorts.add(this) ->
+	this;
+
+create kernelMetamodel::Sort createInsertionSort(kernelMetamodel::Attribute attribute, kernelMetamodel::System system):
+	setAlgorithm(SortAlgorithm::INSERTION) ->
+	setName(attribute.name) ->
+	setAttribute(attribute) ->
+	system.sorts.add(this) ->
+	this;

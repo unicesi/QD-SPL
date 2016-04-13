@@ -1,0 +1,334 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>Recipe Framework</title><link rel="stylesheet" href="../book.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="openArchitectureWare User Guide"><link rel="up" href="reference.html" title="Part&nbsp;II.&nbsp;Reference"><link rel="prev" href="r55.html" title="RSM/RSA Adapter"><link rel="next" href="uml2ecore_reference.html" title="UML2Ecore Reference"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="recipe"></a>Recipe Framework</h2></div></div></div><div class="toc"><dl><dt><span class="section"><a href="recipe.html#recipe_intro">Introductory Example and Plugin</a></span></dt><dt><span class="section"><a href="recipe.html#recipe_execution">Executing Recipe Checks</a></span></dt></dl></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="recipe_intro"></a>Introductory Example and Plugin</h2></div></div></div><p>Currently, it not feasible in MDSD to generate 100% of an
+    application. Usually, you generate some kind of implementation skeleton
+    into which developers integrate their own, manually written code. For
+    example, the generator generates an abstract base class, from which
+    developers extend their implementation classes &#8211; which contains the
+    application logic.</p><p>The screenshot above shows an example &#8211; and also illustrates the use
+    of the <span class="emphasis"><em>Recipe</em></span> plugin. Let us look at the various
+    items in the screenshot:</p><div class="figure"><a name="recipe_fig1"></a><p class="title"><b>Figure&nbsp;35.&nbsp;Recipe Example</b></p><div class="figure-contents"><div class="mediaobject"><img src="images/recipe/screenshot.gif" alt="Recipe Example"></div></div></div><br class="figure-break"><div class="orderedlist"><ol type="1"><li><p>The generator creates a so-called
+          <code class="filename">.recipes</code> file. How this file is created, will
+          be shown below. The recipe file contains the checks that need to be
+          executed on the code base. In the context menu of a
+          <code class="filename">.recipes</code> file you will find an item called
+          <span class="emphasis"><em>Open Recipe File</em></span> that opens the checks in the
+          respective browser. Note that the file has to have a
+          <code class="filename">.recipes</code> extension &#8211; otherwise the plugin will
+          not open the file.</p></li><li>
+           Here you can see failed checks. The messages tell you that you have to write the implementation class, and (the second item) you will have to make sure it extends from the generated base class. 
+        </li><li>
+           Here, you can see a check that worked well. 
+        </li><li>
+           Each check contains a number of parameters; the table shows the parameters of the selected check. For example the name of the class to be generated, the one from which you have to inherit, etc. This is basically for your information. If you double-click on a certain row, the value of the parameter is copied to the clipboard &#8211; and you can past it to wherever you need. 
+        </li><li>
+           Here, you can see a descriptive text that explains, what you have to do, in order to fix the failed check. 
+        </li><li><p>Here, is the manually written code (in the
+          <code class="filename">src</code> folder). You can see the
+          class<code class="classname">CalculatorImplementation</code> &#8211; this is why
+          the check that verifies its presence is successful. There is no
+          <code class="classname">C1Implementation</code> why the check that checks
+          its presence fails.</p></li><li>
+           This is the generated code folder ( 
+
+          <code class="filename">src-gen</code>
+
+           ). It contains the generated base classes. 
+        </li></ol></div><p>There are a couple of options to work with those recipes, as shown
+    in the next illustration:</p><div class="figure"><a name="recipe_fig2"></a><p class="title"><b>Figure&nbsp;36.&nbsp;Using the Recipe plugin</b></p><div class="figure-contents"><div class="mediaobject"><img src="images/recipe/screenshot2.gif" alt="Using the Recipe plugin"></div></div></div><br class="figure-break"><p>If you right-click on a check in the tree view, you can reevaluate
+    the check explicitly. At the top-right of the view, there are three
+    buttons. The first on collapses the tree view. The <span class="emphasis"><em>"play button
+    with the small red cross"</em></span> reevaluates all the failed checks -
+    and only those! The third button is a filter button; if selected, the tree
+    view hides the checks that are OK. In the drop down menu of the view
+    (activated with the small downward-pointing triangle), there are two
+    entries: the green <span class="emphasis"><em>run</em></span> button labelled "reevaluate
+    all" reevaluates all checks, even those that have been successful before.
+    And finally, the reload button reloads the recipe file, and reevaluates
+    everything.</p><p>There are two important automation steps: </p><div class="itemizedlist"><ul type="disc"><li>
+           First of all, you should make sure that when you run the generator &#8211; typically through an ant file &#8211; the workspace will be refreshed after the ant run (you can configure this in Eclipse). If you do this, the view will automatically reload the recipe file and reevaluate all the checks. 
+        </li><li>
+           There are certain kinds of checks that automatically reevaluate if the workspace changes. This means that, for example, if you add the implementation class in the above example, as soon as you save the class file, the check will succeed. The question, which checks will be evaluated automatically, has to be defined in the check definition &#8211; see below. 
+        </li></ul></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="recipe_install"></a>Installing the Plugin</h3></div></div></div><p>There are two steps: The first one installs the plugin itself,
+      i.e. the Recipe browser view, etc. The respective plugin is
+      <code class="filename">org.openarchitectureware.recipe</code>. As usual, you
+      install it by copying it into the Eclipse plugin directory or just by
+      downloading it from the oAW update site. If the plugin is installed in
+      this way, it can only evaluate the (relatively trivial) checks in the
+      <code class="filename">recipe.simpleChecks</code> project. To check useful
+      things, you will have to extend the plugin &#8211; you have to contribute the
+      checks that should be executed. For this purpose, the
+      <span class="package">org.openarchitectureware.recipe</span> plugin provides the
+      <code class="methodname">check</code> extension point. A number of useful
+      checks that can be evaluated in Eclipse are contained in the
+      <span class="package">org.openarchitectureware.recipe.eclipseChecks</span> plugin.
+      You should install that one, too. It also comes automatically from the
+      update site.</p><p>In general, this means: whenever you develop your own checks and
+      want to evaluate them in Eclipse, you have to contain them in a plugin
+      and extend the above-mentioned extension point. Otherwise it will not
+      work.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="recipe_referencing_jars"></a>Referencing the JAR files</h3></div></div></div><p>In order for the workflow to find the recipe JARs, they need to be
+      on the classpath. The easiest way to achieve that is to make your
+      generator project a plugin project and reference the recipe plugins in
+      the plugin dependencies (all the oAW plugins with recipe in their name).
+      This will update your classpath and add the necessary JARs. If, for some
+      reason, you do not want your projects to be plugins, you have to
+      reference the JAR files of the above mentioned plugins manually.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h2 class="title" style="clear: both"><a name="recipe_execution"></a>Executing Recipe Checks</h2></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="recipe_using_checks"></a>Running Checks within your workflow</h3></div></div></div><p>You have to write a workflow component that creates the recipes.
+      Your custom workflow component has to extend the
+      <code class="classname">RecipeCreationComponent</code> base class and overwrite
+      the <code class="methodname">createRecipes()</code> operation. The operation
+      has to return the collection of recipes that should stored into the
+      recipe file. In the workflow file, you then have to configure this
+      component with the name of the application project in Eclipse, the
+      source path where the manually write code can be found, and the name of
+      the recipe file to be written.</p><p>Please take a look a the <span class="emphasis"><em>emfHelloWorld</em></span>
+      example. It contains an extensive example of how to use the recipes in
+      oAW 4.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="recipe_ant_integration"></a>Running Checks within Ant</h3></div></div></div><p>You can also check the recipes using ant. Of course you cannot use
+      those nice and cool interactive checks &#8211; and you also cannot use
+      Eclipse-based checks. They can be in the recipes file, since the ant
+      tasks skips them automatically. The following piece of ant code shows
+      how to run the checks &#8211; should be self-explanatory. Note that you have
+      to use all the jar files from the recipe.ant project.</p><pre class="programlisting">&lt;?xml version="1.0" encoding="ISO-8859-1" ?&gt;
+&lt;project name="scm - hello world - generate" default="generate"&gt;
+	 &lt;property file="build.properties" /&gt;
+	 &lt;path id="ant.runtime.classpath"&gt;
+			&lt;pathelement location="${GENROOT}" /&gt;
+			&lt;fileset dir="${GENROOT}" includes="*.jar"/&gt;
+			&lt;fileset dir="${OAWROOT}/dist" includes="*.jar"/&gt;
+			&lt;fileset dir="${RECIPE.CORE.DIR}/dist" includes="*.jar"/&gt;
+			&lt;fileset dir="${RECIPE.SIMPLECHECKS.DIR}/dist" includes="*.jar"/&gt;
+			&lt;fileset dir="${RECIPE.ANT.DIR}/dist" includes="*.jar"/&gt;
+			&lt;fileset dir="${RECIPE.ANT.DIR}/lib" includes="*.jar"/&gt;
+			&lt;fileset dir="${RECIPE.ECLIPSECHECKS.DIR}" includes="*.jar"/&gt;
+	 &lt;/path&gt;
+	 &lt;target name="check" depends=""&gt;
+			&lt;taskdef name="check"
+				 classname="org.openarchitectureware.recipe.ant.RecipeCheckTask"&gt;
+				 &lt;classpath refid="ant.runtime.classpath" /&gt;
+			&lt;/taskdef&gt;
+			&lt;check recipeFile="L:/workspace/xy/helloWorld.recipes"/&gt;
+	 &lt;/target&gt;
+&lt;/project&gt;</pre><p>The checks use log4j logging to output the messages. So you can
+      set the log level using the log4j.properties file. The following output
+      shows all the checks being successful:</p><pre class="programlisting">Buildfile: l:\exampleWorkspace-v4\scmHelloWorld\build.xml
+check:
+		[check] 0    INFO  - checking recipes from file:
+					L:/runtime-EclipseApplication/xy/helloWorld.recipes
+BUILD SUCCESSFUL
+Total time: 1 second</pre><p>If you set the log level to DEBUG, you will get more output. Here,
+      in our case, you can see that all the Eclipse checks are skipped.</p><pre class="programlisting">Buildfile: l:\exampleWorkspace-v4\scmHelloWorld\build.xml
+check:
+		[check] 0    INFO  - checking recipes from file: L:/runtime-
+						EclipseApplication/xy/helloWorld.recipes
+		[check] 60   DEBUG - [skipped] resource exists exists -
+						skipped - mode was batch only.
+		[check] 70   DEBUG - [skipped] resource exists exists -
+						skipped - mode was batch only.
+		[check] 70   DEBUG - [skipped] resource exists exists -
+						skipped - mode was batch only.
+		[check] 80   DEBUG - [skipped] resource exists exists -
+						skipped - mode was batch only.
+		[check] 80   DEBUG - [skipped] resource exists exists --
+						skipped - mode was batch only.
+		[check] 90   DEBUG - [skipped] resource exists exists -
+						skipped - mode was batch only.
+		[check] 90   DEBUG - [skipped] resource exists exists -
+						skipped - mode was batch only.
+		[check] 90   DEBUG - [skipped] resource exists exists -
+						skipped - mode was batch only.
+BUILD SUCCESSFUL
+Total time: 1 second</pre><p>If there are errors, they will be output as an ERROR level
+      message.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="recipe_implementing_checks"></a>Implementing your own Checks</h3></div></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="recipe_hello_world"></a>Hello World</h4></div></div></div><p>The following piece of code is the simplest check, you could
+        possibly write:</p><pre class="programlisting">package org.openarchitectureware.recipe.checks.test;
+
+import org.openarchitectureware.recipe.core.AtomicCheck;
+import org.openarchitectureware.recipe.eval.EvaluationContext;
+
+public class HelloWorldCheck extends AtomicCheck {
+	private static final long serialVersionUID = 1L;
+	public HelloWorldCheck() {
+		super("hello world", "this check always succeeds");
+	}
+
+	public void evaluate(EvaluationContext c) {
+		ok();
+	}
+}</pre><p>A couple of notes: </p><div class="itemizedlist"><ul type="disc"><li>
+               You can define any kind of constructor you want &#8211; passing any parameters you like. You 
+
+              <span class="emphasis"><em>have to</em></span>
+
+               pass at least two parameters to the constructor of the parent class: the first one is the name, a short name, of the check. The second parameter is the somewhat longer message. You can call 
+
+              <code class="methodname">setLongDescription()</code>
+
+               if you want to set the explanatory text. 
+            </li><li>
+               You can pass a third parameter to the constructor of the parent class: and that is one of the two constants in 
+
+              <code class="classname">EvalTrigger</code>
+
+               . By default, the 
+
+              <code class="classname">EvalTrigger.ON_REQUEST</code>
+
+               is used which means that the check is only evaluated upon explicit request. If you pass 
+
+              <code class="constant">EvalTrigger.ON_CHANGE</code>
+
+               , the check will be automatically re-evaluated if the Eclipse workspace changes. 
+            </li><li>
+               You should define a serial version UID since Java serialization is used for the recipe file. 
+            </li><li>
+               In the 
+
+              <code class="methodname">evaluate()</code>
+
+               method you do the check itself. We will explain more on that later. 
+            </li></ul></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="recipe_advanced_checks"></a>More sensible Checks</h4></div></div></div><p>More sensible checks distinguish themselves in two respects:
+        </p><div class="itemizedlist"><ul type="disc"><li>
+               First, you will typically pass some parameters to the constructor which you will store in member variables and then use in the 
+
+              <code class="methodname">evaluate()</code>
+
+               operation. 
+            </li><li>
+               You can store parameters for display in the table view in the plugin. You can use the 
+
+              <code class="methodname">setParameter(name, value)</code>
+
+               operation for that. More on that below. 
+            </li><li>
+               The evaluation will contain a certain business logic. 
+            </li></ul></div><p>An example: </p><pre class="programlisting">public void evaluate(EvaluationContext c) {
+	 if ( something is not right ) {
+			fail( "something has gone wrong");
+	 }
+	 if ( some condition is met ) {
+			ok();
+	 }</pre><p>By the way, you do not need to care about the EvaluationContext.
+        It is only needed by the framework.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="recipe_eclipse_checks"></a>Eclipse Checks</h4></div></div></div><p>Eclipse checks are a bit special. If the check were implemented
+        in the way described above, you would have a lot of dependencies to
+        all the Eclipse plugins/jars. You would have these dependencies, as
+        soon as you instantiate the check &#8211; i.e. also in the generator when
+        you configure the check. In order to avoid this, we have to decouple
+        the configuration of a check in the generator and its evaluation later
+        in Eclipse: </p><div class="orderedlist"><ol type="1"><li>
+               During configuration we do not want any Eclipse dependencies since we do not want to "import" half of Eclipse into out ant-based code generator 
+            </li><li>
+               However, when evaluating the check we obviously need the Eclipse dependencies, otherwise we could not take advantage of Eclipse-based checks in the first place. 
+            </li></ol></div><p>An Eclipse check is thus implemented in the following way. First
+        of all, our check has to extend the
+        <code class="classname">EclipseCheck</code> base class.</p><pre class="programlisting">public class ResourceExistenceCheck extends EclipseCheck {</pre><p>Again, we add a serial version UID to make sure deserialization
+        will work.</p><pre class="programlisting">private static final long serialVersionUID = 2L; </pre><p>In the constructor we decide whether we want to have this check
+        evaluated whenever the Eclipse workspace changes
+        (<code class="constant">EvalTrigger.ON_CHANGE</code>) or not. We also store
+        some of the parameters in the parameter facility of the framework.
+        Note that we <span class="emphasis"><em>do not implement</em></span> the
+        <code class="methodname">evaluate()</code> operation!</p><pre class="programlisting">
+				public ResourceExistenceCheck(String message,
+					String projectName, String resourceName) {
+			super("resource exists exists", message, EvalTrigger.ON_CHANGE);
+			setProjectName(projectName);
+			setResourceName(resourceName);
+	 }
+
+	 private void setProjectName(String projectName) {
+			setParameter("projectName", projectName);
+	 }
+
+	 private void setResourceName(String resourceName) {
+			setParameter("resourceName", resourceName);
+	 }</pre><p>In order to provide the evaluation functionality, you have to
+        implement an <code class="classname">ICheckEvaluator</code>. It has to have
+        <span class="emphasis"><em>the same qualified name</em></span> as the check itself,
+        postfixed with <code class="classname">Evaluator</code>. During the evaluation
+        of the check, the class is loaded dynamically based on its name. A
+        wrong name will result in a runtime error during the evaluation of the
+        Eclipse plugin.</p><pre class="programlisting">public class ResourceExistenceCheckEvaluator
+implements ICheckEvaluator {
+
+	public void evaluate(AtomicCheck check) {
+		 String projectName =
+				 check.getParameter("projectName").getValue().toString();
+		 String resourceName =
+				check.getParameter("resourceName").getValue().toString();
+		 IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		 IResource project =
+					workspace.getRoot().getProject(projectName);
+		 if (project == null)
+				check.fail("project not found: "+projectName);
+		 IFile f = workspace.getRoot().getFile(
+				new Path(projectName+"/"+resourceName) );
+		 String n = f.getLocation().toOSString();
+		 if ( !f.exists() ) check.fail(
+				"resource not found: "+projectName+"/"+resourceName);
+				check.ok();
+	}</pre><p>When implementing the evaluator, you can basically do the same
+        things as in the <code class="methodname">evaluate()</code> operation in
+        normal checks. However, in order to set the
+        <code class="methodname">ok()</code> or <code class="methodname">fail("why")</code>
+        flags, you have to call the respective operations on the check passed
+        as the parameter to the operation.</p></div><div class="section" lang="en"><div class="titlepage"><div><div><h4 class="title"><a name="recipe_checks_making_checks_available_to_the_eclipse_plugin"></a>Making checks available to the Eclipse plugin</h4></div></div></div><p>In order to allow the Eclipse runtime to execute your checks, it
+        has to find the respective classes when deserializing the recipe file.
+        This is a bit tricky in Eclipse, since each plugin has its own class
+        loader. So, assume you want to define your own checks and want to use
+        them in Eclipse; what you have to do is: implement your own plugin
+        that extends a given extension point in the Recipe Browser plugin. The
+        following XML is the plugin descriptor of the <span class="package">
+        org.openarchitectureware.recipe.eclipseChecks.plugin.EclipseChecksPlugin</span>
+        , a sample plugin that comes with the recipe framework and provides a
+        number of Eclipse-capable checks. </p><pre class="programlisting">
+					&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;?eclipse version="3.0"?&gt;
+&lt;plugin
+	 id="org.openarchitectureware.recipe.eclipseChecks"
+	 name="%plugin_name"
+	 version="4.0.0"
+	 provider-name="%provider_name"
+	 class="org.openarchitectureware.recipe.\
+	 eclipseChecks.plugin.EclipseChecksPlugin"&gt;</pre><p>Here we now define the jar file that contains our checks (This
+        will be important below) </p><pre class="programlisting">   &lt;runtime&gt;
+			&lt;library name="oaw-recipe-eclipsechecks.jar"&gt;
+				 &lt;export name="*"/&gt;
+			&lt;/library&gt;
+	 &lt;/runtime&gt;</pre><p>The required plugins mainly depend on the implementations of
+        <code class="classname">CheckEvaluator</code>, of course, however, you have to
+        make sure the dependencies contains the
+        <span class="package">org.openarchitectureware.recipe</span> plugin, since you
+        are going to extend an extension point defined in this plugin.
+        </p><pre class="programlisting">   &lt;requires&gt;
+			&lt;import plugin="org.eclipse.ui"/&gt;
+			&lt;import plugin="org.eclipse.core.runtime"/&gt;
+			&lt;import plugin="org.eclipse.core.resources"/&gt;
+			&lt;import plugin="org.openarchitectureware.recipe"/&gt;
+			&lt;import plugin="org.eclipse.jdt.core"/&gt;
+	 &lt;/requires&gt;</pre><p>This is the important line: here you specify that you extend the
+        <code class="classname">check</code> extension point of the
+        <span class="emphasis"><em>Recipe</em></span> browser plugin. If you do not do this,
+        deserialization of the recipe file will fail and you will get nasty
+        errors. And yes, you need the dummy element; because otherwise, the
+        class loading "magic" will not work. </p><pre class="programlisting">   &lt;extension point="org.openarchitectureware.recipe.check"&gt;
+			&lt;dummy/&gt;
+	 &lt;/extension&gt;
+&lt;/plugin&gt;</pre><p>When you need to use the checks outside of Eclipse (e.g. in the
+        generator for configuration/serialization purposes) you just add the
+        JAR file of the plugin to your generator classpath. You <span class="emphasis"><em>do
+        not</em></span> need to add references to all the JAR files of the
+        Eclipse plugin in the <span class="emphasis"><em>requires</em></span> section, since
+        these things will only be used during evaluation.</p></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="recipe_framework_components"></a>Framework components</h3></div></div></div><div class="informaltable"><a name="recipe_framework_components_table"></a><table cellspacing="0" cellpadding="10" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; "><colgroup><col align="left"><col align="left"><col align="left"><col align="left"></colgroup><thead><tr><th style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="center">Component</th><th style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="center">Plugin</th><th style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="center">Depends on</th><th style="border-bottom: 2 solid #000000; " align="center">Description</th></tr></thead><tbody><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">recipe.core</td><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">Yes</td><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">-</td><td style="border-bottom: 2 solid #000000; " align="left">Framework core. Needed whenever you do anything with
+                recipes</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">recipe.ant</td><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">Yes</td><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">recipe.core</td><td style="border-bottom: 2 solid #000000; " align="left">Contains the ant task to check recipes. Needed only for
+                recipe evaluation in ant</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">recipe.simpleChecks</td><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">Yes</td><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">recipe.core</td><td style="border-bottom: 2 solid #000000; " align="left">Contains a number of (more or less useful) sample
+                checks</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">recipe.plugin</td><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">Yes</td><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">recipe.core</td><td style="border-bottom: 2 solid #000000; " align="left">Contains the Eclipse Recipe Browser view</td></tr><tr><td style="border-right: 2 solid #000000; " align="left">recipe.eclipsechecks.plugin</td><td style="border-right: 2 solid #000000; " align="left">Yes</td><td style="border-right: 2 solid #000000; " align="left">recipe.core</td><td style="" align="left">Contains the pre-packaged Eclipse checks.</td></tr></tbody></table></div></div><div class="section" lang="en"><div class="titlepage"><div><div><h3 class="title"><a name="recipe_list_of_currently_available_checks"></a>List of currently available Checks</h3></div></div></div><p>This table contains a list of all currently available checks. We
+      are working on additional ones. Contributions are always welcome, of
+      course! This list might, thus, not always be up to date &#8211; just take a
+      look at the code to find out more. </p><div class="informaltable"><a name="recipe_list_of_currently_available_checks_table"></a><table cellspacing="0" cellpadding="10" border="0" style="border-collapse: collapse;border-top: 0.5pt solid ; border-bottom: 0.5pt solid ; border-left: 0.5pt solid ; border-right: 0.5pt solid ; "><colgroup><col align="left"><col align="left"><col align="left"></colgroup><thead><tr><th style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="center">Type</th><th style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="center">Classnames</th><th style="border-bottom: 2 solid #000000; " align="center">Purpose</th></tr></thead><tbody><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">Batch</td><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><span class="emphasis"><em> org.openarchitectureware.recipe.checks.
+                file.FileExistenceCheck </em></span></td><td style="border-bottom: 2 solid #000000; " align="left">Checks whether a given file exists</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">Batch</td><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><span class="emphasis"><em> org.openarchitectureware.recipe.checks.
+                file.FileContentsCheck </em></span></td><td style="border-bottom: 2 solid #000000; " align="left">Checks whether a given substring can be found in a
+                certain file</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">Eclipse</td><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><span class="emphasis"><em> org.openarchitectureware.recipe.
+                eclipseChecks.checks. JavaClassExistenceCheck
+                </em></span></td><td style="border-bottom: 2 solid #000000; " align="left">Checks whether a given Java class exists</td></tr><tr><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left">Eclipse</td><td style="border-right: 2 solid #000000; border-bottom: 2 solid #000000; " align="left"><span class="emphasis"><em> org.openarchitectureware.recipe.
+                eclipseChecks.checks. JavaSupertypeCheck </em></span></td><td style="border-bottom: 2 solid #000000; " align="left">Checks whether a given Java class extends a certain
+                superclass</td></tr><tr><td style="border-right: 2 solid #000000; " align="left">Eclipse</td><td style="border-right: 2 solid #000000; " align="left"><span class="emphasis"><em> org.openarchitectureware.recipe.
+                eclipseChecks.checks. ResourceExistenceCheck
+                </em></span></td><td style="" align="left">Checks whether a given Eclipse Workspace Resource
+                exists</td></tr></tbody></table></div></div></div></div></body></html>

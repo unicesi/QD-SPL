@@ -1,0 +1,74 @@
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   <title>New and Noteworthy</title><link rel="stylesheet" href="../book.css" type="text/css"><meta name="generator" content="DocBook XSL Stylesheets V1.72.0"><link rel="start" href="index.html" title="openArchitectureWare User Guide"><link rel="up" href="index.html" title="openArchitectureWare User Guide"><link rel="prev" href="m2m_uml2_example.html" title="Model-To-Model with UML2 Example"><link rel="next" href="glossary.html" title="Glossary"></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="whatsnew"></a>New and Noteworthy</h2></div></div></div><p>
+    openArchitectureWare 4.3 is mainly a bugfix release. We've fixed 102 bugs with a lot of help by 
+    active community members. Special thanks go to Michael Clay and Manfred Klug for providing a lot
+    of patches and feedback. 
+  </p><p>
+    In addition to the bug fixes we introduced two new components: A generic editor, which can be 
+    used to edit and validate dynamic EMF models without any need for using EMF's generator or 
+    installing DSL-specific editors into the workbench. The other component is an Adapter to EMF's 
+    Validation Framework, which makes the old GMF adapter obsolete.
+  </p><p>
+    The list of bugs fixed during the last release can be found here:
+    <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://tinyurl.com/47mucl" target="_top">http://tinyurl.com/47mucl</a> 
+  </p><div class="informaltable"><table cellspacing="0" cellpadding="10" border="0" style="border-collapse: collapse;"><colgroup><col align="left"><col></colgroup><tbody><tr valign="top"><td style="border-bottom: 2 solid #000000; " colspan="2" align="left" valign="top">
+            <h2><a name="d0e12690"></a>Xtext</h2>
+            <p>A migration guide for migrating Xtext 4.2 projects to Xtext 4.3 projects can be 
+            	found in the Xtext reference documentation.</p>
+          </td></tr><tr valign="top"><td style="border-bottom: 2 solid #000000; " align="right" valign="top">
+            <p>
+              <span class="bold"><strong>EMF resource</strong></span>
+            </p>
+          </td><td style="border-bottom: 2 solid #000000; " valign="top">
+            <p>An implementation to EMF's resource API is generated from the grammar. This 
+            enables referencing Xtext models from other EMF models as well as referencing arbitrary 
+            EMF models from Xtext based models.</p>
+          </td></tr><tr valign="top"><td style="border-bottom: 2 solid #000000; " align="right" valign="top">
+            <p>
+              <span class="bold"><strong>URI token</strong></span>
+            </p>
+          </td><td style="border-bottom: 2 solid #000000; " valign="top">
+            <p>Import mechanisms can be implemented into your DSL using the new URI token. See 
+            the documentation on how to use it.</p>
+          </td></tr><tr valign="top"><td style="border-bottom: 2 solid #000000; " align="right" valign="top">
+            <p>
+              <span class="bold"><strong>Viewpoints</strong></span>
+            </p>
+          </td><td style="border-bottom: 2 solid #000000; " valign="top">
+            <p>It is now possible to add additional "viewpoints" to the outline view (e.g. type 
+            hierarchy, call hierarchy, etc.)</p>
+          </td></tr><tr valign="top"><td style="border-bottom: 2 solid #000000; " align="right" valign="top">
+            <p>
+              <span class="bold"><strong>Font styles</strong></span>
+            </p>
+          </td><td style="border-bottom: 2 solid #000000; " valign="top">
+            <p>Syntax coloring can be defined based on the model's state.</p>
+          </td></tr><tr valign="top"><td style="border-bottom: 2 solid #000000; " align="right" valign="top">
+            <p>
+              <span class="bold"><strong>Configure Xtext parsing</strong></span>
+            </p>
+          </td><td style="border-bottom: 2 solid #000000; " valign="top">
+            <p>Xtext syntax parsing can be controlled using the platform preferences:</p>
+            <div class="mediaobject"><img src="images/new_noteworthy/xtext_validation_policy.jpg"></div>
+          </td></tr><tr valign="top"><td style="border-bottom: 2 solid #000000; " colspan="2" align="left" valign="top">
+            <h2><a name="d0e12775"></a>Experimental Features</h2>
+            <p>
+              The next two features are marked experimental because they are a bit tricky to use and 
+              thus their API is likely to change in the future.
+            </p>
+          </td></tr><tr valign="top"><td style="border-bottom: 2 solid #000000; " align="right" valign="top">
+            <p>
+              <span class="bold"><strong>Use existing meta models</strong></span>
+            </p>
+          </td><td style="border-bottom: 2 solid #000000; " valign="top">
+            <p>If you already have an existing meta model it is now possible to define a textual
+            syntax for it.</p>
+          </td></tr><tr valign="top"><td style="" align="right" valign="top">
+            <p>
+              <span class="bold"><strong>Import grammars</strong></span>
+            </p>
+          </td><td style="" valign="top">
+            <p>This is basically an include mechanism for grammars. It is possible to import an 
+            existing grammar and overwrite some rules in it.</p>
+          </td></tr></tbody></table></div></div></body></html>

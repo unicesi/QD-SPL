@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.openarchitectureware.util.uml2ecore.feature"
+      label="%featureName"
+      version="4.3.0.20080508-1430PRD"
+      provider-name="%providerName"
+      plugin="org.openarchitectureware.util.uml2ecore">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://http://oaw.pluginbuilder.org/nightly/updateSite/site.xml"/>
+      <discovery label="%updateSiteName" url="http://www.openarchitectureware.org/updatesite/milestone"/>
+   </url>
+
+   <requires>
+      <import plugin="org.eclipse.emf.mapping"/>
+      <import plugin="org.eclipse.emf.mapping.ecore2xml"/>
+      <import plugin="org.apache.commons.logging"/>
+      <import plugin="org.openarchitectureware.core.workflow"/>
+      <import plugin="org.openarchitectureware.util.stdlib"/>
+      <import plugin="org.eclipse.uml2.uml"/>
+      <import plugin="org.openarchitectureware.uml2.adapter"/>
+   </requires>
+
+   <plugin
+         id="org.openarchitectureware.util.uml2ecore"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+</feature>

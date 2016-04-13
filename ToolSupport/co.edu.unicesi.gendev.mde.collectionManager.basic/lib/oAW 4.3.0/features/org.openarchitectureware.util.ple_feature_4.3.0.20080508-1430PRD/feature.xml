@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.openarchitectureware.util.ple_feature"
+      label="%featureName"
+      version="4.3.0.20080508-1430PRD"
+      provider-name="%providerName"
+      plugin="org.openarchitectureware.util.featureconfig">
+
+   <description>
+      %description
+   </description>
+
+   <copyright>
+      %copyright
+   </copyright>
+
+   <license url="%licenseURL">
+      %license
+   </license>
+
+   <url>
+      <update label="%updateSiteName" url="http://http://oaw.pluginbuilder.org/nightly/updateSite/site.xml"/>
+      <discovery label="%updateSiteName" url="http://www.openarchitectureware.org/updatesite/milestone"/>
+   </url>
+
+   <requires>
+      <import plugin="org.openarchitectureware.core.workflow"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.openarchitectureware.core.expressions"/>
+      <import plugin="org.openarchitectureware.core.emftools"/>
+      <import plugin="org.openarchitectureware.util.stdlib"/>
+      <import plugin="org.openarchitectureware.core.xpand2"/>
+      <import plugin="org.apache.commons.cli"/>
+      <import plugin="org.apache.commons.logging"/>
+      <import plugin="org.eclipse.emf.ecore.xmi"/>
+      <import plugin="org.antlr.runtime"/>
+   </requires>
+
+   <plugin
+         id="org.openarchitectureware.util.featureconfig"
+         download-size="0"
+         install-size="0"
+         version="1.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.openarchitectureware.util.xvar"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+   <plugin
+         id="org.openarchitectureware.util.xweave"
+         download-size="0"
+         install-size="0"
+         version="4.3.0.20080508-1430PRD"
+         unpack="false"/>
+
+</feature>
