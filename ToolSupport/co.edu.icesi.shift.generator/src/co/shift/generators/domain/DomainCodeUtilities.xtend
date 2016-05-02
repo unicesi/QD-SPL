@@ -24,7 +24,7 @@ import org.w3c.dom.Document
 import org.w3c.dom.Element
 import org.w3c.dom.NodeList
 import org.w3c.dom.Node
-import org.w3c.dom.Attr
+//import org.w3c.dom.Attr
 import javax.xml.transform.Source
 import javax.xml.transform.dom.DOMSource
 import javax.xml.transform.Result
@@ -35,7 +35,7 @@ import javax.xml.transform.Transformer
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.nio.file.StandardCopyOption
+//import java.nio.file.StandardCopyOption
 import java.nio.file.SimpleFileVisitor
 import java.nio.file.FileVisitResult
 import java.nio.file.attribute.BasicFileAttributes
@@ -45,10 +45,10 @@ import java.io.OutputStream
 import java.util.TreeSet
 import java.io.BufferedReader
 import java.io.FileReader
-import java.nio.file.CopyOption
-import org.eclipse.core.resources.IWorkspace
+//import java.nio.file.CopyOption
+//import org.eclipse.core.resources.IWorkspace
 import org.eclipse.core.resources.ResourcesPlugin
-import org.eclipse.ui.handlers.HandlerUtil
+//import org.eclipse.ui.handlers.HandlerUtil
 
 class DomainCodeUtilities {
 	
@@ -413,7 +413,7 @@ class DomainCodeUtilities {
 //	}
 
 	def static void runScript(String packageName) {
-		//JC: Se modifica temporalmente porque el valoro obtenido aquí no funciona
+		//JC: Se modifica temporalmente porque el valor obtenido aquí no funciona
 		//var basePath = System.getProperty("user.dir")
 		var basePath = ResourcesPlugin.workspace.root.location.toString+"/../workspace/co.edu.icesi.shift.generator"
 		System.err.println("workspace: "+basePath)
@@ -513,48 +513,6 @@ class DomainCodeUtilities {
 		earProjectInputWriter.newLine
 		earProjectInputWriter.flush
 		earProjectInputWriter.close
-		
-		//*********inicio Jcifuentes*****************
-		//ejbProject generation
-		var BufferedWriter prjejbProjectWriter = new BufferedWriter(new FileWriter(new File(basePath+"/files/prjejbProject.sh")))
-		//prjejbProjectWriter.write("#!/bin/bash");
-		//prjejbProjectWriter.newLine
-		prjejbProjectWriter.write("mvn archetype:generate -DarchetypeGroupId=org.codehaus.mojo.archetypes -DarchetypeArtifactId=ejb-javaee6 -DarchetypeVersion=1.5")
-		prjejbProjectWriter.flush
-		prjejbProjectWriter.close
-		
-		//project ejb Project Input
-		var BufferedWriter prjejbProjectInputWriter = new BufferedWriter(new FileWriter(new File(basePath+"/files/prjejbProjectInput.txt")))
-		prjejbProjectInputWriter.write("co.shift.pcs.risk")
-//		prjejbProjectInputWriter.write("fabian")
-		prjejbProjectInputWriter.newLine
-//		prjejbProjectInputWriter.write("co.shift.ejb.project")
-		prjejbProjectInputWriter.write("ejbProject")
-		prjejbProjectInputWriter.newLine
-		prjejbProjectInputWriter.newLine
-		prjejbProjectInputWriter.newLine
-		prjejbProjectInputWriter.newLine
-		prjejbProjectInputWriter.flush
-		prjejbProjectInputWriter.close
-
-		//security generation
-		var BufferedWriter prjSecurityWriter = new BufferedWriter(new FileWriter(new File(basePath+"/files/prjsecurity.sh")))
-		prjSecurityWriter.write("mvn archetype:generate -DarchetypeGroupId=org.codehaus.mojo.archetypes -DarchetypeArtifactId=ejb-javaee6 -DarchetypeVersion=1.5")
-		prjSecurityWriter.flush
-		prjSecurityWriter.close
-		
-		//project security Input
-		var BufferedWriter prjSecurityInputWriter = new BufferedWriter(new FileWriter(new File(basePath+"/files/prjsecurityInput.txt")))
-		prjSecurityInputWriter.write("co.shift.pcs.security")
-		prjSecurityInputWriter.newLine
-		prjSecurityInputWriter.write("security")
-		prjSecurityInputWriter.newLine
-		prjSecurityInputWriter.newLine
-		prjSecurityInputWriter.newLine
-		prjSecurityInputWriter.newLine
-		prjSecurityInputWriter.flush
-		prjSecurityInputWriter.close
-		//***********fin Jcifuentes***************
 
 		//GenScript composition
 		var BufferedWriter genScriptWriter = new BufferedWriter(new FileWriter(new File(basePath+"/files/genScript.sh")))
@@ -573,12 +531,6 @@ class DomainCodeUtilities {
 		genScriptWriter.newLine
 		genScriptWriter.write(basePath+"/files/earProject.sh < "+basePath+"/files/earProjectInput.txt")	
 		genScriptWriter.newLine
-		//***********inicio Jcifuentes****************
-		genScriptWriter.write(basePath+"/files/prjejbProject.sh < "+basePath+"/files/prjejbProjectInput.txt")	
-		genScriptWriter.newLine
-		genScriptWriter.write(basePath+"/files/prjsecurity.sh < "+basePath+"/files/prjsecurityInput.txt")	
-		genScriptWriter.newLine
-		//***********fin Jcifuentes ****************
 		genScriptWriter.write("killall Terminal")	
 		genScriptWriter.flush
 		genScriptWriter.close	
@@ -601,10 +553,6 @@ class DomainCodeUtilities {
 		fixEARPom(GENERATION_DIR +"co.shift.root/co.shift.ear/pom.xml")
 		fixEJBPom(GENERATION_DIR +"co.shift.root/co.shift.ejb/pom.xml")
 		fixAPIPom(GENERATION_DIR +"co.shift.root/co.shift.ejb.api/pom.xml")
-		//************inicio Jcifuentes*****************
-		fixPRJEJBPom(GENERATION_DIR +"co.shift.root/ejbProject/pom.xml")
-		fixPRJSecurityPom(GENERATION_DIR +"co.shift.root/security/pom.xml")
-		//*************fin Jcifuentes****************
 		
 		copySourceCode(packageName)
 		mergeDBScripts(packageName)
@@ -873,143 +821,7 @@ class DomainCodeUtilities {
 		
 		writeXML(doc, filePath)
 	}
-	
-//******************INICIO JCIFUENTES ******************
-	def private static void fixPRJEJBPom(String filePath) {
-		// get the factory
-		var DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 
-		// Using factory get an instance of document builder
-		var DocumentBuilder db = dbf.newDocumentBuilder();
-		// parse using builder to get DOM representation of the XML file
-		var Document doc = db.parse(new FileInputStream(filePath));
-		var Element docEle = doc.documentElement
-		var NodeList nl = docEle.getElementsByTagName("dependencies");
-		
-		var Element depEL = doc.createElement("dependency");
-		
-		var Element depGI = doc.createElement("groupId");
-		depGI.appendChild(doc.createTextNode("org.eclipse.persistence"))
-		var Element depAI = doc.createElement("artifactId");
-		depAI.appendChild(doc.createTextNode("eclipselink"))
-		var Element depV = doc.createElement("version");
-		depV.appendChild(doc.createTextNode("2.4.2"))
-		
-		depEL.appendChild(depGI)
-		depEL.appendChild(depAI)
-		depEL.appendChild(depV)
-		
-		nl.item(0).appendChild(depEL)
-		
-		var Element depAPI = doc.createElement("dependency");
-		
-		var Element depAPIGI = doc.createElement("groupId");
-		depAPIGI.appendChild(doc.createTextNode("co.shift"))
-		var Element depAPIAI = doc.createElement("artifactId");
-		depAPIAI.appendChild(doc.createTextNode("security"))
-		var Element depAPIV = doc.createElement("version");
-		depAPIV.appendChild(doc.createTextNode("1.0-SNAPSHOT"))
-		
-		depAPI.appendChild(depAPIGI)
-		depAPI.appendChild(depAPIAI)
-		depAPI.appendChild(depAPIV)
-		
-		nl.item(0).appendChild(depAPI)
-
-//necesario?
-/*
-		var Element depAPI = doc.createElement("dependency");
-		
-		var Element depAPIGI = doc.createElement("groupId");
-		depAPIGI.appendChild(doc.createTextNode("co.shift"))
-		var Element depAPIAI = doc.createElement("artifactId");
-		depAPIAI.appendChild(doc.createTextNode("co.shift.ejb.api"))
-		var Element depAPIV = doc.createElement("version");
-		depAPIV.appendChild(doc.createTextNode("1.0-SNAPSHOT"))
-		
-		depAPI.appendChild(depAPIGI)
-		depAPI.appendChild(depAPIAI)
-		depAPI.appendChild(depAPIV)
-		
-		nl.item(0).appendChild(depAPI)
-		
-		var Element depSec = doc.createElement("dependency");
-		
-		var Element depSecGI = doc.createElement("groupId");
-		depSecGI.appendChild(doc.createTextNode("commons-codec"))
-		var Element depSecAI = doc.createElement("artifactId");
-		depSecAI.appendChild(doc.createTextNode("commons-codec"))
-		var Element depSecV = doc.createElement("version");
-		depSecV.appendChild(doc.createTextNode("1.9"))
-		
-		depSec.appendChild(depSecGI)
-		depSec.appendChild(depSecAI)
-		depSec.appendChild(depSecV)
-		
-		nl.item(0).appendChild(depSec)*/
-//fin necesario ?
-		
-		//Java Version
-		var NodeList source = docEle.getElementsByTagName("source");
-		source.item(0).textContent = "1.7"
-		var NodeList target = docEle.getElementsByTagName("target");
-		target.item(0).textContent = "1.7"
-		
-		writeXML(doc, filePath)
-	}
-
-
-	def private static void fixPRJSecurityPom(String filePath) {
-		// get the factory
-		var DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-
-		// Using factory get an instance of document builder
-		var DocumentBuilder db = dbf.newDocumentBuilder();
-		// parse using builder to get DOM representation of the XML file
-		var Document doc = db.parse(new FileInputStream(filePath));
-		var Element docEle = doc.documentElement
-		var NodeList nl = docEle.getElementsByTagName("dependencies");
-		
-		var Element depEL = doc.createElement("dependency");
-		
-		var Element depGI = doc.createElement("groupId");
-		depGI.appendChild(doc.createTextNode("org.eclipse.persistence"))
-		var Element depAI = doc.createElement("artifactId");
-		depAI.appendChild(doc.createTextNode("eclipselink"))
-		var Element depV = doc.createElement("version");
-		depV.appendChild(doc.createTextNode("2.4.2"))
-		
-		depEL.appendChild(depGI)
-		depEL.appendChild(depAI)
-		depEL.appendChild(depV)
-		
-		nl.item(0).appendChild(depEL)
-		
-		var Element depSec = doc.createElement("dependency");
-		
-		var Element depSecGI = doc.createElement("groupId");
-		depSecGI.appendChild(doc.createTextNode("commons-codec"))
-		var Element depSecAI = doc.createElement("artifactId");
-		depSecAI.appendChild(doc.createTextNode("commons-codec"))
-		var Element depSecV = doc.createElement("version");
-		depSecV.appendChild(doc.createTextNode("1.9"))
-		
-		depSec.appendChild(depSecGI)
-		depSec.appendChild(depSecAI)
-		depSec.appendChild(depSecV)
-		
-		nl.item(0).appendChild(depSec)
-
-		//Java Version
-		var NodeList source = docEle.getElementsByTagName("source");
-		source.item(0).textContent = "1.7"
-		var NodeList target = docEle.getElementsByTagName("target");
-		target.item(0).textContent = "1.7"
-		
-		writeXML(doc, filePath)
-	}
-
-//******************FIN JCIFUENTES ******************
 	def private static writeXML(Document document, String filePath){
 		 // write the XML document to disk
 	
@@ -1118,48 +930,6 @@ class DomainCodeUtilities {
 		deleteFolder(targetFile2, "/ejb", true)
 		var File classes = new File(GENERATION_DIR+"/co.shift.root/co.shift.ejb.api/src/main/java")
 		deleteClases(classes)
-//***** inicio JCifuentes ******
-		var File folderEjbProject = new File(GENERATION_DIR+"/co.shift.root/ejbProject/src/main/java/co/shift/pcs/risk")
-		var File folderEjbProjectTest = new File(GENERATION_DIR+"/co.shift.root/ejbProject/src")
-		deleteFolder(folderEjbProject)
-		deleteFolder(folderEjbProjectTest, "test", true)
-		val Path srcDirEjbProject = Paths.get(basePath+"/co/shift/pcs/risk")
-		val Path dstDirEjbProject = Paths.get(GENERATION_DIR+"/co.shift.root/ejbProject/src/main/java/co/shift/pcs/risk")
-
-		Files.walkFileTree(srcDirEjbProject, new SimpleFileVisitor<Path>() {
-		    override public FileVisitResult visitFile( Path file, BasicFileAttributes attrs ) throws IOException {
-		        return copy(file);
-		    }
-		    override public FileVisitResult preVisitDirectory( Path dir, BasicFileAttributes attrs ) throws IOException {
-		        return copy(dir);
-		    }
-		    def private FileVisitResult copy( Path fileOrDir ) throws IOException {
-		        Files.copy( fileOrDir, dstDirEjbProject.resolve( srcDirEjbProject.relativize( fileOrDir ) ) );
-		        return FileVisitResult.CONTINUE;
-		    }
-		});
-
-		var File folderSecurity = new File(GENERATION_DIR+"/co.shift.root/security/src/main/java/co/shift/pcs/security")
-		var File folderSecurityTest = new File(GENERATION_DIR+"/co.shift.root/security/src")
-		deleteFolder(folderSecurity)
-		deleteFolder(folderSecurityTest, "test", true)
-		val Path srcDirSecurity = Paths.get(basePath+"/co/shift/pcs/security")
-		val Path dstDirSecurity = Paths.get(GENERATION_DIR+"/co.shift.root/security/src/main/java/co/shift/pcs/security")
-
-		Files.walkFileTree(srcDirSecurity, new SimpleFileVisitor<Path>() {
-		    override public FileVisitResult visitFile( Path file, BasicFileAttributes attrs ) throws IOException {
-		        return copy(file);
-		    }
-		    override public FileVisitResult preVisitDirectory( Path dir, BasicFileAttributes attrs ) throws IOException {
-		        return copy(dir);
-		    }
-		    def private FileVisitResult copy( Path fileOrDir ) throws IOException {
-		        Files.copy( fileOrDir, dstDirSecurity.resolve( srcDirSecurity.relativize( fileOrDir ) ) );
-		        return FileVisitResult.CONTINUE;
-		    }
-		});
-
-//***** fin JCifuentes ******
 	}
 	
 	def private static void copyFileUsingFileStreams(File source, File dest)
