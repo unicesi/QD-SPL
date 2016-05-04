@@ -1,0 +1,7 @@
+# Local Files
+*.class
+.DS_Store
+*.xtendbin
+hs_err_pid*
+*._trace
+

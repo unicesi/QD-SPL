@@ -178,8 +178,8 @@ public class DomainCodeGenerator implements IGenerator {
         }
       }
     }
-    DomainCodeUtilities.extendContribution("_r_2_11", DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName, authEntity);
-    DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName);
+    DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_INTEGRITY_AUTHENTICITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName, authEntity);
+    DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_CONFIDENTIALITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName);
     String _lowerCase = appName.toLowerCase();
     String _plus = ("/co/shift/" + _lowerCase);
     String _plus_1 = (_plus + "/web/AbstractController.java");

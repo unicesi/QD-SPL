@@ -22,6 +22,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.Method;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -79,6 +80,34 @@ public class DomainCodeUtilities {
   public final static String CONTRIBUTE_TO_BUSINESS_ATTRIBUTE = "Attributes";
   
   public final static String CONTRIBUTE_TO_GENERATION = "Generate";
+  
+  public final static String QA_ROOT = "_r";
+  
+  public final static String VP_TIME_EXEC = "_r_1";
+  
+  public final static String VA_NORMAL_TE = "_r_1_3_4";
+  
+  public final static String VA_MEDIUM_TE = "_r_1_3_5";
+  
+  public final static String VP_FAST_TE = "_r_1_3_6";
+  
+  public final static String VA_FASTSYNC_TE = "_r_1_3_6_7_8";
+  
+  public final static String VA_FASTASYNC_TE = "_r_1_3_6_7_9";
+  
+  public final static String VP_SECURITY = "_r_2";
+  
+  public final static String VP_CONFIDENTIALITY = "_r_2_10";
+  
+  public final static String VA_DATA_ENCRYPTED = "_r_2_10_12_13";
+  
+  public final static String VA_DATA_UNENCRYPTED = "_r_2_10_12_14";
+  
+  public final static String VP_INTEGRITY_AUTHENTICITY = "_r_2_11";
+  
+  public final static String VA_AUTHORIZATION = "_r_2_11_15_16";
+  
+  public final static String VA_AUTHENTIC_LOCKOUT = "_r_2_11_15_17";
   
   private static HashMap<String, Contribution> selectedContributors;
   
@@ -209,6 +238,42 @@ public class DomainCodeUtilities {
       _xblockexpression = DomainCodeUtilities.manyToMany = _newArrayList;
     }
     return _xblockexpression;
+  }
+  
+  /**
+   * Inicio Jcifuentes
+   * //Se requiere la plantilla
+   * //Se requiere el id del qa para saber cual contribuyente usar
+   * //Se requiere la seccion para saber cual metodo del contribuyente ejecutar
+   * //El método busca en la configuracion los QAs seleccionados para el prefijo dado y obtiene el contribuyente.metodo(parametros) a ejecutar
+   * //ArchitectureFragment {String contributor, String method, String data}
+   * def static String extendContribution(String templateId, String sectionId, String variationPointId) {
+   * val List<ArchitectureFragment> fragments = loadFromConfig(templateId, sectionId, variationPointId) //Load from DB given template, section and VP
+   * for (f : fragments){
+   * f.contributor+"."+f.method
+   * val c = Class.forName(f.contributor);
+   * val o = c.newInstance();
+   * val m = c.getDeclaredMethod(f.method, Object... data); //Validar qué se debe pasar aquí
+   * val s = m.invoke(?, f.data)
+   * s.toString //validar cómo retornar el verdadero valor que queda en el Object s
+   * }
+   * 
+   * }
+   */
+  public static String extendContribution(final String templateId, final String sectionId, final String variationPointId) {
+    try {
+      String _xblockexpression = null;
+      {
+        final Class<?> c = Class.forName("co.shift.contributors.authenticity.Authenticator");
+        final Object o = c.newInstance();
+        final Method m = c.getDeclaredMethod("generate", null);
+        final Object s = m.invoke(null, "fsa, appName, authEntity");
+        _xblockexpression = s.toString();
+      }
+      return _xblockexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   public static String extendContribution(final String id, final String phase, final Object... data) {
@@ -658,45 +723,9 @@ public class DomainCodeUtilities {
       earProjectInputWriter.newLine();
       earProjectInputWriter.flush();
       earProjectInputWriter.close();
-      File _file_8 = new File((basePath + "/files/prjejbProject.sh"));
+      File _file_8 = new File((basePath + "/files/genScript.sh"));
       FileWriter _fileWriter_10 = new FileWriter(_file_8);
-      BufferedWriter prjejbProjectWriter = new BufferedWriter(_fileWriter_10);
-      prjejbProjectWriter.write("mvn archetype:generate -DarchetypeGroupId=org.codehaus.mojo.archetypes -DarchetypeArtifactId=ejb-javaee6 -DarchetypeVersion=1.5");
-      prjejbProjectWriter.flush();
-      prjejbProjectWriter.close();
-      File _file_9 = new File((basePath + "/files/prjejbProjectInput.txt"));
-      FileWriter _fileWriter_11 = new FileWriter(_file_9);
-      BufferedWriter prjejbProjectInputWriter = new BufferedWriter(_fileWriter_11);
-      prjejbProjectInputWriter.write("co.shift.pcs.risk");
-      prjejbProjectInputWriter.newLine();
-      prjejbProjectInputWriter.write("ejbProject");
-      prjejbProjectInputWriter.newLine();
-      prjejbProjectInputWriter.newLine();
-      prjejbProjectInputWriter.newLine();
-      prjejbProjectInputWriter.newLine();
-      prjejbProjectInputWriter.flush();
-      prjejbProjectInputWriter.close();
-      File _file_10 = new File((basePath + "/files/prjsecurity.sh"));
-      FileWriter _fileWriter_12 = new FileWriter(_file_10);
-      BufferedWriter prjSecurityWriter = new BufferedWriter(_fileWriter_12);
-      prjSecurityWriter.write("mvn archetype:generate -DarchetypeGroupId=org.codehaus.mojo.archetypes -DarchetypeArtifactId=ejb-javaee6 -DarchetypeVersion=1.5");
-      prjSecurityWriter.flush();
-      prjSecurityWriter.close();
-      File _file_11 = new File((basePath + "/files/prjsecurityInput.txt"));
-      FileWriter _fileWriter_13 = new FileWriter(_file_11);
-      BufferedWriter prjSecurityInputWriter = new BufferedWriter(_fileWriter_13);
-      prjSecurityInputWriter.write("co.shift.pcs.security");
-      prjSecurityInputWriter.newLine();
-      prjSecurityInputWriter.write("security");
-      prjSecurityInputWriter.newLine();
-      prjSecurityInputWriter.newLine();
-      prjSecurityInputWriter.newLine();
-      prjSecurityInputWriter.newLine();
-      prjSecurityInputWriter.flush();
-      prjSecurityInputWriter.close();
-      File _file_12 = new File((basePath + "/files/genScript.sh"));
-      FileWriter _fileWriter_14 = new FileWriter(_file_12);
-      BufferedWriter genScriptWriter = new BufferedWriter(_fileWriter_14);
+      BufferedWriter genScriptWriter = new BufferedWriter(_fileWriter_10);
       genScriptWriter.write(("cd " + DomainCodeUtilities.GENERATION_DIR));
       genScriptWriter.newLine();
       String _replace = basePath.replace(" ", "\\ ");
@@ -712,10 +741,6 @@ public class DomainCodeUtilities {
       genScriptWriter.write((((basePath + "/files/ejbCProject.sh < ") + basePath) + "/files/ejbProjectCInput.txt"));
       genScriptWriter.newLine();
       genScriptWriter.write((((basePath + "/files/earProject.sh < ") + basePath) + "/files/earProjectInput.txt"));
-      genScriptWriter.newLine();
-      genScriptWriter.write((((basePath + "/files/prjejbProject.sh < ") + basePath) + "/files/prjejbProjectInput.txt"));
-      genScriptWriter.newLine();
-      genScriptWriter.write((((basePath + "/files/prjsecurity.sh < ") + basePath) + "/files/prjsecurityInput.txt"));
       genScriptWriter.newLine();
       genScriptWriter.write("killall Terminal");
       genScriptWriter.flush();
@@ -738,8 +763,6 @@ public class DomainCodeUtilities {
       DomainCodeUtilities.fixEARPom((DomainCodeUtilities.GENERATION_DIR + "co.shift.root/co.shift.ear/pom.xml"));
       DomainCodeUtilities.fixEJBPom((DomainCodeUtilities.GENERATION_DIR + "co.shift.root/co.shift.ejb/pom.xml"));
       DomainCodeUtilities.fixAPIPom((DomainCodeUtilities.GENERATION_DIR + "co.shift.root/co.shift.ejb.api/pom.xml"));
-      DomainCodeUtilities.fixPRJEJBPom((DomainCodeUtilities.GENERATION_DIR + "co.shift.root/ejbProject/pom.xml"));
-      DomainCodeUtilities.fixPRJSecurityPom((DomainCodeUtilities.GENERATION_DIR + "co.shift.root/security/pom.xml"));
       DomainCodeUtilities.copySourceCode(packageName);
       DomainCodeUtilities.mergeDBScripts(packageName);
       System.err.println("Projects Generation Completed");
@@ -1007,106 +1030,6 @@ public class DomainCodeUtilities {
     }
   }
   
-  private static void fixPRJEJBPom(final String filePath) {
-    try {
-      DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-      DocumentBuilder db = dbf.newDocumentBuilder();
-      FileInputStream _fileInputStream = new FileInputStream(filePath);
-      Document doc = db.parse(_fileInputStream);
-      Element docEle = doc.getDocumentElement();
-      NodeList nl = docEle.getElementsByTagName("dependencies");
-      Element depEL = doc.createElement("dependency");
-      Element depGI = doc.createElement("groupId");
-      Text _createTextNode = doc.createTextNode("org.eclipse.persistence");
-      depGI.appendChild(_createTextNode);
-      Element depAI = doc.createElement("artifactId");
-      Text _createTextNode_1 = doc.createTextNode("eclipselink");
-      depAI.appendChild(_createTextNode_1);
-      Element depV = doc.createElement("version");
-      Text _createTextNode_2 = doc.createTextNode("2.4.2");
-      depV.appendChild(_createTextNode_2);
-      depEL.appendChild(depGI);
-      depEL.appendChild(depAI);
-      depEL.appendChild(depV);
-      Node _item = nl.item(0);
-      _item.appendChild(depEL);
-      Element depAPI = doc.createElement("dependency");
-      Element depAPIGI = doc.createElement("groupId");
-      Text _createTextNode_3 = doc.createTextNode("co.shift");
-      depAPIGI.appendChild(_createTextNode_3);
-      Element depAPIAI = doc.createElement("artifactId");
-      Text _createTextNode_4 = doc.createTextNode("security");
-      depAPIAI.appendChild(_createTextNode_4);
-      Element depAPIV = doc.createElement("version");
-      Text _createTextNode_5 = doc.createTextNode("1.0-SNAPSHOT");
-      depAPIV.appendChild(_createTextNode_5);
-      depAPI.appendChild(depAPIGI);
-      depAPI.appendChild(depAPIAI);
-      depAPI.appendChild(depAPIV);
-      Node _item_1 = nl.item(0);
-      _item_1.appendChild(depAPI);
-      NodeList source = docEle.getElementsByTagName("source");
-      Node _item_2 = source.item(0);
-      _item_2.setTextContent("1.7");
-      NodeList target = docEle.getElementsByTagName("target");
-      Node _item_3 = target.item(0);
-      _item_3.setTextContent("1.7");
-      DomainCodeUtilities.writeXML(doc, filePath);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  private static void fixPRJSecurityPom(final String filePath) {
-    try {
-      DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-      DocumentBuilder db = dbf.newDocumentBuilder();
-      FileInputStream _fileInputStream = new FileInputStream(filePath);
-      Document doc = db.parse(_fileInputStream);
-      Element docEle = doc.getDocumentElement();
-      NodeList nl = docEle.getElementsByTagName("dependencies");
-      Element depEL = doc.createElement("dependency");
-      Element depGI = doc.createElement("groupId");
-      Text _createTextNode = doc.createTextNode("org.eclipse.persistence");
-      depGI.appendChild(_createTextNode);
-      Element depAI = doc.createElement("artifactId");
-      Text _createTextNode_1 = doc.createTextNode("eclipselink");
-      depAI.appendChild(_createTextNode_1);
-      Element depV = doc.createElement("version");
-      Text _createTextNode_2 = doc.createTextNode("2.4.2");
-      depV.appendChild(_createTextNode_2);
-      depEL.appendChild(depGI);
-      depEL.appendChild(depAI);
-      depEL.appendChild(depV);
-      Node _item = nl.item(0);
-      _item.appendChild(depEL);
-      Element depSec = doc.createElement("dependency");
-      Element depSecGI = doc.createElement("groupId");
-      Text _createTextNode_3 = doc.createTextNode("commons-codec");
-      depSecGI.appendChild(_createTextNode_3);
-      Element depSecAI = doc.createElement("artifactId");
-      Text _createTextNode_4 = doc.createTextNode("commons-codec");
-      depSecAI.appendChild(_createTextNode_4);
-      Element depSecV = doc.createElement("version");
-      Text _createTextNode_5 = doc.createTextNode("1.9");
-      depSecV.appendChild(_createTextNode_5);
-      depSec.appendChild(depSecGI);
-      depSec.appendChild(depSecAI);
-      depSec.appendChild(depSecV);
-      Node _item_1 = nl.item(0);
-      _item_1.appendChild(depSec);
-      NodeList source = docEle.getElementsByTagName("source");
-      Node _item_2 = source.item(0);
-      _item_2.setTextContent("1.7");
-      NodeList target = docEle.getElementsByTagName("target");
-      Node _item_3 = target.item(0);
-      _item_3.setTextContent("1.7");
-      DomainCodeUtilities.writeXML(doc, filePath);
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
   private static void writeXML(final Document document, final String filePath) {
     try {
       Source xmlSource = new DOMSource(document);
@@ -1131,14 +1054,6 @@ public class DomainCodeUtilities {
     }
     
     abstract class __DomainCodeUtilities_3 extends SimpleFileVisitor<Path> {
-      abstract FileVisitResult copy(final Path fileOrDir) throws IOException;
-    }
-    
-    abstract class __DomainCodeUtilities_4 extends SimpleFileVisitor<Path> {
-      abstract FileVisitResult copy(final Path fileOrDir) throws IOException;
-    }
-    
-    abstract class __DomainCodeUtilities_5 extends SimpleFileVisitor<Path> {
       abstract FileVisitResult copy(final Path fileOrDir) throws IOException;
     }
     
@@ -1231,56 +1146,6 @@ public class DomainCodeUtilities {
       DomainCodeUtilities.deleteFolder(targetFile2, "/ejb", true);
       File classes = new File((DomainCodeUtilities.GENERATION_DIR + "/co.shift.root/co.shift.ejb.api/src/main/java"));
       DomainCodeUtilities.deleteClases(classes);
-      File folderEjbProject = new File((DomainCodeUtilities.GENERATION_DIR + "/co.shift.root/ejbProject/src/main/java/co/shift/pcs/risk"));
-      File folderEjbProjectTest = new File((DomainCodeUtilities.GENERATION_DIR + "/co.shift.root/ejbProject/src"));
-      DomainCodeUtilities.deleteFolder(folderEjbProject);
-      DomainCodeUtilities.deleteFolder(folderEjbProjectTest, "test", true);
-      final Path srcDirEjbProject = Paths.get((basePath + "/co/shift/pcs/risk"));
-      final Path dstDirEjbProject = Paths.get((DomainCodeUtilities.GENERATION_DIR + "/co.shift.root/ejbProject/src/main/java/co/shift/pcs/risk"));
-      __DomainCodeUtilities_4 ___DomainCodeUtilities_4 = new __DomainCodeUtilities_4() {
-        @Override
-        public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
-          return this.copy(file);
-        }
-        
-        @Override
-        public FileVisitResult preVisitDirectory(final Path dir, final BasicFileAttributes attrs) throws IOException {
-          return this.copy(dir);
-        }
-        
-        FileVisitResult copy(final Path fileOrDir) throws IOException {
-          Path _relativize = srcDirEjbProject.relativize(fileOrDir);
-          Path _resolve = dstDirEjbProject.resolve(_relativize);
-          Files.copy(fileOrDir, _resolve);
-          return FileVisitResult.CONTINUE;
-        }
-      };
-      Files.walkFileTree(srcDirEjbProject, ___DomainCodeUtilities_4);
-      File folderSecurity = new File((DomainCodeUtilities.GENERATION_DIR + "/co.shift.root/security/src/main/java/co/shift/pcs/security"));
-      File folderSecurityTest = new File((DomainCodeUtilities.GENERATION_DIR + "/co.shift.root/security/src"));
-      DomainCodeUtilities.deleteFolder(folderSecurity);
-      DomainCodeUtilities.deleteFolder(folderSecurityTest, "test", true);
-      final Path srcDirSecurity = Paths.get((basePath + "/co/shift/pcs/security"));
-      final Path dstDirSecurity = Paths.get((DomainCodeUtilities.GENERATION_DIR + "/co.shift.root/security/src/main/java/co/shift/pcs/security"));
-      __DomainCodeUtilities_5 ___DomainCodeUtilities_5 = new __DomainCodeUtilities_5() {
-        @Override
-        public FileVisitResult visitFile(final Path file, final BasicFileAttributes attrs) throws IOException {
-          return this.copy(file);
-        }
-        
-        @Override
-        public FileVisitResult preVisitDirectory(final Path dir, final BasicFileAttributes attrs) throws IOException {
-          return this.copy(dir);
-        }
-        
-        FileVisitResult copy(final Path fileOrDir) throws IOException {
-          Path _relativize = srcDirSecurity.relativize(fileOrDir);
-          Path _resolve = dstDirSecurity.resolve(_relativize);
-          Files.copy(fileOrDir, _resolve);
-          return FileVisitResult.CONTINUE;
-        }
-      };
-      Files.walkFileTree(srcDirSecurity, ___DomainCodeUtilities_5);
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
