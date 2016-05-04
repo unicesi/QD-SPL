@@ -4,4 +4,5 @@
 *.xtendbin
 hs_err_pid*
 *._trace
+bin/
 
