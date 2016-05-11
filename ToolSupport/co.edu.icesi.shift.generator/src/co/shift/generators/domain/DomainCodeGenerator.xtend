@@ -90,13 +90,12 @@ class DomainCodeGenerator implements IGenerator {
 						WebControllerTemplate::generate(appName, be, associations, fsa))
 			}	
 		}
-//		DomainCodeUtilities.extendContribution("_r_2_11", DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName, authEntity);
-//		DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName)
-		DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_INTEGRITY_AUTHENTICITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName, authEntity);
+
+		//DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_INTEGRITY_AUTHENTICITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName, authEntity);
+		DomainCodeUtilities.extendContribution("root","general", fsa, appName, authEntity)
+
 		DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_CONFIDENTIALITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName)
-		
-		
-		//DomainCodeUtilities.extendContribution("root","generate","_r_2_11")  
+		//DomainCodeUtilities.extendContribution("root","general", fsa, appName)
 		
 		//---------Web Generation-----------
 		fsa.generateFile(
@@ -148,5 +147,6 @@ class DomainCodeGenerator implements IGenerator {
 						InsertsScriptTemplate::generate(appName, authEntity))
 						
 		DomainCodeUtilities.runScript(appName)
+		DomainCodeUtilities.end()
 	}
 }

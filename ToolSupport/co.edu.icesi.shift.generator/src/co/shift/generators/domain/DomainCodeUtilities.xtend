@@ -56,6 +56,9 @@ import co.shift.contributors.timeexecution.NormalTE
 import co.shift.contributors.authenticity.Authenticator
 import co.shift.contributors.timeexecution.FastSyncTE
 import co.shift.contributors.confidentiality.EncConf
+import java.sql.Connection
+import java.sql.DriverManager
+//import com.mysql.jdbc.Driver
 
 //import org.eclipse.ui.handlers.HandlerUtil
 
@@ -74,6 +77,15 @@ class DomainCodeUtilities {
 	public val final static CONTRIBUTE_TO_GENERATION = "Generate";
 
 //Inicio jcifuentes
+// Constante para configuración de QAs por defecto. Esta dependerá en realidad de
+// los qas seleccionados por el configurador de qas
+// Note: 0: Unselected, 1: Selected
+// VP delimited by ";". Variants delimited by ","
+// Note: "NormalTE,MediumTE,FastSyncTE,FastAsyncTE;Encrypted,Unencrypted;Authorization,AuthenticLockout"
+	public val final static selectedQAsConfig = "1,0,0,0;1,0;1,1";
+	public var static Connection connection;
+	
+//Se crean constantes para mnemotecnia de los códigos del QA Config
 	public val final static QA_ROOT = "_r";
 	public val final static VP_TIME_EXEC = "_r_1";
 	public val final static VA_NORMAL_TE = "_r_1_3_4";
@@ -92,6 +104,20 @@ class DomainCodeUtilities {
 
 	public val final static VA_AUTHORIZATION = "_r_2_11_15_16";
 	public val final static VA_AUTHENTIC_LOCKOUT = "_r_2_11_15_17";
+	
+// Configuración temporal. Esto debe ir en BD
+// <llave, fragment>.
+// llave es "template-section-selectedQAsConfig".
+// fragment es "Contributor.method"
+	private var static HashMap<String, String> fragmentsConfig;
+
+	def static void initFragmentsConfig() {
+		fragmentsConfig.put("root-generate-2,2,2,2;2,2;1,2", "Authenticator.generate")
+		fragmentsConfig.put("root-generate-2,2,2,2;2,2;2,1", "Lockout.generate")
+		fragmentsConfig.put("root-generate-2,2,2,2;1,0;2,2", "EncConf.generate")
+		fragmentsConfig.put("root-generate-2,2,2,2;0,1;2,2", "UnencConf.generate")
+	}
+	
 //Fin jcifuentes
 
 	private var static HashMap<String, Contribution> selectedContributors;
@@ -99,6 +125,7 @@ class DomainCodeUtilities {
 	private var static TreeSet<String> entityNames;
 	private var static TreeSet<String> services;
 	private var static List<BusinessEntity[]> manyToMany;
+
 
 	def static HashSet<BusinessEntity> getBusinessEntities() {
 		businessEntities
@@ -175,6 +202,13 @@ class DomainCodeUtilities {
 		return null
 	}
 
+	//Jcifuentes: Obtiene una conexión MySQL
+	def static Connection GetConnection(){
+		Class.forName("com.mysql.jdbc.Driver")
+		DriverManager.getConnection("jdbc:mysql://localhost:8080/ReferenceModel", "root","root")
+	}
+	//Fin Jcifuentes
+
 	def static init() {
 		val QAParser qas = new QAParser()
 		selectedContributors = qas.parseSelectedFeatures
@@ -182,7 +216,16 @@ class DomainCodeUtilities {
 		entityNames = new TreeSet
 		services = new TreeSet
 		manyToMany = newArrayList()
+		//Inicio Jcifuentes
+		connection = GetConnection()
+		//Fin jcifuentes
 	}
+
+	//Inicio Jcifuentes
+	def static end() {
+		connection.close()
+	}
+	//Fin jcifuentes
 
 /* Inicio Jcifuentes
 //Se requiere la plantilla
@@ -203,12 +246,26 @@ class DomainCodeUtilities {
 		
 	}*/
 
- 	def static String extendContribution(String templateId, String sectionId, String variationPointId) {
-		    val c = Class.forName("co.shift.contributors.authenticity.Authenticator")
+ 	def static String extendContribution2(String templateId, String sectionId, Object... data) {
+ 		//Toma el template, la seccion y la configuracion de qas para obtener una llave
+ 		var rules = ""
+ 		var s = connection.createStatement()
+ 		var rs = s.executeQuery("select contributor, method
+								from fragment_config fc
+								where template = '"+templateId+"'"+
+								"and section = "+sectionId+"'"+
+								"and '"+selectedQAsConfig+"' like allowed_qa_config") 
+ 		//Ejecuta cada fragmento encontrado
+ 		while (rs.next()){
+ 			//Obtiene el nombre de la clase
+		    val c = Class.forName(rs.getString(1))
 		    val o = c.newInstance()
-		    val m = c.getDeclaredMethod("generate", null)
-		    val s = m.invoke(null, "fsa, appName, authEntity")
-		    s.toString
+		    //Obtiene el nombre del metodo
+		    val m = c.getDeclaredMethod(rs.getString(2), null)
+		    var result = m.invoke(o, data)
+		    rules += result.toString 
+		}
+	    return rules		
 	}
 //Fin Jcifuentes
 

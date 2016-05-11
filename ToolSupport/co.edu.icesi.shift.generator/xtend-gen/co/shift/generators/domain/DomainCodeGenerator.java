@@ -178,7 +178,7 @@ public class DomainCodeGenerator implements IGenerator {
         }
       }
     }
-    DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_INTEGRITY_AUTHENTICITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName, authEntity);
+    DomainCodeUtilities.extendContribution("root", "general", fsa, appName, authEntity);
     DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_CONFIDENTIALITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName);
     String _lowerCase = appName.toLowerCase();
     String _plus = ("/co/shift/" + _lowerCase);
@@ -260,5 +260,6 @@ public class DomainCodeGenerator implements IGenerator {
     CharSequence _generate_14 = InsertsScriptTemplate.generate(appName, authEntity);
     fsa.generateFile(_plus_31, _generate_14);
     DomainCodeUtilities.runScript(appName);
+    DomainCodeUtilities.end();
   }
 }

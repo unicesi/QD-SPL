@@ -29,6 +29,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -81,6 +85,10 @@ public class DomainCodeUtilities {
   
   public final static String CONTRIBUTE_TO_GENERATION = "Generate";
   
+  public final static String selectedQAsConfig = "1,0,0,0;1,0;1,1";
+  
+  public static Connection connection;
+  
   public final static String QA_ROOT = "_r";
   
   public final static String VP_TIME_EXEC = "_r_1";
@@ -108,6 +116,15 @@ public class DomainCodeUtilities {
   public final static String VA_AUTHORIZATION = "_r_2_11_15_16";
   
   public final static String VA_AUTHENTIC_LOCKOUT = "_r_2_11_15_17";
+  
+  private static HashMap<String, String> fragmentsConfig;
+  
+  public static void initFragmentsConfig() {
+    DomainCodeUtilities.fragmentsConfig.put("root-generate-2,2,2,2;2,2;1,2", "Authenticator.generate");
+    DomainCodeUtilities.fragmentsConfig.put("root-generate-2,2,2,2;2,2;2,1", "Lockout.generate");
+    DomainCodeUtilities.fragmentsConfig.put("root-generate-2,2,2,2;1,0;2,2", "EncConf.generate");
+    DomainCodeUtilities.fragmentsConfig.put("root-generate-2,2,2,2;0,1;2,2", "UnencConf.generate");
+  }
   
   private static HashMap<String, Contribution> selectedContributors;
   
@@ -222,8 +239,21 @@ public class DomainCodeUtilities {
     return null;
   }
   
-  public static List<BusinessEntity[]> init() {
-    List<BusinessEntity[]> _xblockexpression = null;
+  public static Connection GetConnection() {
+    try {
+      Connection _xblockexpression = null;
+      {
+        Class.forName("com.mysql.jdbc.Driver");
+        _xblockexpression = DriverManager.getConnection("jdbc:mysql://localhost:8080/ReferenceModel", "root", "root");
+      }
+      return _xblockexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  public static Connection init() {
+    Connection _xblockexpression = null;
     {
       final QAParser qas = new QAParser();
       HashMap<String, Contribution> _parseSelectedFeatures = qas.parseSelectedFeatures();
@@ -235,9 +265,19 @@ public class DomainCodeUtilities {
       TreeSet<String> _treeSet_1 = new TreeSet<String>();
       DomainCodeUtilities.services = _treeSet_1;
       ArrayList<BusinessEntity[]> _newArrayList = CollectionLiterals.<BusinessEntity[]>newArrayList();
-      _xblockexpression = DomainCodeUtilities.manyToMany = _newArrayList;
+      DomainCodeUtilities.manyToMany = _newArrayList;
+      Connection _GetConnection = DomainCodeUtilities.GetConnection();
+      _xblockexpression = DomainCodeUtilities.connection = _GetConnection;
     }
     return _xblockexpression;
+  }
+  
+  public static void end() {
+    try {
+      DomainCodeUtilities.connection.close();
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
   }
   
   /**
@@ -260,17 +300,28 @@ public class DomainCodeUtilities {
    * 
    * }
    */
-  public static String extendContribution(final String templateId, final String sectionId, final String variationPointId) {
+  public static String extendContribution2(final String templateId, final String sectionId, final Object... data) {
     try {
-      String _xblockexpression = null;
-      {
-        final Class<?> c = Class.forName("co.shift.contributors.authenticity.Authenticator");
-        final Object o = c.newInstance();
-        final Method m = c.getDeclaredMethod("generate", null);
-        final Object s = m.invoke(null, "fsa, appName, authEntity");
-        _xblockexpression = s.toString();
+      String rules = "";
+      Statement s = DomainCodeUtilities.connection.createStatement();
+      ResultSet rs = s.executeQuery(
+        (((((((("select contributor, method\n\t\t\t\t\t\t\t\tfrom fragment_config fc\n\t\t\t\t\t\t\t\twhere template = \'" + templateId) + "\'") + 
+          "and section = ") + sectionId) + "\'") + 
+          "and \'") + DomainCodeUtilities.selectedQAsConfig) + "\' like allowed_qa_config"));
+      while (rs.next()) {
+        {
+          String _string = rs.getString(1);
+          final Class<?> c = Class.forName(_string);
+          final Object o = c.newInstance();
+          String _string_1 = rs.getString(2);
+          final Method m = c.getDeclaredMethod(_string_1, null);
+          Object result = m.invoke(o, data);
+          String _rules = rules;
+          String _string_2 = result.toString();
+          rules = (_rules + _string_2);
+        }
       }
-      return _xblockexpression;
+      return rules;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
     }
