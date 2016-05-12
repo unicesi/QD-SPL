@@ -92,11 +92,11 @@ class DomainCodeGenerator implements IGenerator {
 		}
 
 		//DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_INTEGRITY_AUTHENTICITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName, authEntity);
-		DomainCodeUtilities.extendContribution("root","general", fsa, appName, authEntity)
+		DomainCodeUtilities.extendContribution2("root","general", DomainParams.CONF_AUTHENTIC_LOCKOUT, fsa, appName, authEntity)
 
 		DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_CONFIDENTIALITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName)
 		//DomainCodeUtilities.extendContribution("root","general", fsa, appName)
-		
+/*		
 		//---------Web Generation-----------
 		fsa.generateFile(
 						"/co/shift/" + appName.toLowerCase + "/web/AbstractController.java",
@@ -146,7 +146,7 @@ class DomainCodeGenerator implements IGenerator {
 						"/co/shift/" + appName.toLowerCase + "/web/database/InsertsScript.sql",
 						InsertsScriptTemplate::generate(appName, authEntity))
 						
-		DomainCodeUtilities.runScript(appName)
+		DomainCodeUtilities.runScript(appName)*/
 		DomainCodeUtilities.end()
 	}
 }

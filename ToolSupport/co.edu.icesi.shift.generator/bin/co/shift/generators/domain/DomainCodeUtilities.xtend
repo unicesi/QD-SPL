@@ -58,7 +58,9 @@ import co.shift.contributors.timeexecution.FastSyncTE
 import co.shift.contributors.confidentiality.EncConf
 import java.sql.Connection
 import java.sql.DriverManager
-//import com.mysql.jdbc.Driver
+import com.mysql.jdbc.Driver
+import com.google.inject.Injector
+//import co.shift.generators.domain.DomainCodeSetup
 
 //import org.eclipse.ui.handlers.HandlerUtil
 
@@ -84,7 +86,8 @@ class DomainCodeUtilities {
 // Note: "NormalTE,MediumTE,FastSyncTE,FastAsyncTE;Encrypted,Unencrypted;Authorization,AuthenticLockout"
 	public val final static selectedQAsConfig = "1,0,0,0;1,0;1,1";
 	public var static Connection connection;
-	
+	public var static Injector injector;
+//	
 //Se crean constantes para mnemotecnia de los códigos del QA Config
 	public val final static QA_ROOT = "_r";
 	public val final static VP_TIME_EXEC = "_r_1";
@@ -105,18 +108,21 @@ class DomainCodeUtilities {
 	public val final static VA_AUTHORIZATION = "_r_2_11_15_16";
 	public val final static VA_AUTHENTIC_LOCKOUT = "_r_2_11_15_17";
 	
-// Configuración temporal. Esto debe ir en BD
-// <llave, fragment>.
-// llave es "template-section-selectedQAsConfig".
-// fragment es "Contributor.method"
-	private var static HashMap<String, String> fragmentsConfig;
+// Configuraciones actuales disponibles
+	public val final static CONF_NORMAL_TE = "1,0,0,0;_,_;_,_";
+	public val final static CONF_MEDIUM_TE = "0,1,0,0;_,_;_,_";
+	public val final static CONF_FASTSYNC_TE = "0,0,1,0;_,_;_,_";
+	public val final static CONF_FASTASYNC_TE = "0,0,0,1;_,_;_,_";
 
-	def static void initFragmentsConfig() {
-		fragmentsConfig.put("root-generate-2,2,2,2;2,2;1,2", "Authenticator.generate")
-		fragmentsConfig.put("root-generate-2,2,2,2;2,2;2,1", "Lockout.generate")
-		fragmentsConfig.put("root-generate-2,2,2,2;1,0;2,2", "EncConf.generate")
-		fragmentsConfig.put("root-generate-2,2,2,2;0,1;2,2", "UnencConf.generate")
-	}
+	public val final static CONF_DATA_ENCRYPTED = "_,_,_,_;0,1;_,_"; //Encrypted selected
+	public val final static CONF_DATA_UNENCRYPTED = "_,_,_,_;1,0;_,_"; //Unencrypted selected
+
+	public val final static CONF_AUTHORIZATION = "_,_,_,_;_,_;1,_"; //Authenticator selected
+	public val final static CONF_AUTHENTIC_LOCKOUT = "_,_,_,_;_,_;_,1";//Lockout selected
+	
+	public var static CURRENT_TEMPLATE = "";
+	public var static CURRENT_SECTION = "";
+	
 	
 //Fin jcifuentes
 
@@ -204,8 +210,9 @@ class DomainCodeUtilities {
 
 	//Jcifuentes: Obtiene una conexión MySQL
 	def static Connection GetConnection(){
-		Class.forName("com.mysql.jdbc.Driver")
-		DriverManager.getConnection("jdbc:mysql://localhost:8080/ReferenceModel", "root","root")
+		//Class.forName("com.mysql.jdbc.Driver")
+		DriverManager.registerDriver(new com.mysql.jdbc.Driver())
+		DriverManager.getConnection("jdbc:mysql://localhost:3306/ReferenceModel", "root","root")
 	}
 	//Fin Jcifuentes
 
@@ -218,6 +225,8 @@ class DomainCodeUtilities {
 		manyToMany = newArrayList()
 		//Inicio Jcifuentes
 		connection = GetConnection()
+		injector = new DomainCodeSetup().createInjectorAndDoEMFRegistration();
+		
 		//Fin jcifuentes
 	}
 
@@ -253,18 +262,25 @@ class DomainCodeUtilities {
  		var rs = s.executeQuery("select contributor, method
 								from fragment_config fc
 								where template = '"+templateId+"'"+
-								"and section = "+sectionId+"'"+
+								"and section = '"+sectionId+"'"+
 								"and '"+selectedQAsConfig+"' like allowed_qa_config") 
  		//Ejecuta cada fragmento encontrado
  		while (rs.next()){
  			//Obtiene el nombre de la clase
 		    val c = Class.forName(rs.getString(1))
+System.err.println("Clase "+c);
 		    val o = c.newInstance()
 		    //Obtiene el nombre del metodo
-		    val m = c.getDeclaredMethod(rs.getString(2), null)
-		    var result = m.invoke(o, data)
-		    rules += result.toString 
+//		    val m = c.getDeclaredMethod(rs.getString(2), data)
+		    
+//		    var result = m.invoke(o, data)
+//		    rules += result.toString
+System.err.println("Ejecutar "+c+"."+rs.getString(2));
+
+//			var a = new co.shift.contributors.authenticity.Authenticator()
+//			a.generate(data)
 		}
+		
 	    return rules		
 	}
 //Fin Jcifuentes

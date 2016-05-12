@@ -31,4 +31,11 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.eclipse.xtext.ui.shared.xtextNature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>lib/mysql-connector-java-5.0.8-bin.jar</name>
+			<type>1</type>
+			<location>/Users/daviddurangiraldo/Downloads/mysql-connector-java-5.0.8/mysql-connector-java-5.0.8-bin.jar</location>
+		</link>
+	</linkedResources>
 </projectDescription>

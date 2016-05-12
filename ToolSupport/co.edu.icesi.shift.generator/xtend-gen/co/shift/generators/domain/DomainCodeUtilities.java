@@ -1,8 +1,11 @@
 package co.shift.generators.domain;
 
 import co.shift.contributors.Contribution;
+import co.shift.generators.domain.DomainCodeSetup;
 import co.shift.qualiyatributes.QAParser;
 import com.google.common.base.Objects;
+import com.google.inject.Injector;
+import com.mysql.jdbc.Driver;
 import domainmetamodel.Association;
 import domainmetamodel.Attribute;
 import domainmetamodel.Business;
@@ -22,7 +25,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.Method;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -89,6 +91,8 @@ public class DomainCodeUtilities {
   
   public static Connection connection;
   
+  public static Injector injector;
+  
   public final static String QA_ROOT = "_r";
   
   public final static String VP_TIME_EXEC = "_r_1";
@@ -117,14 +121,25 @@ public class DomainCodeUtilities {
   
   public final static String VA_AUTHENTIC_LOCKOUT = "_r_2_11_15_17";
   
-  private static HashMap<String, String> fragmentsConfig;
+  public final static String CONF_NORMAL_TE = "1,0,0,0;_,_;_,_";
   
-  public static void initFragmentsConfig() {
-    DomainCodeUtilities.fragmentsConfig.put("root-generate-2,2,2,2;2,2;1,2", "Authenticator.generate");
-    DomainCodeUtilities.fragmentsConfig.put("root-generate-2,2,2,2;2,2;2,1", "Lockout.generate");
-    DomainCodeUtilities.fragmentsConfig.put("root-generate-2,2,2,2;1,0;2,2", "EncConf.generate");
-    DomainCodeUtilities.fragmentsConfig.put("root-generate-2,2,2,2;0,1;2,2", "UnencConf.generate");
-  }
+  public final static String CONF_MEDIUM_TE = "0,1,0,0;_,_;_,_";
+  
+  public final static String CONF_FASTSYNC_TE = "0,0,1,0;_,_;_,_";
+  
+  public final static String CONF_FASTASYNC_TE = "0,0,0,1;_,_;_,_";
+  
+  public final static String CONF_DATA_ENCRYPTED = "_,_,_,_;0,1;_,_";
+  
+  public final static String CONF_DATA_UNENCRYPTED = "_,_,_,_;1,0;_,_";
+  
+  public final static String CONF_AUTHORIZATION = "_,_,_,_;_,_;1,_";
+  
+  public final static String CONF_AUTHENTIC_LOCKOUT = "_,_,_,_;_,_;_,1";
+  
+  public static String CURRENT_TEMPLATE = "";
+  
+  public static String CURRENT_SECTION = "";
   
   private static HashMap<String, Contribution> selectedContributors;
   
@@ -243,8 +258,9 @@ public class DomainCodeUtilities {
     try {
       Connection _xblockexpression = null;
       {
-        Class.forName("com.mysql.jdbc.Driver");
-        _xblockexpression = DriverManager.getConnection("jdbc:mysql://localhost:8080/ReferenceModel", "root", "root");
+        Driver _driver = new Driver();
+        DriverManager.registerDriver(_driver);
+        _xblockexpression = DriverManager.getConnection("jdbc:mysql://localhost:3306/ReferenceModel", "root", "root");
       }
       return _xblockexpression;
     } catch (Throwable _e) {
@@ -252,8 +268,8 @@ public class DomainCodeUtilities {
     }
   }
   
-  public static Connection init() {
-    Connection _xblockexpression = null;
+  public static Injector init() {
+    Injector _xblockexpression = null;
     {
       final QAParser qas = new QAParser();
       HashMap<String, Contribution> _parseSelectedFeatures = qas.parseSelectedFeatures();
@@ -267,7 +283,10 @@ public class DomainCodeUtilities {
       ArrayList<BusinessEntity[]> _newArrayList = CollectionLiterals.<BusinessEntity[]>newArrayList();
       DomainCodeUtilities.manyToMany = _newArrayList;
       Connection _GetConnection = DomainCodeUtilities.GetConnection();
-      _xblockexpression = DomainCodeUtilities.connection = _GetConnection;
+      DomainCodeUtilities.connection = _GetConnection;
+      DomainCodeSetup _domainCodeSetup = new DomainCodeSetup();
+      Injector _createInjectorAndDoEMFRegistration = _domainCodeSetup.createInjectorAndDoEMFRegistration();
+      _xblockexpression = DomainCodeUtilities.injector = _createInjectorAndDoEMFRegistration;
     }
     return _xblockexpression;
   }
@@ -306,19 +325,17 @@ public class DomainCodeUtilities {
       Statement s = DomainCodeUtilities.connection.createStatement();
       ResultSet rs = s.executeQuery(
         (((((((("select contributor, method\n\t\t\t\t\t\t\t\tfrom fragment_config fc\n\t\t\t\t\t\t\t\twhere template = \'" + templateId) + "\'") + 
-          "and section = ") + sectionId) + "\'") + 
+          "and section = \'") + sectionId) + "\'") + 
           "and \'") + DomainCodeUtilities.selectedQAsConfig) + "\' like allowed_qa_config"));
       while (rs.next()) {
         {
           String _string = rs.getString(1);
           final Class<?> c = Class.forName(_string);
+          System.err.println(("Clase " + c));
           final Object o = c.newInstance();
           String _string_1 = rs.getString(2);
-          final Method m = c.getDeclaredMethod(_string_1, null);
-          Object result = m.invoke(o, data);
-          String _rules = rules;
-          String _string_2 = result.toString();
-          rules = (_rules + _string_2);
+          String _plus = ((("Ejecutar " + c) + ".") + _string_1);
+          System.err.println(_plus);
         }
       }
       return rules;
