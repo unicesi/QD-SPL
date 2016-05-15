@@ -2,10 +2,10 @@ package co.shift.generators.domain;
 
 import co.shift.contributors.Contribution;
 import co.shift.generators.domain.DomainCodeSetup;
+import co.shift.generators.domain.DomainParams;
 import co.shift.qualiyatributes.QAParser;
 import com.google.common.base.Objects;
 import com.google.inject.Injector;
-import com.mysql.jdbc.Driver;
 import domainmetamodel.Association;
 import domainmetamodel.Attribute;
 import domainmetamodel.Business;
@@ -87,8 +87,6 @@ public class DomainCodeUtilities {
   
   public final static String CONTRIBUTE_TO_GENERATION = "Generate";
   
-  public final static String selectedQAsConfig = "1,0,0,0;1,0;1,1";
-  
   public static Connection connection;
   
   public static Injector injector;
@@ -140,6 +138,8 @@ public class DomainCodeUtilities {
   public static String CURRENT_TEMPLATE = "";
   
   public static String CURRENT_SECTION = "";
+  
+  private static List<String> selectedFeatures;
   
   private static HashMap<String, Contribution> selectedContributors;
   
@@ -258,8 +258,7 @@ public class DomainCodeUtilities {
     try {
       Connection _xblockexpression = null;
       {
-        Driver _driver = new Driver();
-        DriverManager.registerDriver(_driver);
+        Class.forName("com.mysql.jdbc.Driver");
         _xblockexpression = DriverManager.getConnection("jdbc:mysql://localhost:3306/ReferenceModel", "root", "root");
       }
       return _xblockexpression;
@@ -268,8 +267,8 @@ public class DomainCodeUtilities {
     }
   }
   
-  public static Injector init() {
-    Injector _xblockexpression = null;
+  public static List<String> init() {
+    List<String> _xblockexpression = null;
     {
       final QAParser qas = new QAParser();
       HashMap<String, Contribution> _parseSelectedFeatures = qas.parseSelectedFeatures();
@@ -286,7 +285,9 @@ public class DomainCodeUtilities {
       DomainCodeUtilities.connection = _GetConnection;
       DomainCodeSetup _domainCodeSetup = new DomainCodeSetup();
       Injector _createInjectorAndDoEMFRegistration = _domainCodeSetup.createInjectorAndDoEMFRegistration();
-      _xblockexpression = DomainCodeUtilities.injector = _createInjectorAndDoEMFRegistration;
+      DomainCodeUtilities.injector = _createInjectorAndDoEMFRegistration;
+      List<String> _selectedFeatures = qas.getSelectedFeatures();
+      _xblockexpression = DomainCodeUtilities.selectedFeatures = _selectedFeatures;
     }
     return _xblockexpression;
   }
@@ -319,14 +320,14 @@ public class DomainCodeUtilities {
    * 
    * }
    */
-  public static String extendContribution2(final String templateId, final String sectionId, final Object... data) {
+  public static String extendContribution2(final Object... data) {
     try {
       String rules = "";
       Statement s = DomainCodeUtilities.connection.createStatement();
       ResultSet rs = s.executeQuery(
-        (((((((("select contributor, method\n\t\t\t\t\t\t\t\tfrom fragment_config fc\n\t\t\t\t\t\t\t\twhere template = \'" + templateId) + "\'") + 
-          "and section = \'") + sectionId) + "\'") + 
-          "and \'") + DomainCodeUtilities.selectedQAsConfig) + "\' like allowed_qa_config"));
+        (((((((("select contributor, method\n\t\t\t\t\t\t\t\tfrom fragment_config fc\n\t\t\t\t\t\t\t\twhere template = \'" + DomainParams.CURRENT_TEMPLATE) + "\'") + 
+          "and section = \'") + DomainParams.CURRENT_SECTION) + "\'") + 
+          "and \'") + DomainParams.selectedQAsConfig) + "\' like allowed_qa_config"));
       while (rs.next()) {
         {
           String _string = rs.getString(1);

@@ -56,6 +56,8 @@ public class DomainParams {
   
   public static String CURRENT_SECTION = "";
   
+  public final static String TPL_ROOT = "root";
+  
   public final static String SECTION_BINTERFACE = "BusinessInterface";
   
   public final static String SECTION_BIMPL = "BusinessImplementation";

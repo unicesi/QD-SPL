@@ -84,7 +84,7 @@ class DomainCodeUtilities {
 // Note: 0: Unselected, 1: Selected
 // VP delimited by ";". Variants delimited by ","
 // Note: "NormalTE,MediumTE,FastSyncTE,FastAsyncTE;Encrypted,Unencrypted;Authorization,AuthenticLockout"
-	public val final static selectedQAsConfig = "1,0,0,0;1,0;1,1";
+	//public val final static selectedQAsConfig = "1,0,0,0;1,0;1,1";
 	public var static Connection connection;
 	public var static Injector injector;
 //	
@@ -123,7 +123,7 @@ class DomainCodeUtilities {
 	public var static CURRENT_TEMPLATE = "";
 	public var static CURRENT_SECTION = "";
 	
-	
+	private var static List<String> selectedFeatures;
 //Fin jcifuentes
 
 	private var static HashMap<String, Contribution> selectedContributors;
@@ -210,8 +210,8 @@ class DomainCodeUtilities {
 
 	//Jcifuentes: Obtiene una conexión MySQL
 	def static Connection GetConnection(){
-		//Class.forName("com.mysql.jdbc.Driver")
-		DriverManager.registerDriver(new com.mysql.jdbc.Driver())
+		Class::forName("com.mysql.jdbc.Driver")
+		//DriverManager.registerDriver(new com.mysql.jdbc.Driver())
 		DriverManager.getConnection("jdbc:mysql://localhost:3306/ReferenceModel", "root","root")
 	}
 	//Fin Jcifuentes
@@ -226,7 +226,7 @@ class DomainCodeUtilities {
 		//Inicio Jcifuentes
 		connection = GetConnection()
 		injector = new DomainCodeSetup().createInjectorAndDoEMFRegistration();
-		
+		selectedFeatures = qas.selectedFeatures
 		//Fin jcifuentes
 	}
 
@@ -255,15 +255,20 @@ class DomainCodeUtilities {
 		
 	}*/
 
- 	def static String extendContribution2(String templateId, String sectionId, Object... data) {
+ 	def static String extendContribution2(Object... data) {
+ 		//Primero que todo, valida que la configuración de QAs actual, 
+ 		//cumple con la configuración que la plantilla indica
+ 		//verifyConfiguration()
+ 		//
+ 		
  		//Toma el template, la seccion y la configuracion de qas para obtener una llave
  		var rules = ""
  		var s = connection.createStatement()
  		var rs = s.executeQuery("select contributor, method
 								from fragment_config fc
-								where template = '"+templateId+"'"+
-								"and section = '"+sectionId+"'"+
-								"and '"+selectedQAsConfig+"' like allowed_qa_config") 
+								where template = '"+DomainParams.CURRENT_TEMPLATE+"'"+
+								"and section = '"+DomainParams.CURRENT_SECTION+"'"+
+								"and '"+DomainParams.selectedQAsConfig+"' like allowed_qa_config") 
  		//Ejecuta cada fragmento encontrado
  		while (rs.next()){
  			//Obtiene el nombre de la clase

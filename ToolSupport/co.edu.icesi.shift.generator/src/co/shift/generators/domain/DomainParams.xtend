@@ -54,6 +54,10 @@ class DomainParams {
 	//Current template section
 	public var static CURRENT_SECTION = "";
 	
+	//Templates
+	public val final static TPL_ROOT = "root"
+	//...Add templates as needed
+	
 	//Template sections (podrían inicializarse con números)
 	public val final static SECTION_BINTERFACE = "BusinessInterface";
 	public val final static SECTION_BIMPL = "BusinessImplementation";

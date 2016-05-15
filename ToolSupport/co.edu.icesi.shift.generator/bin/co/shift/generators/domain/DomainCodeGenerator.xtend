@@ -92,9 +92,11 @@ class DomainCodeGenerator implements IGenerator {
 		}
 
 		//DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_INTEGRITY_AUTHENTICITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName, authEntity);
-		DomainCodeUtilities.extendContribution2("root","general", DomainParams.CONF_AUTHENTIC_LOCKOUT, fsa, appName, authEntity)
+		DomainParams.CURRENT_TEMPLATE = DomainParams.TPL_ROOT;
+		DomainParams.CURRENT_SECTION = DomainParams.SECTION_GENERATE;
+		DomainCodeUtilities.extendContribution2(DomainParams.CONF_AUTHENTIC_LOCKOUT, fsa, appName, authEntity)
 
-		DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_CONFIDENTIALITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName)
+		DomainCodeUtilities.extendContribution(DomainParams.VP_CONFIDENTIALITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName)
 		//DomainCodeUtilities.extendContribution("root","general", fsa, appName)
 /*		
 		//---------Web Generation-----------

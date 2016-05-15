@@ -2,7 +2,10 @@ package co.shift.qualiyatributes;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -76,6 +79,38 @@ public class QAParser {
 		return selectedFeatures;
 	}
 
+	//Inicio Jcifuentes
+	/**
+	 * Return a List<String> with the selected features on the Quality Attributes
+	 * model.
+	 * 
+	 * @return the list of selected features
+	 */
+	public List<String> getSelectedFeatures() {
+		List<String> selectedFeatures = new ArrayList();
+
+		// get the root element
+		Element docEle = doc.getDocumentElement();
+
+		// get a nodelist of elements
+		NodeList nl = docEle.getElementsByTagName("feature");
+		if (nl != null && nl.getLength() > 0) {
+			for (int i = 0; i < nl.getLength(); i++) {
+
+				// get the feature element
+				Element el = (Element) nl.item(i);
+
+				// get the Feature object
+				Feature f = getFeature(el);
+				if (f.getValue() == 1 && ImplMapping.getContributorImpl(f.getId()) != null) {
+					selectedFeatures.add(f.getId());
+				}
+			}
+		}
+		return selectedFeatures;
+	}
+	//Fin Jcifuentes
+	
 	private Feature getFeature(Element empEl) {
 
 		// for each <feature> element get text or int values of
