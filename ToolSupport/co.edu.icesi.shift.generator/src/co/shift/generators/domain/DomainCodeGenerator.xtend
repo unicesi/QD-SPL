@@ -92,12 +92,25 @@ class DomainCodeGenerator implements IGenerator {
 		}
 
 		//DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_INTEGRITY_AUTHENTICITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName, authEntity);
-		DomainParams.CURRENT_TEMPLATE = DomainParams.TPL_ROOT;
-		DomainParams.CURRENT_SECTION = DomainParams.SECTION_GENERATE;
-		DomainCodeUtilities.extendContribution2(DomainParams.CONF_AUTHENTIC_LOCKOUT, fsa, appName, authEntity)
+		//Establece la plantilla y la sección actuales
+		DomainCodeUtilities.CURRENT_TEMPLATE = DomainParams.TPL_ROOT;
+		DomainCodeUtilities.CURRENT_SECTION = DomainParams.SECTION_GENERATE;
+		//Establece la configuración para la cual es válida la siguiente contribución
+		DomainCodeUtilities.CURRENT_QACONFIG = DomainParams.CONF_AUTHENTIC_LOCKOUT;
+		//Se cambió una linea que enviaba el PV por dos líneas cada una enviando las variantes
+		DomainCodeUtilities.contribute(fsa, appName, authEntity)
+		//Establece la configuración para la cual es válida la siguiente contribución
+		DomainCodeUtilities.CURRENT_QACONFIG = DomainParams.CONF_AUTHORIZATION;
+		//DomainCodeUtilities.contribute(fsa, appName, authEntity)
 
-		DomainCodeUtilities.extendContribution(DomainParams.VP_CONFIDENTIALITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName)
-		//DomainCodeUtilities.extendContribution("root","general", fsa, appName)
+		//DomainCodeUtilities.extendContribution(DomainParams.VP_CONFIDENTIALITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName)
+	//Proximo cambio
+	//Establece la configuración para la cual es válida la siguiente contribución
+	//DomainCodeUtilities.CURRENT_QACONFIG = DomainParams.CONF_DATA_ENCRYPTED;
+	//DomainCodeUtilities.contribute(fsa, appName)
+	//Establece la configuración para la cual es válida la siguiente contribución
+	//DomainCodeUtilities.CURRENT_QACONFIG = DomainParams.CONF_DATA_UNENCRYPTED;
+	//DomainCodeUtilities.contribute(fsa, appName)
 /*		
 		//---------Web Generation-----------
 		fsa.generateFile(

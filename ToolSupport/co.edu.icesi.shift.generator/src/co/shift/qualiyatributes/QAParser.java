@@ -102,7 +102,7 @@ public class QAParser {
 
 				// get the Feature object
 				Feature f = getFeature(el);
-				if (f.getValue() == 1 && ImplMapping.getContributorImpl(f.getId()) != null) {
+				if (f.getValue() == 1) {
 					selectedFeatures.add(f.getId());
 				}
 			}

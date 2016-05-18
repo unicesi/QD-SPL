@@ -52,10 +52,6 @@ public class DomainParams {
   
   public final static String CONF_AUTHENTIC_LOCKOUT = "_,_,_,_;_,_;_,1";
   
-  public static String CURRENT_TEMPLATE = "";
-  
-  public static String CURRENT_SECTION = "";
-  
   public final static String TPL_ROOT = "root";
   
   public final static String SECTION_BINTERFACE = "BusinessInterface";

@@ -49,11 +49,6 @@ class DomainParams {
 	public val final static CONF_AUTHORIZATION     = "_,_,_,_;_,_;1,_"; //Authenticator selected
 	public val final static CONF_AUTHENTIC_LOCKOUT = "_,_,_,_;_,_;_,1";//Lockout selected
 	
-	//Current template
-	public var static CURRENT_TEMPLATE = "";
-	//Current template section
-	public var static CURRENT_SECTION = "";
-	
 	//Templates
 	public val final static TPL_ROOT = "root"
 	//...Add templates as needed

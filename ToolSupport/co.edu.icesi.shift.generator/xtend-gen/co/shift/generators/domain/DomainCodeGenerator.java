@@ -163,10 +163,11 @@ public class DomainCodeGenerator implements IGenerator {
         }
       }
     }
-    DomainParams.CURRENT_TEMPLATE = DomainParams.TPL_ROOT;
-    DomainParams.CURRENT_SECTION = DomainParams.SECTION_GENERATE;
-    DomainCodeUtilities.extendContribution2(DomainParams.CONF_AUTHENTIC_LOCKOUT, fsa, appName, authEntity);
-    DomainCodeUtilities.extendContribution(DomainParams.VP_CONFIDENTIALITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName);
+    DomainCodeUtilities.CURRENT_TEMPLATE = DomainParams.TPL_ROOT;
+    DomainCodeUtilities.CURRENT_SECTION = DomainParams.SECTION_GENERATE;
+    DomainCodeUtilities.CURRENT_QACONFIG = DomainParams.CONF_AUTHENTIC_LOCKOUT;
+    DomainCodeUtilities.contribute(fsa, appName, authEntity);
+    DomainCodeUtilities.CURRENT_QACONFIG = DomainParams.CONF_AUTHORIZATION;
     DomainCodeUtilities.end();
   }
 }

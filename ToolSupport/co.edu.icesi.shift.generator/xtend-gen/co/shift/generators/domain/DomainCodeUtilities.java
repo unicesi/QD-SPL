@@ -2,7 +2,6 @@ package co.shift.generators.domain;
 
 import co.shift.contributors.Contribution;
 import co.shift.generators.domain.DomainCodeSetup;
-import co.shift.generators.domain.DomainParams;
 import co.shift.qualiyatributes.QAParser;
 import com.google.common.base.Objects;
 import com.google.inject.Injector;
@@ -91,53 +90,11 @@ public class DomainCodeUtilities {
   
   public static Injector injector;
   
-  public final static String QA_ROOT = "_r";
-  
-  public final static String VP_TIME_EXEC = "_r_1";
-  
-  public final static String VA_NORMAL_TE = "_r_1_3_4";
-  
-  public final static String VA_MEDIUM_TE = "_r_1_3_5";
-  
-  public final static String VP_FAST_TE = "_r_1_3_6";
-  
-  public final static String VA_FASTSYNC_TE = "_r_1_3_6_7_8";
-  
-  public final static String VA_FASTASYNC_TE = "_r_1_3_6_7_9";
-  
-  public final static String VP_SECURITY = "_r_2";
-  
-  public final static String VP_CONFIDENTIALITY = "_r_2_10";
-  
-  public final static String VA_DATA_ENCRYPTED = "_r_2_10_12_13";
-  
-  public final static String VA_DATA_UNENCRYPTED = "_r_2_10_12_14";
-  
-  public final static String VP_INTEGRITY_AUTHENTICITY = "_r_2_11";
-  
-  public final static String VA_AUTHORIZATION = "_r_2_11_15_16";
-  
-  public final static String VA_AUTHENTIC_LOCKOUT = "_r_2_11_15_17";
-  
-  public final static String CONF_NORMAL_TE = "1,0,0,0;_,_;_,_";
-  
-  public final static String CONF_MEDIUM_TE = "0,1,0,0;_,_;_,_";
-  
-  public final static String CONF_FASTSYNC_TE = "0,0,1,0;_,_;_,_";
-  
-  public final static String CONF_FASTASYNC_TE = "0,0,0,1;_,_;_,_";
-  
-  public final static String CONF_DATA_ENCRYPTED = "_,_,_,_;0,1;_,_";
-  
-  public final static String CONF_DATA_UNENCRYPTED = "_,_,_,_;1,0;_,_";
-  
-  public final static String CONF_AUTHORIZATION = "_,_,_,_;_,_;1,_";
-  
-  public final static String CONF_AUTHENTIC_LOCKOUT = "_,_,_,_;_,_;_,1";
-  
   public static String CURRENT_TEMPLATE = "";
   
   public static String CURRENT_SECTION = "";
+  
+  public static String CURRENT_QACONFIG = "";
   
   private static List<String> selectedFeatures;
   
@@ -320,14 +277,21 @@ public class DomainCodeUtilities {
    * 
    * }
    */
-  public static String extendContribution2(final Object... data) {
+  public static String contribute(final Object... data) {
     try {
+      Object[] _array = DomainCodeUtilities.selectedFeatures.toArray();
+      String stringSelectedFeatures = ((List<Object>)Conversions.doWrapArray(_array)).toString();
+      System.err.println(("selectedFeatures: " + stringSelectedFeatures));
       String rules = "";
       Statement s = DomainCodeUtilities.connection.createStatement();
-      ResultSet rs = s.executeQuery(
-        (((((((("select contributor, method\n\t\t\t\t\t\t\t\tfrom fragment_config fc\n\t\t\t\t\t\t\t\twhere template = \'" + DomainParams.CURRENT_TEMPLATE) + "\'") + 
-          "and section = \'") + DomainParams.CURRENT_SECTION) + "\'") + 
-          "and \'") + DomainParams.selectedQAsConfig) + "\' like allowed_qa_config"));
+      ResultSet rs = s.executeQuery((((("select 1 from dual where \'" + stringSelectedFeatures) + "\'\n\t\t\t\t\t\t\t\tlike (select group_concat(selected separator \',\') selected\n\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIGURATION_X_VARIANT\n\t\t\t\t\t\t\t\twhere configuration_id = ") + DomainCodeUtilities.CURRENT_QACONFIG) + ")"));
+      boolean _next = rs.next();
+      boolean _not = (!_next);
+      if (_not) {
+        return rules;
+      }
+      ResultSet _executeQuery = s.executeQuery((((((("select B.FULL_CLASS_NAME, B.METHOD_NAME\n\t\t\t\t\t\t\tfrom ReferenceModel.TMPLT_X_CONF_X_FRAGM A, ReferenceModel.FRAGMENT B\n\t\t\t\t\t\t\twhere A.TEMPLATE = " + DomainCodeUtilities.CURRENT_TEMPLATE) + "\n\t\t\t\t\t\t\tand A.SECTION = ") + DomainCodeUtilities.CURRENT_SECTION) + "\n\t\t\t\t\t\t\tand A.CONFIGURATION_ID = ") + DomainCodeUtilities.CURRENT_QACONFIG) + "\n\t\t\t\t\t\t\tand A.FRAGMENT_ID = B.FRAGMENT_ID"));
+      rs = _executeQuery;
       while (rs.next()) {
         {
           String _string = rs.getString(1);

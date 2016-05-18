@@ -84,44 +84,12 @@ class DomainCodeUtilities {
 // Note: 0: Unselected, 1: Selected
 // VP delimited by ";". Variants delimited by ","
 // Note: "NormalTE,MediumTE,FastSyncTE,FastAsyncTE;Encrypted,Unencrypted;Authorization,AuthenticLockout"
-	//public val final static selectedQAsConfig = "1,0,0,0;1,0;1,1";
+	//public val final static selectedQAsConfig = "1,0,0,0,1,0,1,1";
 	public var static Connection connection;
 	public var static Injector injector;
-//	
-//Se crean constantes para mnemotecnia de los códigos del QA Config
-	public val final static QA_ROOT = "_r";
-	public val final static VP_TIME_EXEC = "_r_1";
-	public val final static VA_NORMAL_TE = "_r_1_3_4";
-	public val final static VA_MEDIUM_TE = "_r_1_3_5";
-
-	public val final static VP_FAST_TE = "_r_1_3_6";
-	public val final static VA_FASTSYNC_TE = "_r_1_3_6_7_8";
-	public val final static VA_FASTASYNC_TE = "_r_1_3_6_7_9";
-
-	public val final static VP_SECURITY = "_r_2";
-	public val final static VP_CONFIDENTIALITY = "_r_2_10";
-
-	public val final static VA_DATA_ENCRYPTED = "_r_2_10_12_13";
-	public val final static VA_DATA_UNENCRYPTED = "_r_2_10_12_14";
-	public val final static VP_INTEGRITY_AUTHENTICITY = "_r_2_11";
-
-	public val final static VA_AUTHORIZATION = "_r_2_11_15_16";
-	public val final static VA_AUTHENTIC_LOCKOUT = "_r_2_11_15_17";
-	
-// Configuraciones actuales disponibles
-	public val final static CONF_NORMAL_TE = "1,0,0,0;_,_;_,_";
-	public val final static CONF_MEDIUM_TE = "0,1,0,0;_,_;_,_";
-	public val final static CONF_FASTSYNC_TE = "0,0,1,0;_,_;_,_";
-	public val final static CONF_FASTASYNC_TE = "0,0,0,1;_,_;_,_";
-
-	public val final static CONF_DATA_ENCRYPTED = "_,_,_,_;0,1;_,_"; //Encrypted selected
-	public val final static CONF_DATA_UNENCRYPTED = "_,_,_,_;1,0;_,_"; //Unencrypted selected
-
-	public val final static CONF_AUTHORIZATION = "_,_,_,_;_,_;1,_"; //Authenticator selected
-	public val final static CONF_AUTHENTIC_LOCKOUT = "_,_,_,_;_,_;_,1";//Lockout selected
-	
 	public var static CURRENT_TEMPLATE = "";
 	public var static CURRENT_SECTION = "";
+	public var static CURRENT_QACONFIG = "";
 	
 	private var static List<String> selectedFeatures;
 //Fin jcifuentes
@@ -255,20 +223,31 @@ class DomainCodeUtilities {
 		
 	}*/
 
- 	def static String extendContribution2(Object... data) {
- 		//Primero que todo, valida que la configuración de QAs actual, 
- 		//cumple con la configuración que la plantilla indica
+ 	def static String contribute(Object... data) {
+ 		//Valida si la configuración del usuario requiere de esta contribucion
+ 		//Para esto, se verifica si está cubierta por la conf. de arquitectura current 
  		//verifyConfiguration()
- 		//
+ 		//Obtiene una cadena con la configuracion del usuario
+ 		var stringSelectedFeatures = selectedFeatures.toArray.toString;
+ System.err.println("selectedFeatures: "+stringSelectedFeatures);
  		
- 		//Toma el template, la seccion y la configuracion de qas para obtener una llave
  		var rules = ""
  		var s = connection.createStatement()
- 		var rs = s.executeQuery("select contributor, method
-								from fragment_config fc
-								where template = '"+DomainParams.CURRENT_TEMPLATE+"'"+
-								"and section = '"+DomainParams.CURRENT_SECTION+"'"+
-								"and '"+DomainParams.selectedQAsConfig+"' like allowed_qa_config") 
+ 		var rs = s.executeQuery("select 1 from dual where '"+stringSelectedFeatures+"'
+								like (select group_concat(selected separator ',') selected
+								from ReferenceModel.CONFIGURATION_X_VARIANT
+								where configuration_id = "+CURRENT_QACONFIG+")")
+ 		//Si la configuracion no corresponde con la del usuario, no hay contribución 
+ 		if(!rs.next()) return rules;
+ 		//Toma el template, la seccion y la configuracion de qas para obtener una llave
+ 		//var s = connection.createStatement()
+ 		//Valida que la configuración
+ 		rs = s.executeQuery("select B.FULL_CLASS_NAME, B.METHOD_NAME
+							from ReferenceModel.TMPLT_X_CONF_X_FRAGM A, ReferenceModel.FRAGMENT B
+							where A.TEMPLATE = "+CURRENT_TEMPLATE+"
+							and A.SECTION = "+CURRENT_SECTION+"
+							and A.CONFIGURATION_ID = "+CURRENT_QACONFIG+"
+							and A.FRAGMENT_ID = B.FRAGMENT_ID")
  		//Ejecuta cada fragmento encontrado
  		while (rs.next()){
  			//Obtiene el nombre de la clase
