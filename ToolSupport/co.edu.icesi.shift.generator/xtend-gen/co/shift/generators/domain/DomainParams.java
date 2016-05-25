@@ -36,37 +36,37 @@ public class DomainParams {
   
   public final static String VA_AUTHENTIC_LOCKOUT = "_r_2_11_15_17";
   
-  public final static String CONF_NORMAL_TE = "1,0,0,0;_,_;_,_";
+  public final static String CONF_NORMAL_TE = "101";
   
-  public final static String CONF_MEDIUM_TE = "0,1,0,0;_,_;_,_";
+  public final static String CONF_MEDIUM_TE = "102";
   
-  public final static String CONF_FASTSYNC_TE = "0,0,1,0;_,_;_,_";
+  public final static String CONF_FASTSYNC_TE = "103";
   
-  public final static String CONF_FASTASYNC_TE = "0,0,0,1;_,_;_,_";
+  public final static String CONF_FASTASYNC_TE = "104";
   
-  public final static String CONF_DATA_ENCRYPTED = "_,_,_,_;0,1;_,_";
+  public final static String CONF_DATA_ENCRYPTED = "105";
   
-  public final static String CONF_DATA_UNENCRYPTED = "_,_,_,_;1,0;_,_";
+  public final static String CONF_DATA_UNENCRYPTED = "106";
   
-  public final static String CONF_AUTHORIZATION = "_,_,_,_;_,_;1,_";
+  public final static String CONF_AUTHORIZATION = "107";
   
-  public final static String CONF_AUTHENTIC_LOCKOUT = "_,_,_,_;_,_;_,1";
+  public final static String CONF_AUTHENTIC_LOCKOUT = "108";
   
-  public final static String TPL_ROOT = "root";
+  public final static String TPL_ROOT = "1";
   
-  public final static String SECTION_BINTERFACE = "BusinessInterface";
+  public final static String SECTION_BINTERFACE = "1";
   
-  public final static String SECTION_BIMPL = "BusinessImplementation";
+  public final static String SECTION_BIMPL = "2";
   
-  public final static String SECTION_WEB_IMPL = "WebImpl";
+  public final static String SECTION_WEB_IMPL = "3";
   
-  public final static String SECTION_WEB_ATTR = "WebAtt";
+  public final static String SECTION_WEB_ATTR = "4";
   
-  public final static String SECTION_WEB_IMPORT = "WebImport";
+  public final static String SECTION_WEB_IMPORT = "5";
   
-  public final static String SECTION_BIMPORT = "Imports";
+  public final static String SECTION_BIMPORT = "6";
   
-  public final static String SECTION_BATTR = "Attributes";
+  public final static String SECTION_BATTR = "7";
   
-  public final static String SECTION_GENERATE = "Generate";
+  public final static String SECTION_GENERATE = "8";
 }

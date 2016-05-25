@@ -59,7 +59,8 @@ class DomainCodeGenerator implements IGenerator {
 				}
 				
 				name = be.name.toFirstUpper
-				fsa.generateFile("/co/shift/" + appName.toLowerCase + "/to/" + name + "TO.java",
+/*Inicio Jcifuentes (comentado)
+ * 				fsa.generateFile("/co/shift/" + appName.toLowerCase + "/to/" + name + "TO.java",
 					DTOTemplate::generate(be, appName, associations))
 				fsa.generateFile(
 					"/co/shift/" + appName.toLowerCase + "/" + name.toLowerCase + "/boundary/I" + name + "Manager.java",
@@ -85,24 +86,22 @@ class DomainCodeGenerator implements IGenerator {
 						"/co/shift/" + appName.toLowerCase + "/web/ext/" + be.name.toLowerCase + "/"+name+"Form.java",
 						FormTemplate::generate(appName, be))
 				}
-					fsa.generateFile(
-						"/co/shift/" + appName.toLowerCase + "/web/ext/" + be.name.toLowerCase + "/"+name+"Controller.java",
-						WebControllerTemplate::generate(appName, be, associations, fsa))
+				fsa.generateFile(
+					"/co/shift/" + appName.toLowerCase + "/web/ext/" + be.name.toLowerCase + "/"+name+"Controller.java",
+					WebControllerTemplate::generate(appName, be, associations, fsa))
+*///Fin JCifuentes
 			}	
 		}
 
-		//DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_INTEGRITY_AUTHENTICITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName, authEntity);
 		//Establece la plantilla y la sección actuales
 		DomainCodeUtilities.CURRENT_TEMPLATE = DomainParams.TPL_ROOT;
 		DomainCodeUtilities.CURRENT_SECTION = DomainParams.SECTION_GENERATE;
-		//Establece la configuración para la cual es válida la siguiente contribución
-		DomainCodeUtilities.CURRENT_QACONFIG = DomainParams.CONF_AUTHENTIC_LOCKOUT;
-		//Se cambió una linea que enviaba el PV por dos líneas cada una enviando las variantes
-		DomainCodeUtilities.contribute(fsa, appName, authEntity)
-		//Establece la configuración para la cual es válida la siguiente contribución
-		DomainCodeUtilities.CURRENT_QACONFIG = DomainParams.CONF_AUTHORIZATION;
-		//DomainCodeUtilities.contribute(fsa, appName, authEntity)
+		//Llama a las contribuciones para confidencialidad (lockout y authorization) 
+		DomainCodeUtilities.contribute(DomainParams.CONF_AUTHENTIC_LOCKOUT, 1, fsa, appName, authEntity)
+		//DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_INTEGRITY_AUTHENTICITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName, authEntity);
 
+		//Establece la configuración para la cual es válida la siguiente contribución
+		DomainCodeUtilities.contribute(DomainParams.CONF_AUTHORIZATION, 1, fsa, appName, authEntity)
 		//DomainCodeUtilities.extendContribution(DomainParams.VP_CONFIDENTIALITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName)
 	//Proximo cambio
 	//Establece la configuración para la cual es válida la siguiente contribución
@@ -111,7 +110,7 @@ class DomainCodeGenerator implements IGenerator {
 	//Establece la configuración para la cual es válida la siguiente contribución
 	//DomainCodeUtilities.CURRENT_QACONFIG = DomainParams.CONF_DATA_UNENCRYPTED;
 	//DomainCodeUtilities.contribute(fsa, appName)
-/*		
+/*Inicio Jcifuentes (comentado)		
 		//---------Web Generation-----------
 		fsa.generateFile(
 						"/co/shift/" + appName.toLowerCase + "/web/AbstractController.java",
@@ -161,7 +160,7 @@ class DomainCodeGenerator implements IGenerator {
 						"/co/shift/" + appName.toLowerCase + "/web/database/InsertsScript.sql",
 						InsertsScriptTemplate::generate(appName, authEntity))
 						
-		DomainCodeUtilities.runScript(appName)*/
+		DomainCodeUtilities.runScript(appName)*/ //Fin jcifuentes
 		DomainCodeUtilities.end()
 	}
 }

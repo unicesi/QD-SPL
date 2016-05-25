@@ -135,10 +135,10 @@ public class WorkflowHandler implements IHandler {
 
         //Obtiene el injector Guice (como lo hace en la clase DomainCodeSetup del generador
 		Injector injector = new DomainCodeSetup().createInjectorAndDoEMFRegistration();
-		System.err.println("Pasó 1");
+//		System.err.println("Pasó 1");
 		ResourceSet rs = injector.getInstance(ResourceSet.class);
 		Resource r = rs.getResource(URI.createPlatformResourceURI(file.getFullPath().toString(), true), true);
-		System.err.println("Pasó 2 file fullpath: "+file.getFullPath().toString());
+//		System.err.println("Pasó 2 file fullpath: "+file.getFullPath().toString());
 		//Con el injector obtiene el fsa, que es uno de los parametros requeridos por el doGenerate
 		//final InMemoryFileSystemAccess fsa = injector.getInstance(InMemoryFileSystemAccess.class);
 		final JavaIoFileSystemAccess fsa = injector.getInstance(JavaIoFileSystemAccess.class);
@@ -148,7 +148,7 @@ public class WorkflowHandler implements IHandler {
 		//fsa.setOutputConfigurations(outputs);
 		//Configura el output path del fsa
 		fsa.setOutputPath(IFileSystemAccess.DEFAULT_OUTPUT, basePath+srcGenFolder.getFullPath().toString());
-		System.err.println("Pasó 3 outputpath fsa: "+basePath+srcGenFolder.getFullPath().toString());
+//		System.err.println("Pasó 3 outputpath fsa: "+basePath+srcGenFolder.getFullPath().toString());
 		
 		//Borra los archivos generados con anterioridad
 		DirectoryCleaner dc = new DirectoryCleaner();

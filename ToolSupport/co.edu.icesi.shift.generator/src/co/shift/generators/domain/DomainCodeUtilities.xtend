@@ -60,12 +60,15 @@ import java.sql.Connection
 import java.sql.DriverManager
 import com.mysql.jdbc.Driver
 import com.google.inject.Injector
+import java.lang.reflect.Array
+import java.lang.reflect.InvocationTargetException
+
 //import co.shift.generators.domain.DomainCodeSetup
 
 //import org.eclipse.ui.handlers.HandlerUtil
 
 class DomainCodeUtilities {
-	
+	//Estas variables se establecen desde el plugin o el workflow
 	public static String GENERATION_DIR = ""; // = "/Users/daviddurangiraldo/Desktop/"
 	public static String SRC_DIR = ""; // = "/Users/daviddurangiraldo/Desktop/"
 
@@ -89,9 +92,10 @@ class DomainCodeUtilities {
 	public var static Injector injector;
 	public var static CURRENT_TEMPLATE = "";
 	public var static CURRENT_SECTION = "";
-	public var static CURRENT_QACONFIG = "";
+//	public var static CURRENT_QACONFIG = "";
 	
-	private var static List<String> selectedFeatures;
+	private var static List<String> featureCodes;
+	private var static List<String> featureValues;
 //Fin jcifuentes
 
 	private var static HashMap<String, Contribution> selectedContributors;
@@ -194,7 +198,10 @@ class DomainCodeUtilities {
 		//Inicio Jcifuentes
 		connection = GetConnection()
 		injector = new DomainCodeSetup().createInjectorAndDoEMFRegistration();
-		selectedFeatures = qas.selectedFeatures
+		//Get the feature codes from the database
+		featureCodes = getFeatureCodesFromDB()
+		//With the feature codes get its values from XML QA config
+		featureValues = qas.getSelectedFeatures(featureCodes)
 		//Fin jcifuentes
 	}
 
@@ -202,73 +209,113 @@ class DomainCodeUtilities {
 	def static end() {
 		connection.close()
 	}
-	//Fin jcifuentes
 
-/* Inicio Jcifuentes
-//Se requiere la plantilla
-//Se requiere el id del qa para saber cual contribuyente usar 
-//Se requiere la seccion para saber cual metodo del contribuyente ejecutar
-//El método busca en la configuracion los QAs seleccionados para el prefijo dado y obtiene el contribuyente.metodo(parametros) a ejecutar
-//ArchitectureFragment {String contributor, String method, String data}
- 	def static String extendContribution(String templateId, String sectionId, String variationPointId) {
-		val List<ArchitectureFragment> fragments = loadFromConfig(templateId, sectionId, variationPointId) //Load from DB given template, section and VP
-		for (f : fragments){
-		    f.contributor+"."+f.method
-		    val c = Class.forName(f.contributor);
-		    val o = c.newInstance();
-		    val m = c.getDeclaredMethod(f.method, Object... data); //Validar qué se debe pasar aquí
-		    val s = m.invoke(?, f.data)
-		    s.toString //validar cómo retornar el verdadero valor que queda en el Object s
-		}
-		
-	}*/
-
- 	def static String contribute(Object... data) {
- 		//Valida si la configuración del usuario requiere de esta contribucion
- 		//Para esto, se verifica si está cubierta por la conf. de arquitectura current 
- 		//verifyConfiguration()
+    /**
+     * Get the list of feature codes of the variants configured on the database, like
+     * '_r_1_3_4' for NORMAL_TE, and so on.
+     * 
+     * @return List<String> with the feature codes
+     */
+    def static getFeatureCodesFromDB(){
+    	var featureCodes = new ArrayList<String>
+ 		var s = connection.createStatement()
+ 		var rs = s.executeQuery("SELECT DISTINCT A.FEATURE_CODE 
+								FROM ReferenceModel.VARIANT A, ReferenceModel.CONFIGURATION_X_VARIANT B
+								where A.variant_id = B.VARIANT_ID
+								ORDER BY A.VARIANT_ID")
+ 		while(rs.next()){
+ 			featureCodes.add(rs.getString(1))
+ 		}
+		return featureCodes;    	
+    }
+    
+   /**
+     * Get the list of feature codes of the variants configured on the database, like
+     * '_r_1_3_4' for NORMAL_TE, and so on.
+     * 
+     * @return List<String> with the feature codes
+     */
+    def static isContributionRequired(String qaConfigArchitecture){
  		//Obtiene una cadena con la configuracion del usuario
- 		var stringSelectedFeatures = selectedFeatures.toArray.toString;
- System.err.println("selectedFeatures: "+stringSelectedFeatures);
+ 		var stringSelectedFeatures = featureValues.toArray.toString.replace(" ", "").replace("[","").replace("]","");
+ 		System.err.println("selectedFeatures: "+stringSelectedFeatures);
  		
- 		var rules = ""
  		var s = connection.createStatement()
  		var rs = s.executeQuery("select 1 from dual where '"+stringSelectedFeatures+"'
 								like (select group_concat(selected separator ',') selected
 								from ReferenceModel.CONFIGURATION_X_VARIANT
-								where configuration_id = "+CURRENT_QACONFIG+")")
+								where configuration_id = "+qaConfigArchitecture+")")
  		//Si la configuracion no corresponde con la del usuario, no hay contribución 
- 		if(!rs.next()) return rules;
- 		//Toma el template, la seccion y la configuracion de qas para obtener una llave
- 		//var s = connection.createStatement()
- 		//Valida que la configuración
- 		rs = s.executeQuery("select B.FULL_CLASS_NAME, B.METHOD_NAME
+ 		if(rs.next()) return true
+ 		return false
+    }
+
+	/**
+	 * Execute the architecture fragments found in the BD given the architecture config,
+	 * the global template and section 
+	 */
+ 	def static String executeArchitectureFragments(String qaConfigArchitecture, int sequence, Object... data) {
+ 		var rules = ""
+ 		var s = connection.createStatement()
+ 		var rs = s.executeQuery("select B.FULL_CLASS_NAME, B.METHOD_NAME
 							from ReferenceModel.TMPLT_X_CONF_X_FRAGM A, ReferenceModel.FRAGMENT B
-							where A.TEMPLATE = "+CURRENT_TEMPLATE+"
+							where A.SEQUENCE ="+sequence+"
+							and A.TEMPLATE = "+CURRENT_TEMPLATE+"
 							and A.SECTION = "+CURRENT_SECTION+"
-							and A.CONFIGURATION_ID = "+CURRENT_QACONFIG+"
+							and A.CONFIGURATION_ID = "+qaConfigArchitecture+"
 							and A.FRAGMENT_ID = B.FRAGMENT_ID")
  		//Ejecuta cada fragmento encontrado
- 		while (rs.next()){
- 			//Obtiene el nombre de la clase
-		    val c = Class.forName(rs.getString(1))
-System.err.println("Clase "+c);
-		    val o = c.newInstance()
-		    //Obtiene el nombre del metodo
-//		    val m = c.getDeclaredMethod(rs.getString(2), data)
-		    
-//		    var result = m.invoke(o, data)
-//		    rules += result.toString
-System.err.println("Ejecutar "+c+"."+rs.getString(2));
+		try{
+	 		while (rs.next()){
+	 			//Obtiene el nombre de la clase
+			    val cls = Class.forName(rs.getString(1))
+				System.err.println("Clase "+rs.getString(1));
+			    val obj = cls.newInstance()
+			    //Obtiene el nombre del metodo
+				System.err.println("Metodo "+rs.getString(2));
+				
+				//Get the method and set the parameter types
+			    val met = cls.getDeclaredMethod(rs.getString(2), {Class.forName("[Ljava.lang.Object;")})
+				//Invokes the method passing the parameters (Object[] data)
+				var Object[] datas = newArrayOfSize(1)
+				datas.set(0, data)
+			    //var result = met.invoke(obj, {data})//why this doesn't work?
+			    var result = met.invoke(obj, datas)
+			    if(result != null)
+			    	rules += result.toString
+			}
+	    }
+	    catch(InvocationTargetException x){
+	    	System.err.println("Error invocando al metodo: "+x.cause.message)
+	    	return "" 	
+	    }
+	    return rules
+ 	}
 
-//			var a = new co.shift.contributors.authenticity.Authenticator()
-//			a.generate(data)
-		}
-		
-	    return rules		
+	/**
+	 * Determines the contribution for the current template and section, given an
+	 * architecture qa config. The contribution can be a new file generation or
+	 * a string fragment of code that will be placed on the current template and
+	 * section.
+	 * If the current user configuration does not correspond with the architect config
+	 * no operation is done
+	 */
+ 	def static String contribute(String qaConfigArchitecture, int sequence, Object... data) {
+ 		//Valida si la configuración del usuario requiere de esta contribucion
+ 		//Para esto, se verifica si está cubierta por la conf. de arquitectura current
+ 		if(!isContributionRequired(qaConfigArchitecture))
+ 			return "";
+ 		
+ 		//Con la secuencia, el template, la seccion y la configuracion de arquitectura
+		//Obtiene y ejecuta los fragmentos de arquitectura
+		executeArchitectureFragments(qaConfigArchitecture, sequence, data)
 	}
 //Fin Jcifuentes
 
+	/**
+	 * @deprecated use {@link #contribute} instead
+	 */
+	@Deprecated
 	def static String extendContribution(String id, String phase, Object ... data) {
 
 		val List<Contribution> contributors = getSelectedVariants(id)

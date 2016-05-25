@@ -24,6 +24,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -94,9 +96,9 @@ public class DomainCodeUtilities {
   
   public static String CURRENT_SECTION = "";
   
-  public static String CURRENT_QACONFIG = "";
+  private static List<String> featureCodes;
   
-  private static List<String> selectedFeatures;
+  private static List<String> featureValues;
   
   private static HashMap<String, Contribution> selectedContributors;
   
@@ -243,8 +245,10 @@ public class DomainCodeUtilities {
       DomainCodeSetup _domainCodeSetup = new DomainCodeSetup();
       Injector _createInjectorAndDoEMFRegistration = _domainCodeSetup.createInjectorAndDoEMFRegistration();
       DomainCodeUtilities.injector = _createInjectorAndDoEMFRegistration;
-      List<String> _selectedFeatures = qas.getSelectedFeatures();
-      _xblockexpression = DomainCodeUtilities.selectedFeatures = _selectedFeatures;
+      ArrayList<String> _featureCodesFromDB = DomainCodeUtilities.getFeatureCodesFromDB();
+      DomainCodeUtilities.featureCodes = _featureCodesFromDB;
+      List<String> _selectedFeatures = qas.getSelectedFeatures(DomainCodeUtilities.featureCodes);
+      _xblockexpression = DomainCodeUtilities.featureValues = _selectedFeatures;
     }
     return _xblockexpression;
   }
@@ -258,49 +262,96 @@ public class DomainCodeUtilities {
   }
   
   /**
-   * Inicio Jcifuentes
-   * //Se requiere la plantilla
-   * //Se requiere el id del qa para saber cual contribuyente usar
-   * //Se requiere la seccion para saber cual metodo del contribuyente ejecutar
-   * //El método busca en la configuracion los QAs seleccionados para el prefijo dado y obtiene el contribuyente.metodo(parametros) a ejecutar
-   * //ArchitectureFragment {String contributor, String method, String data}
-   * def static String extendContribution(String templateId, String sectionId, String variationPointId) {
-   * val List<ArchitectureFragment> fragments = loadFromConfig(templateId, sectionId, variationPointId) //Load from DB given template, section and VP
-   * for (f : fragments){
-   * f.contributor+"."+f.method
-   * val c = Class.forName(f.contributor);
-   * val o = c.newInstance();
-   * val m = c.getDeclaredMethod(f.method, Object... data); //Validar qué se debe pasar aquí
-   * val s = m.invoke(?, f.data)
-   * s.toString //validar cómo retornar el verdadero valor que queda en el Object s
-   * }
+   * Get the list of feature codes of the variants configured on the database, like
+   * '_r_1_3_4' for NORMAL_TE, and so on.
    * 
-   * }
+   * @return List<String> with the feature codes
    */
-  public static String contribute(final Object... data) {
+  public static ArrayList<String> getFeatureCodesFromDB() {
     try {
-      Object[] _array = DomainCodeUtilities.selectedFeatures.toArray();
-      String stringSelectedFeatures = ((List<Object>)Conversions.doWrapArray(_array)).toString();
+      ArrayList<String> featureCodes = new ArrayList<String>();
+      Statement s = DomainCodeUtilities.connection.createStatement();
+      ResultSet rs = s.executeQuery("SELECT DISTINCT A.FEATURE_CODE \n\t\t\t\t\t\t\t\tFROM ReferenceModel.VARIANT A, ReferenceModel.CONFIGURATION_X_VARIANT B\n\t\t\t\t\t\t\t\twhere A.variant_id = B.VARIANT_ID\n\t\t\t\t\t\t\t\tORDER BY A.VARIANT_ID");
+      while (rs.next()) {
+        String _string = rs.getString(1);
+        featureCodes.add(_string);
+      }
+      return featureCodes;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  /**
+   * Get the list of feature codes of the variants configured on the database, like
+   * '_r_1_3_4' for NORMAL_TE, and so on.
+   * 
+   * @return List<String> with the feature codes
+   */
+  public static boolean isContributionRequired(final String qaConfigArchitecture) {
+    try {
+      Object[] _array = DomainCodeUtilities.featureValues.toArray();
+      String _string = ((List<Object>)Conversions.doWrapArray(_array)).toString();
+      String _replace = _string.replace(" ", "");
+      String _replace_1 = _replace.replace("[", "");
+      String stringSelectedFeatures = _replace_1.replace("]", "");
       System.err.println(("selectedFeatures: " + stringSelectedFeatures));
+      Statement s = DomainCodeUtilities.connection.createStatement();
+      ResultSet rs = s.executeQuery((((("select 1 from dual where \'" + stringSelectedFeatures) + "\'\n\t\t\t\t\t\t\t\tlike (select group_concat(selected separator \',\') selected\n\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIGURATION_X_VARIANT\n\t\t\t\t\t\t\t\twhere configuration_id = ") + qaConfigArchitecture) + ")"));
+      boolean _next = rs.next();
+      if (_next) {
+        return true;
+      }
+      return false;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  /**
+   * Execute the architecture fragments found in the BD given the architecture config,
+   * the global template and section
+   */
+  public static String executeArchitectureFragments(final String qaConfigArchitecture, final int sequence, final Object... data) {
+    try {
       String rules = "";
       Statement s = DomainCodeUtilities.connection.createStatement();
-      ResultSet rs = s.executeQuery((((("select 1 from dual where \'" + stringSelectedFeatures) + "\'\n\t\t\t\t\t\t\t\tlike (select group_concat(selected separator \',\') selected\n\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIGURATION_X_VARIANT\n\t\t\t\t\t\t\t\twhere configuration_id = ") + DomainCodeUtilities.CURRENT_QACONFIG) + ")"));
-      boolean _next = rs.next();
-      boolean _not = (!_next);
-      if (_not) {
-        return rules;
-      }
-      ResultSet _executeQuery = s.executeQuery((((((("select B.FULL_CLASS_NAME, B.METHOD_NAME\n\t\t\t\t\t\t\tfrom ReferenceModel.TMPLT_X_CONF_X_FRAGM A, ReferenceModel.FRAGMENT B\n\t\t\t\t\t\t\twhere A.TEMPLATE = " + DomainCodeUtilities.CURRENT_TEMPLATE) + "\n\t\t\t\t\t\t\tand A.SECTION = ") + DomainCodeUtilities.CURRENT_SECTION) + "\n\t\t\t\t\t\t\tand A.CONFIGURATION_ID = ") + DomainCodeUtilities.CURRENT_QACONFIG) + "\n\t\t\t\t\t\t\tand A.FRAGMENT_ID = B.FRAGMENT_ID"));
-      rs = _executeQuery;
-      while (rs.next()) {
-        {
-          String _string = rs.getString(1);
-          final Class<?> c = Class.forName(_string);
-          System.err.println(("Clase " + c));
-          final Object o = c.newInstance();
-          String _string_1 = rs.getString(2);
-          String _plus = ((("Ejecutar " + c) + ".") + _string_1);
+      ResultSet rs = s.executeQuery((((((((("select B.FULL_CLASS_NAME, B.METHOD_NAME\n\t\t\t\t\t\t\tfrom ReferenceModel.TMPLT_X_CONF_X_FRAGM A, ReferenceModel.FRAGMENT B\n\t\t\t\t\t\t\twhere A.SEQUENCE =" + Integer.valueOf(sequence)) + "\n\t\t\t\t\t\t\tand A.TEMPLATE = ") + DomainCodeUtilities.CURRENT_TEMPLATE) + "\n\t\t\t\t\t\t\tand A.SECTION = ") + DomainCodeUtilities.CURRENT_SECTION) + "\n\t\t\t\t\t\t\tand A.CONFIGURATION_ID = ") + qaConfigArchitecture) + "\n\t\t\t\t\t\t\tand A.FRAGMENT_ID = B.FRAGMENT_ID"));
+      try {
+        while (rs.next()) {
+          {
+            String _string = rs.getString(1);
+            final Class<?> cls = Class.forName(_string);
+            String _string_1 = rs.getString(1);
+            String _plus = ("Clase " + _string_1);
+            System.err.println(_plus);
+            final Object obj = cls.newInstance();
+            String _string_2 = rs.getString(2);
+            String _plus_1 = ("Metodo " + _string_2);
+            System.err.println(_plus_1);
+            String _string_3 = rs.getString(2);
+            final Method met = cls.getDeclaredMethod(_string_3, Class.forName("[Ljava.lang.Object;"));
+            Object[] datas = new Object[1];
+            datas[0] = data;
+            Object result = met.invoke(obj, datas);
+            boolean _notEquals = (!Objects.equal(result, null));
+            if (_notEquals) {
+              String _rules = rules;
+              String _string_4 = result.toString();
+              rules = (_rules + _string_4);
+            }
+          }
+        }
+      } catch (final Throwable _t) {
+        if (_t instanceof InvocationTargetException) {
+          final InvocationTargetException x = (InvocationTargetException)_t;
+          Throwable _cause = x.getCause();
+          String _message = _cause.getMessage();
+          String _plus = ("Error invocando al metodo: " + _message);
           System.err.println(_plus);
+          return "";
+        } else {
+          throw Exceptions.sneakyThrow(_t);
         }
       }
       return rules;
@@ -309,6 +360,31 @@ public class DomainCodeUtilities {
     }
   }
   
+  /**
+   * Determines the contribution for the current template and section, given an
+   * architecture qa config. The contribution can be a new file generation or
+   * a string fragment of code that will be placed on the current template and
+   * section.
+   * If the current user configuration does not correspond with the architect config
+   * no operation is done
+   */
+  public static String contribute(final String qaConfigArchitecture, final int sequence, final Object... data) {
+    String _xblockexpression = null;
+    {
+      boolean _isContributionRequired = DomainCodeUtilities.isContributionRequired(qaConfigArchitecture);
+      boolean _not = (!_isContributionRequired);
+      if (_not) {
+        return "";
+      }
+      _xblockexpression = DomainCodeUtilities.executeArchitectureFragments(qaConfigArchitecture, sequence, data);
+    }
+    return _xblockexpression;
+  }
+  
+  /**
+   * @deprecated use {@link #contribute} instead
+   */
+  @Deprecated
   public static String extendContribution(final String id, final String phase, final Object... data) {
     final List<Contribution> contributors = DomainCodeUtilities.getSelectedVariants(id);
     String rules = "";

@@ -5,11 +5,13 @@ public class Feature {
 	private String id;
 	private String name;
 	private int value;
+	private String type;
 	
-	public Feature(String id, String name, int value){
+	public Feature(String id, String name, int value, String type){
 		this.id = id;
 		this.name = name;
 		this.value = value;
+		this.setType(type);
 	}
 
 	public String getId() {
@@ -34,6 +36,14 @@ public class Feature {
 
 	public void setValue(int value) {
 		this.value = value;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	

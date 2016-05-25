@@ -38,29 +38,29 @@ class DomainParams {
 	public val final static VA_AUTHENTIC_LOCKOUT = "_r_2_11_15_17";
 	
 // Configuraciones actuales disponibles
-	public val final static CONF_NORMAL_TE         = "1,0,0,0;_,_;_,_";//Normal TE selected
-	public val final static CONF_MEDIUM_TE         = "0,1,0,0;_,_;_,_";//Medium TE selected
-	public val final static CONF_FASTSYNC_TE       = "0,0,1,0;_,_;_,_";//Fast Sync selected
-	public val final static CONF_FASTASYNC_TE      = "0,0,0,1;_,_;_,_";//Fast Async seleted
+	public val final static CONF_NORMAL_TE         = "101"//"1,0,0,0;_,_;_,_";//Normal TE selected
+	public val final static CONF_MEDIUM_TE         = "102"//"0,1,0,0;_,_;_,_";//Medium TE selected
+	public val final static CONF_FASTSYNC_TE       = "103"//"0,0,1,0;_,_;_,_";//Fast Sync selected
+	public val final static CONF_FASTASYNC_TE      = "104"//"0,0,0,1;_,_;_,_";//Fast Async seleted
 
-	public val final static CONF_DATA_ENCRYPTED    = "_,_,_,_;0,1;_,_";//Encrypted selected
-	public val final static CONF_DATA_UNENCRYPTED  = "_,_,_,_;1,0;_,_";//Unencrypted selected
+	public val final static CONF_DATA_ENCRYPTED    = "105"//"_,_,_,_;0,1;_,_";//Encrypted selected
+	public val final static CONF_DATA_UNENCRYPTED  = "106"//"_,_,_,_;1,0;_,_";//Unencrypted selected
 
-	public val final static CONF_AUTHORIZATION     = "_,_,_,_;_,_;1,_"; //Authenticator selected
-	public val final static CONF_AUTHENTIC_LOCKOUT = "_,_,_,_;_,_;_,1";//Lockout selected
+	public val final static CONF_AUTHORIZATION     = "107"//"_,_,_,_;_,_;1,_"; //Authenticator selected
+	public val final static CONF_AUTHENTIC_LOCKOUT = "108"//"_,_,_,_;_,_;_,1";//Lockout selected
 	
 	//Templates
-	public val final static TPL_ROOT = "root"
+	public val final static TPL_ROOT = "1" //root template
 	//...Add templates as needed
 	
 	//Template sections (podrían inicializarse con números)
-	public val final static SECTION_BINTERFACE = "BusinessInterface";
-	public val final static SECTION_BIMPL = "BusinessImplementation";
-	public val final static SECTION_WEB_IMPL = "WebImpl";
-	public val final static SECTION_WEB_ATTR = "WebAtt";
-	public val final static SECTION_WEB_IMPORT = "WebImport";
-	public val final static SECTION_BIMPORT = "Imports";
-	public val final static SECTION_BATTR = "Attributes";
-	public val final static SECTION_GENERATE = "Generate";
+	public val final static SECTION_BINTERFACE = "1" //"BusinessInterface";
+	public val final static SECTION_BIMPL = "2" //"BusinessImplementation";
+	public val final static SECTION_WEB_IMPL = "3" //"WebImpl";
+	public val final static SECTION_WEB_ATTR = "4" //"WebAtt";
+	public val final static SECTION_WEB_IMPORT = "5" //"WebImport";
+	public val final static SECTION_BIMPORT = "6" //"Imports";
+	public val final static SECTION_BATTR = "7" //"Attributes";
+	public val final static SECTION_GENERATE = "8" //"Generate";
 
 }

@@ -86,7 +86,7 @@ public class QAParser {
 	 * 
 	 * @return the list of selected features
 	 */
-	public List<String> getSelectedFeatures() {
+	public List<String> getSelectedFeatures(List<String> groupedFeatures) {
 		List<String> selectedFeatures = new ArrayList();
 
 		// get the root element
@@ -102,9 +102,11 @@ public class QAParser {
 
 				// get the Feature object
 				Feature f = getFeature(el);
-				if (f.getValue() == 1) {
-					selectedFeatures.add(f.getId());
-				}
+//				 System.err.println("feature: "+f.getName()+"-"+f.getType());
+				//If the feature from model is configured on database, obtain its value
+				//e.g., _r_1_3_4 is on database, but _r_1 is not
+				if (groupedFeatures.contains(f.getId().toLowerCase()))
+					selectedFeatures.add(""+f.getValue());
 			}
 		}
 		return selectedFeatures;
@@ -118,9 +120,10 @@ public class QAParser {
 		String id = empEl.getAttribute("id");
 		String name = getTextValue(empEl, "name");
 		int value = getIntValue(empEl, "value");
+		String type = getTextValue(empEl, "type");
 
 		// Create a new Feature with the value read from the xml nodes
-		Feature feature = new Feature(id, name, value);
+		Feature feature = new Feature(id, name, value, type);
 
 		return feature;
 	}
