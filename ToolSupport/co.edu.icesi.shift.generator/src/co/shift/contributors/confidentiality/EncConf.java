@@ -222,13 +222,13 @@ public class EncConf implements Contribution {
 	@Override
 	public String contributeToBusinessImport(Object... data) {
 		String packageName = (String) data[0];
-		return "import co.shift."+packageName.toLowerCase()+".security.PBECryptographyManager;";
+		return "import co.shift."+packageName.toLowerCase()+".security.PBECryptographyManager;\n";
 	}
 
 	@Override
 	public String contributeToBusinessAtribute(Object... data) {
-		return	"@EJB" + "\n" + 
-				"private PBECryptographyManager cManager;";
+		return	"@EJB\n" + 
+				"private PBECryptographyManager cManager;\n";
 	}
 
 	@Override

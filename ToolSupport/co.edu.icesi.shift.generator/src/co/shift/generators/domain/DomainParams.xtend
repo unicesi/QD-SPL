@@ -6,8 +6,8 @@ package co.shift.generators.domain
 
 class DomainParams {
 	
-	public static String GENERATION_DIR = ""; // = "/Users/daviddurangiraldo/Desktop/"
-	public static String SRC_DIR = ""; // = "/Users/daviddurangiraldo/Desktop/"
+//	public static String GENERATION_DIR = ""; // = "/Users/daviddurangiraldo/Desktop/"
+//	public static String SRC_DIR = ""; // = "/Users/daviddurangiraldo/Desktop/"
 
 //Inicio jcifuentes
 // Constante para configuración de QAs por defecto. Esta dependerá en realidad de
@@ -15,7 +15,7 @@ class DomainParams {
 // Note: 0: Unselected, 1: Selected
 // VP delimited by ";". Variants delimited by ","
 // Note: "NormalTE,MediumTE,FastSyncTE,FastAsyncTE;Encrypted,Unencrypted;Authorization,AuthenticLockout"
-	public val final static selectedQAsConfig = "1,0,0,0;1,0;1,1";
+//	public val final static selectedQAsConfig = "1,0,0,0;1,0;1,1";
 
 //Se crean constantes para mnemotecnia de los códigos del QA Config
 	public val final static QA_ROOT = "_r";
@@ -48,19 +48,33 @@ class DomainParams {
 
 	public val final static CONF_AUTHORIZATION     = "107"//"_,_,_,_;_,_;1,_"; //Authenticator selected
 	public val final static CONF_AUTHENTIC_LOCKOUT = "108"//"_,_,_,_;_,_;_,1";//Lockout selected
+//	public val final static CONF_FASTASYNC_TE_AND_ENCRYPTED = "109"//"0,0,0,1;0,1;_,_";//FastSync TE and Encripted selected
 	
 	//Templates
-	public val final static TPL_ROOT = "1" //root template
+//	public val final static TPL_ROOT = "1" //root template
+//	public val final static TPL_BOUNDARY_IMPL = ""
+//	public val final static TPL_BOUNDARY_INTERFACE = "BoundaryInterfaceTemplate"
+//	public val final static TPL_DAO_IMPL = "2"
+//	public val final static TPL_DAO_INTERFACE = "2"
+//	public val final static TPL_DTO = "2"
+//	public val final static TPL_JPA_PK_ENCAP = "2"
+//	public val final static TPL_JPA_PK = "2"
+//	public val final static TPL_JPA = "2"
+	
 	//...Add templates as needed
 	
-	//Template sections (podrían inicializarse con números)
-	public val final static SECTION_BINTERFACE = "1" //"BusinessInterface";
-	public val final static SECTION_BIMPL = "2" //"BusinessImplementation";
-	public val final static SECTION_WEB_IMPL = "3" //"WebImpl";
-	public val final static SECTION_WEB_ATTR = "4" //"WebAtt";
-	public val final static SECTION_WEB_IMPORT = "5" //"WebImport";
-	public val final static SECTION_BIMPORT = "6" //"Imports";
-	public val final static SECTION_BATTR = "7" //"Attributes";
-	public val final static SECTION_GENERATE = "8" //"Generate";
+	//Template sections (identified as in the database)
+//	public val final static SECTION_BI = "BusinessInterface";//Declaracion de métodos en interfaces
+//	public val final static SECTION_BIMPL = "BusinessImplementation";//Implementación de métodos en clases
+//	public val final static SECTION_BUSINESS_IMPORT = "Imports";//Seccion de imports
+//	public val final static SECTION_BUSINESS_ATTRIBUTE = "Attributes";//Seccion de atributos
+//	public val final static SECTION_WEB_IMPORT = "WebImport";//Seccion import de clases web
+//	public val final static SECTION_WEB_ATTRIBUTE = "WebAtt";//Sección atributos de clases web
+//	public val final static SECTION_WEB_IMPL = "WebImpl";//Implementación de métodos en clases web
+	public val final static SECT_IMPORTS = "Imports";//Seccion de imports
+	public val final static SECT_ATTRIBUTES = "Attributes";//Seccion de atributos
+	public val final static SECT_METHODS = "Methods";//Seccion de métodos
+	public val final static SECT_GENERATE = "Generate";//Una clase completa
+
 
 }

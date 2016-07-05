@@ -1,6 +1,7 @@
 package co.shift.templates.ejb.basic;
 
 import co.shift.generators.domain.DomainCodeUtilities;
+import co.shift.generators.domain.DomainParams;
 import domainmetamodel.AddElement;
 import domainmetamodel.Association;
 import domainmetamodel.Attribute;
@@ -28,8 +29,15 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 public class BoundaryInterfaceTemplate {
   private static ArrayList<String> importTOs = new ArrayList<String>();
   
+  private static String className = new Object() {
+  }.getClass().getEnclosingClass().getSimpleName();
+  
   public static CharSequence generate(final BusinessEntity be, final String packageName, final List<Association> associations, final IFileSystemAccess fsa) {
     StringConcatenation _builder = new StringConcatenation();
+    _builder.append("\t\t");
+    String _beginTemplate = DomainCodeUtilities.beginTemplate(BoundaryInterfaceTemplate.className);
+    _builder.append(_beginTemplate, "\t\t");
+    _builder.newLineIfNotEmpty();
     _builder.append("package co.shift.");
     String _lowerCase = packageName.toLowerCase();
     _builder.append(_lowerCase, "");
@@ -128,12 +136,16 @@ public class BoundaryInterfaceTemplate {
         {
           if ((contract_1 instanceof ListAll)) {
             _builder.append("\t");
-            String _extendContribution = DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_BI, contract_1, be);
-            _builder.append(_extendContribution, "\t");
+            String _beginSection = DomainCodeUtilities.beginSection(DomainParams.SECT_METHODS);
+            _builder.append(_beginSection, "\t");
             _builder.newLineIfNotEmpty();
             _builder.append("\t");
-            String _extendContribution_1 = DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, packageName, be);
-            _builder.append(_extendContribution_1, "\t");
+            String _contribute2Template = DomainCodeUtilities.contribute2Template(1, contract_1, be);
+            _builder.append(_contribute2Template, "\t");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            String _endSection = DomainCodeUtilities.endSection();
+            _builder.append(_endSection, "\t");
             _builder.newLineIfNotEmpty();
           }
         }
@@ -191,8 +203,6 @@ public class BoundaryInterfaceTemplate {
     {
       EList<Association> _associations = be.getAssociations();
       for(final Association association : _associations) {
-        _builder.append("\t");
-        _builder.newLine();
         {
           if ((association instanceof Simple)) {
             _builder.append("\t");
@@ -273,8 +283,6 @@ public class BoundaryInterfaceTemplate {
         _builder.newLineIfNotEmpty();
       }
     }
-    _builder.append("\t");
-    _builder.newLine();
     {
       List<Association> _detailMultipleAssociations = DomainCodeUtilities.getDetailMultipleAssociations(be, associations);
       for(final Association association_2 : _detailMultipleAssociations) {
@@ -345,6 +353,9 @@ public class BoundaryInterfaceTemplate {
     }
     _builder.append("}");
     _builder.newLine();
+    String _endTemplate = DomainCodeUtilities.endTemplate();
+    _builder.append(_endTemplate, "");
+    _builder.newLineIfNotEmpty();
     return _builder;
   }
 }

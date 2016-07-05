@@ -1,22 +1,21 @@
 package co.shift.templates.web.basic
 
-import domainmetamodel.BusinessEntity
 import co.shift.generators.domain.DomainCodeUtilities
-import domainmetamodel.Simple
-import domainmetamodel.Multiple
-import domainmetamodel.Create
-import domainmetamodel.Update
-import domainmetamodel.Delete
 import domainmetamodel.AddElement
-import domainmetamodel.DeleteElement
-import domainmetamodel.ContractElements
-import domainmetamodel.ListAll
-import java.util.List
 import domainmetamodel.Association
-import java.util.ArrayList
 import domainmetamodel.Attribute
+import domainmetamodel.BusinessEntity
+import domainmetamodel.ContractElements
+import domainmetamodel.Create
+import domainmetamodel.Delete
+import domainmetamodel.DeleteElement
+import domainmetamodel.ListAll
+import domainmetamodel.Multiple
+import domainmetamodel.Simple
+import domainmetamodel.Update
+import java.util.ArrayList
+import java.util.List
 import org.eclipse.xtext.generator.IFileSystemAccess
-import domainmetamodel.DataType
 
 class WebControllerTemplate {
 	
@@ -107,7 +106,6 @@ class WebControllerTemplate {
 								.withBusinessInterface(I«be.name.toFirstUpper»Manager.class)
 								.asString());
 			}
-			
 			«IF DomainCodeUtilities.isMaster(be)»
 			public void show«be.name.toFirstUpper»Form() {
 				«be.name.toFirstUpper»Form «be.name.toLowerCase»Form = Registry.get(«be.name.toFirstUpper»Form.ID);
@@ -294,7 +292,7 @@ class WebControllerTemplate {
 						.get«relBe.name.toFirstUpper»From«be.name.toFirstUpper»(«be.name.toLowerCase»ID);
 				«be.name.toFirstUpper»Form pF = Registry.get(«be.name.toFirstUpper»Form.ID);
 				pF.getTable_«pp»().removeAllItems();
-		
+
 				for («relBe.name.toFirstUpper»TO to : «relBe.name.toLowerCase»s) {
 					Object data[] = { 
 						«var size = relBe.attributes.size»

@@ -1,12 +1,6 @@
 package co.edu.icesi.shift.generator.handlers;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URL;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.util.Map;
-import java.util.Set;
 
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -15,46 +9,23 @@ import org.eclipse.core.commands.IHandlerListener;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IFolder;
 import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.mwe.utils.DirectoryCleaner;
-import org.eclipse.emf.mwe2.launch.runtime.Mwe2Launcher;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.handlers.HandlerUtil;
-import org.eclipse.xtext.naming.IQualifiedNameConverter;
-import org.eclipse.xtext.naming.QualifiedName;
-import org.eclipse.xtext.resource.IResourceServiceProvider;
+import org.eclipse.xtext.generator.IFileSystemAccess;
+import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
+
+import com.google.inject.Injector;
 
 import co.shift.generators.domain.DomainCodeGenerator;
-import co.shift.generators.domain.DomainCodeModule;
 import co.shift.generators.domain.DomainCodeSetup;
-import co.shift.generators.domain.DomainCodeSupport;
 import co.shift.generators.domain.DomainCodeUtilities;
-import co.shift.generators.domain.DomainGenerator;
-import co.shift.generators.workflows.AbstractGenerator;
 import co.shift.qualiyatributes.QAParser;
-import domainmetamodel.Business;
-
-import org.eclipse.xtext.builder.EclipseResourceFileSystemAccess2;
-import org.eclipse.xtext.generator.IFileSystemAccess;
-import org.eclipse.xtext.generator.IOutputConfigurationProvider;
-import org.eclipse.xtext.generator.InMemoryFileSystemAccess;
-import org.eclipse.xtext.generator.JavaIoFileSystemAccess;
-import org.eclipse.xtext.generator.OutputConfiguration;
-import org.eclipse.xtext.ui.resource.IResourceSetProvider;
-
-import com.google.inject.Guice;
-import com.google.inject.Inject;
-import com.google.inject.Injector;
-import com.google.inject.Provider;
 
 public class WorkflowHandler implements IHandler {
 /*	@Inject
@@ -109,6 +80,7 @@ public class WorkflowHandler implements IHandler {
 	 */
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
+ 	 try{
     	String basePath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString();
    
     	//Obtiene el project
@@ -153,12 +125,8 @@ public class WorkflowHandler implements IHandler {
 		//Borra los archivos generados con anterioridad
 		DirectoryCleaner dc = new DirectoryCleaner();
 		dc.setDirectory(basePath+srcGenFolder.getFullPath().toString());
-		try{
-			dc.cleanFolder(basePath+srcGenFolder.getFullPath().toString());
-		}
-		catch(FileNotFoundException e){
-			System.err.println("Error intentando borrar el directorio: "+e.getMessage());
-		}
+
+		dc.cleanFolder(basePath+srcGenFolder.getFullPath().toString());
 		
 		DomainCodeGenerator generator = injector.getInstance(DomainCodeGenerator.class);
 		
@@ -166,6 +134,17 @@ public class WorkflowHandler implements IHandler {
 System.err.println("EJECUTADO EL WF!!");
 
         return null;
+  	  }
+	  catch(FileNotFoundException e){
+		  System.err.println("Error intentando borrar el directorio: "+e.getMessage());
+		  return null;
+	  }
+	  catch(Exception e){
+		  System.err.println("Error no controlado: "+e.getMessage());
+		  e.printStackTrace();
+		  System.err.println("FIN StackTrace Error no controlado");
+		  return null;
+	  }
     }
 
 	@Override

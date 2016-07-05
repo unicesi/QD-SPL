@@ -309,7 +309,9 @@ class BoundaryImplTemplate {
 					«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, true, 0)»
 					«IF DomainCodeUtilities.isQASelected("_r_2_11_15_17")»
 					«authContribution»
+«««			JCifuentes: Comentar porque es redundante (ya está siendo ejecutado en DomainCodeGenerator)
 					«DomainCodeUtilities.extendContribution("_r_2_11_15_17", DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, packageName, be)»
+«««			JCifuentes: Fin Comentar
 					«ELSE»
 					User found«be.name.toFirstUpper» = em.find(«be.name.toFirstUpper».class, «be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper»);
 					if (found«be.name.toFirstUpper» != null) {

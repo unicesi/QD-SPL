@@ -1,9 +1,8 @@
 package co.shift.templates.web.contributed.authenticity
 
-import domainmetamodel.BusinessEntity
 import co.shift.generators.domain.DomainCodeUtilities
+import domainmetamodel.BusinessEntity
 import domainmetamodel.ListAll
-import co.shift.contributors.confidentiality.PBECryptographyManager
 
 class AuthorizerControllerTemplate {
 	

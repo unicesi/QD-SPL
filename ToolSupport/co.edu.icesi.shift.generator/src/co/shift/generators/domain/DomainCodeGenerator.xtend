@@ -1,39 +1,24 @@
 package co.shift.generators.domain
 
-import org.eclipse.xtext.generator.IGenerator
+import co.shift.qualiyatributes.ImplMapping
+import co.shift.templates.ejb.basic.BoundaryInterfaceTemplate
+import co.shift.templates.ejb.basic.DTOTemplate
+import domainmetamodel.Association
+import domainmetamodel.Business
+import domainmetamodel.BusinessEntity
+import java.util.ArrayList
+import java.util.List
 import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.IFileSystemAccess
-import domainmetamodel.BusinessEntity
-import co.shift.templates.ejb.basic.BoundaryInterfaceTemplate
-import domainmetamodel.Business
-import domainmetamodel.Association
-import java.util.List
-import java.util.ArrayList
-import co.shift.templates.ejb.basic.DTOTemplate
-import co.shift.qualiyatributes.ImplMapping
+import org.eclipse.xtext.generator.IGenerator
 import co.shift.templates.ejb.basic.BoundaryImplTemplate
+import co.shift.templates.ejb.basic.JPATemplate
 import co.shift.templates.ejb.basic.DAOInterfaceTemplate
 import co.shift.templates.ejb.basic.DAOImplTemplate
-import co.shift.templates.ejb.basic.JPATemplate
-import co.shift.templates.web.basic.AbstractControllerTemplate
-import co.shift.templates.web.basic.UITemplate
-import co.shift.templates.web.basic.ProcessContributorTemplate
-import co.shift.templates.web.basic.RegistryTemplate
-import co.shift.templates.web.basic.UIContributorTemplate
-import co.shift.templates.web.basic.UIControllerTemplate
-import co.shift.templates.web.basic.ContentPanelTemplate
-import co.shift.templates.web.basic.MenuPaneTemplate
-import co.shift.templates.web.basic.BeanLocatorTemplate
-import co.shift.templates.web.basic.GlobalJNDITemplate
-import co.shift.templates.web.contributed.authenticity.LoginFormTemplate
-import co.shift.templates.web.contributed.authenticity.LoginControllerTemplate
-import co.shift.templates.web.basic.FormTemplate
-import co.shift.templates.web.basic.WebControllerTemplate
-import co.shift.templates.database.basic.MERScriptTemplate
-import co.shift.templates.web.basic.PersistenceTemplate
-import co.shift.templates.database.basic.InsertsScriptTemplate
 
 class DomainCodeGenerator implements IGenerator {
+
+	private static String className = new Object(){}.class.enclosingClass.simpleName
 
 	override doGenerate(Resource input, IFileSystemAccess fsa) {
 		ImplMapping.performMapping
@@ -43,6 +28,8 @@ class DomainCodeGenerator implements IGenerator {
 		var appName = ""
 		var name = ""
 		var List<Association> associations = new ArrayList
+		//Establece la plantilla actual
+		DomainCodeUtilities.beginTemplate(className)
 		for (k : input.allContents.toIterable) {
 			if (k instanceof Business) {
 				val b = k as Business
@@ -59,8 +46,25 @@ class DomainCodeGenerator implements IGenerator {
 				}
 				
 				name = be.name.toFirstUpper
-/*Inicio Jcifuentes (comentado)
- * 				fsa.generateFile("/co/shift/" + appName.toLowerCase + "/to/" + name + "TO.java",
+//Inicio Jcifuentes: En esta sección deberían incluirse todas las configuraciones para GENERATION
+//Que David definio dentro de las plantillas. Anotar el origen en cada caso:
+//FROM BoundaryInterfaceTemplate 
+				DomainCodeUtilities.beginSection(DomainParams.SECT_GENERATE)
+				DomainCodeUtilities.contribute2Template(1, fsa, appName, be);
+//				DomainCodeUtilities.contribute(DomainParams.CONF_NORMAL_TE, 1, fsa, appName, be) //Esta ni siquiera hace nada, así se invoque
+//				DomainCodeUtilities.contribute(DomainParams.CONF_MEDIUM_TE, 1, fsa, appName, be) //Genera los controles BasicFLR
+//				DomainCodeUtilities.contribute(DomainParams.CONF_FASTSYNC_TE, 1, fsa, appName, be) //Genera los controles OptimizedFLR y el ListUpdater
+//				DomainCodeUtilities.contribute(DomainParams.CONF_FASTASYNC_TE, 1, fsa, appName, be) //Genera los controles Parallelizer y AsyncWorker
+//FROM DomainCodeGenerator (estaba abajo)
+//				DomainCodeUtilities.contribute(DomainParams.CONF_AUTHENTIC_LOCKOUT, 1, fsa, appName, authEntity) //Genera los controles IAuthorizationManager.java y otros
+//				DomainCodeUtilities.contribute(DomainParams.CONF_AUTHORIZATION, 1, fsa, appName, authEntity)
+//				DomainCodeUtilities.contribute(DomainParams.CONF_DATA_ENCRYPTED, 1, fsa, appName)
+//				DomainCodeUtilities.contribute(DomainParams.CONF_DATA_UNENCRYPTED, 1, fsa, appName)
+
+				DomainCodeUtilities.endSection
+//Fin Jcifuentes GENERATION
+
+  				fsa.generateFile("/co/shift/" + appName.toLowerCase + "/to/" + name + "TO.java",
 					DTOTemplate::generate(be, appName, associations))
 				fsa.generateFile(
 					"/co/shift/" + appName.toLowerCase + "/" + name.toLowerCase + "/boundary/I" + name + "Manager.java",
@@ -81,6 +85,7 @@ class DomainCodeGenerator implements IGenerator {
 						DAOImplTemplate::generate(be, appName, associations))
 				}
 				
+/*Inicio Jcifuentes (comentado)
 				if(DomainCodeUtilities.isMaster(be)){
 					fsa.generateFile(
 						"/co/shift/" + appName.toLowerCase + "/web/ext/" + be.name.toLowerCase + "/"+name+"Form.java",
@@ -90,26 +95,18 @@ class DomainCodeGenerator implements IGenerator {
 					"/co/shift/" + appName.toLowerCase + "/web/ext/" + be.name.toLowerCase + "/"+name+"Controller.java",
 					WebControllerTemplate::generate(appName, be, associations, fsa))
 *///Fin JCifuentes
-			}	
+			}
 		}
 
-		//Establece la plantilla y la sección actuales
-		DomainCodeUtilities.CURRENT_TEMPLATE = DomainParams.TPL_ROOT;
-		DomainCodeUtilities.CURRENT_SECTION = DomainParams.SECTION_GENERATE;
-		//Llama a las contribuciones para confidencialidad (lockout y authorization) 
-		DomainCodeUtilities.contribute(DomainParams.CONF_AUTHENTIC_LOCKOUT, 1, fsa, appName, authEntity)
-		//DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_INTEGRITY_AUTHENTICITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName, authEntity);
+/*Inicio Jcifuentes (comentado)
+		//Esto se cambió al nuevo esquema (contribute) y además se movió arriba
+		//Llama a las contribuciones para integridad/autenticidad (lockout y authorization) 
+		DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_INTEGRITY_AUTHENTICITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName, authEntity);
 
-		//Establece la configuración para la cual es válida la siguiente contribución
-		DomainCodeUtilities.contribute(DomainParams.CONF_AUTHORIZATION, 1, fsa, appName, authEntity)
-		//DomainCodeUtilities.extendContribution(DomainParams.VP_CONFIDENTIALITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName)
-	//Proximo cambio
-	//Establece la configuración para la cual es válida la siguiente contribución
-	//DomainCodeUtilities.CURRENT_QACONFIG = DomainParams.CONF_DATA_ENCRYPTED;
-	//DomainCodeUtilities.contribute(fsa, appName)
-	//Establece la configuración para la cual es válida la siguiente contribución
-	//DomainCodeUtilities.CURRENT_QACONFIG = DomainParams.CONF_DATA_UNENCRYPTED;
-	//DomainCodeUtilities.contribute(fsa, appName)
+		//Llama a las contribuciones para confidencialidad (encriptado, desencriptado)
+		DomainCodeUtilities.extendContribution(DomainParams.VP_CONFIDENTIALITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName)
+*///Fin JCifuentes
+
 /*Inicio Jcifuentes (comentado)		
 		//---------Web Generation-----------
 		fsa.generateFile(
@@ -161,6 +158,7 @@ class DomainCodeGenerator implements IGenerator {
 						InsertsScriptTemplate::generate(appName, authEntity))
 						
 		DomainCodeUtilities.runScript(appName)*/ //Fin jcifuentes
-		DomainCodeUtilities.end()
+		DomainCodeUtilities.endTemplate
+		DomainCodeUtilities.finish
 	}
 }

@@ -82,9 +82,13 @@ public class QAParser {
 	//Inicio Jcifuentes
 	/**
 	 * Return a List<String> with the selected features on the Quality Attributes
-	 * model.
+	 * model, the features of interest are given in the input parameter 
+	 * <code>groupedFeatures</code>.
+	 * For example, if the input contains {"_r_1_3_4","_r_1_3_6_7_8"}, the output
+	 * would be {"1","0"}, meaning that "_r_1_3_4" is selected and "_r_1_3_6_7_8"
+	 * is unselected
 	 * 
-	 * @return the list of selected features
+	 * @return the list of feature values: "1" when selected, "0" otherwise
 	 */
 	public List<String> getSelectedFeatures(List<String> groupedFeatures) {
 		List<String> selectedFeatures = new ArrayList();

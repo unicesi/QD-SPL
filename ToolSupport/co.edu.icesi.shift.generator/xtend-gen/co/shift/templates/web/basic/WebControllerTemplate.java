@@ -418,8 +418,6 @@ public class WebControllerTemplate {
     _builder.append("\t");
     _builder.append("}");
     _builder.newLine();
-    _builder.append("\t");
-    _builder.newLine();
     {
       boolean _isMaster = DomainCodeUtilities.isMaster(be);
       if (_isMaster) {
@@ -1490,7 +1488,6 @@ public class WebControllerTemplate {
                 _builder.append(pp, "\t\t");
                 _builder.append("().removeAllItems();");
                 _builder.newLineIfNotEmpty();
-                _builder.append("\t\t");
                 _builder.newLine();
                 _builder.append("\t");
                 _builder.append("\t");

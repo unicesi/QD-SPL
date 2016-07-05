@@ -2,12 +2,6 @@ package co.shift.generators.domain;
 
 @SuppressWarnings("all")
 public class DomainParams {
-  public static String GENERATION_DIR = "";
-  
-  public static String SRC_DIR = "";
-  
-  public final static String selectedQAsConfig = "1,0,0,0;1,0;1,1";
-  
   public final static String QA_ROOT = "_r";
   
   public final static String VP_TIME_EXEC = "_r_1";
@@ -52,21 +46,11 @@ public class DomainParams {
   
   public final static String CONF_AUTHENTIC_LOCKOUT = "108";
   
-  public final static String TPL_ROOT = "1";
+  public final static String SECT_IMPORTS = "Imports";
   
-  public final static String SECTION_BINTERFACE = "1";
+  public final static String SECT_ATTRIBUTES = "Attributes";
   
-  public final static String SECTION_BIMPL = "2";
+  public final static String SECT_METHODS = "Methods";
   
-  public final static String SECTION_WEB_IMPL = "3";
-  
-  public final static String SECTION_WEB_ATTR = "4";
-  
-  public final static String SECTION_WEB_IMPORT = "5";
-  
-  public final static String SECTION_BIMPORT = "6";
-  
-  public final static String SECTION_BATTR = "7";
-  
-  public final static String SECTION_GENERATE = "8";
+  public final static String SECT_GENERATE = "Generate";
 }

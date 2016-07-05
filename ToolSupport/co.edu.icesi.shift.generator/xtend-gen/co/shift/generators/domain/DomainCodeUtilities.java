@@ -1,7 +1,6 @@
 package co.shift.generators.domain;
 
 import co.shift.contributors.Contribution;
-import co.shift.generators.domain.DomainCodeSetup;
 import co.shift.qualiyatributes.QAParser;
 import com.google.common.base.Objects;
 import com.google.inject.Injector;
@@ -37,9 +36,11 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -92,9 +93,9 @@ public class DomainCodeUtilities {
   
   public static Injector injector;
   
-  public static String CURRENT_TEMPLATE = "";
+  public static Deque<String> curTemplate;
   
-  public static String CURRENT_SECTION = "";
+  public static Deque<String> curSection;
   
   private static List<String> featureCodes;
   
@@ -213,21 +214,8 @@ public class DomainCodeUtilities {
     return null;
   }
   
-  public static Connection GetConnection() {
-    try {
-      Connection _xblockexpression = null;
-      {
-        Class.forName("com.mysql.jdbc.Driver");
-        _xblockexpression = DriverManager.getConnection("jdbc:mysql://localhost:3306/ReferenceModel", "root", "root");
-      }
-      return _xblockexpression;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  public static List<String> init() {
-    List<String> _xblockexpression = null;
+  public static Deque<String> init() {
+    Deque<String> _xblockexpression = null;
     {
       final QAParser qas = new QAParser();
       HashMap<String, Contribution> _parseSelectedFeatures = qas.parseSelectedFeatures();
@@ -242,18 +230,60 @@ public class DomainCodeUtilities {
       DomainCodeUtilities.manyToMany = _newArrayList;
       Connection _GetConnection = DomainCodeUtilities.GetConnection();
       DomainCodeUtilities.connection = _GetConnection;
-      DomainCodeSetup _domainCodeSetup = new DomainCodeSetup();
-      Injector _createInjectorAndDoEMFRegistration = _domainCodeSetup.createInjectorAndDoEMFRegistration();
-      DomainCodeUtilities.injector = _createInjectorAndDoEMFRegistration;
       ArrayList<String> _featureCodesFromDB = DomainCodeUtilities.getFeatureCodesFromDB();
       DomainCodeUtilities.featureCodes = _featureCodesFromDB;
       List<String> _selectedFeatures = qas.getSelectedFeatures(DomainCodeUtilities.featureCodes);
-      _xblockexpression = DomainCodeUtilities.featureValues = _selectedFeatures;
+      DomainCodeUtilities.featureValues = _selectedFeatures;
+      LinkedList<String> _newLinkedList = CollectionLiterals.<String>newLinkedList();
+      DomainCodeUtilities.curTemplate = _newLinkedList;
+      LinkedList<String> _newLinkedList_1 = CollectionLiterals.<String>newLinkedList();
+      _xblockexpression = DomainCodeUtilities.curSection = _newLinkedList_1;
     }
     return _xblockexpression;
   }
   
-  public static void end() {
+  public static String beginTemplate(final String template) {
+    DomainCodeUtilities.curTemplate.push(template);
+    return "";
+  }
+  
+  public static String endTemplate() {
+    DomainCodeUtilities.curTemplate.pop();
+    return "";
+  }
+  
+  public static String beginSection(final String section) {
+    DomainCodeUtilities.curSection.push(section);
+    return "";
+  }
+  
+  public static String endSection() {
+    DomainCodeUtilities.curSection.pop();
+    return "";
+  }
+  
+  public static String getCurTemplate() {
+    return DomainCodeUtilities.curTemplate.getFirst();
+  }
+  
+  public static String getCurSection() {
+    return DomainCodeUtilities.curSection.getFirst();
+  }
+  
+  public static Connection GetConnection() {
+    try {
+      Connection _xblockexpression = null;
+      {
+        Class.forName("com.mysql.jdbc.Driver");
+        _xblockexpression = DriverManager.getConnection("jdbc:mysql://localhost:3306/ReferenceModel", "root", "root");
+      }
+      return _xblockexpression;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  public static void finish() {
     try {
       DomainCodeUtilities.connection.close();
     } catch (Throwable _e) {
@@ -287,7 +317,9 @@ public class DomainCodeUtilities {
    * '_r_1_3_4' for NORMAL_TE, and so on.
    * 
    * @return List<String> with the feature codes
+   * @deprecated no longer needed
    */
+  @Deprecated
   public static boolean isContributionRequired(final String qaConfigArchitecture) {
     try {
       Object[] _array = DomainCodeUtilities.featureValues.toArray();
@@ -300,8 +332,10 @@ public class DomainCodeUtilities {
       ResultSet rs = s.executeQuery((((("select 1 from dual where \'" + stringSelectedFeatures) + "\'\n\t\t\t\t\t\t\t\tlike (select group_concat(selected separator \',\') selected\n\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIGURATION_X_VARIANT\n\t\t\t\t\t\t\t\twhere configuration_id = ") + qaConfigArchitecture) + ")"));
       boolean _next = rs.next();
       if (_next) {
+        System.err.println((("la configuracion " + qaConfigArchitecture) + " SI contribuye a la config. de usuario actual"));
         return true;
       }
+      System.err.println((("la configuracion " + qaConfigArchitecture) + " NO contribuye a la config. de usuario actual"));
       return false;
     } catch (Throwable _e) {
       throw Exceptions.sneakyThrow(_e);
@@ -309,26 +343,102 @@ public class DomainCodeUtilities {
   }
   
   /**
-   * Execute the architecture fragments found in the BD given the architecture config,
-   * the global template and section
+   * Determines the contribution for the current template and section.
+   * The contribution can be a new file generation or
+   * a string fragment of code that will be placed on the current template and
+   * section.
+   * If the current user configuration does not correspond with any architect config
+   * on the database, no operation is done
    */
-  public static String executeArchitectureFragments(final String qaConfigArchitecture, final int sequence, final Object... data) {
+  public static String contribute2Template(final int sequence, final Object... data) {
+    try {
+      String rules = "";
+      Object[] _array = DomainCodeUtilities.featureValues.toArray();
+      String _string = ((List<Object>)Conversions.doWrapArray(_array)).toString();
+      String _replace = _string.replace(" ", "");
+      String _replace_1 = _replace.replace("[", "");
+      String stringSelectedFeatures = _replace_1.replace("]", "");
+      System.err.println(("selectedFeatures: " + stringSelectedFeatures));
+      Statement s = DomainCodeUtilities.connection.createStatement();
+      String _curTemplate = DomainCodeUtilities.getCurTemplate();
+      String _plus = ((("select A.FULL_CLASS_NAME, A.METHOD_NAME\n\t\t\t\t\t\t\tfrom ReferenceModel.TEMPL_SECT_CONFIG A\n\t\t\t\t\t\t\twhere A.SEQUENCE =" + Integer.valueOf(sequence)) + "\n\t\t\t\t\t\t\tand A.TEMPLATE = \'") + _curTemplate);
+      String _plus_1 = (_plus + "\'\n\t\t\t\t\t\t\tand A.SECTION = \'");
+      String _curSection = DomainCodeUtilities.getCurSection();
+      String _plus_2 = (_plus_1 + _curSection);
+      String _plus_3 = (_plus_2 + "\'\n\t\t\t\t\t\t\tand A.CONFIGURATION in (\n\t\t\t\t\t\t\t\tselect CV.CONFIGURATION\n\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIGURATION_X_VARIANT CV\n\t\t\t\t\t\t\t\tgroup by CV.CONFIGURATION_ID\n\t\t\t\t\t\t\t\thaving \'");
+      String _plus_4 = (_plus_3 + stringSelectedFeatures);
+      String _plus_5 = (_plus_4 + "\'\tlike \n\t\t\t\t\t\t\t\t\t\t\t\tgroup_concat(selected separator \',\') \n\t\t\t\t\t\t\t\t)\n\t\t\t\t\t\t\tand A.CONFIGURATION not in (\n\t\t\t\t\t\t\t\tselect CONFIGURATION_B\n\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIG_IMPACT\n\t\t\t\t\t\t\t\twhere impact_type = \'EXCLUDE\')");
+      ResultSet rs = s.executeQuery(_plus_5);
+      try {
+        while (rs.next()) {
+          {
+            String _string_1 = rs.getString(1);
+            final Class<?> cls = Class.forName(_string_1);
+            String _string_2 = rs.getString(1);
+            String _plus_6 = ("Clase " + _string_2);
+            System.err.println(_plus_6);
+            final Object obj = cls.newInstance();
+            String _string_3 = rs.getString(2);
+            String _plus_7 = ("Metodo " + _string_3);
+            System.err.println(_plus_7);
+            String _string_4 = rs.getString(2);
+            final Method met = cls.getDeclaredMethod(_string_4, Class.forName("[Ljava.lang.Object;"));
+            Object[] datas = new Object[1];
+            datas[0] = data;
+            Object result = met.invoke(obj, datas);
+            boolean _notEquals = (!Objects.equal(result, null));
+            if (_notEquals) {
+              String _rules = rules;
+              String _string_5 = result.toString();
+              rules = (_rules + _string_5);
+            }
+          }
+        }
+      } catch (final Throwable _t) {
+        if (_t instanceof InvocationTargetException) {
+          final InvocationTargetException x = (InvocationTargetException)_t;
+          Throwable _cause = x.getCause();
+          String _message = _cause.getMessage();
+          String _plus_6 = ("Error invocando al metodo: " + _message);
+          System.err.println(_plus_6);
+          return "";
+        } else {
+          throw Exceptions.sneakyThrow(_t);
+        }
+      }
+      return rules;
+    } catch (Throwable _e) {
+      throw Exceptions.sneakyThrow(_e);
+    }
+  }
+  
+  /**
+   * Execute the architecture fragments found in the BD given the architecture config,
+   * and the global section. The architecture config determines the contributor class
+   * and the section determines the method to execute.
+   * @deprecated no longer needed
+   */
+  @Deprecated
+  public static String execArchitectureFragments(final String qaConfigArchitecture, final int sequence, final Object... data) {
     try {
       String rules = "";
       Statement s = DomainCodeUtilities.connection.createStatement();
-      ResultSet rs = s.executeQuery((((((((("select B.FULL_CLASS_NAME, B.METHOD_NAME\n\t\t\t\t\t\t\tfrom ReferenceModel.TMPLT_X_CONF_X_FRAGM A, ReferenceModel.FRAGMENT B\n\t\t\t\t\t\t\twhere A.SEQUENCE =" + Integer.valueOf(sequence)) + "\n\t\t\t\t\t\t\tand A.TEMPLATE = ") + DomainCodeUtilities.CURRENT_TEMPLATE) + "\n\t\t\t\t\t\t\tand A.SECTION = ") + DomainCodeUtilities.CURRENT_SECTION) + "\n\t\t\t\t\t\t\tand A.CONFIGURATION_ID = ") + qaConfigArchitecture) + "\n\t\t\t\t\t\t\tand A.FRAGMENT_ID = B.FRAGMENT_ID"));
+      String _curSection = DomainCodeUtilities.getCurSection();
+      String _plus = ((((("SELECT a.FULL_CLASS_NAME, b.METHOD_NAME \n\t\t\t\t\t\t\t\t FROM ReferenceModel.CONFIGURATION a,\n\t\t\t\t\t\t\t\t \t ReferenceModel.SECTION b\n\t\t\t\t\t\t\t\t WHERE a.CONFIGURATION_ID = " + qaConfigArchitecture) + "\n\t\t\t\t\t\t\t\t AND b.SEQUENCE = ") + Integer.valueOf(sequence)) + "\n\t\t\t\t\t\t\t\t AND b.SECTION_ID = \'") + _curSection);
+      String _plus_1 = (_plus + "\'");
+      ResultSet rs = s.executeQuery(_plus_1);
       try {
         while (rs.next()) {
           {
             String _string = rs.getString(1);
             final Class<?> cls = Class.forName(_string);
             String _string_1 = rs.getString(1);
-            String _plus = ("Clase " + _string_1);
-            System.err.println(_plus);
+            String _plus_2 = ("Clase " + _string_1);
+            System.err.println(_plus_2);
             final Object obj = cls.newInstance();
             String _string_2 = rs.getString(2);
-            String _plus_1 = ("Metodo " + _string_2);
-            System.err.println(_plus_1);
+            String _plus_3 = ("Metodo " + _string_2);
+            System.err.println(_plus_3);
             String _string_3 = rs.getString(2);
             final Method met = cls.getDeclaredMethod(_string_3, Class.forName("[Ljava.lang.Object;"));
             Object[] datas = new Object[1];
@@ -347,8 +457,8 @@ public class DomainCodeUtilities {
           final InvocationTargetException x = (InvocationTargetException)_t;
           Throwable _cause = x.getCause();
           String _message = _cause.getMessage();
-          String _plus = ("Error invocando al metodo: " + _message);
-          System.err.println(_plus);
+          String _plus_2 = ("Error invocando al metodo: " + _message);
+          System.err.println(_plus_2);
           return "";
         } else {
           throw Exceptions.sneakyThrow(_t);
@@ -367,8 +477,10 @@ public class DomainCodeUtilities {
    * section.
    * If the current user configuration does not correspond with the architect config
    * no operation is done
+   * @deprecated use {@link #contribute2Template} instead
    */
-  public static String contribute(final String qaConfigArchitecture, final int sequence, final Object... data) {
+  @Deprecated
+  public static String contributeOld(final String qaConfigArchitecture, final int sequence, final Object... data) {
     String _xblockexpression = null;
     {
       boolean _isContributionRequired = DomainCodeUtilities.isContributionRequired(qaConfigArchitecture);
@@ -376,13 +488,13 @@ public class DomainCodeUtilities {
       if (_not) {
         return "";
       }
-      _xblockexpression = DomainCodeUtilities.executeArchitectureFragments(qaConfigArchitecture, sequence, data);
+      _xblockexpression = DomainCodeUtilities.execArchitectureFragments(qaConfigArchitecture, sequence, data);
     }
     return _xblockexpression;
   }
   
   /**
-   * @deprecated use {@link #contribute} instead
+   * @deprecated use {@link #contribute2Template} instead
    */
   @Deprecated
   public static String extendContribution(final String id, final String phase, final Object... data) {

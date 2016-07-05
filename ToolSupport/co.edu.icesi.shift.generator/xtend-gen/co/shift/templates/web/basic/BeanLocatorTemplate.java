@@ -77,7 +77,6 @@ public class BeanLocatorTemplate {
     _builder.newLine();
     _builder.append("public class BeanLocator {");
     _builder.newLine();
-    _builder.append("\t");
     _builder.newLine();
     _builder.append("\t");
     _builder.append("private GlobalJNDIName globalJNDIName;");

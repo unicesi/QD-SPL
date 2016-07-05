@@ -1532,7 +1532,6 @@ public class FormTemplate {
             _builder.append(aL1, "\t\t");
             _builder.append(".setHeight(\"150px\");");
             _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
             _builder.newLine();
             _builder.append("\t");
             _builder.append("\t");
@@ -1601,7 +1600,6 @@ public class FormTemplate {
             _builder.append(_firstUpper_85, "\t\t");
             _builder.append("1, \"top:22.0px;left:7.0px;\");");
             _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
             _builder.newLine();
             _builder.append("\t");
             _builder.append("\t");
@@ -1670,7 +1668,6 @@ public class FormTemplate {
             _builder.append(_firstUpper_94, "\t\t");
             _builder.append("2, \"top:61.0px;left:7.0px;\");");
             _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
             _builder.newLine();
             _builder.append("\t");
             _builder.append("\t");
@@ -1733,7 +1730,6 @@ public class FormTemplate {
             _builder.append(_firstUpper_102, "\t\t");
             _builder.append(", \"top:93.0px;left:24.0px;\");");
             _builder.newLineIfNotEmpty();
-            _builder.append("\t\t");
             _builder.newLine();
             _builder.append("\t");
             _builder.append("\t");

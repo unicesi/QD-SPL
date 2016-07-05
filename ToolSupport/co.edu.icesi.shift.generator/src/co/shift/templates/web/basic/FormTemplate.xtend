@@ -418,7 +418,7 @@ class FormTemplate {
 				absoluteLayout_«aL1».setImmediate(false);
 				absoluteLayout_«aL1».setWidth("150px");
 				absoluteLayout_«aL1».setHeight("150px");
-		
+
 				// textField«ass.name.toFirstUpper»1
 				textField«ass.name.toFirstUpper»1 = new TextField();
 				textField«ass.name.toFirstUpper»1.setCaption("«ass.name.toFirstUpper» «DomainCodeUtilities.getID(relBe).name.toFirstUpper»");
@@ -426,7 +426,7 @@ class FormTemplate {
 				textField«ass.name.toFirstUpper»1.setWidth("-1px");
 				textField«ass.name.toFirstUpper»1.setHeight("-1px");
 				absoluteLayout_«aL1».addComponent(textField«ass.name.toFirstUpper»1, "top:22.0px;left:7.0px;");
-		
+
 				// textField«ass.name.toFirstUpper»2
 				textField«ass.name.toFirstUpper»2 = new TextField();
 				textField«ass.name.toFirstUpper»2.setCaption("«ass.name.toFirstUpper» «DomainCodeUtilities.getSecondAttribute(relBe).name.toFirstUpper»");
@@ -434,7 +434,7 @@ class FormTemplate {
 				textField«ass.name.toFirstUpper»2.setWidth("-1px");
 				textField«ass.name.toFirstUpper»2.setHeight("-1px");
 				absoluteLayout_«aL1».addComponent(textField«ass.name.toFirstUpper»2, "top:61.0px;left:7.0px;");
-		
+
 				// button«ass.name.toFirstUpper»
 				button«ass.name.toFirstUpper» = new Button();
 				button«ass.name.toFirstUpper».setCaption("Set «ass.name.toFirstUpper»");
@@ -442,7 +442,7 @@ class FormTemplate {
 				button«ass.name.toFirstUpper».setWidth("-1px");
 				button«ass.name.toFirstUpper».setHeight("-1px");
 				absoluteLayout_«aL1».addComponent(button«ass.name.toFirstUpper», "top:93.0px;left:24.0px;");
-		
+
 				return absoluteLayout_«aL1++»;
 			}
 			«ENDIF»

@@ -1,67 +1,56 @@
 package co.shift.generators.domain
 
-import java.util.HashMap
 import co.shift.contributors.Contribution
-import java.util.List
-import domainmetamodel.BusinessEntity
-import domainmetamodel.Multiple
-import java.util.ArrayList
+import co.shift.qualiyatributes.QAParser
+import com.google.inject.Injector
 import domainmetamodel.Association
-import domainmetamodel.Simple
 import domainmetamodel.Attribute
 import domainmetamodel.Business
-import co.shift.qualiyatributes.QAParser
-import domainmetamodel.DeleteElement
+import domainmetamodel.BusinessEntity
 import domainmetamodel.Contracts
-import java.util.HashSet
+import domainmetamodel.DeleteElement
+import domainmetamodel.Multiple
+import domainmetamodel.Simple
+import java.io.BufferedReader
 import java.io.BufferedWriter
-import java.io.FileWriter
 import java.io.File
-import javax.xml.parsers.DocumentBuilderFactory
-import javax.xml.parsers.DocumentBuilder
 import java.io.FileInputStream
-import org.w3c.dom.Document
-import org.w3c.dom.Element
-import org.w3c.dom.NodeList
-import org.w3c.dom.Node
-//import org.w3c.dom.Attr
-import javax.xml.transform.Source
-import javax.xml.transform.dom.DOMSource
-import javax.xml.transform.Result
-import javax.xml.transform.stream.StreamResult
 import java.io.FileOutputStream
-import javax.xml.transform.TransformerFactory
-import javax.xml.transform.Transformer
-import java.nio.file.Files
-import java.nio.file.Path
-import java.nio.file.Paths
-//import java.nio.file.StandardCopyOption
-import java.nio.file.SimpleFileVisitor
-import java.nio.file.FileVisitResult
-import java.nio.file.attribute.BasicFileAttributes
+import java.io.FileReader
+import java.io.FileWriter
 import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
-import java.util.TreeSet
-import java.io.BufferedReader
-import java.io.FileReader
-//import java.nio.file.CopyOption
-//import org.eclipse.core.resources.IWorkspace
-import org.eclipse.core.resources.ResourcesPlugin
-import co.shift.contributors.authenticity.Lockout
-import co.shift.contributors.timeexecution.FastAsyncTE
-import co.shift.contributors.timeexecution.MediumTE
-import co.shift.contributors.confidentiality.UnencConf
-import co.shift.contributors.timeexecution.NormalTE
-import co.shift.contributors.authenticity.Authenticator
-import co.shift.contributors.timeexecution.FastSyncTE
-import co.shift.contributors.confidentiality.EncConf
+import java.lang.reflect.InvocationTargetException
+import java.nio.file.FileVisitResult
+import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import java.nio.file.SimpleFileVisitor
+import java.nio.file.attribute.BasicFileAttributes
 import java.sql.Connection
 import java.sql.DriverManager
-import com.mysql.jdbc.Driver
-import com.google.inject.Injector
-import java.lang.reflect.Array
-import java.lang.reflect.InvocationTargetException
+import java.util.ArrayList
+import java.util.Deque
+import java.util.HashMap
+import java.util.HashSet
+import java.util.List
+import java.util.TreeSet
+import javax.xml.parsers.DocumentBuilder
+import javax.xml.parsers.DocumentBuilderFactory
+import javax.xml.transform.Result
+import javax.xml.transform.Source
+import javax.xml.transform.Transformer
+import javax.xml.transform.TransformerFactory
+import javax.xml.transform.dom.DOMSource
+import javax.xml.transform.stream.StreamResult
+import org.eclipse.core.resources.ResourcesPlugin
+import org.w3c.dom.Document
+import org.w3c.dom.Element
+import org.w3c.dom.Node
+import org.w3c.dom.NodeList
+
+import static co.shift.generators.domain.DomainCodeUtilities.*
 
 //import co.shift.generators.domain.DomainCodeSetup
 
@@ -90,8 +79,11 @@ class DomainCodeUtilities {
 	//public val final static selectedQAsConfig = "1,0,0,0,1,0,1,1";
 	public var static Connection connection;
 	public var static Injector injector;
-	public var static CURRENT_TEMPLATE = "";
-	public var static CURRENT_SECTION = "";
+	public var static Deque<String> curTemplate
+	public var static Deque<String> curSection
+	
+	//private var static CURRENT_TEMPLATE = "";
+	//private var static CURRENT_SECTION = "";
 //	public var static CURRENT_QACONFIG = "";
 	
 	private var static List<String> featureCodes;
@@ -180,14 +172,6 @@ class DomainCodeUtilities {
 		return null
 	}
 
-	//Jcifuentes: Obtiene una conexión MySQL
-	def static Connection GetConnection(){
-		Class::forName("com.mysql.jdbc.Driver")
-		//DriverManager.registerDriver(new com.mysql.jdbc.Driver())
-		DriverManager.getConnection("jdbc:mysql://localhost:3306/ReferenceModel", "root","root")
-	}
-	//Fin Jcifuentes
-
 	def static init() {
 		val QAParser qas = new QAParser()
 		selectedContributors = qas.parseSelectedFeatures
@@ -197,16 +181,55 @@ class DomainCodeUtilities {
 		manyToMany = newArrayList()
 		//Inicio Jcifuentes
 		connection = GetConnection()
-		injector = new DomainCodeSetup().createInjectorAndDoEMFRegistration();
+//		injector = new DomainCodeSetup().createInjectorAndDoEMFRegistration();
 		//Get the feature codes from the database
 		featureCodes = getFeatureCodesFromDB()
 		//With the feature codes get its values from XML QA config
+		//This is necessary because the xml has another features that are not
+		//important for us, so we just get the values of our features of interest
 		featureValues = qas.getSelectedFeatures(featureCodes)
-		//Fin jcifuentes
+		curTemplate = newLinkedList()
+		curSection = newLinkedList()
+		//Fin jcifuentes		
 	}
 
 	//Inicio Jcifuentes
-	def static end() {
+    def static beginTemplate(String template){
+    	curTemplate.push(template)
+    	return ""
+    }
+
+    def static endTemplate(){
+    	curTemplate.pop()
+    	return ""
+    }
+
+    def static beginSection(String section){
+    	curSection.push(section)
+    	return ""
+    }
+
+    def static endSection(){
+    	curSection.pop()
+    	return ""
+    }
+    
+    def static getCurTemplate(){
+    	curTemplate.first
+    }
+    def static getCurSection(){
+    	curSection.first
+    }
+
+	//Obtiene una conexión MySQL
+	def static Connection GetConnection(){
+		Class::forName("com.mysql.jdbc.Driver")
+		//DriverManager.registerDriver(new com.mysql.jdbc.Driver())
+		DriverManager.getConnection("jdbc:mysql://localhost:3306/ReferenceModel", "root","root")
+	}
+
+	//Instrucciones finales para finalizar la generación
+	def static finish() {
 		connection.close()
 	}
 
@@ -234,7 +257,9 @@ class DomainCodeUtilities {
      * '_r_1_3_4' for NORMAL_TE, and so on.
      * 
      * @return List<String> with the feature codes
+	 * @deprecated no longer needed
      */
+    @Deprecated
     def static isContributionRequired(String qaConfigArchitecture){
  		//Obtiene una cadena con la configuracion del usuario
  		var stringSelectedFeatures = featureValues.toArray.toString.replace(" ", "").replace("[","").replace("]","");
@@ -246,24 +271,46 @@ class DomainCodeUtilities {
 								from ReferenceModel.CONFIGURATION_X_VARIANT
 								where configuration_id = "+qaConfigArchitecture+")")
  		//Si la configuracion no corresponde con la del usuario, no hay contribución 
- 		if(rs.next()) return true
+ 		if(rs.next()){
+			System.err.println("la configuracion "+qaConfigArchitecture+" SI contribuye a la config. de usuario actual");
+	 		return true
+ 		}
+
+		System.err.println("la configuracion "+qaConfigArchitecture+" NO contribuye a la config. de usuario actual");
  		return false
     }
 
 	/**
-	 * Execute the architecture fragments found in the BD given the architecture config,
-	 * the global template and section 
+	 * Determines the contribution for the current template and section.
+	 * The contribution can be a new file generation or
+	 * a string fragment of code that will be placed on the current template and
+	 * section.
+	 * If the current user configuration does not correspond with any architect config
+	 * on the database, no operation is done
 	 */
- 	def static String executeArchitectureFragments(String qaConfigArchitecture, int sequence, Object... data) {
+ 	def static String contribute2Template(int sequence, Object... data) {
  		var rules = ""
+ 		//Obtiene una cadena con la configuracion del usuario
+ 		var stringSelectedFeatures = featureValues.toArray.toString.replace(" ", "").replace("[","").replace("]","");
+ 		System.err.println("selectedFeatures: "+stringSelectedFeatures);
+
  		var s = connection.createStatement()
- 		var rs = s.executeQuery("select B.FULL_CLASS_NAME, B.METHOD_NAME
-							from ReferenceModel.TMPLT_X_CONF_X_FRAGM A, ReferenceModel.FRAGMENT B
+ 		var rs = s.executeQuery("select A.FULL_CLASS_NAME, A.METHOD_NAME
+							from ReferenceModel.TEMPL_SECT_CONFIG A
 							where A.SEQUENCE ="+sequence+"
-							and A.TEMPLATE = "+CURRENT_TEMPLATE+"
-							and A.SECTION = "+CURRENT_SECTION+"
-							and A.CONFIGURATION_ID = "+qaConfigArchitecture+"
-							and A.FRAGMENT_ID = B.FRAGMENT_ID")
+							and A.TEMPLATE = '"+getCurTemplate()+"'
+							and A.SECTION = '"+getCurSection()+"'
+							and A.CONFIGURATION in (
+								select CV.CONFIGURATION
+								from ReferenceModel.CONFIGURATION_X_VARIANT CV
+								group by CV.CONFIGURATION_ID
+								having '"+stringSelectedFeatures+"'	like 
+												group_concat(selected separator ',') 
+								)
+							and A.CONFIGURATION not in (
+								select CONFIGURATION_B
+								from ReferenceModel.CONFIG_IMPACT
+								where impact_type = 'EXCLUDE')")
  		//Ejecuta cada fragmento encontrado
 		try{
 	 		while (rs.next()){
@@ -293,14 +340,60 @@ class DomainCodeUtilities {
  	}
 
 	/**
+	 * Execute the architecture fragments found in the BD given the architecture config,
+	 * and the global section. The architecture config determines the contributor class
+	 * and the section determines the method to execute.
+	 * @deprecated no longer needed
+	 */
+	@Deprecated
+ 	def static String execArchitectureFragments(String qaConfigArchitecture, int sequence, Object... data) {
+ 		var rules = ""
+ 		var s = connection.createStatement()
+ 		var rs = s.executeQuery("SELECT a.FULL_CLASS_NAME, b.METHOD_NAME 
+								 FROM ReferenceModel.CONFIGURATION a,
+								 	 ReferenceModel.SECTION b
+								 WHERE a.CONFIGURATION_ID = "+qaConfigArchitecture+"
+								 AND b.SEQUENCE = "+sequence+"
+								 AND b.SECTION_ID = '"+getCurSection()+"'")
+
+ 		//Ejecuta cada fragmento encontrado
+		try{
+	 		while (rs.next()){
+	 			//Obtiene el nombre de la clase
+			    val cls = Class.forName(rs.getString(1))
+				System.err.println("Clase "+rs.getString(1));
+			    val obj = cls.newInstance()
+			    //Obtiene el nombre del metodo
+				System.err.println("Metodo "+rs.getString(2));
+				
+				//Get the method and set the parameter types
+			    val met = cls.getDeclaredMethod(rs.getString(2), {Class.forName("[Ljava.lang.Object;")})
+				//Invokes the method passing the parameters (Object[] data)
+				var Object[] datas = newArrayOfSize(1)
+				datas.set(0, data)
+			    //var result = met.invoke(obj, {data})//why this doesn't work?
+			    var result = met.invoke(obj, datas)
+			    if(result != null)
+			    	rules += result.toString
+			}
+	    }
+	    catch(InvocationTargetException x){
+	    	System.err.println("Error invocando al metodo: "+x.cause.message)
+	    	return "" 	
+	    }
+	    return rules
+ 	}
+	/**
 	 * Determines the contribution for the current template and section, given an
 	 * architecture qa config. The contribution can be a new file generation or
 	 * a string fragment of code that will be placed on the current template and
 	 * section.
 	 * If the current user configuration does not correspond with the architect config
 	 * no operation is done
+	 * @deprecated use {@link #contribute2Template} instead
 	 */
- 	def static String contribute(String qaConfigArchitecture, int sequence, Object... data) {
+	@Deprecated
+ 	def static String contributeOld(String qaConfigArchitecture, int sequence, Object... data) {
  		//Valida si la configuración del usuario requiere de esta contribucion
  		//Para esto, se verifica si está cubierta por la conf. de arquitectura current
  		if(!isContributionRequired(qaConfigArchitecture))
@@ -308,12 +401,14 @@ class DomainCodeUtilities {
  		
  		//Con la secuencia, el template, la seccion y la configuracion de arquitectura
 		//Obtiene y ejecuta los fragmentos de arquitectura
-		executeArchitectureFragments(qaConfigArchitecture, sequence, data)
+		//El template y la sección han sido establecidos previamente al llamado
+		execArchitectureFragments(qaConfigArchitecture, sequence, data)
 	}
+	
 //Fin Jcifuentes
 
 	/**
-	 * @deprecated use {@link #contribute} instead
+	 * @deprecated use {@link #contribute2Template} instead
 	 */
 	@Deprecated
 	def static String extendContribution(String id, String phase, Object ... data) {
@@ -1216,4 +1311,5 @@ class DomainCodeUtilities {
 			readOne.close
 		}		
 	}
+	
 }

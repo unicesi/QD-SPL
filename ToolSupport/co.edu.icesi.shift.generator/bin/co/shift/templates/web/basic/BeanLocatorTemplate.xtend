@@ -37,7 +37,7 @@ class BeanLocatorTemplate {
 		 * @author Adam Bien, www.adam-bien.com
 		 */
 		public class BeanLocator {
-	
+
 			private GlobalJNDIName globalJNDIName;
 			
 			public BeanLocator(){
