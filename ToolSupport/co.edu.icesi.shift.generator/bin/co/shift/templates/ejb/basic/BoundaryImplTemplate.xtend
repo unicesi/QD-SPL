@@ -18,12 +18,16 @@ import domainmetamodel.Delete
 import org.eclipse.xtext.generator.IFileSystemAccess
 import co.shift.generators.domain.DomainCodeUtilities
 import domainmetamodel.Multiple
+import co.shift.generators.domain.DomainParams
 
 class BoundaryImplTemplate {
 	
 	static ArrayList<String> importTOs = new ArrayList;
+	private static String className = new Object(){}.class.enclosingClass.simpleName
 	
 	def static generate(BusinessEntity be, String packageName, List<Association> associations, IFileSystemAccess fsa) '''
+		««« Establece la plantilla actual para contribución.
+		«DomainCodeUtilities.beginTemplate(className)»
 		package co.shift.«packageName.toLowerCase()».«be.name.toLowerCase».boundary;
 		
 		import java.util.ArrayList;
@@ -53,16 +57,20 @@ class BoundaryImplTemplate {
 			«ENDIF»
 		«ENDFOR»
 		
-		«IF (DomainCodeUtilities.getDetailMultipleAssociations(be, associations) != null && !DomainCodeUtilities.hasZeroAssociations(be))»
-		«DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName, be.name)»
-		«ENDIF»
+««« Jcifuentes: Comentado
+«««		«IF (DomainCodeUtilities.getDetailMultipleAssociations(be, associations) != null && !DomainCodeUtilities.hasZeroAssociations(be))»
+«««		«DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName, be.name)»
+«««		«ENDIF»
 		
-		«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName)»
-		«var authContribution = DomainCodeUtilities.extendContribution("_r_2_11_15_17", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, be.name.toLowerCase+""+DomainCodeUtilities.getID(be).name.toFirstUpper, be)»
-					
-		«IF (be.isIsAuthenticable && authContribution != null && !authContribution.equals(""))»
-		«DomainCodeUtilities.extendContribution("_r_2_11_15_17", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName, be.name)»
-		«ENDIF»
+«««		«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName)»
+«««		«var authContribution = DomainCodeUtilities.extendContribution("_r_2_11_15_17", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, be.name.toLowerCase+""+DomainCodeUtilities.getID(be).name.toFirstUpper, be)»
+
+«««		«IF (be.isIsAuthenticable && authContribution != null && !authContribution.equals(""))»
+«««		«DomainCodeUtilities.extendContribution("_r_2_11_15_17", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName, be.name)»
+«««		«ENDIF»
+		«DomainCodeUtilities.beginSection(DomainParams.SECT_IMPORTS)»
+		«DomainCodeUtilities.contribute2Template(1, packageName, be.name, be)»
+		«DomainCodeUtilities.endSection»
 		
 		import co.shift.«packageName.toLowerCase()».«be.name.toLowerCase».entity.«be.name.toFirstUpper»;
 «««		«FOR association : DomainCodeUtilities.getDetailMultipleAssociations(be, associations)»
@@ -88,25 +96,32 @@ class BoundaryImplTemplate {
 			private I«be.name.toFirstUpper»DAO «be.name.toLowerCase»DAO;
 			«ENDIF»
 			
-			«IF (be.isIsAuthenticable && authContribution != null && !authContribution.equals(""))»
-			«DomainCodeUtilities.extendContribution("_r_2_11_15_17", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE)»
-			«ENDIF»
+««« Jcifuentes: Comentado
+«««			«IF (be.isIsAuthenticable && authContribution != null && !authContribution.equals(""))»
+«««			«DomainCodeUtilities.extendContribution("_r_2_11_15_17", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE)»
+«««			«ENDIF»
 			
-			«val attribute = DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE, be.name)»
-			«IF (attribute != null && !attribute.equals("") && (DomainCodeUtilities.getDetailMultipleAssociations(be, associations) != null && !DomainCodeUtilities.hasZeroAssociations(be)))»
-				«attribute»
-			«ENDIF»
-			«val attribute2 = DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE)»
-			«IF (attribute2 != null && !attribute2.equals(""))»
-				«attribute2»
+«««			«val attribute = DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE, be.name)»
+«««			«IF (attribute != null && !attribute.equals("") && (DomainCodeUtilities.getDetailMultipleAssociations(be, associations) != null && !DomainCodeUtilities.hasZeroAssociations(be)))»
+«««				«attribute»
+«««			«ENDIF»
+«««			«val attribute2 = DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE)»
+«««			«IF (attribute2 != null && !attribute2.equals(""))»
+«««				«attribute2»
 «««				«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, packageName, be)»
-			«ENDIF»
+«««			«ENDIF»
+		«DomainCodeUtilities.beginSection(DomainParams.SECT_ATTRIBUTES)»
+		«DomainCodeUtilities.contribute2Template(1, be.name, be)»
+		«DomainCodeUtilities.endSection»
 			
+		«DomainCodeUtilities.beginSection(DomainParams.SECT_METHODS)»
 			«FOR contract : be.contracts»
 «««				Create contract
 				«IF (contract instanceof Create)»
 					public boolean «(contract as Contracts).name»(«be.name»TO «be.name.toLowerCase()») throws Exception {
-					«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, contract, be, null, null, null, null, null, 0)»
+««« Jcifuentes: Comentado
+«««					«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, contract, be, null, null, null, null, null, 0)»
+					«DomainCodeUtilities.contribute2Template(2, contract, be, null, null, null, null, null, 0)»
 						«var id = DomainCodeUtilities.getID(be)»
 						«be.name.toFirstUpper» found«be.name.toFirstUpper» = em.find(«be.name.toFirstUpper».class, «be.name.toLowerCase».get«id.name.toFirstUpper»());
 						if (found«be.name.toFirstUpper» != null)
@@ -135,7 +150,9 @@ class BoundaryImplTemplate {
 				«««				Update contract
 				«IF (contract instanceof Update)»
 					public boolean «(contract as Contracts).name»(«be.name»TO «be.name.toLowerCase()») throws Exception {
-						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, contract, be, null, null, null, null, null, 0)»
+««« Jcifuentes: Comentado
+«««						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, contract, be, null, null, null, null, null, 0)»
+					«DomainCodeUtilities.contribute2Template(2, contract, be, null, null, null, null, null, 0)»
 						«var id = DomainCodeUtilities.getID(be)»
 						«be.name.toFirstUpper» found«be.name.toFirstUpper» = em.find(«be.name.toFirstUpper».class, «be.name.toLowerCase».get«id.name.toFirstUpper»());
 						if (found«be.name.toFirstUpper» == null)
@@ -157,7 +174,9 @@ class BoundaryImplTemplate {
 				«««				Delete contract
 				«IF (contract instanceof Delete)»
 					public boolean «(contract as Contracts).name»(«be.name»TO «be.name.toLowerCase()») throws Exception {
-						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, contract, be, null, null, null, null, null, 0)»
+««« Jcifuentes: Comentado
+«««						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, contract, be, null, null, null, null, null, 0)»
+					«DomainCodeUtilities.contribute2Template(2, contract, be, null, null, null, null, null, 0)»
 						«var id = DomainCodeUtilities.getID(be)»
 						«be.name.toFirstUpper» found«be.name.toFirstUpper» = em.find(«be.name.toFirstUpper».class, «be.name.toLowerCase».get«id.name.toFirstUpper»());
 						if (found«be.name.toFirstUpper» == null)
@@ -179,7 +198,9 @@ class BoundaryImplTemplate {
 				«ENDIF»
 «««				ListAll contract
 				«IF (contract instanceof ListAll)»
-					«DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, contract, be)»
+««« Jcifuentes: Comentado
+«««					«DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, contract, be)»
+					«DomainCodeUtilities.contribute2Template(1, contract, be)»
 				«ENDIF»
 «««				AddElement contract
 				«IF (contract instanceof AddElement)»
@@ -188,7 +209,9 @@ class BoundaryImplTemplate {
 					«val type = DomainCodeUtilities.getID(be).dataType.literal»
 					public boolean «(contract as ContractElements).name»(«relatedEntity.name»TO «relatedEntity.name.toLowerCase», «DomainCodeUtilities.getType(
 			type)» «be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper») throws Exception {
-						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, contract, be, relatedEntity, null, null, null, null, 0)»
+««« Jcifuentes: Comentado
+«««						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, contract, be, relatedEntity, null, null, null, null, 0)»
+					«DomainCodeUtilities.contribute2Template(2, contract, be, relatedEntity, null, null, null, null, 0)»
 						«be.name.toFirstUpper» «be.name.toLowerCase» = em.find(«be.name.toFirstUpper».class, «be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper»);
 						«be.name.toFirstUpper»«relatedEntity.name.toFirstUpper»PK pk = new «be.name.toFirstUpper»«relatedEntity.name.toFirstUpper»PK();
 						pk.set«be.name.toFirstUpper»«DomainCodeUtilities.getID(be).name.toFirstUpper»(«be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper»);
@@ -220,7 +243,9 @@ class BoundaryImplTemplate {
 					«val type = DomainCodeUtilities.getID(be).dataType.literal»
 					public boolean «(contract as ContractElements).name»(«relatedEntity.name»TO «relatedEntity.name.toLowerCase», «DomainCodeUtilities.getType(
 			type)» «be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper») throws Exception {
-						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, contract, be, relatedEntity, null, null, null, null, 0)»
+««« Jcifuentes: Comentado
+«««						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, contract, be, relatedEntity, null, null, null, null, 0)»
+					«DomainCodeUtilities.contribute2Template(2, contract, be, relatedEntity, null, null, null, null, 0)»
 						«be.name.toFirstUpper» «be.name.toLowerCase» = em.find(«be.name.toFirstUpper».class, «be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper»);
 
 						«be.name.toFirstUpper»«relatedEntity.name.toFirstUpper»PK pk = new «be.name.toFirstUpper»«relatedEntity.name.toFirstUpper»PK();
@@ -247,7 +272,9 @@ class BoundaryImplTemplate {
 					«val type = DomainCodeUtilities.getID(be).dataType.literal»
 					public boolean set«be.name.toFirstUpper»«association.name.toFirstUpper»(«relatedEntity.name»TO «association.name.
 			toLowerCase», «DomainCodeUtilities.getType(type)» «be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper») throws Exception {
-						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, relatedEntity, association.name, association, null, null, 0)»
+««« Jcifuentes: Comentado
+«««						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, relatedEntity, association.name, association, null, null, 0)»
+					«DomainCodeUtilities.contribute2Template(2, null, be, relatedEntity, association.name, association, null, null, 0)»
 						«be.name.toFirstUpper» «be.name.toLowerCase» = em.find(«be.name.toFirstUpper».class, «be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper»);
 						«be.name.toLowerCase».set«association.name.toFirstUpper»(«association.name.toLowerCase».get«DomainCodeUtilities.getID(relatedEntity).name.toFirstUpper»());
 
@@ -267,7 +294,9 @@ class BoundaryImplTemplate {
 				«val type = DomainCodeUtilities.getID(container).dataType.literal»
 				public «be.name»TO get«container.name.toFirstUpper»«association.name.toFirstUpper»(«DomainCodeUtilities.getType(type)» «container.name.
 			toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper») {
-					«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, null, container, null, null, 1, null, 0)»
+««« Jcifuentes: Comentado
+«««					«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, null, container, null, null, 1, null, 0)»
+					«DomainCodeUtilities.contribute2Template(2, null, null, container, null, null, 1, null, 0)»
 					return «be.name.toLowerCase»DAO.get«container.name.toFirstUpper»«association.name.toFirstUpper»(«container.name.
 						toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper»);
 				}
@@ -279,7 +308,9 @@ class BoundaryImplTemplate {
 				public List<«be.name.toFirstUpper»TO> get«be.name.toFirstUpper»From«container.name.toFirstUpper»(«DomainCodeUtilities.getType(type)» «container.name.
 			toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper») {
 				«IF !DomainCodeUtilities.hasZeroAssociations(be)»
-					«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, null, container, null, null, 1, null, 0)»
+««« Jcifuentes: Comentado
+«««					«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, null, container, null, null, 1, null, 0)»
+					«DomainCodeUtilities.contribute2Template(2, null, null, container, null, null, 1, null, 0)»
 					return «be.name.toLowerCase»DAO.get«be.name.toFirstUpper»From«container.name.toFirstUpper»(«container.name.
 						toLowerCase»«DomainCodeUtilities.getID(container).name.toFirstUpper»);
 				«ELSE»
@@ -291,7 +322,10 @@ class BoundaryImplTemplate {
 						List<«be.name.toFirstUpper»> found«be.name.toFirstUpper»s = query.getResultList();
 						for («be.name.toFirstUpper» «be.name.toLowerCase» : found«be.name.toFirstUpper»s) {
 							«be.name.toFirstUpper»TO to = new «be.name.toFirstUpper»TO();
-							«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, 1)»
+««« Jcifuentes: Comentado
+«««							«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, 1)»
+					«DomainCodeUtilities.contribute2Template(2, null, be, null, null, null, null, null, 1)»
+
 «««							to«be.name.toFirstUpper»s.add(«be.name.toLowerCase».toTO());
 							to«be.name.toFirstUpper»s.add(to);
 						}
@@ -306,11 +340,17 @@ class BoundaryImplTemplate {
 			«IF (be.isIsAuthenticable)»
 				«val type = DomainCodeUtilities.getID(be).dataType.literal»
 				public «be.name.toFirstUpper»TO authenticate(«DomainCodeUtilities.getType(type)» «be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper», String password) throws Exception {
-					«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, true, 0)»
+««« Jcifuentes: Comentado
+«««					«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, true, 0)»
+					«DomainCodeUtilities.contribute2Template(2, null, be, null, null, null, null, true, 0)»
+
+
 					«IF DomainCodeUtilities.isQASelected("_r_2_11_15_17")»
-					«authContribution»
+««« Jcifuentes: Comentado
+«««					«authContribution»
+					«DomainCodeUtilities.contribute2Template(3, be.name.toLowerCase+""+DomainCodeUtilities.getID(be).name.toFirstUpper, be)»
 «««			JCifuentes: Comentar porque es redundante (ya está siendo ejecutado en DomainCodeGenerator)
-					«DomainCodeUtilities.extendContribution("_r_2_11_15_17", DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, packageName, be)»
+«««					«DomainCodeUtilities.extendContribution("_r_2_11_15_17", DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, packageName, be)»
 «««			JCifuentes: Fin Comentar
 					«ELSE»
 					User found«be.name.toFirstUpper» = em.find(«be.name.toFirstUpper».class, «be.name.toLowerCase»«DomainCodeUtilities.getID(be).name.toFirstUpper»);
@@ -325,5 +365,7 @@ class BoundaryImplTemplate {
 				}
 			«ENDIF»
 		}
+		«DomainCodeUtilities.endSection»
+		«DomainCodeUtilities.endTemplate»
 	'''
 }

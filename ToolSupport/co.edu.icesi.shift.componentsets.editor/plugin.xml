@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.ui.newWizards">
+      <!-- @generated ComponentSets -->
+      <category
+            id="org.eclipse.emf.ecore.Wizard.category.ID"
+            name="%_UI_Wizard_category"/>
+      <wizard
+            id="componentsetsmodel.presentation.ComponentsetsmodelModelWizardID"
+            name="%_UI_ComponentsetsmodelModelWizard_label"
+            class="componentsetsmodel.presentation.ComponentsetsmodelModelWizard"
+            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            icon="icons/full/obj16/ComponentsetsmodelModelFile.gif">
+         <description>%_UI_ComponentsetsmodelModelWizard_description</description>
+         <selection class="org.eclipse.core.resources.IResource"/>
+      </wizard>
+   </extension>
+
+   <extension point="org.eclipse.ui.editors">
+      <!-- @generated ComponentSets -->
+      <editor
+            id="componentsetsmodel.presentation.ComponentsetsmodelEditorID"
+            name="%_UI_ComponentsetsmodelEditor_label"
+            icon="icons/full/obj16/ComponentsetsmodelModelFile.gif"
+            extensions="componentsetsmodel"
+            class="componentsetsmodel.presentation.ComponentsetsmodelEditor"
+            contributorClass="componentsetsmodel.presentation.ComponentsetsmodelActionBarContributor">
+      </editor>
+   </extension>
+
+</plugin>

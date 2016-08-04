@@ -23,7 +23,7 @@ public class MediumTE implements Contribution {
 		Contracts contract = (Contracts) data[0];
 		BusinessEntity be = (BusinessEntity) data[1];
 		return "public List<" + be.getName() + "TO> "
-				+ contract.getName() + "();";
+				+ contract.getName() + "();\n";
 	}
 
 	@Override
@@ -32,11 +32,11 @@ public class MediumTE implements Contribution {
 		BusinessEntity be = (BusinessEntity) data[1];
 		return "public List<" + be.getName() + "TO> "
 				+ contract.getName() + "() {" + "\n" + 
-				"try {" + "\n" + 
-				"return basicFLR."+contract.getName()+"();" + "\n" + 
-				"} catch (Exception e) {" + "\n" +  
-				"return null;" + "\n" +  
-				"}" + "\n" + 
+				"	try {" + "\n" + 
+				"		return basicFLR."+contract.getName()+"();" + "\n" + 
+				"	} catch (Exception e) {" + "\n" +  
+				"		return null;" + "\n" +  
+				"	}" + "\n" + 
 				"}";
 	}
 
@@ -86,14 +86,14 @@ public class MediumTE implements Contribution {
 	public String contributeToBusinessImport(Object... data) {
 		String packageName = (String) data[0];
 		String beName = (String) data[1];
-		return "import co.shift."+packageName.toLowerCase()+"."+beName.toLowerCase()+".control.I"+Utilities.toFisrtUpper(beName)+"BasicFLR;";
+		return "import co.shift."+packageName.toLowerCase()+"."+beName.toLowerCase()+".control.I"+Utilities.toFisrtUpper(beName)+"BasicFLR;\n";
 	}
 
 	@Override
 	public String contributeToBusinessAtribute(Object... data) {
 		String beName = (String) data[0];
 		return	"@EJB" + "\n" + 
-				"private I"+Utilities.toFisrtUpper(beName)+"BasicFLR basicFLR;";
+				"private I"+Utilities.toFisrtUpper(beName)+"BasicFLR basicFLR;\n";
 	}
 
 	@Override

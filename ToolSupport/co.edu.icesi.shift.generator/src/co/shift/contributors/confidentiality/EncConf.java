@@ -234,13 +234,13 @@ public class EncConf implements Contribution {
 	@Override
 	public String contributeToWebImport(Object... data) {
 		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 
 	@Override
 	public String contributeToWebAttribute(Object... data) {
 		// TODO Auto-generated method stub
-		return null;
+		return "";
 	}
 
 }

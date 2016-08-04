@@ -23,6 +23,8 @@ public class Lockout implements Contribution {
 		String id = (String) data[0];
 		BusinessEntity be = (BusinessEntity) data[1];
 		String txt = "";
+		//JCifuentes: Se incluye este IF para que esta clase sea responsable de esta validacion
+		if(!be.isIsAuthenticable()) return txt;
 		if (DomainCodeUtilities.isQASelected("_r_2_10_12_13")){
 			txt = Utilities.toFisrtUpper(be.getName())+"TO to = lockOut.authenticate(e" + Utilities.toFisrtUpper(DomainCodeUtilities.getID(be).getName()) + ", ePassword);" + "\n" +
 				"if (to != null) {"  + "\n" +
@@ -39,13 +41,21 @@ public class Lockout implements Contribution {
 	public String contributeToBusinessImport(Object... data) {
 		String packageName = (String) data[0];
 		String beName = (String) data[1];
+		BusinessEntity be = (BusinessEntity) data[2];
+		//JCifuentes: Se incluye este IF para que esta clase sea responsable de esta validacion
+		if(!be.isIsAuthenticable()) return "";
 		return "import co.shift." + packageName.toLowerCase() + "."
-				+ beName.toLowerCase() + ".control.LockoutManager;";
+				+ beName.toLowerCase() + ".control.LockoutManager;\n";
 	}
 
+	//Cuando se invoca desde BoundaryImplTemplate, se envia "be" como segundo parametro
+	//porque para algunos contribuyentes se envia "be.name" como primero
 	@Override
 	public String contributeToBusinessAtribute(Object... data) {
-		return "@EJB" + "\n" + "private LockoutManager lockOut;";
+		BusinessEntity be = (BusinessEntity) data[1];
+		//JCifuentes: Se incluye este IF para que esta clase sea responsable de esta validacion
+		if(!be.isIsAuthenticable()) return "";
+		return "@EJB" + "\n" + "private LockoutManager lockOut;\n";
 	}
 
 	@Override
@@ -59,6 +69,9 @@ public class Lockout implements Contribution {
 		IFileSystemAccess fsa = (IFileSystemAccess) data[0];
 		String appName = (String) data[1];
 		BusinessEntity be = (BusinessEntity) data[2];
+		//JCifuentes: Se incluye este IF para que esta clase sea responsable de esta validacion
+		if(!be.isIsAuthenticable()) return;
+
 		fsa.generateFile("/co/shift/" + appName.toLowerCase() + "/"
 				+ be.getName().toLowerCase() + "/control/LockoutManager.java",
 				LockoutTemplate.generate(appName, be));

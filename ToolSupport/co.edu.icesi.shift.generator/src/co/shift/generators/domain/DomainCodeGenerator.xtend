@@ -51,16 +51,6 @@ class DomainCodeGenerator implements IGenerator {
 //FROM BoundaryInterfaceTemplate 
 				DomainCodeUtilities.beginSection(DomainParams.SECT_GENERATE)
 				DomainCodeUtilities.contribute2Template(1, fsa, appName, be);
-//				DomainCodeUtilities.contribute(DomainParams.CONF_NORMAL_TE, 1, fsa, appName, be) //Esta ni siquiera hace nada, así se invoque
-//				DomainCodeUtilities.contribute(DomainParams.CONF_MEDIUM_TE, 1, fsa, appName, be) //Genera los controles BasicFLR
-//				DomainCodeUtilities.contribute(DomainParams.CONF_FASTSYNC_TE, 1, fsa, appName, be) //Genera los controles OptimizedFLR y el ListUpdater
-//				DomainCodeUtilities.contribute(DomainParams.CONF_FASTASYNC_TE, 1, fsa, appName, be) //Genera los controles Parallelizer y AsyncWorker
-//FROM DomainCodeGenerator (estaba abajo)
-//				DomainCodeUtilities.contribute(DomainParams.CONF_AUTHENTIC_LOCKOUT, 1, fsa, appName, authEntity) //Genera los controles IAuthorizationManager.java y otros
-//				DomainCodeUtilities.contribute(DomainParams.CONF_AUTHORIZATION, 1, fsa, appName, authEntity)
-//				DomainCodeUtilities.contribute(DomainParams.CONF_DATA_ENCRYPTED, 1, fsa, appName)
-//				DomainCodeUtilities.contribute(DomainParams.CONF_DATA_UNENCRYPTED, 1, fsa, appName)
-
 				DomainCodeUtilities.endSection
 //Fin Jcifuentes GENERATION
 

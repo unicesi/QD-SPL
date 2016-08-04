@@ -24,7 +24,7 @@ class BoundaryInterfaceTemplate {
 	private static String className = new Object(){}.class.enclosingClass.simpleName
 	
 	def static generate(BusinessEntity be, String packageName, List<Association> associations, IFileSystemAccess fsa) '''
-		««« Establece la plantilla actual para contribución. (no se está usando ahora)
+		««« Establece la plantilla actual para contribución.
 		«DomainCodeUtilities.beginTemplate(className)»
 		package co.shift.«packageName.toLowerCase()».«be.name.toLowerCase».boundary;
 		
@@ -55,10 +55,6 @@ class BoundaryInterfaceTemplate {
 «««					Establece la sección actual para contribución
 					«DomainCodeUtilities.beginSection(DomainParams.SECT_METHODS)»
 					«DomainCodeUtilities.contribute2Template(1, contract, be)»
-«««					«DomainCodeUtilities.contribute(DomainParams.CONF_NORMAL_TE, 1, contract, be)»
-«««					«DomainCodeUtilities.contribute(DomainParams.CONF_MEDIUM_TE, 1, contract, be)»
-«««					«DomainCodeUtilities.contribute(DomainParams.CONF_FASTSYNC_TE, 1, contract, be)»
-«««					«DomainCodeUtilities.contribute(DomainParams.CONF_FASTASYNC_TE, 1, contract, be)»
 					«DomainCodeUtilities.endSection»
 ««« Jcifuentes: Comentado. Esto fue llevado a la plantilla DomainCodeGenerator
 «««					«DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, packageName, be)»

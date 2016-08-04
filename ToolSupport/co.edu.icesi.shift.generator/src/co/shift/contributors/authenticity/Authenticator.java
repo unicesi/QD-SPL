@@ -52,6 +52,8 @@ public class Authenticator implements Contribution {
 		IFileSystemAccess fsa = (IFileSystemAccess) data[0];
 		String appName = (String) data[1];
 		BusinessEntity authBe = (BusinessEntity) data[2];
+		//JCifuentes: Se incluye este IF para que esta clase sea responsable de esta validacion
+		if(!authBe.isIsAuthenticable()) return;
 		fsa.generateFile("/co/shift/" + appName.toLowerCase()
 				+ "/authorization/boundary/IAuthorizationManager.java",
 				AuthInterfaceTemplate.generate(appName, authBe));

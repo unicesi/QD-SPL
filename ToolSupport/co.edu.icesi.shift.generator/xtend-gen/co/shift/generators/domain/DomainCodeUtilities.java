@@ -23,7 +23,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -313,36 +312,6 @@ public class DomainCodeUtilities {
   }
   
   /**
-   * Get the list of feature codes of the variants configured on the database, like
-   * '_r_1_3_4' for NORMAL_TE, and so on.
-   * 
-   * @return List<String> with the feature codes
-   * @deprecated no longer needed
-   */
-  @Deprecated
-  public static boolean isContributionRequired(final String qaConfigArchitecture) {
-    try {
-      Object[] _array = DomainCodeUtilities.featureValues.toArray();
-      String _string = ((List<Object>)Conversions.doWrapArray(_array)).toString();
-      String _replace = _string.replace(" ", "");
-      String _replace_1 = _replace.replace("[", "");
-      String stringSelectedFeatures = _replace_1.replace("]", "");
-      System.err.println(("selectedFeatures: " + stringSelectedFeatures));
-      Statement s = DomainCodeUtilities.connection.createStatement();
-      ResultSet rs = s.executeQuery((((("select 1 from dual where \'" + stringSelectedFeatures) + "\'\n\t\t\t\t\t\t\t\tlike (select group_concat(selected separator \',\') selected\n\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIGURATION_X_VARIANT\n\t\t\t\t\t\t\t\twhere configuration_id = ") + qaConfigArchitecture) + ")"));
-      boolean _next = rs.next();
-      if (_next) {
-        System.err.println((("la configuracion " + qaConfigArchitecture) + " SI contribuye a la config. de usuario actual"));
-        return true;
-      }
-      System.err.println((("la configuracion " + qaConfigArchitecture) + " NO contribuye a la config. de usuario actual"));
-      return false;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  /**
    * Determines the contribution for the current template and section.
    * The contribution can be a new file generation or
    * a string fragment of code that will be placed on the current template and
@@ -351,8 +320,9 @@ public class DomainCodeUtilities {
    * on the database, no operation is done
    */
   public static String contribute2Template(final int sequence, final Object... data) {
+    String rules = "";
+    String clasemetodo = "";
     try {
-      String rules = "";
       Object[] _array = DomainCodeUtilities.featureValues.toArray();
       String _string = ((List<Object>)Conversions.doWrapArray(_array)).toString();
       String _replace = _string.replace(" ", "");
@@ -361,139 +331,60 @@ public class DomainCodeUtilities {
       System.err.println(("selectedFeatures: " + stringSelectedFeatures));
       Statement s = DomainCodeUtilities.connection.createStatement();
       String _curTemplate = DomainCodeUtilities.getCurTemplate();
-      String _plus = ((("select A.FULL_CLASS_NAME, A.METHOD_NAME\n\t\t\t\t\t\t\tfrom ReferenceModel.TEMPL_SECT_CONFIG A\n\t\t\t\t\t\t\twhere A.SEQUENCE =" + Integer.valueOf(sequence)) + "\n\t\t\t\t\t\t\tand A.TEMPLATE = \'") + _curTemplate);
-      String _plus_1 = (_plus + "\'\n\t\t\t\t\t\t\tand A.SECTION = \'");
+      String _plus = ((("select A.FULL_CLASS_NAME, A.METHOD_NAME\n\t\t\t\t\t\t\t\tfrom ReferenceModel.TEMPL_SECT_CONFIG A\n\t\t\t\t\t\t\t\twhere A.SEQUENCE =" + Integer.valueOf(sequence)) + "\n\t\t\t\t\t\t\t\tand A.TEMPLATE = \'") + _curTemplate);
+      String _plus_1 = (_plus + "\'\n\t\t\t\t\t\t\t\tand A.SECTION = \'");
       String _curSection = DomainCodeUtilities.getCurSection();
       String _plus_2 = (_plus_1 + _curSection);
-      String _plus_3 = (_plus_2 + "\'\n\t\t\t\t\t\t\tand A.CONFIGURATION in (\n\t\t\t\t\t\t\t\tselect CV.CONFIGURATION\n\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIGURATION_X_VARIANT CV\n\t\t\t\t\t\t\t\tgroup by CV.CONFIGURATION_ID\n\t\t\t\t\t\t\t\thaving \'");
+      String _plus_3 = (_plus_2 + "\'\n\t\t\t\t\t\t\t\tand A.CONFIGURATION in (\n\t\t\t\t\t\t\t\t\tselect CV.CONFIGURATION\n\t\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIGURATION_X_VARIANT CV\n\t\t\t\t\t\t\t\t\tgroup by CV.CONFIGURATION_ID\n\t\t\t\t\t\t\t\t\thaving \'");
       String _plus_4 = (_plus_3 + stringSelectedFeatures);
-      String _plus_5 = (_plus_4 + "\'\tlike \n\t\t\t\t\t\t\t\t\t\t\t\tgroup_concat(selected separator \',\') \n\t\t\t\t\t\t\t\t)\n\t\t\t\t\t\t\tand A.CONFIGURATION not in (\n\t\t\t\t\t\t\t\tselect CONFIGURATION_B\n\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIG_IMPACT\n\t\t\t\t\t\t\t\twhere impact_type = \'EXCLUDE\')");
+      String _plus_5 = (_plus_4 + "\'\tlike \n\t\t\t\t\t\t\t\t\t\t\t\t\tgroup_concat(selected separator \',\') \n\t\t\t\t\t\t\t\t\t)\n\t\t\t\t\t\t\t\tand A.CONFIGURATION not in (\n\t\t\t\t\t\t\t\t\tselect CONFIGURATION_B\n\t\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIG_IMPACT\n\t\t\t\t\t\t\t\t\twhere impact_type = \'EXCLUDE\')\n\t\t\t\t\t\t\t\tand full_class_name is not null\n\t\t\t\t\t\t\t\tand method_name is not null");
       ResultSet rs = s.executeQuery(_plus_5);
-      try {
-        while (rs.next()) {
-          {
-            String _string_1 = rs.getString(1);
-            final Class<?> cls = Class.forName(_string_1);
-            String _string_2 = rs.getString(1);
-            String _plus_6 = ("Clase " + _string_2);
-            System.err.println(_plus_6);
-            final Object obj = cls.newInstance();
-            String _string_3 = rs.getString(2);
-            String _plus_7 = ("Metodo " + _string_3);
-            System.err.println(_plus_7);
-            String _string_4 = rs.getString(2);
-            final Method met = cls.getDeclaredMethod(_string_4, Class.forName("[Ljava.lang.Object;"));
-            Object[] datas = new Object[1];
-            datas[0] = data;
-            Object result = met.invoke(obj, datas);
-            boolean _notEquals = (!Objects.equal(result, null));
-            if (_notEquals) {
-              String _rules = rules;
-              String _string_5 = result.toString();
-              rules = (_rules + _string_5);
-            }
-          }
-        }
-      } catch (final Throwable _t) {
-        if (_t instanceof InvocationTargetException) {
-          final InvocationTargetException x = (InvocationTargetException)_t;
-          Throwable _cause = x.getCause();
-          String _message = _cause.getMessage();
-          String _plus_6 = ("Error invocando al metodo: " + _message);
+      while (rs.next()) {
+        {
+          String _string_1 = rs.getString(1);
+          final Class<?> cls = Class.forName(_string_1);
+          String _string_2 = rs.getString(1);
+          String _plus_6 = ("Clase " + _string_2);
           System.err.println(_plus_6);
-          return "";
-        } else {
-          throw Exceptions.sneakyThrow(_t);
-        }
-      }
-      return rules;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  /**
-   * Execute the architecture fragments found in the BD given the architecture config,
-   * and the global section. The architecture config determines the contributor class
-   * and the section determines the method to execute.
-   * @deprecated no longer needed
-   */
-  @Deprecated
-  public static String execArchitectureFragments(final String qaConfigArchitecture, final int sequence, final Object... data) {
-    try {
-      String rules = "";
-      Statement s = DomainCodeUtilities.connection.createStatement();
-      String _curSection = DomainCodeUtilities.getCurSection();
-      String _plus = ((((("SELECT a.FULL_CLASS_NAME, b.METHOD_NAME \n\t\t\t\t\t\t\t\t FROM ReferenceModel.CONFIGURATION a,\n\t\t\t\t\t\t\t\t \t ReferenceModel.SECTION b\n\t\t\t\t\t\t\t\t WHERE a.CONFIGURATION_ID = " + qaConfigArchitecture) + "\n\t\t\t\t\t\t\t\t AND b.SEQUENCE = ") + Integer.valueOf(sequence)) + "\n\t\t\t\t\t\t\t\t AND b.SECTION_ID = \'") + _curSection);
-      String _plus_1 = (_plus + "\'");
-      ResultSet rs = s.executeQuery(_plus_1);
-      try {
-        while (rs.next()) {
-          {
-            String _string = rs.getString(1);
-            final Class<?> cls = Class.forName(_string);
-            String _string_1 = rs.getString(1);
-            String _plus_2 = ("Clase " + _string_1);
-            System.err.println(_plus_2);
-            final Object obj = cls.newInstance();
-            String _string_2 = rs.getString(2);
-            String _plus_3 = ("Metodo " + _string_2);
-            System.err.println(_plus_3);
-            String _string_3 = rs.getString(2);
-            final Method met = cls.getDeclaredMethod(_string_3, Class.forName("[Ljava.lang.Object;"));
-            Object[] datas = new Object[1];
-            datas[0] = data;
-            Object result = met.invoke(obj, datas);
-            boolean _notEquals = (!Objects.equal(result, null));
-            if (_notEquals) {
-              String _rules = rules;
-              String _string_4 = result.toString();
-              rules = (_rules + _string_4);
-            }
+          final Object obj = cls.newInstance();
+          String _string_3 = rs.getString(2);
+          String _plus_7 = ("Metodo " + _string_3);
+          System.err.println(_plus_7);
+          String _string_4 = rs.getString(1);
+          String _plus_8 = (_string_4 + ".");
+          String _string_5 = rs.getString(2);
+          String _plus_9 = (_plus_8 + _string_5);
+          clasemetodo = _plus_9;
+          String _string_6 = rs.getString(2);
+          final Method met = cls.getDeclaredMethod(_string_6, Class.forName("[Ljava.lang.Object;"));
+          Object[] datas = new Object[1];
+          datas[0] = data;
+          Object result = met.invoke(obj, datas);
+          boolean _notEquals = (!Objects.equal(result, null));
+          if (_notEquals) {
+            String _rules = rules;
+            String _string_7 = result.toString();
+            rules = (_rules + _string_7);
           }
         }
-      } catch (final Throwable _t) {
-        if (_t instanceof InvocationTargetException) {
-          final InvocationTargetException x = (InvocationTargetException)_t;
-          Throwable _cause = x.getCause();
-          String _message = _cause.getMessage();
-          String _plus_2 = ("Error invocando al metodo: " + _message);
-          System.err.println(_plus_2);
-          return "";
-        } else {
-          throw Exceptions.sneakyThrow(_t);
-        }
       }
-      return rules;
-    } catch (Throwable _e) {
-      throw Exceptions.sneakyThrow(_e);
-    }
-  }
-  
-  /**
-   * Determines the contribution for the current template and section, given an
-   * architecture qa config. The contribution can be a new file generation or
-   * a string fragment of code that will be placed on the current template and
-   * section.
-   * If the current user configuration does not correspond with the architect config
-   * no operation is done
-   * @deprecated use {@link #contribute2Template} instead
-   */
-  @Deprecated
-  public static String contributeOld(final String qaConfigArchitecture, final int sequence, final Object... data) {
-    String _xblockexpression = null;
-    {
-      boolean _isContributionRequired = DomainCodeUtilities.isContributionRequired(qaConfigArchitecture);
-      boolean _not = (!_isContributionRequired);
-      if (_not) {
+    } catch (final Throwable _t) {
+      if (_t instanceof Exception) {
+        final Exception x = (Exception)_t;
+        Throwable _cause = x.getCause();
+        String _string_1 = _cause.toString();
+        String _plus_6 = ((("Error invocando al metodo " + clasemetodo) + ": ") + _string_1);
+        System.err.println(_plus_6);
         return "";
+      } else {
+        throw Exceptions.sneakyThrow(_t);
       }
-      _xblockexpression = DomainCodeUtilities.execArchitectureFragments(qaConfigArchitecture, sequence, data);
     }
-    return _xblockexpression;
+    return rules;
   }
   
   /**
+   * Jcifuentes: Marcado como obsoleto
    * @deprecated use {@link #contribute2Template} instead
    */
   @Deprecated

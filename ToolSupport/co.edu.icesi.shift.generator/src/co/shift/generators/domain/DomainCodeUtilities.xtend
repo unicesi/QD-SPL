@@ -251,34 +251,7 @@ class DomainCodeUtilities {
  		}
 		return featureCodes;    	
     }
-    
-   /**
-     * Get the list of feature codes of the variants configured on the database, like
-     * '_r_1_3_4' for NORMAL_TE, and so on.
-     * 
-     * @return List<String> with the feature codes
-	 * @deprecated no longer needed
-     */
-    @Deprecated
-    def static isContributionRequired(String qaConfigArchitecture){
- 		//Obtiene una cadena con la configuracion del usuario
- 		var stringSelectedFeatures = featureValues.toArray.toString.replace(" ", "").replace("[","").replace("]","");
- 		System.err.println("selectedFeatures: "+stringSelectedFeatures);
- 		
- 		var s = connection.createStatement()
- 		var rs = s.executeQuery("select 1 from dual where '"+stringSelectedFeatures+"'
-								like (select group_concat(selected separator ',') selected
-								from ReferenceModel.CONFIGURATION_X_VARIANT
-								where configuration_id = "+qaConfigArchitecture+")")
- 		//Si la configuracion no corresponde con la del usuario, no hay contribución 
- 		if(rs.next()){
-			System.err.println("la configuracion "+qaConfigArchitecture+" SI contribuye a la config. de usuario actual");
-	 		return true
- 		}
 
-		System.err.println("la configuracion "+qaConfigArchitecture+" NO contribuye a la config. de usuario actual");
- 		return false
-    }
 
 	/**
 	 * Determines the contribution for the current template and section.
@@ -290,29 +263,32 @@ class DomainCodeUtilities {
 	 */
  	def static String contribute2Template(int sequence, Object... data) {
  		var rules = ""
- 		//Obtiene una cadena con la configuracion del usuario
- 		var stringSelectedFeatures = featureValues.toArray.toString.replace(" ", "").replace("[","").replace("]","");
- 		System.err.println("selectedFeatures: "+stringSelectedFeatures);
-
- 		var s = connection.createStatement()
- 		var rs = s.executeQuery("select A.FULL_CLASS_NAME, A.METHOD_NAME
-							from ReferenceModel.TEMPL_SECT_CONFIG A
-							where A.SEQUENCE ="+sequence+"
-							and A.TEMPLATE = '"+getCurTemplate()+"'
-							and A.SECTION = '"+getCurSection()+"'
-							and A.CONFIGURATION in (
-								select CV.CONFIGURATION
-								from ReferenceModel.CONFIGURATION_X_VARIANT CV
-								group by CV.CONFIGURATION_ID
-								having '"+stringSelectedFeatures+"'	like 
-												group_concat(selected separator ',') 
-								)
-							and A.CONFIGURATION not in (
-								select CONFIGURATION_B
-								from ReferenceModel.CONFIG_IMPACT
-								where impact_type = 'EXCLUDE')")
- 		//Ejecuta cada fragmento encontrado
+ 		var clasemetodo = ""
 		try{
+	 		//Obtiene una cadena con la configuracion del usuario
+	 		var stringSelectedFeatures = featureValues.toArray.toString.replace(" ", "").replace("[","").replace("]","");
+	 		System.err.println("selectedFeatures: "+stringSelectedFeatures);
+	
+	 		var s = connection.createStatement()
+	 		var rs = s.executeQuery("select A.FULL_CLASS_NAME, A.METHOD_NAME
+								from ReferenceModel.TEMPL_SECT_CONFIG A
+								where A.SEQUENCE ="+sequence+"
+								and A.TEMPLATE = '"+getCurTemplate()+"'
+								and A.SECTION = '"+getCurSection()+"'
+								and A.CONFIGURATION in (
+									select CV.CONFIGURATION
+									from ReferenceModel.CONFIGURATION_X_VARIANT CV
+									group by CV.CONFIGURATION_ID
+									having '"+stringSelectedFeatures+"'	like 
+													group_concat(selected separator ',') 
+									)
+								and A.CONFIGURATION not in (
+									select CONFIGURATION_B
+									from ReferenceModel.CONFIG_IMPACT
+									where impact_type = 'EXCLUDE')
+								and full_class_name is not null
+								and method_name is not null")
+	 		//Ejecuta cada fragmento encontrado
 	 		while (rs.next()){
 	 			//Obtiene el nombre de la clase
 			    val cls = Class.forName(rs.getString(1))
@@ -320,94 +296,37 @@ class DomainCodeUtilities {
 			    val obj = cls.newInstance()
 			    //Obtiene el nombre del metodo
 				System.err.println("Metodo "+rs.getString(2));
+				clasemetodo = rs.getString(1)+"."+rs.getString(2)
 				
+				//System.err.println("Pasó 1");
 				//Get the method and set the parameter types
 			    val met = cls.getDeclaredMethod(rs.getString(2), {Class.forName("[Ljava.lang.Object;")})
 				//Invokes the method passing the parameters (Object[] data)
+				//System.err.println("Pasó 2");
 				var Object[] datas = newArrayOfSize(1)
 				datas.set(0, data)
 			    //var result = met.invoke(obj, {data})//why this doesn't work?
+				//System.err.println("Pasó 3");
 			    var result = met.invoke(obj, datas)
+				//System.err.println("Pasó 4");
 			    if(result != null)
 			    	rules += result.toString
 			}
 	    }
-	    catch(InvocationTargetException x){
-	    	System.err.println("Error invocando al metodo: "+x.cause.message)
-	    	return "" 	
+	    catch(Exception x){
+	    	//x.printStackTrace
+	    	System.err.println("Error invocando al metodo "+clasemetodo+": "+x.cause.toString)
+	    	return ""
 	    }
 	    return rules
  	}
 
-	/**
-	 * Execute the architecture fragments found in the BD given the architecture config,
-	 * and the global section. The architecture config determines the contributor class
-	 * and the section determines the method to execute.
-	 * @deprecated no longer needed
-	 */
-	@Deprecated
- 	def static String execArchitectureFragments(String qaConfigArchitecture, int sequence, Object... data) {
- 		var rules = ""
- 		var s = connection.createStatement()
- 		var rs = s.executeQuery("SELECT a.FULL_CLASS_NAME, b.METHOD_NAME 
-								 FROM ReferenceModel.CONFIGURATION a,
-								 	 ReferenceModel.SECTION b
-								 WHERE a.CONFIGURATION_ID = "+qaConfigArchitecture+"
-								 AND b.SEQUENCE = "+sequence+"
-								 AND b.SECTION_ID = '"+getCurSection()+"'")
 
- 		//Ejecuta cada fragmento encontrado
-		try{
-	 		while (rs.next()){
-	 			//Obtiene el nombre de la clase
-			    val cls = Class.forName(rs.getString(1))
-				System.err.println("Clase "+rs.getString(1));
-			    val obj = cls.newInstance()
-			    //Obtiene el nombre del metodo
-				System.err.println("Metodo "+rs.getString(2));
-				
-				//Get the method and set the parameter types
-			    val met = cls.getDeclaredMethod(rs.getString(2), {Class.forName("[Ljava.lang.Object;")})
-				//Invokes the method passing the parameters (Object[] data)
-				var Object[] datas = newArrayOfSize(1)
-				datas.set(0, data)
-			    //var result = met.invoke(obj, {data})//why this doesn't work?
-			    var result = met.invoke(obj, datas)
-			    if(result != null)
-			    	rules += result.toString
-			}
-	    }
-	    catch(InvocationTargetException x){
-	    	System.err.println("Error invocando al metodo: "+x.cause.message)
-	    	return "" 	
-	    }
-	    return rules
- 	}
-	/**
-	 * Determines the contribution for the current template and section, given an
-	 * architecture qa config. The contribution can be a new file generation or
-	 * a string fragment of code that will be placed on the current template and
-	 * section.
-	 * If the current user configuration does not correspond with the architect config
-	 * no operation is done
-	 * @deprecated use {@link #contribute2Template} instead
-	 */
-	@Deprecated
- 	def static String contributeOld(String qaConfigArchitecture, int sequence, Object... data) {
- 		//Valida si la configuración del usuario requiere de esta contribucion
- 		//Para esto, se verifica si está cubierta por la conf. de arquitectura current
- 		if(!isContributionRequired(qaConfigArchitecture))
- 			return "";
- 		
- 		//Con la secuencia, el template, la seccion y la configuracion de arquitectura
-		//Obtiene y ejecuta los fragmentos de arquitectura
-		//El template y la sección han sido establecidos previamente al llamado
-		execArchitectureFragments(qaConfigArchitecture, sequence, data)
-	}
 	
 //Fin Jcifuentes
 
 	/**
+	 * Jcifuentes: Marcado como obsoleto
 	 * @deprecated use {@link #contribute2Template} instead
 	 */
 	@Deprecated
