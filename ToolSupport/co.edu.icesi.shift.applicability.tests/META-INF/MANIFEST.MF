@@ -10,6 +10,8 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Export-Package: applicabilitymodel.tests
 Require-Bundle: org.eclipse.core.runtime,
  co.edu.icesi.shift.applicability;visibility:=reexport,
+ co.edu.icesi.shift.componentsets;visibility:=reexport,
+ co.edu.icesi.shift.qaconfig;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.junit;visibility:=reexport
 Bundle-ActivationPolicy: lazy

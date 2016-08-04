@@ -3,9 +3,11 @@
 package applicabilitymodel.provider;
 
 
-import applicabilitymodel.Applicability;
 import applicabilitymodel.ApplicabilitymodelFactory;
 import applicabilitymodel.ApplicabilitymodelPackage;
+import applicabilitymodel.DecisionModel;
+
+import componentsetsmodel.ComponentsetsmodelFactory;
 
 import java.util.Collection;
 import java.util.List;
@@ -17,24 +19,24 @@ import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
-import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
-import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
+import qasvariabilitymodel.QasvariabilitymodelFactory;
+
 /**
- * This is the item provider adapter for a {@link applicabilitymodel.Applicability} object.
+ * This is the item provider adapter for a {@link applicabilitymodel.DecisionModel} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class ApplicabilityItemProvider 
+public class DecisionModelItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -48,7 +50,7 @@ public class ApplicabilityItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ApplicabilityItemProvider(AdapterFactory adapterFactory) {
+	public DecisionModelItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -63,31 +65,8 @@ public class ApplicabilityItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addValuePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
-	}
-
-	/**
-	 * This adds a property descriptor for the Value feature.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected void addValuePropertyDescriptor(Object object) {
-		itemPropertyDescriptors.add
-			(createItemPropertyDescriptor
-				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
-				 getResourceLocator(),
-				 getString("_UI_Applicability_value_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Applicability_value_feature", "_UI_Applicability_type"),
-				 ApplicabilitymodelPackage.Literals.APPLICABILITY__VALUE,
-				 true,
-				 false,
-				 false,
-				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
-				 null,
-				 null));
 	}
 
 	/**
@@ -102,8 +81,9 @@ public class ApplicabilityItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ApplicabilitymodelPackage.Literals.APPLICABILITY__QUALITY_SCENARIO);
-			childrenFeatures.add(ApplicabilitymodelPackage.Literals.APPLICABILITY__COMPONENT_SETS);
+			childrenFeatures.add(ApplicabilitymodelPackage.Literals.DECISION_MODEL__QUALITYMODEL);
+			childrenFeatures.add(ApplicabilitymodelPackage.Literals.DECISION_MODEL__COMPONENT_SETS_MODEL);
+			childrenFeatures.add(ApplicabilitymodelPackage.Literals.DECISION_MODEL__DECISIONS);
 		}
 		return childrenFeatures;
 	}
@@ -122,14 +102,14 @@ public class ApplicabilityItemProvider
 	}
 
 	/**
-	 * This returns Applicability.gif.
+	 * This returns DecisionModel.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Applicability"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/DecisionModel"));
 	}
 
 	/**
@@ -140,8 +120,7 @@ public class ApplicabilityItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		Applicability applicability = (Applicability)object;
-		return getString("_UI_Applicability_type") + " " + applicability.getValue();
+		return getString("_UI_DecisionModel_type");
 	}
 	
 
@@ -156,12 +135,10 @@ public class ApplicabilityItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Applicability.class)) {
-			case ApplicabilitymodelPackage.APPLICABILITY__VALUE:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-			case ApplicabilitymodelPackage.APPLICABILITY__QUALITY_SCENARIO:
-			case ApplicabilitymodelPackage.APPLICABILITY__COMPONENT_SETS:
+		switch (notification.getFeatureID(DecisionModel.class)) {
+			case ApplicabilitymodelPackage.DECISION_MODEL__QUALITYMODEL:
+			case ApplicabilitymodelPackage.DECISION_MODEL__COMPONENT_SETS_MODEL:
+			case ApplicabilitymodelPackage.DECISION_MODEL__DECISIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
@@ -181,13 +158,18 @@ public class ApplicabilityItemProvider
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ApplicabilitymodelPackage.Literals.APPLICABILITY__QUALITY_SCENARIO,
-				 ApplicabilitymodelFactory.eINSTANCE.createQualityScenario()));
+				(ApplicabilitymodelPackage.Literals.DECISION_MODEL__QUALITYMODEL,
+				 QasvariabilitymodelFactory.eINSTANCE.createRootQA()));
 
 		newChildDescriptors.add
 			(createChildParameter
-				(ApplicabilitymodelPackage.Literals.APPLICABILITY__COMPONENT_SETS,
-				 ApplicabilitymodelFactory.eINSTANCE.createComponentSet()));
+				(ApplicabilitymodelPackage.Literals.DECISION_MODEL__COMPONENT_SETS_MODEL,
+				 ComponentsetsmodelFactory.eINSTANCE.createComponentSetsModel()));
+
+		newChildDescriptors.add
+			(createChildParameter
+				(ApplicabilitymodelPackage.Literals.DECISION_MODEL__DECISIONS,
+				 ApplicabilitymodelFactory.eINSTANCE.createDecision()));
 	}
 
 	/**

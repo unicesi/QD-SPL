@@ -56,11 +56,8 @@ public class ApplicabilitymodelFactoryImpl extends EFactoryImpl implements Appli
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case ApplicabilitymodelPackage.APPLICABILITY_MODEL: return createApplicabilityModel();
-			case ApplicabilitymodelPackage.INPUT_MODEL: return createInputModel();
-			case ApplicabilitymodelPackage.APPLICABILITY: return createApplicability();
-			case ApplicabilitymodelPackage.QUALITY_SCENARIO: return createQualityScenario();
-			case ApplicabilitymodelPackage.COMPONENT_SET: return createComponentSet();
+			case ApplicabilitymodelPackage.DECISION_MODEL: return createDecisionModel();
+			case ApplicabilitymodelPackage.DECISION: return createDecision();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -71,9 +68,9 @@ public class ApplicabilitymodelFactoryImpl extends EFactoryImpl implements Appli
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ApplicabilityModel createApplicabilityModel() {
-		ApplicabilityModelImpl applicabilityModel = new ApplicabilityModelImpl();
-		return applicabilityModel;
+	public DecisionModel createDecisionModel() {
+		DecisionModelImpl decisionModel = new DecisionModelImpl();
+		return decisionModel;
 	}
 
 	/**
@@ -81,39 +78,9 @@ public class ApplicabilitymodelFactoryImpl extends EFactoryImpl implements Appli
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public InputModel createInputModel() {
-		InputModelImpl inputModel = new InputModelImpl();
-		return inputModel;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public Applicability createApplicability() {
-		ApplicabilityImpl applicability = new ApplicabilityImpl();
-		return applicability;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public QualityScenario createQualityScenario() {
-		QualityScenarioImpl qualityScenario = new QualityScenarioImpl();
-		return qualityScenario;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ComponentSet createComponentSet() {
-		ComponentSetImpl componentSet = new ComponentSetImpl();
-		return componentSet;
+	public Decision createDecision() {
+		DecisionImpl decision = new DecisionImpl();
+		return decision;
 	}
 
 	/**

@@ -3,30 +3,19 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/co.edu.icesi.shift.applicability/src" modelPluginID="co.edu.icesi.shift.applicability"
     modelName="Applicability" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="7.0" copyrightFields="false"
+    usedGenPackages="../../co.edu.icesi.shift.componentsets/metamodels/ComponentSets.genmodel#//componentsetsmodel ../../co.edu.icesi.shift.qaconfig/metamodels/qaconfig.genmodel#//qasvariabilitymodel"
     operationReflection="true" importOrganizing="true">
   <foreignModel>applicability.ecore</foreignModel>
   <genPackages prefix="Applicabilitymodel" disposableProviderFactory="true" ecorePackage="applicability.ecore#/">
-    <genClasses ecoreClass="applicability.ecore#//ApplicabilityModel">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference applicability.ecore#//ApplicabilityModel/qualitymodel"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference applicability.ecore#//ApplicabilityModel/componentSetStore"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference applicability.ecore#//ApplicabilityModel/applicabilities"/>
+    <genClasses ecoreClass="applicability.ecore#//DecisionModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference applicability.ecore#//DecisionModel/qualitymodel"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference applicability.ecore#//DecisionModel/componentSetsModel"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference applicability.ecore#//DecisionModel/decisions"/>
     </genClasses>
-    <genClasses ecoreClass="applicability.ecore#//InputModel">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute applicability.ecore#//InputModel/path"/>
-    </genClasses>
-    <genClasses ecoreClass="applicability.ecore#//Applicability">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute applicability.ecore#//Applicability/value"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference applicability.ecore#//Applicability/qualityScenario"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference applicability.ecore#//Applicability/componentSets"/>
-    </genClasses>
-    <genClasses ecoreClass="applicability.ecore#//QualityScenario">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute applicability.ecore#//QualityScenario/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute applicability.ecore#//QualityScenario/name"/>
-    </genClasses>
-    <genClasses ecoreClass="applicability.ecore#//ComponentSet">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute applicability.ecore#//ComponentSet/id"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute applicability.ecore#//ComponentSet/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute applicability.ecore#//ComponentSet/filePath"/>
+    <genClasses ecoreClass="applicability.ecore#//Decision">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference applicability.ecore#//Decision/qaVariant"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference applicability.ecore#//Decision/componentSet"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute applicability.ecore#//Decision/requiresVariantSelected"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

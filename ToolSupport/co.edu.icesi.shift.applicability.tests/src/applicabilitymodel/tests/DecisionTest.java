@@ -3,7 +3,7 @@
 package applicabilitymodel.tests;
 
 import applicabilitymodel.ApplicabilitymodelFactory;
-import applicabilitymodel.ComponentSet;
+import applicabilitymodel.Decision;
 
 import junit.framework.TestCase;
 
@@ -11,19 +11,19 @@ import junit.textui.TestRunner;
 
 /**
  * <!-- begin-user-doc -->
- * A test case for the model object '<em><b>Component Set</b></em>'.
+ * A test case for the model object '<em><b>Decision</b></em>'.
  * <!-- end-user-doc -->
  * @generated
  */
-public class ComponentSetTest extends TestCase {
+public class DecisionTest extends TestCase {
 
 	/**
-	 * The fixture for this Component Set test case.
+	 * The fixture for this Decision test case.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ComponentSet fixture = null;
+	protected Decision fixture = null;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -31,36 +31,36 @@ public class ComponentSetTest extends TestCase {
 	 * @generated
 	 */
 	public static void main(String[] args) {
-		TestRunner.run(ComponentSetTest.class);
+		TestRunner.run(DecisionTest.class);
 	}
 
 	/**
-	 * Constructs a new Component Set test case with the given name.
+	 * Constructs a new Decision test case with the given name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public ComponentSetTest(String name) {
+	public DecisionTest(String name) {
 		super(name);
 	}
 
 	/**
-	 * Sets the fixture for this Component Set test case.
+	 * Sets the fixture for this Decision test case.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void setFixture(ComponentSet fixture) {
+	protected void setFixture(Decision fixture) {
 		this.fixture = fixture;
 	}
 
 	/**
-	 * Returns the fixture for this Component Set test case.
+	 * Returns the fixture for this Decision test case.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ComponentSet getFixture() {
+	protected Decision getFixture() {
 		return fixture;
 	}
 
@@ -72,7 +72,7 @@ public class ComponentSetTest extends TestCase {
 	 */
 	@Override
 	protected void setUp() throws Exception {
-		setFixture(ApplicabilitymodelFactory.eINSTANCE.createComponentSet());
+		setFixture(ApplicabilitymodelFactory.eINSTANCE.createDecision());
 	}
 
 	/**
@@ -86,4 +86,4 @@ public class ComponentSetTest extends TestCase {
 		setFixture(null);
 	}
 
-} //ComponentSetTest
+} //DecisionTest

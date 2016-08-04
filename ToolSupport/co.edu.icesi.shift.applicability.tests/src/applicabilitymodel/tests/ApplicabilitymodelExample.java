@@ -2,9 +2,9 @@
  */
 package applicabilitymodel.tests;
 
-import applicabilitymodel.ApplicabilityModel;
 import applicabilitymodel.ApplicabilitymodelFactory;
 import applicabilitymodel.ApplicabilitymodelPackage;
+import applicabilitymodel.DecisionModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -60,7 +60,7 @@ public class ApplicabilitymodelExample {
 			System.out.println("Enter a list of file paths or URIs that have content like this:");
 			try {
 				Resource resource = resourceSet.createResource(URI.createURI("http:///My.applicabilitymodel"));
-				ApplicabilityModel root = ApplicabilitymodelFactory.eINSTANCE.createApplicabilityModel();
+				DecisionModel root = ApplicabilitymodelFactory.eINSTANCE.createDecisionModel();
 				resource.getContents().add(root);
 				resource.save(System.out, null);
 			}

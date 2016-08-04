@@ -68,24 +68,12 @@ public class ApplicabilitymodelAdapterFactory extends AdapterFactoryImpl {
 	protected ApplicabilitymodelSwitch<Adapter> modelSwitch =
 		new ApplicabilitymodelSwitch<Adapter>() {
 			@Override
-			public Adapter caseApplicabilityModel(ApplicabilityModel object) {
-				return createApplicabilityModelAdapter();
+			public Adapter caseDecisionModel(DecisionModel object) {
+				return createDecisionModelAdapter();
 			}
 			@Override
-			public Adapter caseInputModel(InputModel object) {
-				return createInputModelAdapter();
-			}
-			@Override
-			public Adapter caseApplicability(Applicability object) {
-				return createApplicabilityAdapter();
-			}
-			@Override
-			public Adapter caseQualityScenario(QualityScenario object) {
-				return createQualityScenarioAdapter();
-			}
-			@Override
-			public Adapter caseComponentSet(ComponentSet object) {
-				return createComponentSetAdapter();
+			public Adapter caseDecision(Decision object) {
+				return createDecisionAdapter();
 			}
 			@Override
 			public Adapter defaultCase(EObject object) {
@@ -108,72 +96,30 @@ public class ApplicabilitymodelAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link applicabilitymodel.ApplicabilityModel <em>Applicability Model</em>}'.
+	 * Creates a new adapter for an object of class '{@link applicabilitymodel.DecisionModel <em>Decision Model</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see applicabilitymodel.ApplicabilityModel
+	 * @see applicabilitymodel.DecisionModel
 	 * @generated
 	 */
-	public Adapter createApplicabilityModelAdapter() {
+	public Adapter createDecisionModelAdapter() {
 		return null;
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link applicabilitymodel.InputModel <em>Input Model</em>}'.
+	 * Creates a new adapter for an object of class '{@link applicabilitymodel.Decision <em>Decision</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see applicabilitymodel.InputModel
+	 * @see applicabilitymodel.Decision
 	 * @generated
 	 */
-	public Adapter createInputModelAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link applicabilitymodel.Applicability <em>Applicability</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see applicabilitymodel.Applicability
-	 * @generated
-	 */
-	public Adapter createApplicabilityAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link applicabilitymodel.QualityScenario <em>Quality Scenario</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see applicabilitymodel.QualityScenario
-	 * @generated
-	 */
-	public Adapter createQualityScenarioAdapter() {
-		return null;
-	}
-
-	/**
-	 * Creates a new adapter for an object of class '{@link applicabilitymodel.ComponentSet <em>Component Set</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see applicabilitymodel.ComponentSet
-	 * @generated
-	 */
-	public Adapter createComponentSetAdapter() {
+	public Adapter createDecisionAdapter() {
 		return null;
 	}
 

@@ -66,33 +66,15 @@ public class ApplicabilitymodelSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case ApplicabilitymodelPackage.APPLICABILITY_MODEL: {
-				ApplicabilityModel applicabilityModel = (ApplicabilityModel)theEObject;
-				T result = caseApplicabilityModel(applicabilityModel);
+			case ApplicabilitymodelPackage.DECISION_MODEL: {
+				DecisionModel decisionModel = (DecisionModel)theEObject;
+				T result = caseDecisionModel(decisionModel);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case ApplicabilitymodelPackage.INPUT_MODEL: {
-				InputModel inputModel = (InputModel)theEObject;
-				T result = caseInputModel(inputModel);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ApplicabilitymodelPackage.APPLICABILITY: {
-				Applicability applicability = (Applicability)theEObject;
-				T result = caseApplicability(applicability);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ApplicabilitymodelPackage.QUALITY_SCENARIO: {
-				QualityScenario qualityScenario = (QualityScenario)theEObject;
-				T result = caseQualityScenario(qualityScenario);
-				if (result == null) result = defaultCase(theEObject);
-				return result;
-			}
-			case ApplicabilitymodelPackage.COMPONENT_SET: {
-				ComponentSet componentSet = (ComponentSet)theEObject;
-				T result = caseComponentSet(componentSet);
+			case ApplicabilitymodelPackage.DECISION: {
+				Decision decision = (Decision)theEObject;
+				T result = caseDecision(decision);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
@@ -101,77 +83,32 @@ public class ApplicabilitymodelSwitch<T> extends Switch<T> {
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Applicability Model</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Decision Model</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Applicability Model</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Decision Model</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseApplicabilityModel(ApplicabilityModel object) {
+	public T caseDecisionModel(DecisionModel object) {
 		return null;
 	}
 
 	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Input Model</em>'.
+	 * Returns the result of interpreting the object as an instance of '<em>Decision</em>'.
 	 * <!-- begin-user-doc -->
 	 * This implementation returns null;
 	 * returning a non-null result will terminate the switch.
 	 * <!-- end-user-doc -->
 	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Input Model</em>'.
+	 * @return the result of interpreting the object as an instance of '<em>Decision</em>'.
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseInputModel(InputModel object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Applicability</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Applicability</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseApplicability(Applicability object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Quality Scenario</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Quality Scenario</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseQualityScenario(QualityScenario object) {
-		return null;
-	}
-
-	/**
-	 * Returns the result of interpreting the object as an instance of '<em>Component Set</em>'.
-	 * <!-- begin-user-doc -->
-	 * This implementation returns null;
-	 * returning a non-null result will terminate the switch.
-	 * <!-- end-user-doc -->
-	 * @param object the target of the switch.
-	 * @return the result of interpreting the object as an instance of '<em>Component Set</em>'.
-	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-	 * @generated
-	 */
-	public T caseComponentSet(ComponentSet object) {
+	public T caseDecision(Decision object) {
 		return null;
 	}
 

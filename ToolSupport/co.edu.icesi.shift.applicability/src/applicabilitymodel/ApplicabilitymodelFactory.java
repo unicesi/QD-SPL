@@ -22,49 +22,22 @@ public interface ApplicabilitymodelFactory extends EFactory {
 	ApplicabilitymodelFactory eINSTANCE = applicabilitymodel.impl.ApplicabilitymodelFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>Applicability Model</em>'.
+	 * Returns a new object of class '<em>Decision Model</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Applicability Model</em>'.
+	 * @return a new object of class '<em>Decision Model</em>'.
 	 * @generated
 	 */
-	ApplicabilityModel createApplicabilityModel();
+	DecisionModel createDecisionModel();
 
 	/**
-	 * Returns a new object of class '<em>Input Model</em>'.
+	 * Returns a new object of class '<em>Decision</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Input Model</em>'.
+	 * @return a new object of class '<em>Decision</em>'.
 	 * @generated
 	 */
-	InputModel createInputModel();
-
-	/**
-	 * Returns a new object of class '<em>Applicability</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Applicability</em>'.
-	 * @generated
-	 */
-	Applicability createApplicability();
-
-	/**
-	 * Returns a new object of class '<em>Quality Scenario</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Quality Scenario</em>'.
-	 * @generated
-	 */
-	QualityScenario createQualityScenario();
-
-	/**
-	 * Returns a new object of class '<em>Component Set</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>Component Set</em>'.
-	 * @generated
-	 */
-	ComponentSet createComponentSet();
+	Decision createDecision();
 
 	/**
 	 * Returns the package supported by this factory.

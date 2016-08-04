@@ -72,118 +72,49 @@ public class ApplicabilitymodelItemProviderAdapterFactory extends Applicabilitym
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link applicabilitymodel.ApplicabilityModel} instances.
+	 * This keeps track of the one adapter used for all {@link applicabilitymodel.DecisionModel} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected ApplicabilityModelItemProvider applicabilityModelItemProvider;
+	protected DecisionModelItemProvider decisionModelItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link applicabilitymodel.ApplicabilityModel}.
+	 * This creates an adapter for a {@link applicabilitymodel.DecisionModel}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createApplicabilityModelAdapter() {
-		if (applicabilityModelItemProvider == null) {
-			applicabilityModelItemProvider = new ApplicabilityModelItemProvider(this);
+	public Adapter createDecisionModelAdapter() {
+		if (decisionModelItemProvider == null) {
+			decisionModelItemProvider = new DecisionModelItemProvider(this);
 		}
 
-		return applicabilityModelItemProvider;
+		return decisionModelItemProvider;
 	}
 
 	/**
-	 * This keeps track of the one adapter used for all {@link applicabilitymodel.InputModel} instances.
+	 * This keeps track of the one adapter used for all {@link applicabilitymodel.Decision} instances.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected InputModelItemProvider inputModelItemProvider;
+	protected DecisionItemProvider decisionItemProvider;
 
 	/**
-	 * This creates an adapter for a {@link applicabilitymodel.InputModel}.
+	 * This creates an adapter for a {@link applicabilitymodel.Decision}.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
-	public Adapter createInputModelAdapter() {
-		if (inputModelItemProvider == null) {
-			inputModelItemProvider = new InputModelItemProvider(this);
+	public Adapter createDecisionAdapter() {
+		if (decisionItemProvider == null) {
+			decisionItemProvider = new DecisionItemProvider(this);
 		}
 
-		return inputModelItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link applicabilitymodel.Applicability} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ApplicabilityItemProvider applicabilityItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link applicabilitymodel.Applicability}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createApplicabilityAdapter() {
-		if (applicabilityItemProvider == null) {
-			applicabilityItemProvider = new ApplicabilityItemProvider(this);
-		}
-
-		return applicabilityItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link applicabilitymodel.QualityScenario} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected QualityScenarioItemProvider qualityScenarioItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link applicabilitymodel.QualityScenario}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createQualityScenarioAdapter() {
-		if (qualityScenarioItemProvider == null) {
-			qualityScenarioItemProvider = new QualityScenarioItemProvider(this);
-		}
-
-		return qualityScenarioItemProvider;
-	}
-
-	/**
-	 * This keeps track of the one adapter used for all {@link applicabilitymodel.ComponentSet} instances.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	protected ComponentSetItemProvider componentSetItemProvider;
-
-	/**
-	 * This creates an adapter for a {@link applicabilitymodel.ComponentSet}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Adapter createComponentSetAdapter() {
-		if (componentSetItemProvider == null) {
-			componentSetItemProvider = new ComponentSetItemProvider(this);
-		}
-
-		return componentSetItemProvider;
+		return decisionItemProvider;
 	}
 
 	/**
@@ -285,11 +216,8 @@ public class ApplicabilitymodelItemProviderAdapterFactory extends Applicabilitym
 	 * @generated
 	 */
 	public void dispose() {
-		if (applicabilityModelItemProvider != null) applicabilityModelItemProvider.dispose();
-		if (inputModelItemProvider != null) inputModelItemProvider.dispose();
-		if (applicabilityItemProvider != null) applicabilityItemProvider.dispose();
-		if (qualityScenarioItemProvider != null) qualityScenarioItemProvider.dispose();
-		if (componentSetItemProvider != null) componentSetItemProvider.dispose();
+		if (decisionModelItemProvider != null) decisionModelItemProvider.dispose();
+		if (decisionItemProvider != null) decisionItemProvider.dispose();
 	}
 
 }
