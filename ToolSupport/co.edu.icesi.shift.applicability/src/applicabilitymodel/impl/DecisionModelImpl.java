@@ -6,8 +6,6 @@ import applicabilitymodel.ApplicabilitymodelPackage;
 import applicabilitymodel.Decision;
 import applicabilitymodel.DecisionModel;
 
-import componentsetsmodel.ComponentSetsModel;
-
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -24,8 +22,6 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import qasvariabilitymodel.RootQA;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Decision Model</b></em>'.
@@ -34,8 +30,7 @@ import qasvariabilitymodel.RootQA;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link applicabilitymodel.impl.DecisionModelImpl#getQualitymodel <em>Qualitymodel</em>}</li>
- *   <li>{@link applicabilitymodel.impl.DecisionModelImpl#getComponentSetsModel <em>Component Sets Model</em>}</li>
+ *   <li>{@link applicabilitymodel.impl.DecisionModelImpl#getDecisionModelName <em>Decision Model Name</em>}</li>
  *   <li>{@link applicabilitymodel.impl.DecisionModelImpl#getDecisions <em>Decisions</em>}</li>
  * </ul>
  *
@@ -43,24 +38,24 @@ import qasvariabilitymodel.RootQA;
  */
 public class DecisionModelImpl extends MinimalEObjectImpl.Container implements DecisionModel {
 	/**
-	 * The cached value of the '{@link #getQualitymodel() <em>Qualitymodel</em>}' containment reference.
+	 * The default value of the '{@link #getDecisionModelName() <em>Decision Model Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getQualitymodel()
+	 * @see #getDecisionModelName()
 	 * @generated
 	 * @ordered
 	 */
-	protected RootQA qualitymodel;
+	protected static final String DECISION_MODEL_NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getComponentSetsModel() <em>Component Sets Model</em>}' containment reference.
+	 * The cached value of the '{@link #getDecisionModelName() <em>Decision Model Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getComponentSetsModel()
+	 * @see #getDecisionModelName()
 	 * @generated
 	 * @ordered
 	 */
-	protected ComponentSetsModel componentSetsModel;
+	protected String decisionModelName = DECISION_MODEL_NAME_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getDecisions() <em>Decisions</em>}' containment reference list.
@@ -96,8 +91,8 @@ public class DecisionModelImpl extends MinimalEObjectImpl.Container implements D
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public RootQA getQualitymodel() {
-		return qualitymodel;
+	public String getDecisionModelName() {
+		return decisionModelName;
 	}
 
 	/**
@@ -105,76 +100,11 @@ public class DecisionModelImpl extends MinimalEObjectImpl.Container implements D
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetQualitymodel(RootQA newQualitymodel, NotificationChain msgs) {
-		RootQA oldQualitymodel = qualitymodel;
-		qualitymodel = newQualitymodel;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ApplicabilitymodelPackage.DECISION_MODEL__QUALITYMODEL, oldQualitymodel, newQualitymodel);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setQualitymodel(RootQA newQualitymodel) {
-		if (newQualitymodel != qualitymodel) {
-			NotificationChain msgs = null;
-			if (qualitymodel != null)
-				msgs = ((InternalEObject)qualitymodel).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ApplicabilitymodelPackage.DECISION_MODEL__QUALITYMODEL, null, msgs);
-			if (newQualitymodel != null)
-				msgs = ((InternalEObject)newQualitymodel).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ApplicabilitymodelPackage.DECISION_MODEL__QUALITYMODEL, null, msgs);
-			msgs = basicSetQualitymodel(newQualitymodel, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ApplicabilitymodelPackage.DECISION_MODEL__QUALITYMODEL, newQualitymodel, newQualitymodel));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ComponentSetsModel getComponentSetsModel() {
-		return componentSetsModel;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public NotificationChain basicSetComponentSetsModel(ComponentSetsModel newComponentSetsModel, NotificationChain msgs) {
-		ComponentSetsModel oldComponentSetsModel = componentSetsModel;
-		componentSetsModel = newComponentSetsModel;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ApplicabilitymodelPackage.DECISION_MODEL__COMPONENT_SETS_MODEL, oldComponentSetsModel, newComponentSetsModel);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setComponentSetsModel(ComponentSetsModel newComponentSetsModel) {
-		if (newComponentSetsModel != componentSetsModel) {
-			NotificationChain msgs = null;
-			if (componentSetsModel != null)
-				msgs = ((InternalEObject)componentSetsModel).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ApplicabilitymodelPackage.DECISION_MODEL__COMPONENT_SETS_MODEL, null, msgs);
-			if (newComponentSetsModel != null)
-				msgs = ((InternalEObject)newComponentSetsModel).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ApplicabilitymodelPackage.DECISION_MODEL__COMPONENT_SETS_MODEL, null, msgs);
-			msgs = basicSetComponentSetsModel(newComponentSetsModel, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ApplicabilitymodelPackage.DECISION_MODEL__COMPONENT_SETS_MODEL, newComponentSetsModel, newComponentSetsModel));
+	public void setDecisionModelName(String newDecisionModelName) {
+		String oldDecisionModelName = decisionModelName;
+		decisionModelName = newDecisionModelName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ApplicabilitymodelPackage.DECISION_MODEL__DECISION_MODEL_NAME, oldDecisionModelName, decisionModelName));
 	}
 
 	/**
@@ -197,10 +127,6 @@ public class DecisionModelImpl extends MinimalEObjectImpl.Container implements D
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ApplicabilitymodelPackage.DECISION_MODEL__QUALITYMODEL:
-				return basicSetQualitymodel(null, msgs);
-			case ApplicabilitymodelPackage.DECISION_MODEL__COMPONENT_SETS_MODEL:
-				return basicSetComponentSetsModel(null, msgs);
 			case ApplicabilitymodelPackage.DECISION_MODEL__DECISIONS:
 				return ((InternalEList<?>)getDecisions()).basicRemove(otherEnd, msgs);
 		}
@@ -215,10 +141,8 @@ public class DecisionModelImpl extends MinimalEObjectImpl.Container implements D
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ApplicabilitymodelPackage.DECISION_MODEL__QUALITYMODEL:
-				return getQualitymodel();
-			case ApplicabilitymodelPackage.DECISION_MODEL__COMPONENT_SETS_MODEL:
-				return getComponentSetsModel();
+			case ApplicabilitymodelPackage.DECISION_MODEL__DECISION_MODEL_NAME:
+				return getDecisionModelName();
 			case ApplicabilitymodelPackage.DECISION_MODEL__DECISIONS:
 				return getDecisions();
 		}
@@ -234,11 +158,8 @@ public class DecisionModelImpl extends MinimalEObjectImpl.Container implements D
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ApplicabilitymodelPackage.DECISION_MODEL__QUALITYMODEL:
-				setQualitymodel((RootQA)newValue);
-				return;
-			case ApplicabilitymodelPackage.DECISION_MODEL__COMPONENT_SETS_MODEL:
-				setComponentSetsModel((ComponentSetsModel)newValue);
+			case ApplicabilitymodelPackage.DECISION_MODEL__DECISION_MODEL_NAME:
+				setDecisionModelName((String)newValue);
 				return;
 			case ApplicabilitymodelPackage.DECISION_MODEL__DECISIONS:
 				getDecisions().clear();
@@ -256,11 +177,8 @@ public class DecisionModelImpl extends MinimalEObjectImpl.Container implements D
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ApplicabilitymodelPackage.DECISION_MODEL__QUALITYMODEL:
-				setQualitymodel((RootQA)null);
-				return;
-			case ApplicabilitymodelPackage.DECISION_MODEL__COMPONENT_SETS_MODEL:
-				setComponentSetsModel((ComponentSetsModel)null);
+			case ApplicabilitymodelPackage.DECISION_MODEL__DECISION_MODEL_NAME:
+				setDecisionModelName(DECISION_MODEL_NAME_EDEFAULT);
 				return;
 			case ApplicabilitymodelPackage.DECISION_MODEL__DECISIONS:
 				getDecisions().clear();
@@ -277,14 +195,28 @@ public class DecisionModelImpl extends MinimalEObjectImpl.Container implements D
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ApplicabilitymodelPackage.DECISION_MODEL__QUALITYMODEL:
-				return qualitymodel != null;
-			case ApplicabilitymodelPackage.DECISION_MODEL__COMPONENT_SETS_MODEL:
-				return componentSetsModel != null;
+			case ApplicabilitymodelPackage.DECISION_MODEL__DECISION_MODEL_NAME:
+				return DECISION_MODEL_NAME_EDEFAULT == null ? decisionModelName != null : !DECISION_MODEL_NAME_EDEFAULT.equals(decisionModelName);
 			case ApplicabilitymodelPackage.DECISION_MODEL__DECISIONS:
 				return decisions != null && !decisions.isEmpty();
 		}
 		return super.eIsSet(featureID);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String toString() {
+		if (eIsProxy()) return super.toString();
+
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (decisionModelName: ");
+		result.append(decisionModelName);
+		result.append(')');
+		return result.toString();
 	}
 
 } //DecisionModelImpl

@@ -2,15 +2,11 @@
  */
 package applicabilitymodel.presentation;
 
-import componentsetsmodel.provider.ComponentSetsEditPlugin;
-
 import org.eclipse.emf.common.EMFPlugin;
 
 import org.eclipse.emf.common.ui.EclipseUIPlugin;
 
 import org.eclipse.emf.common.util.ResourceLocator;
-
-import qasvariabilitymodel.provider.QaconfigEditPlugin;
 
 /**
  * This is the central singleton for the Applicability editor plugin.
@@ -44,8 +40,6 @@ public final class ApplicabilityEditorPlugin extends EMFPlugin {
 	public ApplicabilityEditorPlugin() {
 		super
 			(new ResourceLocator [] {
-				ComponentSetsEditPlugin.INSTANCE,
-				QaconfigEditPlugin.INSTANCE,
 			});
 	}
 

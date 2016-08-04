@@ -67,22 +67,13 @@ public interface ApplicabilitymodelPackage extends EPackage {
 	int DECISION_MODEL = 0;
 
 	/**
-	 * The feature id for the '<em><b>Qualitymodel</b></em>' containment reference.
+	 * The feature id for the '<em><b>Decision Model Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DECISION_MODEL__QUALITYMODEL = 0;
-
-	/**
-	 * The feature id for the '<em><b>Component Sets Model</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int DECISION_MODEL__COMPONENT_SETS_MODEL = 1;
+	int DECISION_MODEL__DECISION_MODEL_NAME = 0;
 
 	/**
 	 * The feature id for the '<em><b>Decisions</b></em>' containment reference list.
@@ -91,7 +82,7 @@ public interface ApplicabilitymodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DECISION_MODEL__DECISIONS = 2;
+	int DECISION_MODEL__DECISIONS = 1;
 
 	/**
 	 * The number of structural features of the '<em>Decision Model</em>' class.
@@ -100,7 +91,7 @@ public interface ApplicabilitymodelPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DECISION_MODEL_FEATURE_COUNT = 3;
+	int DECISION_MODEL_FEATURE_COUNT = 2;
 
 	/**
 	 * The number of operations of the '<em>Decision Model</em>' class.
@@ -122,16 +113,16 @@ public interface ApplicabilitymodelPackage extends EPackage {
 	int DECISION = 1;
 
 	/**
-	 * The feature id for the '<em><b>Qa Variant</b></em>' containment reference.
+	 * The feature id for the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DECISION__QA_VARIANT = 0;
+	int DECISION__NAME = 0;
 
 	/**
-	 * The feature id for the '<em><b>Component Set</b></em>' containment reference.
+	 * The feature id for the '<em><b>Component Set</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -140,13 +131,13 @@ public interface ApplicabilitymodelPackage extends EPackage {
 	int DECISION__COMPONENT_SET = 1;
 
 	/**
-	 * The feature id for the '<em><b>Requires Variant Selected</b></em>' attribute.
+	 * The feature id for the '<em><b>Required Variants</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DECISION__REQUIRES_VARIANT_SELECTED = 2;
+	int DECISION__REQUIRED_VARIANTS = 2;
 
 	/**
 	 * The number of structural features of the '<em>Decision</em>' class.
@@ -166,6 +157,52 @@ public interface ApplicabilitymodelPackage extends EPackage {
 	 */
 	int DECISION_OPERATION_COUNT = 0;
 
+	/**
+	 * The meta object id for the '{@link applicabilitymodel.impl.RequiredVariantImpl <em>Required Variant</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see applicabilitymodel.impl.RequiredVariantImpl
+	 * @see applicabilitymodel.impl.ApplicabilitymodelPackageImpl#getRequiredVariant()
+	 * @generated
+	 */
+	int REQUIRED_VARIANT = 2;
+
+	/**
+	 * The feature id for the '<em><b>Variant Name</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REQUIRED_VARIANT__VARIANT_NAME = 0;
+
+	/**
+	 * The feature id for the '<em><b>Selection Required</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REQUIRED_VARIANT__SELECTION_REQUIRED = 1;
+
+	/**
+	 * The number of structural features of the '<em>Required Variant</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REQUIRED_VARIANT_FEATURE_COUNT = 2;
+
+	/**
+	 * The number of operations of the '<em>Required Variant</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int REQUIRED_VARIANT_OPERATION_COUNT = 0;
+
 
 	/**
 	 * Returns the meta object for class '{@link applicabilitymodel.DecisionModel <em>Decision Model</em>}'.
@@ -178,26 +215,15 @@ public interface ApplicabilitymodelPackage extends EPackage {
 	EClass getDecisionModel();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link applicabilitymodel.DecisionModel#getQualitymodel <em>Qualitymodel</em>}'.
+	 * Returns the meta object for the attribute '{@link applicabilitymodel.DecisionModel#getDecisionModelName <em>Decision Model Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Qualitymodel</em>'.
-	 * @see applicabilitymodel.DecisionModel#getQualitymodel()
+	 * @return the meta object for the attribute '<em>Decision Model Name</em>'.
+	 * @see applicabilitymodel.DecisionModel#getDecisionModelName()
 	 * @see #getDecisionModel()
 	 * @generated
 	 */
-	EReference getDecisionModel_Qualitymodel();
-
-	/**
-	 * Returns the meta object for the containment reference '{@link applicabilitymodel.DecisionModel#getComponentSetsModel <em>Component Sets Model</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Component Sets Model</em>'.
-	 * @see applicabilitymodel.DecisionModel#getComponentSetsModel()
-	 * @see #getDecisionModel()
-	 * @generated
-	 */
-	EReference getDecisionModel_ComponentSetsModel();
+	EAttribute getDecisionModel_DecisionModelName();
 
 	/**
 	 * Returns the meta object for the containment reference list '{@link applicabilitymodel.DecisionModel#getDecisions <em>Decisions</em>}'.
@@ -221,37 +247,69 @@ public interface ApplicabilitymodelPackage extends EPackage {
 	EClass getDecision();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link applicabilitymodel.Decision#getQaVariant <em>Qa Variant</em>}'.
+	 * Returns the meta object for the attribute '{@link applicabilitymodel.Decision#getName <em>Name</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Qa Variant</em>'.
-	 * @see applicabilitymodel.Decision#getQaVariant()
+	 * @return the meta object for the attribute '<em>Name</em>'.
+	 * @see applicabilitymodel.Decision#getName()
 	 * @see #getDecision()
 	 * @generated
 	 */
-	EReference getDecision_QaVariant();
+	EAttribute getDecision_Name();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link applicabilitymodel.Decision#getComponentSet <em>Component Set</em>}'.
+	 * Returns the meta object for the attribute '{@link applicabilitymodel.Decision#getComponentSet <em>Component Set</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Component Set</em>'.
+	 * @return the meta object for the attribute '<em>Component Set</em>'.
 	 * @see applicabilitymodel.Decision#getComponentSet()
 	 * @see #getDecision()
 	 * @generated
 	 */
-	EReference getDecision_ComponentSet();
+	EAttribute getDecision_ComponentSet();
 
 	/**
-	 * Returns the meta object for the attribute '{@link applicabilitymodel.Decision#getRequiresVariantSelected <em>Requires Variant Selected</em>}'.
+	 * Returns the meta object for the containment reference list '{@link applicabilitymodel.Decision#getRequiredVariants <em>Required Variants</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the attribute '<em>Requires Variant Selected</em>'.
-	 * @see applicabilitymodel.Decision#getRequiresVariantSelected()
+	 * @return the meta object for the containment reference list '<em>Required Variants</em>'.
+	 * @see applicabilitymodel.Decision#getRequiredVariants()
 	 * @see #getDecision()
 	 * @generated
 	 */
-	EAttribute getDecision_RequiresVariantSelected();
+	EReference getDecision_RequiredVariants();
+
+	/**
+	 * Returns the meta object for class '{@link applicabilitymodel.RequiredVariant <em>Required Variant</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Required Variant</em>'.
+	 * @see applicabilitymodel.RequiredVariant
+	 * @generated
+	 */
+	EClass getRequiredVariant();
+
+	/**
+	 * Returns the meta object for the attribute '{@link applicabilitymodel.RequiredVariant#getVariantName <em>Variant Name</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Variant Name</em>'.
+	 * @see applicabilitymodel.RequiredVariant#getVariantName()
+	 * @see #getRequiredVariant()
+	 * @generated
+	 */
+	EAttribute getRequiredVariant_VariantName();
+
+	/**
+	 * Returns the meta object for the attribute '{@link applicabilitymodel.RequiredVariant#getSelectionRequired <em>Selection Required</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Selection Required</em>'.
+	 * @see applicabilitymodel.RequiredVariant#getSelectionRequired()
+	 * @see #getRequiredVariant()
+	 * @generated
+	 */
+	EAttribute getRequiredVariant_SelectionRequired();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -287,20 +345,12 @@ public interface ApplicabilitymodelPackage extends EPackage {
 		EClass DECISION_MODEL = eINSTANCE.getDecisionModel();
 
 		/**
-		 * The meta object literal for the '<em><b>Qualitymodel</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Decision Model Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DECISION_MODEL__QUALITYMODEL = eINSTANCE.getDecisionModel_Qualitymodel();
-
-		/**
-		 * The meta object literal for the '<em><b>Component Sets Model</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference DECISION_MODEL__COMPONENT_SETS_MODEL = eINSTANCE.getDecisionModel_ComponentSetsModel();
+		EAttribute DECISION_MODEL__DECISION_MODEL_NAME = eINSTANCE.getDecisionModel_DecisionModelName();
 
 		/**
 		 * The meta object literal for the '<em><b>Decisions</b></em>' containment reference list feature.
@@ -321,28 +371,54 @@ public interface ApplicabilitymodelPackage extends EPackage {
 		EClass DECISION = eINSTANCE.getDecision();
 
 		/**
-		 * The meta object literal for the '<em><b>Qa Variant</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DECISION__QA_VARIANT = eINSTANCE.getDecision_QaVariant();
+		EAttribute DECISION__NAME = eINSTANCE.getDecision_Name();
 
 		/**
-		 * The meta object literal for the '<em><b>Component Set</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Component Set</b></em>' attribute feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DECISION__COMPONENT_SET = eINSTANCE.getDecision_ComponentSet();
+		EAttribute DECISION__COMPONENT_SET = eINSTANCE.getDecision_ComponentSet();
 
 		/**
-		 * The meta object literal for the '<em><b>Requires Variant Selected</b></em>' attribute feature.
+		 * The meta object literal for the '<em><b>Required Variants</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EAttribute DECISION__REQUIRES_VARIANT_SELECTED = eINSTANCE.getDecision_RequiresVariantSelected();
+		EReference DECISION__REQUIRED_VARIANTS = eINSTANCE.getDecision_RequiredVariants();
+
+		/**
+		 * The meta object literal for the '{@link applicabilitymodel.impl.RequiredVariantImpl <em>Required Variant</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see applicabilitymodel.impl.RequiredVariantImpl
+		 * @see applicabilitymodel.impl.ApplicabilitymodelPackageImpl#getRequiredVariant()
+		 * @generated
+		 */
+		EClass REQUIRED_VARIANT = eINSTANCE.getRequiredVariant();
+
+		/**
+		 * The meta object literal for the '<em><b>Variant Name</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REQUIRED_VARIANT__VARIANT_NAME = eINSTANCE.getRequiredVariant_VariantName();
+
+		/**
+		 * The meta object literal for the '<em><b>Selection Required</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute REQUIRED_VARIANT__SELECTION_REQUIRED = eINSTANCE.getRequiredVariant_SelectionRequired();
 
 	}
 

@@ -58,6 +58,7 @@ public class ApplicabilitymodelFactoryImpl extends EFactoryImpl implements Appli
 		switch (eClass.getClassifierID()) {
 			case ApplicabilitymodelPackage.DECISION_MODEL: return createDecisionModel();
 			case ApplicabilitymodelPackage.DECISION: return createDecision();
+			case ApplicabilitymodelPackage.REQUIRED_VARIANT: return createRequiredVariant();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -81,6 +82,16 @@ public class ApplicabilitymodelFactoryImpl extends EFactoryImpl implements Appli
 	public Decision createDecision() {
 		DecisionImpl decision = new DecisionImpl();
 		return decision;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public RequiredVariant createRequiredVariant() {
+		RequiredVariantImpl requiredVariant = new RequiredVariantImpl();
+		return requiredVariant;
 	}
 
 	/**

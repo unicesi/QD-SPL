@@ -3,24 +3,21 @@
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="applicabilitymodel" nsURI="http://applicabilitymodel/applicabilitymodel"
     nsPrefix="applicabilitymodel">
   <eClassifiers xsi:type="ecore:EClass" name="DecisionModel">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qualitymodel" lowerBound="1"
-        eType="ecore:EClass ../../co.edu.icesi.shift.qaconfig/metamodels/QAsConfig.ecore#//RootQA"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="componentSetsModel" lowerBound="1"
-        eType="ecore:EClass ../../co.edu.icesi.shift.componentsets/metamodels/ComponentSets.ecore#//ComponentSetsModel"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="decisionModelName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="decisions" lowerBound="1"
         upperBound="-1" eType="#//Decision" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Decision">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="qaVariant" lowerBound="1"
-        eType="ecore:EClass ../../co.edu.icesi.shift.qaconfig/metamodels/QAsConfig.ecore#//QA"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="componentSet" lowerBound="1"
-        eType="ecore:EClass ../../co.edu.icesi.shift.componentsets/metamodels/ComponentSets.ecore#//ComponentSet"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="requiresVariantSelected"
-        lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-        defaultValueLiteral="0"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="componentSet" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="requiredVariants" upperBound="-1"
+        eType="#//RequiredVariant" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="RequiredVariant">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="variantName" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="selectionRequired" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt" defaultValueLiteral="0"/>
   </eClassifiers>
 </ecore:EPackage>

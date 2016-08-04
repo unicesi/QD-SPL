@@ -40,6 +40,15 @@ public interface ApplicabilitymodelFactory extends EFactory {
 	Decision createDecision();
 
 	/**
+	 * Returns a new object of class '<em>Required Variant</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Required Variant</em>'.
+	 * @generated
+	 */
+	RequiredVariant createRequiredVariant();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

@@ -6,8 +6,7 @@ import applicabilitymodel.ApplicabilitymodelFactory;
 import applicabilitymodel.ApplicabilitymodelPackage;
 import applicabilitymodel.Decision;
 import applicabilitymodel.DecisionModel;
-
-import componentsetsmodel.ComponentsetsmodelPackage;
+import applicabilitymodel.RequiredVariant;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -15,8 +14,6 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
-
-import qasvariabilitymodel.QasvariabilitymodelPackage;
 
 /**
  * <!-- begin-user-doc -->
@@ -38,6 +35,13 @@ public class ApplicabilitymodelPackageImpl extends EPackageImpl implements Appli
 	 * @generated
 	 */
 	private EClass decisionEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass requiredVariantEClass = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -85,10 +89,6 @@ public class ApplicabilitymodelPackageImpl extends EPackageImpl implements Appli
 
 		isInited = true;
 
-		// Initialize simple dependencies
-		ComponentsetsmodelPackage.eINSTANCE.eClass();
-		QasvariabilitymodelPackage.eINSTANCE.eClass();
-
 		// Create package meta-data objects
 		theApplicabilitymodelPackage.createPackageContents();
 
@@ -118,17 +118,8 @@ public class ApplicabilitymodelPackageImpl extends EPackageImpl implements Appli
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDecisionModel_Qualitymodel() {
-		return (EReference)decisionModelEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getDecisionModel_ComponentSetsModel() {
-		return (EReference)decisionModelEClass.getEStructuralFeatures().get(1);
+	public EAttribute getDecisionModel_DecisionModelName() {
+		return (EAttribute)decisionModelEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -137,7 +128,7 @@ public class ApplicabilitymodelPackageImpl extends EPackageImpl implements Appli
 	 * @generated
 	 */
 	public EReference getDecisionModel_Decisions() {
-		return (EReference)decisionModelEClass.getEStructuralFeatures().get(2);
+		return (EReference)decisionModelEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -154,8 +145,8 @@ public class ApplicabilitymodelPackageImpl extends EPackageImpl implements Appli
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDecision_QaVariant() {
-		return (EReference)decisionEClass.getEStructuralFeatures().get(0);
+	public EAttribute getDecision_Name() {
+		return (EAttribute)decisionEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -163,8 +154,8 @@ public class ApplicabilitymodelPackageImpl extends EPackageImpl implements Appli
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDecision_ComponentSet() {
-		return (EReference)decisionEClass.getEStructuralFeatures().get(1);
+	public EAttribute getDecision_ComponentSet() {
+		return (EAttribute)decisionEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -172,8 +163,35 @@ public class ApplicabilitymodelPackageImpl extends EPackageImpl implements Appli
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getDecision_RequiresVariantSelected() {
-		return (EAttribute)decisionEClass.getEStructuralFeatures().get(2);
+	public EReference getDecision_RequiredVariants() {
+		return (EReference)decisionEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getRequiredVariant() {
+		return requiredVariantEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRequiredVariant_VariantName() {
+		return (EAttribute)requiredVariantEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getRequiredVariant_SelectionRequired() {
+		return (EAttribute)requiredVariantEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -205,14 +223,17 @@ public class ApplicabilitymodelPackageImpl extends EPackageImpl implements Appli
 
 		// Create classes and their features
 		decisionModelEClass = createEClass(DECISION_MODEL);
-		createEReference(decisionModelEClass, DECISION_MODEL__QUALITYMODEL);
-		createEReference(decisionModelEClass, DECISION_MODEL__COMPONENT_SETS_MODEL);
+		createEAttribute(decisionModelEClass, DECISION_MODEL__DECISION_MODEL_NAME);
 		createEReference(decisionModelEClass, DECISION_MODEL__DECISIONS);
 
 		decisionEClass = createEClass(DECISION);
-		createEReference(decisionEClass, DECISION__QA_VARIANT);
-		createEReference(decisionEClass, DECISION__COMPONENT_SET);
-		createEAttribute(decisionEClass, DECISION__REQUIRES_VARIANT_SELECTED);
+		createEAttribute(decisionEClass, DECISION__NAME);
+		createEAttribute(decisionEClass, DECISION__COMPONENT_SET);
+		createEReference(decisionEClass, DECISION__REQUIRED_VARIANTS);
+
+		requiredVariantEClass = createEClass(REQUIRED_VARIANT);
+		createEAttribute(requiredVariantEClass, REQUIRED_VARIANT__VARIANT_NAME);
+		createEAttribute(requiredVariantEClass, REQUIRED_VARIANT__SELECTION_REQUIRED);
 	}
 
 	/**
@@ -238,10 +259,6 @@ public class ApplicabilitymodelPackageImpl extends EPackageImpl implements Appli
 		setNsPrefix(eNS_PREFIX);
 		setNsURI(eNS_URI);
 
-		// Obtain other dependent packages
-		QasvariabilitymodelPackage theQasvariabilitymodelPackage = (QasvariabilitymodelPackage)EPackage.Registry.INSTANCE.getEPackage(QasvariabilitymodelPackage.eNS_URI);
-		ComponentsetsmodelPackage theComponentsetsmodelPackage = (ComponentsetsmodelPackage)EPackage.Registry.INSTANCE.getEPackage(ComponentsetsmodelPackage.eNS_URI);
-
 		// Create type parameters
 
 		// Set bounds for type parameters
@@ -250,14 +267,17 @@ public class ApplicabilitymodelPackageImpl extends EPackageImpl implements Appli
 
 		// Initialize classes, features, and operations; add parameters
 		initEClass(decisionModelEClass, DecisionModel.class, "DecisionModel", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDecisionModel_Qualitymodel(), theQasvariabilitymodelPackage.getRootQA(), null, "qualitymodel", null, 1, 1, DecisionModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDecisionModel_ComponentSetsModel(), theComponentsetsmodelPackage.getComponentSetsModel(), null, "componentSetsModel", null, 1, 1, DecisionModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDecisionModel_DecisionModelName(), ecorePackage.getEString(), "decisionModelName", null, 0, 1, DecisionModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getDecisionModel_Decisions(), this.getDecision(), null, "decisions", null, 1, -1, DecisionModel.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(decisionEClass, Decision.class, "Decision", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDecision_QaVariant(), theQasvariabilitymodelPackage.getQA(), null, "qaVariant", null, 1, 1, Decision.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDecision_ComponentSet(), theComponentsetsmodelPackage.getComponentSet(), null, "componentSet", null, 1, 1, Decision.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getDecision_RequiresVariantSelected(), ecorePackage.getEInt(), "requiresVariantSelected", "0", 1, 1, Decision.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDecision_Name(), ecorePackage.getEString(), "name", null, 1, 1, Decision.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getDecision_ComponentSet(), ecorePackage.getEString(), "componentSet", null, 1, 1, Decision.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDecision_RequiredVariants(), this.getRequiredVariant(), null, "requiredVariants", null, 0, -1, Decision.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(requiredVariantEClass, RequiredVariant.class, "RequiredVariant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getRequiredVariant_VariantName(), ecorePackage.getEString(), "variantName", null, 1, 1, RequiredVariant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getRequiredVariant_SelectionRequired(), ecorePackage.getEInt(), "selectionRequired", "0", 1, 1, RequiredVariant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);

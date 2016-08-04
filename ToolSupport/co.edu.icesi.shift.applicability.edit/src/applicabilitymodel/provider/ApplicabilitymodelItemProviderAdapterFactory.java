@@ -118,6 +118,29 @@ public class ApplicabilitymodelItemProviderAdapterFactory extends Applicabilitym
 	}
 
 	/**
+	 * This keeps track of the one adapter used for all {@link applicabilitymodel.RequiredVariant} instances.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected RequiredVariantItemProvider requiredVariantItemProvider;
+
+	/**
+	 * This creates an adapter for a {@link applicabilitymodel.RequiredVariant}.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public Adapter createRequiredVariantAdapter() {
+		if (requiredVariantItemProvider == null) {
+			requiredVariantItemProvider = new RequiredVariantItemProvider(this);
+		}
+
+		return requiredVariantItemProvider;
+	}
+
+	/**
 	 * This returns the root adapter factory that contains this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -218,6 +241,7 @@ public class ApplicabilitymodelItemProviderAdapterFactory extends Applicabilitym
 	public void dispose() {
 		if (decisionModelItemProvider != null) decisionModelItemProvider.dispose();
 		if (decisionItemProvider != null) decisionItemProvider.dispose();
+		if (requiredVariantItemProvider != null) requiredVariantItemProvider.dispose();
 	}
 
 }

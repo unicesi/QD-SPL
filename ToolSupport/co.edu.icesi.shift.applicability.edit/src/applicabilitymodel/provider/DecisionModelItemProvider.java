@@ -7,8 +7,6 @@ import applicabilitymodel.ApplicabilitymodelFactory;
 import applicabilitymodel.ApplicabilitymodelPackage;
 import applicabilitymodel.DecisionModel;
 
-import componentsetsmodel.ComponentsetsmodelFactory;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -19,16 +17,16 @@ import org.eclipse.emf.common.util.ResourceLocator;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
-
-import qasvariabilitymodel.QasvariabilitymodelFactory;
 
 /**
  * This is the item provider adapter for a {@link applicabilitymodel.DecisionModel} object.
@@ -65,8 +63,31 @@ public class DecisionModelItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
+			addDecisionModelNamePropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
+	}
+
+	/**
+	 * This adds a property descriptor for the Decision Model Name feature.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	protected void addDecisionModelNamePropertyDescriptor(Object object) {
+		itemPropertyDescriptors.add
+			(createItemPropertyDescriptor
+				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
+				 getResourceLocator(),
+				 getString("_UI_DecisionModel_decisionModelName_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_DecisionModel_decisionModelName_feature", "_UI_DecisionModel_type"),
+				 ApplicabilitymodelPackage.Literals.DECISION_MODEL__DECISION_MODEL_NAME,
+				 true,
+				 false,
+				 false,
+				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 null,
+				 null));
 	}
 
 	/**
@@ -81,8 +102,6 @@ public class DecisionModelItemProvider
 	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
 		if (childrenFeatures == null) {
 			super.getChildrenFeatures(object);
-			childrenFeatures.add(ApplicabilitymodelPackage.Literals.DECISION_MODEL__QUALITYMODEL);
-			childrenFeatures.add(ApplicabilitymodelPackage.Literals.DECISION_MODEL__COMPONENT_SETS_MODEL);
 			childrenFeatures.add(ApplicabilitymodelPackage.Literals.DECISION_MODEL__DECISIONS);
 		}
 		return childrenFeatures;
@@ -120,7 +139,10 @@ public class DecisionModelItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		return getString("_UI_DecisionModel_type");
+		String label = ((DecisionModel)object).getDecisionModelName();
+		return label == null || label.length() == 0 ?
+			getString("_UI_DecisionModel_type") :
+			getString("_UI_DecisionModel_type") + " " + label;
 	}
 	
 
@@ -136,8 +158,9 @@ public class DecisionModelItemProvider
 		updateChildren(notification);
 
 		switch (notification.getFeatureID(DecisionModel.class)) {
-			case ApplicabilitymodelPackage.DECISION_MODEL__QUALITYMODEL:
-			case ApplicabilitymodelPackage.DECISION_MODEL__COMPONENT_SETS_MODEL:
+			case ApplicabilitymodelPackage.DECISION_MODEL__DECISION_MODEL_NAME:
+				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+				return;
 			case ApplicabilitymodelPackage.DECISION_MODEL__DECISIONS:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
@@ -155,16 +178,6 @@ public class DecisionModelItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ApplicabilitymodelPackage.Literals.DECISION_MODEL__QUALITYMODEL,
-				 QasvariabilitymodelFactory.eINSTANCE.createRootQA()));
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ApplicabilitymodelPackage.Literals.DECISION_MODEL__COMPONENT_SETS_MODEL,
-				 ComponentsetsmodelFactory.eINSTANCE.createComponentSetsModel()));
 
 		newChildDescriptors.add
 			(createChildParameter

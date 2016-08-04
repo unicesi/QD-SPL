@@ -2,13 +2,9 @@
  */
 package applicabilitymodel;
 
-import componentsetsmodel.ComponentSetsModel;
-
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
-
-import qasvariabilitymodel.RootQA;
 
 /**
  * <!-- begin-user-doc -->
@@ -19,8 +15,7 @@ import qasvariabilitymodel.RootQA;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link applicabilitymodel.DecisionModel#getQualitymodel <em>Qualitymodel</em>}</li>
- *   <li>{@link applicabilitymodel.DecisionModel#getComponentSetsModel <em>Component Sets Model</em>}</li>
+ *   <li>{@link applicabilitymodel.DecisionModel#getDecisionModelName <em>Decision Model Name</em>}</li>
  *   <li>{@link applicabilitymodel.DecisionModel#getDecisions <em>Decisions</em>}</li>
  * </ul>
  *
@@ -30,56 +25,30 @@ import qasvariabilitymodel.RootQA;
  */
 public interface DecisionModel extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Qualitymodel</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Decision Model Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Qualitymodel</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Decision Model Name</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Qualitymodel</em>' containment reference.
-	 * @see #setQualitymodel(RootQA)
-	 * @see applicabilitymodel.ApplicabilitymodelPackage#getDecisionModel_Qualitymodel()
-	 * @model containment="true" required="true"
+	 * @return the value of the '<em>Decision Model Name</em>' attribute.
+	 * @see #setDecisionModelName(String)
+	 * @see applicabilitymodel.ApplicabilitymodelPackage#getDecisionModel_DecisionModelName()
+	 * @model
 	 * @generated
 	 */
-	RootQA getQualitymodel();
+	String getDecisionModelName();
 
 	/**
-	 * Sets the value of the '{@link applicabilitymodel.DecisionModel#getQualitymodel <em>Qualitymodel</em>}' containment reference.
+	 * Sets the value of the '{@link applicabilitymodel.DecisionModel#getDecisionModelName <em>Decision Model Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Qualitymodel</em>' containment reference.
-	 * @see #getQualitymodel()
+	 * @param value the new value of the '<em>Decision Model Name</em>' attribute.
+	 * @see #getDecisionModelName()
 	 * @generated
 	 */
-	void setQualitymodel(RootQA value);
-
-	/**
-	 * Returns the value of the '<em><b>Component Sets Model</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Component Sets Model</em>' containment reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Component Sets Model</em>' containment reference.
-	 * @see #setComponentSetsModel(ComponentSetsModel)
-	 * @see applicabilitymodel.ApplicabilitymodelPackage#getDecisionModel_ComponentSetsModel()
-	 * @model containment="true" required="true"
-	 * @generated
-	 */
-	ComponentSetsModel getComponentSetsModel();
-
-	/**
-	 * Sets the value of the '{@link applicabilitymodel.DecisionModel#getComponentSetsModel <em>Component Sets Model</em>}' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Component Sets Model</em>' containment reference.
-	 * @see #getComponentSetsModel()
-	 * @generated
-	 */
-	void setComponentSetsModel(ComponentSetsModel value);
+	void setDecisionModelName(String value);
 
 	/**
 	 * Returns the value of the '<em><b>Decisions</b></em>' containment reference list.

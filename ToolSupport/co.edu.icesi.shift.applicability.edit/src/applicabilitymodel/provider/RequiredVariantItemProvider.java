@@ -3,9 +3,8 @@
 package applicabilitymodel.provider;
 
 
-import applicabilitymodel.ApplicabilitymodelFactory;
 import applicabilitymodel.ApplicabilitymodelPackage;
-import applicabilitymodel.Decision;
+import applicabilitymodel.RequiredVariant;
 
 import java.util.Collection;
 import java.util.List;
@@ -14,8 +13,6 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 
 import org.eclipse.emf.common.util.ResourceLocator;
-
-import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
@@ -29,12 +26,12 @@ import org.eclipse.emf.edit.provider.ItemProviderAdapter;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 /**
- * This is the item provider adapter for a {@link applicabilitymodel.Decision} object.
+ * This is the item provider adapter for a {@link applicabilitymodel.RequiredVariant} object.
  * <!-- begin-user-doc -->
  * <!-- end-user-doc -->
  * @generated
  */
-public class DecisionItemProvider 
+public class RequiredVariantItemProvider 
 	extends ItemProviderAdapter
 	implements
 		IEditingDomainItemProvider,
@@ -48,7 +45,7 @@ public class DecisionItemProvider
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DecisionItemProvider(AdapterFactory adapterFactory) {
+	public RequiredVariantItemProvider(AdapterFactory adapterFactory) {
 		super(adapterFactory);
 	}
 
@@ -63,26 +60,26 @@ public class DecisionItemProvider
 		if (itemPropertyDescriptors == null) {
 			super.getPropertyDescriptors(object);
 
-			addNamePropertyDescriptor(object);
-			addComponentSetPropertyDescriptor(object);
+			addVariantNamePropertyDescriptor(object);
+			addSelectionRequiredPropertyDescriptor(object);
 		}
 		return itemPropertyDescriptors;
 	}
 
 	/**
-	 * This adds a property descriptor for the Name feature.
+	 * This adds a property descriptor for the Variant Name feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addNamePropertyDescriptor(Object object) {
+	protected void addVariantNamePropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Decision_name_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Decision_name_feature", "_UI_Decision_type"),
-				 ApplicabilitymodelPackage.Literals.DECISION__NAME,
+				 getString("_UI_RequiredVariant_variantName_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RequiredVariant_variantName_feature", "_UI_RequiredVariant_type"),
+				 ApplicabilitymodelPackage.Literals.REQUIRED_VARIANT__VARIANT_NAME,
 				 true,
 				 false,
 				 false,
@@ -92,66 +89,36 @@ public class DecisionItemProvider
 	}
 
 	/**
-	 * This adds a property descriptor for the Component Set feature.
+	 * This adds a property descriptor for the Selection Required feature.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected void addComponentSetPropertyDescriptor(Object object) {
+	protected void addSelectionRequiredPropertyDescriptor(Object object) {
 		itemPropertyDescriptors.add
 			(createItemPropertyDescriptor
 				(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(),
 				 getResourceLocator(),
-				 getString("_UI_Decision_componentSet_feature"),
-				 getString("_UI_PropertyDescriptor_description", "_UI_Decision_componentSet_feature", "_UI_Decision_type"),
-				 ApplicabilitymodelPackage.Literals.DECISION__COMPONENT_SET,
+				 getString("_UI_RequiredVariant_selectionRequired_feature"),
+				 getString("_UI_PropertyDescriptor_description", "_UI_RequiredVariant_selectionRequired_feature", "_UI_RequiredVariant_type"),
+				 ApplicabilitymodelPackage.Literals.REQUIRED_VARIANT__SELECTION_REQUIRED,
 				 true,
 				 false,
 				 false,
-				 ItemPropertyDescriptor.GENERIC_VALUE_IMAGE,
+				 ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE,
 				 null,
 				 null));
 	}
 
 	/**
-	 * This specifies how to implement {@link #getChildren} and is used to deduce an appropriate feature for an
-	 * {@link org.eclipse.emf.edit.command.AddCommand}, {@link org.eclipse.emf.edit.command.RemoveCommand} or
-	 * {@link org.eclipse.emf.edit.command.MoveCommand} in {@link #createCommand}.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object) {
-		if (childrenFeatures == null) {
-			super.getChildrenFeatures(object);
-			childrenFeatures.add(ApplicabilitymodelPackage.Literals.DECISION__REQUIRED_VARIANTS);
-		}
-		return childrenFeatures;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	@Override
-	protected EStructuralFeature getChildFeature(Object object, Object child) {
-		// Check the type of the specified child object and return the proper feature to use for
-		// adding (see {@link AddCommand}) it as a child.
-
-		return super.getChildFeature(object, child);
-	}
-
-	/**
-	 * This returns Decision.gif.
+	 * This returns RequiredVariant.gif.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
 	@Override
 	public Object getImage(Object object) {
-		return overlayImage(object, getResourceLocator().getImage("full/obj16/Decision"));
+		return overlayImage(object, getResourceLocator().getImage("full/obj16/RequiredVariant"));
 	}
 
 	/**
@@ -162,10 +129,10 @@ public class DecisionItemProvider
 	 */
 	@Override
 	public String getText(Object object) {
-		String label = ((Decision)object).getName();
+		String label = ((RequiredVariant)object).getVariantName();
 		return label == null || label.length() == 0 ?
-			getString("_UI_Decision_type") :
-			getString("_UI_Decision_type") + " " + label;
+			getString("_UI_RequiredVariant_type") :
+			getString("_UI_RequiredVariant_type") + " " + label;
 	}
 	
 
@@ -180,13 +147,10 @@ public class DecisionItemProvider
 	public void notifyChanged(Notification notification) {
 		updateChildren(notification);
 
-		switch (notification.getFeatureID(Decision.class)) {
-			case ApplicabilitymodelPackage.DECISION__NAME:
-			case ApplicabilitymodelPackage.DECISION__COMPONENT_SET:
+		switch (notification.getFeatureID(RequiredVariant.class)) {
+			case ApplicabilitymodelPackage.REQUIRED_VARIANT__VARIANT_NAME:
+			case ApplicabilitymodelPackage.REQUIRED_VARIANT__SELECTION_REQUIRED:
 				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
-				return;
-			case ApplicabilitymodelPackage.DECISION__REQUIRED_VARIANTS:
-				fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
 				return;
 		}
 		super.notifyChanged(notification);
@@ -202,11 +166,6 @@ public class DecisionItemProvider
 	@Override
 	protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object) {
 		super.collectNewChildDescriptors(newChildDescriptors, object);
-
-		newChildDescriptors.add
-			(createChildParameter
-				(ApplicabilitymodelPackage.Literals.DECISION__REQUIRED_VARIANTS,
-				 ApplicabilitymodelFactory.eINSTANCE.createRequiredVariant()));
 	}
 
 	/**

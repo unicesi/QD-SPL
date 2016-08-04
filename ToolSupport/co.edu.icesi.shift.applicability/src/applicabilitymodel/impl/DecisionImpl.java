@@ -4,11 +4,14 @@ package applicabilitymodel.impl;
 
 import applicabilitymodel.ApplicabilitymodelPackage;
 import applicabilitymodel.Decision;
+import applicabilitymodel.RequiredVariant;
 
-import componentsetsmodel.ComponentSet;
+import java.util.Collection;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
+
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -16,7 +19,8 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import qasvariabilitymodel.QA;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
@@ -26,53 +30,63 @@ import qasvariabilitymodel.QA;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link applicabilitymodel.impl.DecisionImpl#getQaVariant <em>Qa Variant</em>}</li>
+ *   <li>{@link applicabilitymodel.impl.DecisionImpl#getName <em>Name</em>}</li>
  *   <li>{@link applicabilitymodel.impl.DecisionImpl#getComponentSet <em>Component Set</em>}</li>
- *   <li>{@link applicabilitymodel.impl.DecisionImpl#getRequiresVariantSelected <em>Requires Variant Selected</em>}</li>
+ *   <li>{@link applicabilitymodel.impl.DecisionImpl#getRequiredVariants <em>Required Variants</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class DecisionImpl extends MinimalEObjectImpl.Container implements Decision {
 	/**
-	 * The cached value of the '{@link #getQaVariant() <em>Qa Variant</em>}' containment reference.
+	 * The default value of the '{@link #getName() <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getQaVariant()
+	 * @see #getName()
 	 * @generated
 	 * @ordered
 	 */
-	protected QA qaVariant;
+	protected static final String NAME_EDEFAULT = null;
 
 	/**
-	 * The cached value of the '{@link #getComponentSet() <em>Component Set</em>}' containment reference.
+	 * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see #getName()
+	 * @generated
+	 * @ordered
+	 */
+	protected String name = NAME_EDEFAULT;
+
+	/**
+	 * The default value of the '{@link #getComponentSet() <em>Component Set</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getComponentSet()
 	 * @generated
 	 * @ordered
 	 */
-	protected ComponentSet componentSet;
+	protected static final String COMPONENT_SET_EDEFAULT = null;
 
 	/**
-	 * The default value of the '{@link #getRequiresVariantSelected() <em>Requires Variant Selected</em>}' attribute.
+	 * The cached value of the '{@link #getComponentSet() <em>Component Set</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getRequiresVariantSelected()
+	 * @see #getComponentSet()
 	 * @generated
 	 * @ordered
 	 */
-	protected static final int REQUIRES_VARIANT_SELECTED_EDEFAULT = 0;
+	protected String componentSet = COMPONENT_SET_EDEFAULT;
 
 	/**
-	 * The cached value of the '{@link #getRequiresVariantSelected() <em>Requires Variant Selected</em>}' attribute.
+	 * The cached value of the '{@link #getRequiredVariants() <em>Required Variants</em>}' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see #getRequiresVariantSelected()
+	 * @see #getRequiredVariants()
 	 * @generated
 	 * @ordered
 	 */
-	protected int requiresVariantSelected = REQUIRES_VARIANT_SELECTED_EDEFAULT;
+	protected EList<RequiredVariant> requiredVariants;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -98,8 +112,8 @@ public class DecisionImpl extends MinimalEObjectImpl.Container implements Decisi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public QA getQaVariant() {
-		return qaVariant;
+	public String getName() {
+		return name;
 	}
 
 	/**
@@ -107,14 +121,11 @@ public class DecisionImpl extends MinimalEObjectImpl.Container implements Decisi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetQaVariant(QA newQaVariant, NotificationChain msgs) {
-		QA oldQaVariant = qaVariant;
-		qaVariant = newQaVariant;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ApplicabilitymodelPackage.DECISION__QA_VARIANT, oldQaVariant, newQaVariant);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
+	public void setName(String newName) {
+		String oldName = name;
+		name = newName;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, ApplicabilitymodelPackage.DECISION__NAME, oldName, name));
 	}
 
 	/**
@@ -122,26 +133,7 @@ public class DecisionImpl extends MinimalEObjectImpl.Container implements Decisi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setQaVariant(QA newQaVariant) {
-		if (newQaVariant != qaVariant) {
-			NotificationChain msgs = null;
-			if (qaVariant != null)
-				msgs = ((InternalEObject)qaVariant).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ApplicabilitymodelPackage.DECISION__QA_VARIANT, null, msgs);
-			if (newQaVariant != null)
-				msgs = ((InternalEObject)newQaVariant).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ApplicabilitymodelPackage.DECISION__QA_VARIANT, null, msgs);
-			msgs = basicSetQaVariant(newQaVariant, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ApplicabilitymodelPackage.DECISION__QA_VARIANT, newQaVariant, newQaVariant));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public ComponentSet getComponentSet() {
+	public String getComponentSet() {
 		return componentSet;
 	}
 
@@ -150,54 +142,23 @@ public class DecisionImpl extends MinimalEObjectImpl.Container implements Decisi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public NotificationChain basicSetComponentSet(ComponentSet newComponentSet, NotificationChain msgs) {
-		ComponentSet oldComponentSet = componentSet;
+	public void setComponentSet(String newComponentSet) {
+		String oldComponentSet = componentSet;
 		componentSet = newComponentSet;
-		if (eNotificationRequired()) {
-			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, ApplicabilitymodelPackage.DECISION__COMPONENT_SET, oldComponentSet, newComponentSet);
-			if (msgs == null) msgs = notification; else msgs.add(notification);
-		}
-		return msgs;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setComponentSet(ComponentSet newComponentSet) {
-		if (newComponentSet != componentSet) {
-			NotificationChain msgs = null;
-			if (componentSet != null)
-				msgs = ((InternalEObject)componentSet).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - ApplicabilitymodelPackage.DECISION__COMPONENT_SET, null, msgs);
-			if (newComponentSet != null)
-				msgs = ((InternalEObject)newComponentSet).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - ApplicabilitymodelPackage.DECISION__COMPONENT_SET, null, msgs);
-			msgs = basicSetComponentSet(newComponentSet, msgs);
-			if (msgs != null) msgs.dispatch();
-		}
-		else if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ApplicabilitymodelPackage.DECISION__COMPONENT_SET, newComponentSet, newComponentSet));
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public int getRequiresVariantSelected() {
-		return requiresVariantSelected;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public void setRequiresVariantSelected(int newRequiresVariantSelected) {
-		int oldRequiresVariantSelected = requiresVariantSelected;
-		requiresVariantSelected = newRequiresVariantSelected;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, ApplicabilitymodelPackage.DECISION__REQUIRES_VARIANT_SELECTED, oldRequiresVariantSelected, requiresVariantSelected));
+			eNotify(new ENotificationImpl(this, Notification.SET, ApplicabilitymodelPackage.DECISION__COMPONENT_SET, oldComponentSet, componentSet));
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EList<RequiredVariant> getRequiredVariants() {
+		if (requiredVariants == null) {
+			requiredVariants = new EObjectContainmentEList<RequiredVariant>(RequiredVariant.class, this, ApplicabilitymodelPackage.DECISION__REQUIRED_VARIANTS);
+		}
+		return requiredVariants;
 	}
 
 	/**
@@ -208,10 +169,8 @@ public class DecisionImpl extends MinimalEObjectImpl.Container implements Decisi
 	@Override
 	public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
 		switch (featureID) {
-			case ApplicabilitymodelPackage.DECISION__QA_VARIANT:
-				return basicSetQaVariant(null, msgs);
-			case ApplicabilitymodelPackage.DECISION__COMPONENT_SET:
-				return basicSetComponentSet(null, msgs);
+			case ApplicabilitymodelPackage.DECISION__REQUIRED_VARIANTS:
+				return ((InternalEList<?>)getRequiredVariants()).basicRemove(otherEnd, msgs);
 		}
 		return super.eInverseRemove(otherEnd, featureID, msgs);
 	}
@@ -224,12 +183,12 @@ public class DecisionImpl extends MinimalEObjectImpl.Container implements Decisi
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case ApplicabilitymodelPackage.DECISION__QA_VARIANT:
-				return getQaVariant();
+			case ApplicabilitymodelPackage.DECISION__NAME:
+				return getName();
 			case ApplicabilitymodelPackage.DECISION__COMPONENT_SET:
 				return getComponentSet();
-			case ApplicabilitymodelPackage.DECISION__REQUIRES_VARIANT_SELECTED:
-				return getRequiresVariantSelected();
+			case ApplicabilitymodelPackage.DECISION__REQUIRED_VARIANTS:
+				return getRequiredVariants();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -239,17 +198,19 @@ public class DecisionImpl extends MinimalEObjectImpl.Container implements Decisi
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case ApplicabilitymodelPackage.DECISION__QA_VARIANT:
-				setQaVariant((QA)newValue);
+			case ApplicabilitymodelPackage.DECISION__NAME:
+				setName((String)newValue);
 				return;
 			case ApplicabilitymodelPackage.DECISION__COMPONENT_SET:
-				setComponentSet((ComponentSet)newValue);
+				setComponentSet((String)newValue);
 				return;
-			case ApplicabilitymodelPackage.DECISION__REQUIRES_VARIANT_SELECTED:
-				setRequiresVariantSelected((Integer)newValue);
+			case ApplicabilitymodelPackage.DECISION__REQUIRED_VARIANTS:
+				getRequiredVariants().clear();
+				getRequiredVariants().addAll((Collection<? extends RequiredVariant>)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -263,14 +224,14 @@ public class DecisionImpl extends MinimalEObjectImpl.Container implements Decisi
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case ApplicabilitymodelPackage.DECISION__QA_VARIANT:
-				setQaVariant((QA)null);
+			case ApplicabilitymodelPackage.DECISION__NAME:
+				setName(NAME_EDEFAULT);
 				return;
 			case ApplicabilitymodelPackage.DECISION__COMPONENT_SET:
-				setComponentSet((ComponentSet)null);
+				setComponentSet(COMPONENT_SET_EDEFAULT);
 				return;
-			case ApplicabilitymodelPackage.DECISION__REQUIRES_VARIANT_SELECTED:
-				setRequiresVariantSelected(REQUIRES_VARIANT_SELECTED_EDEFAULT);
+			case ApplicabilitymodelPackage.DECISION__REQUIRED_VARIANTS:
+				getRequiredVariants().clear();
 				return;
 		}
 		super.eUnset(featureID);
@@ -284,12 +245,12 @@ public class DecisionImpl extends MinimalEObjectImpl.Container implements Decisi
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case ApplicabilitymodelPackage.DECISION__QA_VARIANT:
-				return qaVariant != null;
+			case ApplicabilitymodelPackage.DECISION__NAME:
+				return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
 			case ApplicabilitymodelPackage.DECISION__COMPONENT_SET:
-				return componentSet != null;
-			case ApplicabilitymodelPackage.DECISION__REQUIRES_VARIANT_SELECTED:
-				return requiresVariantSelected != REQUIRES_VARIANT_SELECTED_EDEFAULT;
+				return COMPONENT_SET_EDEFAULT == null ? componentSet != null : !COMPONENT_SET_EDEFAULT.equals(componentSet);
+			case ApplicabilitymodelPackage.DECISION__REQUIRED_VARIANTS:
+				return requiredVariants != null && !requiredVariants.isEmpty();
 		}
 		return super.eIsSet(featureID);
 	}
@@ -304,8 +265,10 @@ public class DecisionImpl extends MinimalEObjectImpl.Container implements Decisi
 		if (eIsProxy()) return super.toString();
 
 		StringBuffer result = new StringBuffer(super.toString());
-		result.append(" (requiresVariantSelected: ");
-		result.append(requiresVariantSelected);
+		result.append(" (name: ");
+		result.append(name);
+		result.append(", componentSet: ");
+		result.append(componentSet);
 		result.append(')');
 		return result.toString();
 	}

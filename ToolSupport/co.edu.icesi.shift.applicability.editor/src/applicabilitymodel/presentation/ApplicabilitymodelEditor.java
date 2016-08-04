@@ -156,11 +156,7 @@ import org.eclipse.emf.edit.ui.view.ExtendedPropertySheetPage;
 
 import applicabilitymodel.provider.ApplicabilitymodelItemProviderAdapterFactory;
 
-import componentsetsmodel.provider.ComponentsetsmodelItemProviderAdapterFactory;
-
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
-
-import qasvariabilitymodel.provider.QasvariabilitymodelItemProviderAdapterFactory;
 
 
 /**
@@ -706,8 +702,6 @@ public class ApplicabilitymodelEditor
 
 		adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ApplicabilitymodelItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new ComponentsetsmodelItemProviderAdapterFactory());
-		adapterFactory.addAdapterFactory(new QasvariabilitymodelItemProviderAdapterFactory());
 		adapterFactory.addAdapterFactory(new ReflectiveItemProviderAdapterFactory());
 
 		// Create the command stack that will notify this editor as commands are executed.

@@ -2,11 +2,9 @@
  */
 package applicabilitymodel;
 
-import componentsetsmodel.ComponentSet;
+import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EObject;
-
-import qasvariabilitymodel.QA;
 
 /**
  * <!-- begin-user-doc -->
@@ -17,9 +15,9 @@ import qasvariabilitymodel.QA;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link applicabilitymodel.Decision#getQaVariant <em>Qa Variant</em>}</li>
+ *   <li>{@link applicabilitymodel.Decision#getName <em>Name</em>}</li>
  *   <li>{@link applicabilitymodel.Decision#getComponentSet <em>Component Set</em>}</li>
- *   <li>{@link applicabilitymodel.Decision#getRequiresVariantSelected <em>Requires Variant Selected</em>}</li>
+ *   <li>{@link applicabilitymodel.Decision#getRequiredVariants <em>Required Variants</em>}</li>
  * </ul>
  *
  * @see applicabilitymodel.ApplicabilitymodelPackage#getDecision()
@@ -28,82 +26,71 @@ import qasvariabilitymodel.QA;
  */
 public interface Decision extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Qa Variant</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Name</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Qa Variant</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Name</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Qa Variant</em>' containment reference.
-	 * @see #setQaVariant(QA)
-	 * @see applicabilitymodel.ApplicabilitymodelPackage#getDecision_QaVariant()
-	 * @model containment="true" required="true"
+	 * @return the value of the '<em>Name</em>' attribute.
+	 * @see #setName(String)
+	 * @see applicabilitymodel.ApplicabilitymodelPackage#getDecision_Name()
+	 * @model required="true"
 	 * @generated
 	 */
-	QA getQaVariant();
+	String getName();
 
 	/**
-	 * Sets the value of the '{@link applicabilitymodel.Decision#getQaVariant <em>Qa Variant</em>}' containment reference.
+	 * Sets the value of the '{@link applicabilitymodel.Decision#getName <em>Name</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Qa Variant</em>' containment reference.
-	 * @see #getQaVariant()
+	 * @param value the new value of the '<em>Name</em>' attribute.
+	 * @see #getName()
 	 * @generated
 	 */
-	void setQaVariant(QA value);
+	void setName(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Component Set</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Component Set</b></em>' attribute.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Component Set</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Component Set</em>' attribute isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Component Set</em>' containment reference.
-	 * @see #setComponentSet(ComponentSet)
+	 * @return the value of the '<em>Component Set</em>' attribute.
+	 * @see #setComponentSet(String)
 	 * @see applicabilitymodel.ApplicabilitymodelPackage#getDecision_ComponentSet()
-	 * @model containment="true" required="true"
+	 * @model required="true"
 	 * @generated
 	 */
-	ComponentSet getComponentSet();
+	String getComponentSet();
 
 	/**
-	 * Sets the value of the '{@link applicabilitymodel.Decision#getComponentSet <em>Component Set</em>}' containment reference.
+	 * Sets the value of the '{@link applicabilitymodel.Decision#getComponentSet <em>Component Set</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Component Set</em>' containment reference.
+	 * @param value the new value of the '<em>Component Set</em>' attribute.
 	 * @see #getComponentSet()
 	 * @generated
 	 */
-	void setComponentSet(ComponentSet value);
+	void setComponentSet(String value);
 
 	/**
-	 * Returns the value of the '<em><b>Requires Variant Selected</b></em>' attribute.
-	 * The default value is <code>"0"</code>.
+	 * Returns the value of the '<em><b>Required Variants</b></em>' containment reference list.
+	 * The list contents are of type {@link applicabilitymodel.RequiredVariant}.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Requires Variant Selected</em>' attribute isn't clear,
+	 * If the meaning of the '<em>Required Variants</em>' containment reference list isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Requires Variant Selected</em>' attribute.
-	 * @see #setRequiresVariantSelected(int)
-	 * @see applicabilitymodel.ApplicabilitymodelPackage#getDecision_RequiresVariantSelected()
-	 * @model default="0" required="true"
+	 * @return the value of the '<em>Required Variants</em>' containment reference list.
+	 * @see applicabilitymodel.ApplicabilitymodelPackage#getDecision_RequiredVariants()
+	 * @model containment="true"
 	 * @generated
 	 */
-	int getRequiresVariantSelected();
-
-	/**
-	 * Sets the value of the '{@link applicabilitymodel.Decision#getRequiresVariantSelected <em>Requires Variant Selected</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Requires Variant Selected</em>' attribute.
-	 * @see #getRequiresVariantSelected()
-	 * @generated
-	 */
-	void setRequiresVariantSelected(int value);
+	EList<RequiredVariant> getRequiredVariants();
 
 } // Decision
