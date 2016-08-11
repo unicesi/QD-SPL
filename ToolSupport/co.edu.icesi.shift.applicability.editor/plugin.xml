@@ -8,14 +8,11 @@
 
    <extension point="org.eclipse.ui.newWizards">
       <!-- @generated applicability -->
-      <category
-            id="org.eclipse.emf.ecore.Wizard.category.ID"
-            name="%_UI_Wizard_category"/>
       <wizard
             id="applicabilitymodel.presentation.ApplicabilitymodelModelWizardID"
             name="%_UI_ApplicabilitymodelModelWizard_label"
             class="applicabilitymodel.presentation.ApplicabilitymodelModelWizard"
-            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            category="co.edu.icesi.shift.common.shiftcategory"
             icon="icons/full/obj16/ApplicabilitymodelModelFile.gif">
          <description>%_UI_ApplicabilitymodelModelWizard_description</description>
          <selection class="org.eclipse.core.resources.IResource"/>

@@ -8,14 +8,11 @@
 
    <extension point="org.eclipse.ui.newWizards">
       <!-- @generated ComponentSets -->
-      <category
-            id="org.eclipse.emf.ecore.Wizard.category.ID"
-            name="%_UI_Wizard_category"/>
       <wizard
             id="componentsetsmodel.presentation.ComponentsetsmodelModelWizardID"
             name="%_UI_ComponentsetsmodelModelWizard_label"
             class="componentsetsmodel.presentation.ComponentsetsmodelModelWizard"
-            category="org.eclipse.emf.ecore.Wizard.category.ID"
+            category="co.edu.icesi.shift.common.shiftcategory"
             icon="icons/full/obj16/ComponentsetsmodelModelFile.gif">
          <description>%_UI_ComponentsetsmodelModelWizard_description</description>
          <selection class="org.eclipse.core.resources.IResource"/>
