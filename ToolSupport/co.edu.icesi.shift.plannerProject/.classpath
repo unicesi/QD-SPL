@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/saxpath.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jaxen-1.0-dev.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jaxen-core.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jaxen-jdom.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/jdom.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/resolver.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xalan.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xerces.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/xml-apis.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Applications/EclipseModeling_Mars/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.jdt.launching.macosx_3.3.0.v20150313-0517.jar"/>
+	<classpathentry exported="true" kind="lib" path="/Applications/EclipseModeling_Mars/Eclipse.app/Contents/Eclipse/plugins/org.eclipse.jdt.launching_3.8.0.v20150527-0946.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
