@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration model="SHIFT QAs">
+	<feature id="_r">
+		<name>QAs</name>
+		<type>templateModel</type>
+		<value>1</value>
+		<decisionType>propagated</decisionType>
+		<decisionStep>1</decisionStep>
+	</feature>
+	<feature id="_r_1">
+		<name>Time Execution</name>
+		<type>mandatory</type>
+		<value>1</value>
+		<decisionType>propagated</decisionType>
+		<decisionStep>1</decisionStep>
+	</feature>
+	<feature id="_r_1_3_4">
+		<name>Normal</name>
+		<type>grouped</type>
+		<value>0</value>
+		<decisionType>manual</decisionType>
+		<decisionStep>2</decisionStep>
+	</feature>
+	<feature id="_r_1_3_5">
+		<name>Medium</name>
+		<type>grouped</type>
+		<value>1</value>
+		<decisionType>propagated</decisionType>
+		<decisionStep>2</decisionStep>
+	</feature>
+	<feature id="_r_1_3_6">
+		<name>Fast</name>
+		<type>grouped</type>
+		<value>0</value>
+		<decisionType>propagated</decisionType>
+		<decisionStep>2</decisionStep>
+	</feature>
+	<feature id="_r_1_3_6_7_8">
+		<name>Sync</name>
+		<type>grouped</type>
+		<value>0</value>
+		<decisionType>propagated</decisionType>
+		<decisionStep>2</decisionStep>
+	</feature>
+	<feature id="_r_1_3_6_7_9">
+		<name>Async</name>
+		<type>grouped</type>
+		<value>0</value>
+		<decisionType>propagated</decisionType>
+		<decisionStep>2</decisionStep>
+	</feature>
+	<feature id="_r_2">
+		<name>Security</name>
+		<type>mandatory</type>
+		<value>1</value>
+		<decisionType>propagated</decisionType>
+		<decisionStep>1</decisionStep>
+	</feature>
+	<feature id="_r_2_10">
+		<name>Confidentiality</name>
+		<type>mandatory</type>
+		<value>1</value>
+		<decisionType>propagated</decisionType>
+		<decisionStep>1</decisionStep>
+	</feature>
+	<feature id="_r_2_10_12_13">
+		<name>Data Encrypted</name>
+		<type>grouped</type>
+		<value>1</value>
+		<decisionType>propagated</decisionType>
+		<decisionStep>3</decisionStep>
+	</feature>
+	<feature id="_r_2_10_12_14">
+		<name>Data Unencrypted</name>
+		<type>grouped</type>
+		<value>0</value>
+		<decisionType>manual</decisionType>
+		<decisionStep>3</decisionStep>
+	</feature>
+	<feature id="_r_2_11">
+		<name>Integrity And Authenticity</name>
+		<type>mandatory</type>
+		<value>1</value>
+		<decisionType>propagated</decisionType>
+		<decisionStep>1</decisionStep>
+	</feature>
+	<feature id="_r_2_11_15_16">
+		<name>Authorization</name>
+		<type>grouped</type>
+		<value>1</value>
+		<decisionType>manual</decisionType>
+		<decisionStep>4</decisionStep>
+	</feature>
+	<feature id="_r_2_11_15_17">
+		<name>Authentication Lockout</name>
+		<type>grouped</type>
+		<value>1</value>
+		<decisionType>manual</decisionType>
+		<decisionStep>4</decisionStep>
+	</feature>
+</configuration>

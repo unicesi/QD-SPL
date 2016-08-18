@@ -1,0 +1,39 @@
+module generators.workflows.WF
+
+import org.eclipse.emf.mwe.utils.*
+import org.eclipse.xtext.generator.*
+import org.eclipse.xtext.ui.generator.*
+import co.edu.icesi.shift.planner.generator.domain.*
+
+var targetDir = "src-gen"
+var modelPath = "models"
+
+Workflow {
+	bean = StandaloneSetup {
+        registerGeneratedEPackage = "domainmetamodel.DomainmetamodelPackage"
+    }	
+// Cleans up the destiny location in case there are some files stored there
+	component = DirectoryCleaner {
+        directory = targetDir
+    }
+// Initialize the Kernel Transformation    
+    component = DomainGenerator {}
+// Initialize the Kernel Module defined above 
+    component = DomainCodeSupport {}
+// Invoke the Kernel Transformation and store the output model in a variable named “model”
+    component = org.eclipse.xtext.mwe.Reader {
+        path = modelPath
+        register = PlannerSetup {}
+        loadResource = {
+            slot = "model"
+        }
+    }
+// Read the model stored in “model” and generate the java source code for it
+    component = org.eclipse.xtext.generator.GeneratorComponent {
+        register = PlannerSetup {}
+        slot = 'model'
+        outlet = {
+            path = targetDir
+        }
+    }
+}
