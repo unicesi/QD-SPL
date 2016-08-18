@@ -8,5 +8,35 @@
             name="SHIFT">
       </category>
    </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
+         <menu
+               id="co.edu.icesi.shift.generator.menushift"
+               label="SHIFT">
+            <command
+                  commandId="co.edu.icesi.shift.generator.command1"
+                  label="Generate QD-SPL"
+                  style="push">
+            </command>
+            <command
+                  commandId="co.edu.icesi.shift.planner.generator.command1"
+                  label="Generate PISCIS Plan"
+                  style="push">
+            </command>
+         </menu>
+      </menuContribution>
+      <menuContribution
+            allPopups="false"
+            locationURI="toolbar:org.eclipse.ui.views.ContentOutline?after=additions">
+         <command
+               commandId="co.edu.icesi.shift.generator.command1"
+               label="Generate QD-SPL"
+               style="push">
+         </command>
+      </menuContribution>
+   </extension>
 
 </plugin>
