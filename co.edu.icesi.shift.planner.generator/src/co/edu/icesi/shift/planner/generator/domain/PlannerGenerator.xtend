@@ -47,28 +47,51 @@ class PlannerGenerator implements IGenerator {
 			}
 		}
 		
-/*		// Crear el solver
-		var Solver solver = new Solver("Solver PISCIS")
-		var IntVar sj = VariableFactory.enumerated("Sj", 0, 1, solver)
-		var IntVar dij = VariableFactory.enumerated("Dij", 0, 2, solver)
-		//1) Deployment constraint.
-		//A componentset must be deployed satisfying the respective deployment condition in the decision model
-		// (Sj = 1) => ( (D(i,j) = 0) || [(D(i,j) != 0) ^ (D(i,j) = vi)])
-		// Reescrito:
-		// (Sj = 1) => ( (D(i,j) = 0) || (D(i,j) = vi))
-		//solver.post(IntConstraintFactory.arithm(x,"+",y, "<", 5))
-		//solver.post
+		var m = decisionModel.size //number of component sets
+		var n = qualityScenario.size //number of quality scenarios
 		
+		// Crear el solver
+		var Solver solver = new Solver("Solver PISCIS")
+		//Definition 3 (decision model): finite set of m x n decisions.
+		//Each dij relates component set cj with quality scenario vi
+		var IntVar[] vi = VariableFactory.boundedArray("Vi", n, 1, 2, solver)
+
+		//Definition 3 (decision model): finite set of m x n decisions.
+		//Each dij relates component set cj with quality scenario vi
+		var IntVar[][] dji = VariableFactory.boundedMatrix("Dji", m, n, 0, 2, solver)
+
+		//Definition 4 (resolution model): finite set of m component set deployments
+		var IntVar[] sj = VariableFactory.boundedArray("Sj", m, 0, 1, solver)
+		
+		//Definition 5 (Deployment constraint):
+		//A componentset must be deployed satisfying the respective deployment condition in the decision model
+		// (Sj = 1) => ( (D(j,i) = 0) || [(D(j,i) != 0) ^ (D(j,i) = vi)])
+		// Reescrito:
+		// (Sj = 1) => ( (D(j,i) = 0) || (D(j,i) = vi))
+		//c1 solver.post(IntConstraintFactory.arithm(sj,"=",1))
+		//c2 solver.post(IntConstraintFactory.arithm(dji,"=",0))
+		//c3 solver.post(IntConstraintFactory.arithm(dji,"=",vi))
+		//TODO ifthen(c1, OR(c2,c3))
+
 		//2) Non-exclusion constraint.
 		//Two deployable componentsets must not exclude each other.
 		// ((Sj1 = Sj2 = 1) ^ (j1 != j2)) => ((D(j1,i) = 0) || (D(j2,i) = 0) || (D(j1,i) = D(j2,i)))
+		//c1 solver.post(IntConstraintFactory.arithm(sj[j1], "=", sj[j2], "=", 1))
+		//c2 solver.post(IntConstraintFactory.arithm(j1, "!=", j2))
+		//c3 solver.post(IntConstraintFactory.arithm(dji[j1][i], "=", 0))
+		//c4 solver.post(IntConstraintFactory.arithm(dji[j2][i], "=", 0)) 
+		//c5 solver.post(IntConstraintFactory.arithm(dji[j1][i], "=", dji[j2][i]))
+		//TODO ifThen(AND(c1,c2), OR(c3,c4,c5))
 
 		//3) Completeness constraint.
 		//All deployable componentsets must take into account all the quality scenarios’ states in the quality configuration
 		// Para todo i existe j tal que ((Sj = 1) ^ (D(i,j) != 1))
+		//c1 solver.post(IntConstraintFactory.arithm(sj, "=", 1))
+		//c2 solver.post(IntConstraintFactory.arithm(dji, "!=", 1))
+		//TODO AND(c1,c2)
 
 		//Define the search strategy
-		solver.set(IntStrategyFactory.lexico_LB(x, y))
+/*		solver.set(IntStrategyFactory.lexico_LB(x, y))
 		//Launch the resolution process
 		solver.findSolution
 		//Print search statistics
