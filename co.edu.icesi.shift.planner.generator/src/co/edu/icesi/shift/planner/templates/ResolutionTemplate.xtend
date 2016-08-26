@@ -5,7 +5,7 @@ import java.util.List
 class ResolutionTemplate {
 	
 //	def static generate(DecisionModel dm, String string, List<Association> associations) '''
-	def static generate(List<List<String>> decisionModel, List<String> qualityScenario) '''
+	def static generate(List<List<String>> decisionModel, List<String> qualityScenario, String solverMeasures) '''
 		Quality Scenario:
 		«FOR v : qualityScenario»
 			Variant: «v»
@@ -17,6 +17,8 @@ class ResolutionTemplate {
 				ReqVariant: «requiredVariant»
 			«ENDFOR»
 		«ENDFOR»
+		Solver statistics:
+			«solverMeasures»
 	'''
 	
 }

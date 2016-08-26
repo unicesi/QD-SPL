@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="lib/trove-3.0.0a1.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/choco-solver-3.3.2-j7.jar" sourcepath="lib/choco-solver-3.3.2-j7-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="xtend-gen"/>
 	<classpathentry exported="true" kind="lib" path="lib/mysql-connector-java-5.0.8-bin.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/daviddurangiraldo/Dropbox/JulianC/Maestria/201502/ProyectoJC/Documentos/KnowledgeBase/ChocoReasoner/choco-3.3.2-j7/choco-solver-3.3.2-j7.jar" sourcepath="/Users/daviddurangiraldo/Dropbox/JulianC/Maestria/201502/ProyectoJC/Documentos/KnowledgeBase/ChocoReasoner/choco-3.3.2-j7/choco-solver-3.3.2-j7-sources.jar"/>
-	<classpathentry exported="true" kind="lib" path="/Users/daviddurangiraldo/Dropbox/JulianC/Maestria/201502/ProyectoJC/Documentos/KnowledgeBase/ChocoReasoner/choco-3.3.2-j7/choco-solver-3.3.2-j7-sources.jar"/>
-	<classpathentry kind="lib" path="/Users/daviddurangiraldo/Dropbox/JulianC/Maestria/201502/ProyectoJC/Documentos/KnowledgeBase/ChocoReasoner/choco-3.3.2-j7/apidocs-3.3.2-j7.zip"/>
+	<classpathentry kind="lib" path="lib/choco-solver-3.3.2-j7-sources.jar"/>
+	<classpathentry kind="lib" path="lib/apidocs-3.3.2-j7.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

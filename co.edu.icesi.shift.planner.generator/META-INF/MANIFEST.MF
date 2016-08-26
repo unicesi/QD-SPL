@@ -24,4 +24,6 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.7
 Bundle-ActivationPolicy: lazy
 Export-Package: co.shift.generators.workflows
 Bundle-ClassPath: lib/mysql-connector-java-5.0.8-bin.jar,
+ lib/choco-solver-3.3.2-j7.jar,
+ lib/trove-3.0.0a1.jar,
  .

@@ -77,7 +77,8 @@ public class PlannerGeneratorHandler implements IHandler {
         
         //Establece la ruta del archivo de qa en el Parser de QAs
 //        IFile fileqa = project.getFile("models/xxx.qaconfig");
-        IFile fileQS = project.getFile("models/QScenarioEcommerceInitial.qasvariabilitymodel");
+//        IFile fileQS = project.getFile("models/QScenarioEcommerceInitial.qasvariabilitymodel");
+        IFile fileQS = project.getFile("models/QScenarioEcommerceTimeBeh.qasvariabilitymodel");
         //QAParser.setQaFullPath(basePath+fileqa.getFullPath().toString());
         
 

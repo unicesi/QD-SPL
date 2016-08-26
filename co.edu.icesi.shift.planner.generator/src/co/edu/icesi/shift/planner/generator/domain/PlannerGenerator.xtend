@@ -17,21 +17,28 @@ import com.google.inject.Injector
 import org.eclipse.emf.common.util.URI
 import org.eclipse.emf.ecore.resource.ResourceSet
 import qasvariabilitymodel.QAGroup
+import org.chocosolver.solver.constraints.LogicalConstraintFactory
+import org.chocosolver.solver.constraints.Constraint
+import org.chocosolver.solver.constraints.nary.alldifferent.conditions.Condition
+import org.chocosolver.solver.search.strategy.SetStrategyFactory
 
 class PlannerGenerator implements IGenerator {
 
 	private static String className = new Object(){}.class.enclosingClass.simpleName
 
 	override doGenerate(Resource input, IFileSystemAccess fsa) {
-		var i = 0
+		//var i = 0
+		var index = 0;
+		var solutionString = "";
 
 		var List<List<String>> decisionModel = new ArrayList<List<String>>()
 		for (d : input.allContents.toIterable) {
 			if (d instanceof Decision) {
 				decisionModel.add(new ArrayList<String>) //Nuevo C*
 				for(rv : d.requiredVariants){
-					decisionModel.get(i).add(rv.selectionRequired+"") //Nueva V* para el C*
+					decisionModel.get(index).add(rv.selectionRequired+"") //Nueva V* para el C*
 				}
+				index++
 			}
 		}
 		
@@ -47,31 +54,75 @@ class PlannerGenerator implements IGenerator {
 			}
 		}
 		
-		var m = decisionModel.size //number of component sets
-		var n = qualityScenario.size //number of quality scenarios
+		var m = decisionModel.size //number of component sets. Iterated with j
+		var n1 = decisionModel.get(0).size //should be equal to n
+		var n = qualityScenario.size //number of quality scenarios. Iterated with i
+		System.out.println("m:"+m)
+		System.out.println("n1:"+n1)
+		System.out.println("n:"+n)
 		
-		// Crear el solver
+		// Create the solver
 		var Solver solver = new Solver("Solver PISCIS")
-		//Definition 3 (decision model): finite set of m x n decisions.
-		//Each dij relates component set cj with quality scenario vi
-		var IntVar[] vi = VariableFactory.boundedArray("Vi", n, 1, 2, solver)
+		var Constraint c1
+		var Constraint c2
+		var Constraint c3
 
-		//Definition 3 (decision model): finite set of m x n decisions.
+
+		//Definition X (quality scenario): n-tuple
+		//Array for the quality scenario
+		var IntVar[] V = VariableFactory.enumeratedArray("V", n, 1, 2, solver)
+		//Each position is constrained with the values from the input model (qualityModel)
+		for(i:0..<n){
+			solver.post(IntConstraintFactory.arithm(V.get(i), "=", Integer.parseInt(qualityScenario.get(i))))
+		}
+
+		//Definition 3 (decision model): finite set of n x m decisions.
 		//Each dij relates component set cj with quality scenario vi
-		var IntVar[][] dji = VariableFactory.boundedMatrix("Dji", m, n, 0, 2, solver)
+		var IntVar[][] D = VariableFactory.enumeratedMatrix("D", m, n, 0, 2, solver)
+		for(j:0..<m){
+			for(i:0..<n){
+				solver.post(IntConstraintFactory.arithm(D.get(j).get(i), "=", Integer.parseInt(decisionModel.get(j).get(i))))
+			}
+		}
 
 		//Definition 4 (resolution model): finite set of m component set deployments
-		var IntVar[] sj = VariableFactory.boundedArray("Sj", m, 0, 1, solver)
+		var IntVar[] S = VariableFactory.enumeratedArray("S", m, 0, 1, solver)
 		
 		//Definition 5 (Deployment constraint):
 		//A componentset must be deployed satisfying the respective deployment condition in the decision model
 		// (Sj = 1) => ( (D(j,i) = 0) || [(D(j,i) != 0) ^ (D(j,i) = vi)])
-		// Reescrito:
-		// (Sj = 1) => ( (D(j,i) = 0) || (D(j,i) = vi))
-		//c1 solver.post(IntConstraintFactory.arithm(sj,"=",1))
-		//c2 solver.post(IntConstraintFactory.arithm(dji,"=",0))
-		//c3 solver.post(IntConstraintFactory.arithm(dji,"=",vi))
-		//TODO ifthen(c1, OR(c2,c3))
+		// Se puede reescribir así, ya que dji = vi implica que dji!=0:
+		// (Sj = 1) => ( (Dj,i = 0) || (Dj,i = vi))
+		for(j:0..<m){
+			//c1: (S(j) = 1)
+			c1 = IntConstraintFactory.arithm(S.get(j), "=", 1)
+			for(i:0..<n){
+				//c2: D(j,i) = 0
+				c2 = IntConstraintFactory.arithm(D.get(j).get(i), "=", 0)
+				//c3: D(j,i) = V(i)
+				c3 = IntConstraintFactory.arithm(D.get(j).get(i), "=", V.get(i))
+				//c1 => (c2 OR c3)
+				LogicalConstraintFactory.ifThen(c1, LogicalConstraintFactory.or(c2,c3))
+			}
+		}
+		//c1: (Sj = 1)
+		//var Constraint[] c1 = IntConstraintFactory.nvalues(sj, UNO)
+		//solver.post(IntConstraintFactory.nvalues(sj, UNO))
+
+		//c2: D(j,i) = 0
+		//var Constraint[][] c2// = IntConstraintFactory.nvalues(dji.get(0), CERO)
+		//for(i:0..<n) c2.add(IntConstraintFactory.nvalues(dji.get(i), CERO))
+		
+		//c3: Dj,i = vi
+		//var Constraint[][] c3
+		//for(i:0..<n) c3.add(IntConstraintFactory.nvalues(dji.get(i), vi.get(i)))
+
+		//c4: c1 => (c2 OR c3)
+		//LogicalConstraintFactory.ifThen(c1, LogicalConstraintFactory.or(c2.get(0),c3.get(0)))
+		
+		//Valida el solver
+		//solver.isFeasible
+
 
 		//2) Non-exclusion constraint.
 		//Two deployable componentsets must not exclude each other.
@@ -91,12 +142,31 @@ class PlannerGenerator implements IGenerator {
 		//TODO AND(c1,c2)
 
 		//Define the search strategy
-/*		solver.set(IntStrategyFactory.lexico_LB(x, y))
+		//solver.set(IntStrategyFactory.lexico_LB(V, D, S))
+		solver.set(IntStrategyFactory.lexico_LB(S))
+
+		
 		//Launch the resolution process
-		solver.findSolution
+		//solver.findSolution
+		//var cardS = 
+//		System.out.println("cardS:"+cardS)
+/*		for(s:0..<cardS){
+			System.out.println("Solution "+s)
+			solutionString+="Solution "+s+":\n"
+			for(j:0..<m){
+				System.out.println("S("+j+"):"+solver.solutionRecorder.solutions.get(s).getIntVal(S.get(j)).toString)
+				solutionString += "S("+j+"):"+solver.solutionRecorder.solutions.get(s).getIntVal(S.get(j)).toString+"\n"
+			}
+		}
+*/
+		solutionString += solver.measures.toString
+		Chatterbox.showSolutions(solver)
 		//Print search statistics
-		Chatterbox.printStatistics(solver)*/
-//		fsa.generateFile("/co/shift/PISCIS/ResolutionPlan.txt",	ResolutionTemplate::generate())
-		fsa.generateFile("ResolutionPlan.txt",	ResolutionTemplate::generate(decisionModel, qualityScenario))
+		//Chatterbox.printStatistics(solver)*/
+		solver.findAllSolutions //as int
+
+		fsa.generateFile("ResolutionPlan.txt",	ResolutionTemplate::generate(decisionModel, qualityScenario, solutionString))
 	}
+	
+	
 }
