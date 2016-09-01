@@ -21,6 +21,9 @@ import org.chocosolver.solver.constraints.LogicalConstraintFactory
 import org.chocosolver.solver.constraints.Constraint
 import org.chocosolver.solver.constraints.nary.alldifferent.conditions.Condition
 import org.chocosolver.solver.search.strategy.SetStrategyFactory
+import org.chocosolver.solver.search.measure.IMeasures
+import org.chocosolver.solver.search.solution.ISolutionRecorder
+import org.chocosolver.solver.search.solution.Solution
 
 class PlannerGenerator implements IGenerator {
 
@@ -66,6 +69,8 @@ class PlannerGenerator implements IGenerator {
 		var Constraint c1
 		var Constraint c2
 		var Constraint c3
+		var Constraint c4
+		var Constraint c5
 
 
 		//Definition X (quality scenario): n-tuple
@@ -99,40 +104,41 @@ class PlannerGenerator implements IGenerator {
 			for(i:0..<n){
 				//c2: D(j,i) = 0
 				c2 = IntConstraintFactory.arithm(D.get(j).get(i), "=", 0)
-				//c3: D(j,i) = V(i)
-				c3 = IntConstraintFactory.arithm(D.get(j).get(i), "=", V.get(i))
-				//c1 => (c2 OR c3)
-				LogicalConstraintFactory.ifThen(c1, LogicalConstraintFactory.or(c2,c3))
+				//c3: D(j,i) != 0
+				c3 = IntConstraintFactory.arithm(D.get(j).get(i), "!=", 0)
+				//c4: D(j,i) = V(i)
+				c4 = IntConstraintFactory.arithm(D.get(j).get(i), "=", V.get(i))
+				//c1 => (c2 OR (c3 AND c4))
+				//LogicalConstraintFactory.ifThen(c1, LogicalConstraintFactory.or(c2,LogicalConstraintFactory.and(c3,c4)))
+				LogicalConstraintFactory.ifThen(c1, LogicalConstraintFactory.or(c2,c4))
 			}
 		}
-		//c1: (Sj = 1)
-		//var Constraint[] c1 = IntConstraintFactory.nvalues(sj, UNO)
-		//solver.post(IntConstraintFactory.nvalues(sj, UNO))
-
-		//c2: D(j,i) = 0
-		//var Constraint[][] c2// = IntConstraintFactory.nvalues(dji.get(0), CERO)
-		//for(i:0..<n) c2.add(IntConstraintFactory.nvalues(dji.get(i), CERO))
-		
-		//c3: Dj,i = vi
-		//var Constraint[][] c3
-		//for(i:0..<n) c3.add(IntConstraintFactory.nvalues(dji.get(i), vi.get(i)))
-
-		//c4: c1 => (c2 OR c3)
-		//LogicalConstraintFactory.ifThen(c1, LogicalConstraintFactory.or(c2.get(0),c3.get(0)))
-		
-		//Valida el solver
-		//solver.isFeasible
 
 
 		//2) Non-exclusion constraint.
 		//Two deployable componentsets must not exclude each other.
 		// ((Sj1 = Sj2 = 1) ^ (j1 != j2)) => ((D(j1,i) = 0) || (D(j2,i) = 0) || (D(j1,i) = D(j2,i)))
 		//c1 solver.post(IntConstraintFactory.arithm(sj[j1], "=", sj[j2], "=", 1))
-		//c2 solver.post(IntConstraintFactory.arithm(j1, "!=", j2))
-		//c3 solver.post(IntConstraintFactory.arithm(dji[j1][i], "=", 0))
-		//c4 solver.post(IntConstraintFactory.arithm(dji[j2][i], "=", 0)) 
-		//c5 solver.post(IntConstraintFactory.arithm(dji[j1][i], "=", dji[j2][i]))
+		// solver.post(IntConstraintFactory.arithm(j1, "!=", j2))
+		//c2 solver.post(IntConstraintFactory.arithm(dji[j1][i], "=", 0))
+		//c3 solver.post(IntConstraintFactory.arithm(dji[j2][i], "=", 0)) 
+		//c4 solver.post(IntConstraintFactory.arithm(dji[j1][i], "=", dji[j2][i]))
 		//TODO ifThen(AND(c1,c2), OR(c3,c4,c5))
+		for(j1:0..<m){
+			for(j2:0..<m){
+				if(j1 != j2){
+					c1 = IntConstraintFactory.arithm(S.get(j1), "=", 1)
+					c2 = IntConstraintFactory.arithm(S.get(j2), "=", 1)
+					for(i:0..<n){
+						c3 = IntConstraintFactory.arithm(D.get(j1).get(i), "=", 0)
+						c4 = IntConstraintFactory.arithm(D.get(j2).get(i), "=", 0)
+						c5 = IntConstraintFactory.arithm(D.get(j1).get(i), "=", D.get(j2).get(i))
+						LogicalConstraintFactory.ifThen(LogicalConstraintFactory.and(c1,c2), LogicalConstraintFactory.or(c3,c4,c5))
+					}
+				}
+			}
+		}
+		
 
 		//3) Completeness constraint.
 		//All deployable componentsets must take into account all the quality scenarios’ states in the quality configuration
@@ -140,6 +146,13 @@ class PlannerGenerator implements IGenerator {
 		//c1 solver.post(IntConstraintFactory.arithm(sj, "=", 1))
 		//c2 solver.post(IntConstraintFactory.arithm(dji, "!=", 1))
 		//TODO AND(c1,c2)
+		for(i:0..<n){
+			for(j:0..<m){
+				c1 = IntConstraintFactory.arithm(S.get(j), "=", 1)
+				c2 = IntConstraintFactory.arithm(D.get(j).get(i), "!=", 1)
+				LogicalConstraintFactory.and(c1,c2)
+			}
+		}
 
 		//Define the search strategy
 		//solver.set(IntStrategyFactory.lexico_LB(V, D, S))
@@ -147,23 +160,25 @@ class PlannerGenerator implements IGenerator {
 
 		
 		//Launch the resolution process
-		//solver.findSolution
-		//var cardS = 
-//		System.out.println("cardS:"+cardS)
-/*		for(s:0..<cardS){
-			System.out.println("Solution "+s)
-			solutionString+="Solution "+s+":\n"
-			for(j:0..<m){
-				System.out.println("S("+j+"):"+solver.solutionRecorder.solutions.get(s).getIntVal(S.get(j)).toString)
-				solutionString += "S("+j+"):"+solver.solutionRecorder.solutions.get(s).getIntVal(S.get(j)).toString+"\n"
-			}
+		solver.findSolution
+		var ISolutionRecorder solRec = solver.solutionRecorder
+		var List<Solution> solutions = solRec.solutions
+
+		solutionString += "\n solutions.size: "+solutions.size
+		solutionString += "\nsolver.solutionRecorder.solutions.get(0).toString: "+solutions.get(0).toString(solver)
+		for (j:0..<m)
+			solutionString += "\nsolver.solutionRecorder.solutions.get(0).S("+j+"): "+solutions.get(0).getIntVal(S.get(j))
+
+		while(solver.nextSolution){
+			solRec = solver.solutionRecorder
+			solutions = solRec.solutions
+			solutionString += "\nA new solution has been found"
+			solutionString += "\n solutions.size: "+solutions.size
+			solutionString += "\nsolver.solutionRecorder.solutions.get(0).toString: "+solutions.get(0).toString(solver)
+			for (j:0..<m)
+				solutionString += "\nsolver.solutionRecorder.solutions.get(0).S("+j+"): "+solutions.get(0).getIntVal(S.get(j))
+				
 		}
-*/
-		solutionString += solver.measures.toString
-		Chatterbox.showSolutions(solver)
-		//Print search statistics
-		//Chatterbox.printStatistics(solver)*/
-		solver.findAllSolutions //as int
 
 		fsa.generateFile("ResolutionPlan.txt",	ResolutionTemplate::generate(decisionModel, qualityScenario, solutionString))
 	}
