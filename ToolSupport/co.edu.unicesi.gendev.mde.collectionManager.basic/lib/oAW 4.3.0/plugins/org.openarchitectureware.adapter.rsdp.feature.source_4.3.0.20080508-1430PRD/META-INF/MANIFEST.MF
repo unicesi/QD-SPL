@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Bundle-Name: %pluginName
-Bundle-SymbolicName: org.openarchitectureware.adapter.rsdp.feature.source; singleton=true
-Bundle-Version: 4.3.0.20080508-1430PRD
-Bundle-Localization: plugin
-Bundle-Vendor: %providerName

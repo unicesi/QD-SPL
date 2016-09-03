@@ -1,3 +1,0 @@
-«DEFINE gui2text(kernelMetamodel::Kernel kernel) FOR guiMetamodel::GUI»
-	«EXPAND mainView::SystemGUI(systemName, kernel) FOR mainView»
-«ENDDEFINE»

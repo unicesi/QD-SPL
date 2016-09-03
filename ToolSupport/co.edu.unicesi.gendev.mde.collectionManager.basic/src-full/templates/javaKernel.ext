@@ -1,8 +1,0 @@
-import kernelMetamodel;
-
-/*
- * Template that returns a string representing the name of 
- * an attribute's get method.
- */
-String getterName(kernelMetamodel::Attribute attribute) :
-	'get' + attribute.name.toFirstUpper() + '()';
