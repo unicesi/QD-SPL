@@ -15,7 +15,22 @@
             locationURI="popup:org.eclipse.ui.navigator.ProjectExplorer#PopupMenu?after=additions">
          <menu
                id="co.edu.icesi.shift.generator.menushift"
-               label="SHIFT">
+               label="PISCIS">
+            <command
+                  commandId="co.edu.icesi.shift.planner.generator.command1"
+                  label="New Planner Project"
+                  style="push">
+            </command>
+            <command
+                  commandId="co.edu.icesi.shift.planner.generator.command1"
+                  label="New Decision Model"
+                  style="push">
+            </command>
+            <command
+                  commandId="co.edu.icesi.shift.planner.generator.command1"
+                  label="New Quality Configuration"
+                  style="push">
+            </command>
             <command
                   commandId="co.edu.icesi.shift.generator.command1"
                   label="Generate QD-SPL"
@@ -23,7 +38,7 @@
             </command>
             <command
                   commandId="co.edu.icesi.shift.planner.generator.command1"
-                  label="Generate PISCIS Plan"
+                  label="Generate Optimum Resolution"
                   style="push">
             </command>
          </menu>

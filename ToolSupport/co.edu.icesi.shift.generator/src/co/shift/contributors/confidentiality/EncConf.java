@@ -34,6 +34,11 @@ public class EncConf implements Contribution {
 	}
 
 	@Override
+	/**
+	 * Este metodo puede mejorar, convirtiéndolo en varios métodos, uno por
+	 * cada tipo de contrato, a no ser que todos los contributeToBusinessImpl
+	 * manejaran esta estructura... (?)
+	 */
 	public String contributeToBusinessImpl(Object ... data) {
 		Contracts contract = (Contracts) data[0];
 		BusinessEntity be = (BusinessEntity) data[1];

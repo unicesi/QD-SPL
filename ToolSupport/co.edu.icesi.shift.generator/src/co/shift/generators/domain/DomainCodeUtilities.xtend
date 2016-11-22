@@ -260,6 +260,8 @@ class DomainCodeUtilities {
 	 * section.
 	 * If the current user configuration does not correspond with any architect config
 	 * on the database, no operation is done
+	 * The input parameter sequence, is used to generate non-continuous and distinct
+	 * contributions on a same template section.
 	 */
  	def static String contribute2Template(int sequence, Object... data) {
  		var rules = ""
