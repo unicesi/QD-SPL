@@ -15,6 +15,23 @@ import co.shift.templates.ejb.basic.BoundaryImplTemplate
 import co.shift.templates.ejb.basic.JPATemplate
 import co.shift.templates.ejb.basic.DAOInterfaceTemplate
 import co.shift.templates.ejb.basic.DAOImplTemplate
+import co.shift.templates.web.basic.FormTemplate
+import co.shift.templates.web.basic.WebControllerTemplate
+import co.shift.templates.web.basic.AbstractControllerTemplate
+import co.shift.templates.web.basic.UITemplate
+import co.shift.templates.web.basic.ProcessContributorTemplate
+import co.shift.templates.web.basic.RegistryTemplate
+import co.shift.templates.web.basic.UIContributorTemplate
+import co.shift.templates.web.basic.UIControllerTemplate
+import co.shift.templates.web.basic.ContentPanelTemplate
+import co.shift.templates.web.basic.MenuPaneTemplate
+import co.shift.templates.web.basic.BeanLocatorTemplate
+import co.shift.templates.web.basic.GlobalJNDITemplate
+import co.shift.templates.web.contributed.authenticity.LoginFormTemplate
+import co.shift.templates.web.contributed.authenticity.LoginControllerTemplate
+import co.shift.templates.web.basic.PersistenceTemplate
+import co.shift.templates.database.basic.MERScriptTemplate
+import co.shift.templates.database.basic.InsertsScriptTemplate
 
 class DomainCodeGenerator implements IGenerator {
 
@@ -46,13 +63,14 @@ class DomainCodeGenerator implements IGenerator {
 				}
 				
 				name = be.name.toFirstUpper
+
 //Inicio Jcifuentes: En esta sección deberían incluirse todas las configuraciones para GENERATION
 //Que David definio dentro de las plantillas. Anotar el origen en cada caso:
 //FROM BoundaryInterfaceTemplate 
 				DomainCodeUtilities.beginSection(DomainParams.SECT_GENERATE)
 				DomainCodeUtilities.contribute2Template(1, fsa, appName, be);
 				DomainCodeUtilities.endSection
-//Fin Jcifuentes GENERATION
+//Fin Jcifuentes
 
   				fsa.generateFile("/co/shift/" + appName.toLowerCase + "/to/" + name + "TO.java",
 					DTOTemplate::generate(be, appName, associations))
@@ -75,7 +93,6 @@ class DomainCodeGenerator implements IGenerator {
 						DAOImplTemplate::generate(be, appName, associations))
 				}
 				
-/*Inicio Jcifuentes (comentado)
 				if(DomainCodeUtilities.isMaster(be)){
 					fsa.generateFile(
 						"/co/shift/" + appName.toLowerCase + "/web/ext/" + be.name.toLowerCase + "/"+name+"Form.java",
@@ -84,20 +101,30 @@ class DomainCodeGenerator implements IGenerator {
 				fsa.generateFile(
 					"/co/shift/" + appName.toLowerCase + "/web/ext/" + be.name.toLowerCase + "/"+name+"Controller.java",
 					WebControllerTemplate::generate(appName, be, associations, fsa))
-*///Fin JCifuentes
+
 			}
 		}
 
 /*Inicio Jcifuentes (comentado)
-		//Esto se cambió al nuevo esquema (contribute) y además se movió arriba
+		//Esto se cambió al nuevo esquema (contribute)
 		//Llama a las contribuciones para integridad/autenticidad (lockout y authorization) 
 		DomainCodeUtilities.extendContribution(DomainCodeUtilities.VP_INTEGRITY_AUTHENTICITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName, authEntity);
 
 		//Llama a las contribuciones para confidencialidad (encriptado, desencriptado)
 		DomainCodeUtilities.extendContribution(DomainParams.VP_CONFIDENTIALITY, DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, appName)
 *///Fin JCifuentes
+//Inicio Jcifuentes GENERATION: En esta sección deberían incluirse todas las configuraciones para GENERATION
+//Que David definio dentro de las plantillas. Anotar el origen en cada caso:
+				DomainCodeUtilities.beginSection(DomainParams.SECT_GENERATE)
+//FROM DomainCodeGenerator (Confidentiality) 
+				DomainCodeUtilities.contribute2Template(2, fsa, appName);
+//FROM DomainCodeGenerator (Integrity-Authenticity) 
+				DomainCodeUtilities.contribute2Template(3, fsa, appName, authEntity);
+				DomainCodeUtilities.contribute2Template(4, fsa, appName, authEntity);
+				DomainCodeUtilities.endSection
+//Fin Jcifuentes GENERATION
 
-/*Inicio Jcifuentes (comentado)		
+
 		//---------Web Generation-----------
 		fsa.generateFile(
 						"/co/shift/" + appName.toLowerCase + "/web/AbstractController.java",
@@ -146,8 +173,7 @@ class DomainCodeGenerator implements IGenerator {
 		fsa.generateFile(
 						"/co/shift/" + appName.toLowerCase + "/web/database/InsertsScript.sql",
 						InsertsScriptTemplate::generate(appName, authEntity))
-						
-		DomainCodeUtilities.runScript(appName)*/ //Fin jcifuentes
+		DomainCodeUtilities.runScript(appName)
 		DomainCodeUtilities.endTemplate
 		DomainCodeUtilities.finish
 	}

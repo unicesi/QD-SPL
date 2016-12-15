@@ -16,12 +16,17 @@ import domainmetamodel.Update
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtext.generator.IFileSystemAccess
+import co.shift.generators.domain.DomainParams
 
 class WebControllerTemplate {
 	
+	private static String className = new Object(){}.class.enclosingClass.simpleName
 	def static generate(String packageName, BusinessEntity be, List<Association> associations, IFileSystemAccess fsa) '''
+		««« Establece la plantilla actual para contribución.
+		«DomainCodeUtilities.beginTemplate(className)»
 		package co.shift.«packageName.toLowerCase()».web.ext.«be.name.toLowerCase»;
 		
+		«DomainCodeUtilities.beginSection(DomainParams.SECT_IMPORTS)»
 		import java.math.BigDecimal;
 		import java.util.Date;
 		import java.util.List;
@@ -36,7 +41,9 @@ class WebControllerTemplate {
 		import com.vaadin.ui.TextField;
 		import com.vaadin.ui.PopupDateField;
 		
-		«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPORT, packageName)»
+««« Jcifuentes: Comentado
+«««		«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPORT, packageName)»
+		«DomainCodeUtilities.contribute2Template(1, packageName)»
 		«FOR ass : be.associations»
 		«IF ass instanceof Simple»
 		«var relBe = ass.relatedEntity»		
@@ -78,6 +85,7 @@ class WebControllerTemplate {
 		import co.shift.«packageName.toLowerCase()».«be.name.toLowerCase».boundary.I«be.name.toFirstUpper»Manager;
 		import co.shift.«packageName.toLowerCase()».util.beanlocator.BeanLocator;
 		import co.shift.«packageName.toLowerCase()».to.«be.name.toFirstUpper»TO;
+		«DomainCodeUtilities.endSection»
 		
 		
 		public class «be.name.toFirstUpper»Controller extends AbstractController {
@@ -92,6 +100,7 @@ class WebControllerTemplate {
 			
 			private I«be.name.toFirstUpper»Manager «be.name.toLowerCase»Manager;
 			
+		«DomainCodeUtilities.beginSection(DomainParams.SECT_METHODS)»
 			private «be.name.toFirstUpper»Controller() {
 				doLookup();
 			}
@@ -110,7 +119,9 @@ class WebControllerTemplate {
 			public void show«be.name.toFirstUpper»Form() {
 				«be.name.toFirstUpper»Form «be.name.toLowerCase»Form = Registry.get(«be.name.toFirstUpper»Form.ID);
 				«var conListAll = DomainCodeUtilities.getContract(be, ListAll).get(0)»
-				«var con0 = DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, conListAll, be, 0)»
+««« Jcifuentes: Comentado
+«««				«var con0 = DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, conListAll, be, 0)»
+				«var con0 = DomainCodeUtilities.contribute2Template(1, conListAll, be, 0)»
 				«var con1 = con0.substring(con0.indexOf(" ")+1)»
 				«var con2 = con1.substring(con1.indexOf(" ")+1)»
 				«var con3 = con2.substring(0, con2.indexOf(")")+1)»
@@ -137,7 +148,9 @@ class WebControllerTemplate {
 					case TAB_«relBe.name.toUpperCase»:
 						try {
 							// String obtained from ClassName - MethodName
-							«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, be.name.toFirstUpper+" - Remove"+relBe.name.toFirstUpper)»
+««« Jcifuentes: Comentado
+«««							«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, be.name.toFirstUpper+" - Remove"+relBe.name.toFirstUpper)»
+							«DomainCodeUtilities.contribute2Template(2, be.name.toFirstUpper+" - Remove"+relBe.name.toFirstUpper)»
 							«DomainCodeUtilities.addService(be.name.toFirstUpper+" - Remove"+relBe.name.toFirstUpper)»
 							«relBe.name.toFirstUpper»TO «relBe.name.toLowerCase» = («relBe.name.toFirstUpper»TO) pF.getTable_«index++»().getValue();
 							if («relBe.name.toLowerCase» != null) {
@@ -245,12 +258,16 @@ class WebControllerTemplate {
 			«ENDFOR»
 			
 			«FOR con : DomainCodeUtilities.getContract(be, ListAll)»
-			«DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, con, be, 1)»
+««« Jcifuentes: Comentado
+«««			«DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, con, be, 1)»
+			«DomainCodeUtilities.contribute2Template(1, con, be, 1)»
 			«ENDFOR»
 			
 			«FOR c : be.contracts»
 			«IF c instanceof ListAll»
-			«DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, c, be, 0)»
+««« Jcifuentes: Comentado
+«««			«DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, c, be, 0)»
+			«DomainCodeUtilities.contribute2Template(1, c, be, 0)»
 			«ENDIF»
 			«ENDFOR»
 			
@@ -320,7 +337,9 @@ class WebControllerTemplate {
 				«packageName.toUpperCase»UI ui = Registry.get(«packageName.toUpperCase»UI.UI);
 				try {
 					// String obtained from ClassName - MethodName
-					«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, be.name.toFirstUpper+" - Create")»
+««« Jcifuentes: Comentado
+«««					«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, be.name.toFirstUpper+" - Create")»
+					«DomainCodeUtilities.contribute2Template(2, be.name.toFirstUpper+" - Create")»
 					«DomainCodeUtilities.addService(be.name.toFirstUpper+" - Create")»
 					«be.name.toFirstUpper»Form pF = Registry.get(«be.name.toFirstUpper»Form.ID);
 					«FOR a : be.attributes»
@@ -365,7 +384,9 @@ class WebControllerTemplate {
 							ui.showNotification(«packageName.toUpperCase»UI.MSG_NOT,
 									"Creation process executed successfully");
 							«var conListAll = DomainCodeUtilities.getContract(be, ListAll).get(0)»
-							«var con = DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, conListAll, be, 0)»
+««« Jcifuentes: Comentado
+«««							«var con = DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, conListAll, be, 0)»
+							«var con = DomainCodeUtilities.contribute2Template(1, conListAll, be, 0)»
 							«var con1 = con.substring(con.indexOf(" ")+1)»
 							«var con2 = con1.substring(con1.indexOf(" ")+1)»
 							«var con3 = con2.substring(0, con2.indexOf(")")+1)»
@@ -391,7 +412,9 @@ class WebControllerTemplate {
 				«packageName.toUpperCase»UI ui = Registry.get(«packageName.toUpperCase»UI.UI);
 				try {
 					// String obtained from ClassName - MethodName
-					«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, be.name.toFirstUpper+" - Update")»
+««« Jcifuentes: Comentado
+«««					«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, be.name.toFirstUpper+" - Update")»
+					«DomainCodeUtilities.contribute2Template(2, be.name.toFirstUpper+" - Update")»
 					«DomainCodeUtilities.addService(be.name.toFirstUpper+" - Update")»
 					«be.name.toFirstUpper»Form pF = Registry.get(«be.name.toFirstUpper»Form.ID);
 					«be.name.toFirstUpper»TO «be.name.toLowerCase» = («be.name.toFirstUpper»TO) pF.getTable_1().getValue();
@@ -427,7 +450,9 @@ class WebControllerTemplate {
 				«packageName.toUpperCase»UI ui = Registry.get(«packageName.toUpperCase»UI.UI);
 				try {
 					// String obtained from ClassName - MethodName
-					«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, be.name.toFirstUpper+" - Delete")»
+««« Jcifuentes: Comentado
+«««					«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, be.name.toFirstUpper+" - Delete")»
+					«DomainCodeUtilities.contribute2Template(2, be.name.toFirstUpper+" - Delete")»
 					«DomainCodeUtilities.addService(be.name.toFirstUpper+" - Delete")»
 					«be.name.toFirstUpper»Form pF = Registry.get(«be.name.toFirstUpper»Form.ID);
 					«be.name.toFirstUpper»TO «be.name.toLowerCase» = («be.name.toFirstUpper»TO) pF.getTable_1().getValue();
@@ -436,7 +461,9 @@ class WebControllerTemplate {
 							ui.showNotification(«packageName.toUpperCase»UI.MSG_NOT,
 									"Delete process executed successfully");
 							«var conListAll = DomainCodeUtilities.getContract(be, ListAll).get(0)»
-							«var con = DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, conListAll, be, 0)»
+««« Jcifuentes: Comentado
+«««							«var con = DomainCodeUtilities.extendContribution("_r_1", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, conListAll, be, 0)»
+							«var con = DomainCodeUtilities.contribute2Template(1, conListAll, be, 0)»
 							«var con1 = con.substring(con.indexOf(" ")+1)»
 							«var con2 = con1.substring(con1.indexOf(" ")+1)»
 							«var con3 = con2.substring(0, con2.indexOf(")")+1)»
@@ -552,7 +579,9 @@ class WebControllerTemplate {
 				«packageName.toUpperCase»UI ui = Registry.get(«packageName.toUpperCase»UI.UI);
 				try {
 					// String obtained from ClassName - MethodName
-					«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, be.name.toFirstUpper+" - Set"+ass.name.toFirstUpper)»
+««« Jcifuentes: Comentado
+«««					«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, be.name.toFirstUpper+" - Set"+ass.name.toFirstUpper)»
+					«DomainCodeUtilities.contribute2Template(2, be.name.toFirstUpper+" - Set"+ass.name.toFirstUpper)»
 					«DomainCodeUtilities.addService(be.name.toFirstUpper+" - Set"+ass.name.toFirstUpper)»
 					«be.name.toFirstUpper»Form pF = Registry.get(«be.name.toFirstUpper»Form.ID);
 					«be.name.toFirstUpper»TO «be.name.toLowerCase» = («be.name.toFirstUpper»TO) pF.getTable_1().getValue();
@@ -605,7 +634,9 @@ class WebControllerTemplate {
 					case TAB_«relBe.name.toUpperCase»:
 						try {
 							// String obtained from ClassName - MethodName
-							«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, be.name.toFirstUpper+" - Add"+relBe.name.toFirstUpper)»
+««« Jcifuentes: Comentado
+«««							«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, be.name.toFirstUpper+" - Add"+relBe.name.toFirstUpper)»
+							«DomainCodeUtilities.contribute2Template(2, be.name.toFirstUpper+" - Add"+relBe.name.toFirstUpper)»
 							«DomainCodeUtilities.addService(be.name.toFirstUpper+" - Add"+relBe.name.toFirstUpper)»
 							«IF DomainCodeUtilities.hasZeroAssociations(relBe) && !DomainCodeUtilities.isMaster(relBe)»
 					
@@ -680,7 +711,9 @@ class WebControllerTemplate {
 				«ENDIF»
 				try{		
 					// String obtained from ClassName - MethodName
-					«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, relBe.name.toFirstUpper+" - Add"+be.name.toFirstUpper)»
+««« Jcifuentes: Comentado
+«««					«DomainCodeUtilities.extendContribution("_r_2_11_15_16", DomainCodeUtilities.CONTRIBUTE_TO_WEB_IMPL, relBe.name.toFirstUpper+" - Add"+be.name.toFirstUpper)»
+					«DomainCodeUtilities.contribute2Template(2, relBe.name.toFirstUpper+" - Add"+be.name.toFirstUpper)»
 					«DomainCodeUtilities.addService(relBe.name.toFirstUpper+" - Add"+be.name.toFirstUpper)»
 					«var tF = 1»
 					«FOR a : be.attributes»
@@ -757,7 +790,7 @@ class WebControllerTemplate {
 								«relBe.name.toFirstUpper»Controller.getInstance().list«relBe.name.toFirstUpper»«be.name.toFirstUpper»(
 										«be.name.toLowerCase».get«relBe.name.toFirstUpper»());
 								return true;
-							} else {
+						} else {
 								ui.showNotification(«packageName.toUpperCase»UI.MSG_ERR,
 										"«be.name.toFirstUpper» cannot be added to «relBe.name.toFirstUpper»");
 								return false;
@@ -874,5 +907,7 @@ class WebControllerTemplate {
 						.generate(packageName, be.name.toLowerCase, relBe, be, be.name.toFirstUpper+"Controller", "set"+relBe.name.toFirstUpper+""+ass.name.toFirstUpper, be.name.toFirstUpper+ass.name.toFirstUpper, "update"+ass.name.toFirstUpper+"FormFields"))»
 			«ENDFOR»
 		}
+		«DomainCodeUtilities.endSection»
+		«DomainCodeUtilities.endTemplate»
 	'''
 }

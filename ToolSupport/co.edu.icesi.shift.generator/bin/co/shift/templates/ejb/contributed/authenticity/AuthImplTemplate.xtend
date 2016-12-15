@@ -2,10 +2,15 @@ package co.shift.templates.ejb.contributed.authenticity
 
 import domainmetamodel.BusinessEntity
 import co.shift.generators.domain.DomainCodeUtilities
+import co.shift.generators.domain.DomainParams
 
 class AuthImplTemplate {
 	
+	private static String className = new Object(){}.class.enclosingClass.simpleName
+
 	def static generate (String packageName, BusinessEntity authEntity) '''
+		««« Establece la plantilla actual para contribución.
+		«DomainCodeUtilities.beginTemplate(className)»
 		package co.shift.«packageName.toLowerCase()».authorization.boundary;
 		
 		import java.util.ArrayList;
@@ -29,7 +34,11 @@ class AuthImplTemplate {
 		import co.shift.«packageName.toLowerCase()».authorization.entity.Service;
 		import co.shift.«packageName.toLowerCase()».authorization.entity.«authEntity.name.toFirstUpper»Role;
 		import co.shift.«packageName.toLowerCase()».authorization.entity.«authEntity.name.toFirstUpper»RolePK;
-		«DomainCodeUtilities.extendContribution("_r_2_10_12_13", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName)»
+««« Jcifuentes: Comentado
+«««		«DomainCodeUtilities.extendContribution("_r_2_10_12_13", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName)»
+		«DomainCodeUtilities.beginSection(DomainParams.SECT_IMPORTS)»
+		«DomainCodeUtilities.contribute2Template(1, packageName)»
+		«DomainCodeUtilities.endSection»
 		
 		@Stateless
 		public class AuthorizationManager implements IAuthorizationManager {
@@ -37,16 +46,25 @@ class AuthImplTemplate {
 			@PersistenceContext(unitName = "«packageName»")
 			private EntityManager em;
 			
-			«val attribute2 = DomainCodeUtilities.extendContribution("_r_2_10_12_13", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE)»
-			«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
-				«attribute2»
-			«ENDIF»
+««« Jcifuentes: Comentado
+«««			«val attribute2 = DomainCodeUtilities.extendContribution("_r_2_10_12_13", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE)»
+«««			«IF (DomainCodeUtilities.isQASelected("_r_2_10_12_13"))»
+«««				«attribute2»
+«««			«ENDIF»
+		«DomainCodeUtilities.beginSection(DomainParams.SECT_ATTRIBUTES)»
+		«DomainCodeUtilities.contribute2Template(1)»
+		«DomainCodeUtilities.endSection»
 			
 		«var authId = DomainCodeUtilities.getID(authEntity)»
 			public List<RoleTO> get«authEntity.name.toFirstUpper»Roles(«DomainCodeUtilities.getType(authId)» «authId.name.toLowerCase») {
 				List<RoleTO> «authEntity.name.toLowerCase»Roles = new ArrayList<>();
 				TypedQuery<Role> query = em.createNamedQuery("auth.get«authEntity.name.toFirstUpper»Roles",
 						Role.class);
+««« Jcifuentes: Validaciones como la siguiente no deberían hacerse. Esto deberia
+««« utilizar el mecanismo de los contribuyentes.Por ejemplo, todo este IF deberia
+««« reemplazarse por una linea como la siguiente (habiendo marcado previamente la
+««« seccion de METHODS):
+««« 	«DomainCodeUtilities.contribute2Template(1)»
 				«IF DomainCodeUtilities.isQASelected("_r_2_10_12_13")»
 				char[] eCCChars = cManager.doFinal(
 				PBECryptographyManager.ENCRYPT, «authId.name.toLowerCase»);
@@ -365,5 +383,6 @@ class AuthImplTemplate {
 				return new ArrayList<>(«authEntity.name.toLowerCase»ServicesHash);
 			}
 		}
+		«DomainCodeUtilities.endTemplate»
 	'''
 }

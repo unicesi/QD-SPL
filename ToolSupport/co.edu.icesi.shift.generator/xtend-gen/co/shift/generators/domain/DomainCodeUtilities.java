@@ -51,10 +51,6 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import org.eclipse.core.resources.IWorkspace;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -71,6 +67,8 @@ public class DomainCodeUtilities {
   public static String GENERATION_DIR = "";
   
   public static String SRC_DIR = "";
+  
+  public static String basePath = "";
   
   public final static String CONTRIBUTE_TO_BI = "BusinessInterface";
   
@@ -318,8 +316,16 @@ public class DomainCodeUtilities {
    * section.
    * If the current user configuration does not correspond with any architect config
    * on the database, no operation is done
+   * The input parameter sequence, is used to generate non-continuous and distinct
+   * contributions on a same template section.
    */
-  public static String contribute2Template(final int sequence, final Object... data) {
+  public static String contribute2Template(final int sequence, final Object... data) throws Exception {
+    String _curTemplate = DomainCodeUtilities.getCurTemplate();
+    String _plus = ((("contribute2Template: " + Integer.valueOf(sequence)) + ",") + _curTemplate);
+    String _plus_1 = (_plus + ",");
+    String _curSection = DomainCodeUtilities.getCurSection();
+    String _plus_2 = (_plus_1 + _curSection);
+    System.err.println(_plus_2);
     String rules = "";
     String clasemetodo = "";
     try {
@@ -328,33 +334,32 @@ public class DomainCodeUtilities {
       String _replace = _string.replace(" ", "");
       String _replace_1 = _replace.replace("[", "");
       String stringSelectedFeatures = _replace_1.replace("]", "");
-      System.err.println(("selectedFeatures: " + stringSelectedFeatures));
       Statement s = DomainCodeUtilities.connection.createStatement();
-      String _curTemplate = DomainCodeUtilities.getCurTemplate();
-      String _plus = ((("select A.FULL_CLASS_NAME, A.METHOD_NAME\n\t\t\t\t\t\t\t\tfrom ReferenceModel.TEMPL_SECT_CONFIG A\n\t\t\t\t\t\t\t\twhere A.SEQUENCE =" + Integer.valueOf(sequence)) + "\n\t\t\t\t\t\t\t\tand A.TEMPLATE = \'") + _curTemplate);
-      String _plus_1 = (_plus + "\'\n\t\t\t\t\t\t\t\tand A.SECTION = \'");
-      String _curSection = DomainCodeUtilities.getCurSection();
-      String _plus_2 = (_plus_1 + _curSection);
-      String _plus_3 = (_plus_2 + "\'\n\t\t\t\t\t\t\t\tand A.CONFIGURATION in (\n\t\t\t\t\t\t\t\t\tselect CV.CONFIGURATION\n\t\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIGURATION_X_VARIANT CV\n\t\t\t\t\t\t\t\t\tgroup by CV.CONFIGURATION_ID\n\t\t\t\t\t\t\t\t\thaving \'");
-      String _plus_4 = (_plus_3 + stringSelectedFeatures);
-      String _plus_5 = (_plus_4 + "\'\tlike \n\t\t\t\t\t\t\t\t\t\t\t\t\tgroup_concat(selected separator \',\') \n\t\t\t\t\t\t\t\t\t)\n\t\t\t\t\t\t\t\tand A.CONFIGURATION not in (\n\t\t\t\t\t\t\t\t\tselect CONFIGURATION_B\n\t\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIG_IMPACT\n\t\t\t\t\t\t\t\t\twhere impact_type = \'EXCLUDE\')\n\t\t\t\t\t\t\t\tand full_class_name is not null\n\t\t\t\t\t\t\t\tand method_name is not null");
-      ResultSet rs = s.executeQuery(_plus_5);
+      String _curTemplate_1 = DomainCodeUtilities.getCurTemplate();
+      String _plus_3 = ((("select A.FULL_CLASS_NAME, A.METHOD_NAME\n\t\t\t\t\t\t\t\tfrom ReferenceModel.TEMPL_SECT_CONFIG A\n\t\t\t\t\t\t\t\twhere A.SEQUENCE =" + Integer.valueOf(sequence)) + "\n\t\t\t\t\t\t\t\tand A.TEMPLATE = \'") + _curTemplate_1);
+      String _plus_4 = (_plus_3 + "\'\n\t\t\t\t\t\t\t\tand A.SECTION = \'");
+      String _curSection_1 = DomainCodeUtilities.getCurSection();
+      String _plus_5 = (_plus_4 + _curSection_1);
+      String _plus_6 = (_plus_5 + "\'\n\t\t\t\t\t\t\t\tand A.CONFIGURATION in (\n\t\t\t\t\t\t\t\t\tselect CV.CONFIGURATION\n\t\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIGURATION_X_VARIANT CV\n\t\t\t\t\t\t\t\t\tgroup by CV.CONFIGURATION_ID\n\t\t\t\t\t\t\t\t\thaving \'");
+      String _plus_7 = (_plus_6 + stringSelectedFeatures);
+      String _plus_8 = (_plus_7 + "\'\tlike \n\t\t\t\t\t\t\t\t\t\t\t\t\tgroup_concat(selected separator \',\') \n\t\t\t\t\t\t\t\t\t)\n\t\t\t\t\t\t\t\tand A.CONFIGURATION not in (\n\t\t\t\t\t\t\t\t\tselect CONFIGURATION_B\n\t\t\t\t\t\t\t\t\tfrom ReferenceModel.CONFIG_IMPACT\n\t\t\t\t\t\t\t\t\twhere impact_type = \'EXCLUDE\')\n\t\t\t\t\t\t\t\tand full_class_name <> \'\'\n\t\t\t\t\t\t\t\tand method_name <> \'\'");
+      ResultSet rs = s.executeQuery(_plus_8);
       while (rs.next()) {
         {
           String _string_1 = rs.getString(1);
           final Class<?> cls = Class.forName(_string_1);
           String _string_2 = rs.getString(1);
-          String _plus_6 = ("Clase " + _string_2);
-          System.err.println(_plus_6);
+          String _plus_9 = ("Clase " + _string_2);
+          System.err.println(_plus_9);
           final Object obj = cls.newInstance();
           String _string_3 = rs.getString(2);
-          String _plus_7 = ("Metodo " + _string_3);
-          System.err.println(_plus_7);
+          String _plus_10 = ("Metodo " + _string_3);
+          System.err.println(_plus_10);
           String _string_4 = rs.getString(1);
-          String _plus_8 = (_string_4 + ".");
+          String _plus_11 = (_string_4 + ".");
           String _string_5 = rs.getString(2);
-          String _plus_9 = (_plus_8 + _string_5);
-          clasemetodo = _plus_9;
+          String _plus_12 = (_plus_11 + _string_5);
+          clasemetodo = _plus_12;
           String _string_6 = rs.getString(2);
           final Method met = cls.getDeclaredMethod(_string_6, Class.forName("[Ljava.lang.Object;"));
           Object[] datas = new Object[1];
@@ -371,11 +376,10 @@ public class DomainCodeUtilities {
     } catch (final Throwable _t) {
       if (_t instanceof Exception) {
         final Exception x = (Exception)_t;
-        Throwable _cause = x.getCause();
-        String _string_1 = _cause.toString();
-        String _plus_6 = ((("Error invocando al metodo " + clasemetodo) + ": ") + _string_1);
-        System.err.println(_plus_6);
-        return "";
+        String _string_1 = x.toString();
+        String _plus_9 = ((("Error invocando al metodo " + clasemetodo) + ": ") + _string_1);
+        System.err.println(_plus_9);
+        throw x;
       } else {
         throw Exceptions.sneakyThrow(_t);
       }
@@ -734,13 +738,8 @@ public class DomainCodeUtilities {
   
   public static void runScript(final String packageName) {
     try {
-      IWorkspace _workspace = ResourcesPlugin.getWorkspace();
-      IWorkspaceRoot _root = _workspace.getRoot();
-      IPath _location = _root.getLocation();
-      String _string = _location.toString();
-      String basePath = (_string + "/../workspace/co.edu.icesi.shift.generator");
-      System.err.println(("workspace: " + basePath));
-      File _file = new File((basePath + "/files/rootProject.sh"));
+      System.err.println(("workspace: " + DomainCodeUtilities.basePath));
+      File _file = new File((DomainCodeUtilities.basePath + "/files/rootProject.sh"));
       FileWriter _fileWriter = new FileWriter(_file);
       BufferedWriter rootProjectWriter = new BufferedWriter(_fileWriter);
       rootProjectWriter.write("#!/bin/bash");
@@ -748,7 +747,7 @@ public class DomainCodeUtilities {
       rootProjectWriter.write("mvn archetype:generate -DarchetypeGroupId=org.codehaus.mojo.archetypes -DarchetypeArtifactId=pom-root -DarchetypeVersion=1.1");
       rootProjectWriter.flush();
       rootProjectWriter.close();
-      FileWriter _fileWriter_1 = new FileWriter((basePath + "/files/rootProjectInput.txt"));
+      FileWriter _fileWriter_1 = new FileWriter((DomainCodeUtilities.basePath + "/files/rootProjectInput.txt"));
       BufferedWriter rootProjectInputWriter = new BufferedWriter(_fileWriter_1);
       rootProjectInputWriter.write("co.shift");
       rootProjectInputWriter.newLine();
@@ -759,7 +758,7 @@ public class DomainCodeUtilities {
       rootProjectInputWriter.newLine();
       rootProjectInputWriter.flush();
       rootProjectInputWriter.close();
-      File _file_1 = new File((basePath + "/files/vaadinProject.sh"));
+      File _file_1 = new File((DomainCodeUtilities.basePath + "/files/vaadinProject.sh"));
       FileWriter _fileWriter_2 = new FileWriter(_file_1);
       BufferedWriter vaadinProjectWriter = new BufferedWriter(_fileWriter_2);
       vaadinProjectWriter.write("#!/bin/bash");
@@ -767,7 +766,7 @@ public class DomainCodeUtilities {
       vaadinProjectWriter.write("mvn archetype:generate -DarchetypeGroupId=com.vaadin -DarchetypeArtifactId=vaadin-archetype-application -DarchetypeVersion=7.3.5");
       vaadinProjectWriter.flush();
       vaadinProjectWriter.close();
-      FileWriter _fileWriter_3 = new FileWriter((basePath + "/files/vaadinProjectInput.txt"));
+      FileWriter _fileWriter_3 = new FileWriter((DomainCodeUtilities.basePath + "/files/vaadinProjectInput.txt"));
       BufferedWriter vaadinProjectInputWriter = new BufferedWriter(_fileWriter_3);
       vaadinProjectInputWriter.write("co.shift");
       vaadinProjectInputWriter.newLine();
@@ -778,14 +777,14 @@ public class DomainCodeUtilities {
       vaadinProjectInputWriter.newLine();
       vaadinProjectInputWriter.flush();
       vaadinProjectInputWriter.close();
-      File _file_2 = new File((basePath + "/files/ejbProject.sh"));
+      File _file_2 = new File((DomainCodeUtilities.basePath + "/files/ejbProject.sh"));
       FileWriter _fileWriter_4 = new FileWriter(_file_2);
       BufferedWriter ejbProjectWriter = new BufferedWriter(_fileWriter_4);
       ejbProjectWriter.write("mvn archetype:generate -DarchetypeGroupId=org.codehaus.mojo.archetypes -DarchetypeArtifactId=ejb-javaee6 -DarchetypeVersion=1.5");
       ejbProjectWriter.newLine();
       ejbProjectWriter.flush();
       ejbProjectWriter.close();
-      File _file_3 = new File((basePath + "/files/ejbProjectInput.txt"));
+      File _file_3 = new File((DomainCodeUtilities.basePath + "/files/ejbProjectInput.txt"));
       FileWriter _fileWriter_5 = new FileWriter(_file_3);
       BufferedWriter ejbProjectInputWriter = new BufferedWriter(_fileWriter_5);
       ejbProjectInputWriter.write("co.shift");
@@ -797,14 +796,14 @@ public class DomainCodeUtilities {
       ejbProjectInputWriter.newLine();
       ejbProjectInputWriter.flush();
       ejbProjectInputWriter.close();
-      File _file_4 = new File((basePath + "/files/ejbCProject.sh"));
+      File _file_4 = new File((DomainCodeUtilities.basePath + "/files/ejbCProject.sh"));
       FileWriter _fileWriter_6 = new FileWriter(_file_4);
       BufferedWriter ejbCProjectWriter = new BufferedWriter(_fileWriter_6);
       ejbCProjectWriter.write("mvn archetype:generate -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.1");
       ejbCProjectWriter.newLine();
       ejbCProjectWriter.flush();
       ejbCProjectWriter.close();
-      File _file_5 = new File((basePath + "/files/ejbProjectCInput.txt"));
+      File _file_5 = new File((DomainCodeUtilities.basePath + "/files/ejbProjectCInput.txt"));
       FileWriter _fileWriter_7 = new FileWriter(_file_5);
       BufferedWriter ejbProjectCInputWriter = new BufferedWriter(_fileWriter_7);
       ejbProjectCInputWriter.write("co.shift");
@@ -816,14 +815,14 @@ public class DomainCodeUtilities {
       ejbProjectCInputWriter.newLine();
       ejbProjectCInputWriter.flush();
       ejbProjectCInputWriter.close();
-      File _file_6 = new File((basePath + "/files/earProject.sh"));
+      File _file_6 = new File((DomainCodeUtilities.basePath + "/files/earProject.sh"));
       FileWriter _fileWriter_8 = new FileWriter(_file_6);
       BufferedWriter earProjectWriter = new BufferedWriter(_fileWriter_8);
       earProjectWriter.write("mvn archetype:generate -DarchetypeGroupId=org.codehaus.mojo.archetypes -DarchetypeArtifactId=ear-javaee6 -DarchetypeVersion=1.5");
       earProjectWriter.newLine();
       earProjectWriter.flush();
       earProjectWriter.close();
-      File _file_7 = new File((basePath + "/files/earProjectInput.txt"));
+      File _file_7 = new File((DomainCodeUtilities.basePath + "/files/earProjectInput.txt"));
       FileWriter _fileWriter_9 = new FileWriter(_file_7);
       BufferedWriter earProjectInputWriter = new BufferedWriter(_fileWriter_9);
       earProjectInputWriter.write("co.shift");
@@ -835,31 +834,31 @@ public class DomainCodeUtilities {
       earProjectInputWriter.newLine();
       earProjectInputWriter.flush();
       earProjectInputWriter.close();
-      File _file_8 = new File((basePath + "/files/genScript.sh"));
+      File _file_8 = new File((DomainCodeUtilities.basePath + "/files/genScript.sh"));
       FileWriter _fileWriter_10 = new FileWriter(_file_8);
       BufferedWriter genScriptWriter = new BufferedWriter(_fileWriter_10);
       genScriptWriter.write(("cd " + DomainCodeUtilities.GENERATION_DIR));
       genScriptWriter.newLine();
-      String _replace = basePath.replace(" ", "\\ ");
-      basePath = _replace;
-      genScriptWriter.write((((basePath + "/files/rootProject.sh < ") + basePath) + "/files/rootProjectInput.txt"));
+      String _replace = DomainCodeUtilities.basePath.replace(" ", "\\ ");
+      DomainCodeUtilities.basePath = _replace;
+      genScriptWriter.write((((DomainCodeUtilities.basePath + "/files/rootProject.sh < ") + DomainCodeUtilities.basePath) + "/files/rootProjectInput.txt"));
       genScriptWriter.newLine();
       genScriptWriter.write((("cd " + DomainCodeUtilities.GENERATION_DIR) + "co.shift.root/"));
       genScriptWriter.newLine();
-      genScriptWriter.write((((basePath + "/files/vaadinProject.sh < ") + basePath) + "/files/vaadinProjectInput.txt"));
+      genScriptWriter.write((((DomainCodeUtilities.basePath + "/files/vaadinProject.sh < ") + DomainCodeUtilities.basePath) + "/files/vaadinProjectInput.txt"));
       genScriptWriter.newLine();
-      genScriptWriter.write((((basePath + "/files/ejbProject.sh < ") + basePath) + "/files/ejbProjectInput.txt"));
+      genScriptWriter.write((((DomainCodeUtilities.basePath + "/files/ejbProject.sh < ") + DomainCodeUtilities.basePath) + "/files/ejbProjectInput.txt"));
       genScriptWriter.newLine();
-      genScriptWriter.write((((basePath + "/files/ejbCProject.sh < ") + basePath) + "/files/ejbProjectCInput.txt"));
+      genScriptWriter.write((((DomainCodeUtilities.basePath + "/files/ejbCProject.sh < ") + DomainCodeUtilities.basePath) + "/files/ejbProjectCInput.txt"));
       genScriptWriter.newLine();
-      genScriptWriter.write((((basePath + "/files/earProject.sh < ") + basePath) + "/files/earProjectInput.txt"));
+      genScriptWriter.write((((DomainCodeUtilities.basePath + "/files/earProject.sh < ") + DomainCodeUtilities.basePath) + "/files/earProjectInput.txt"));
       genScriptWriter.newLine();
       genScriptWriter.write("killall Terminal");
       genScriptWriter.flush();
       genScriptWriter.close();
-      String _replace_1 = basePath.replace("\\ ", " ");
-      basePath = _replace_1;
-      String scriptPath = (basePath + "/files/genScript.sh");
+      String _replace_1 = DomainCodeUtilities.basePath.replace("\\ ", " ");
+      DomainCodeUtilities.basePath = _replace_1;
+      String scriptPath = (DomainCodeUtilities.basePath + "/files/genScript.sh");
       List<String> list = new ArrayList<String>();
       list.add("open");
       list.add("-W");

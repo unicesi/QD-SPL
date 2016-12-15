@@ -60,6 +60,7 @@ class DomainCodeUtilities {
 	//Estas variables se establecen desde el plugin o el workflow
 	public static String GENERATION_DIR = ""; // = "/Users/daviddurangiraldo/Desktop/"
 	public static String SRC_DIR = ""; // = "/Users/daviddurangiraldo/Desktop/"
+	public static String basePath = ""; // = "/Users/daviddurangiraldo/Desktop/"
 
 	public val final static CONTRIBUTE_TO_BI = "BusinessInterface";
 	public val final static CONTRIBUTE_TO_BIMPL = "BusinessImplementation";
@@ -263,13 +264,14 @@ class DomainCodeUtilities {
 	 * The input parameter sequence, is used to generate non-continuous and distinct
 	 * contributions on a same template section.
 	 */
- 	def static String contribute2Template(int sequence, Object... data) {
+ 	def static String contribute2Template(int sequence, Object... data) throws Exception {
+	 	System.err.println("contribute2Template: "+sequence+","+getCurTemplate()+","+getCurSection());
  		var rules = ""
  		var clasemetodo = ""
 		try{
 	 		//Obtiene una cadena con la configuracion del usuario
 	 		var stringSelectedFeatures = featureValues.toArray.toString.replace(" ", "").replace("[","").replace("]","");
-	 		System.err.println("selectedFeatures: "+stringSelectedFeatures);
+	 		//System.err.println("selectedFeatures: "+stringSelectedFeatures);
 	
 	 		var s = connection.createStatement()
 	 		var rs = s.executeQuery("select A.FULL_CLASS_NAME, A.METHOD_NAME
@@ -288,8 +290,8 @@ class DomainCodeUtilities {
 									select CONFIGURATION_B
 									from ReferenceModel.CONFIG_IMPACT
 									where impact_type = 'EXCLUDE')
-								and full_class_name is not null
-								and method_name is not null")
+								and full_class_name <> ''
+								and method_name <> ''")
 	 		//Ejecuta cada fragmento encontrado
 	 		while (rs.next()){
 	 			//Obtiene el nombre de la clase
@@ -317,8 +319,9 @@ class DomainCodeUtilities {
 	    }
 	    catch(Exception x){
 	    	//x.printStackTrace
-	    	System.err.println("Error invocando al metodo "+clasemetodo+": "+x.cause.toString)
-	    	return ""
+	    	System.err.println("Error invocando al metodo "+clasemetodo+": "+x.toString)
+	    	//return ""
+	    	throw x
 	    }
 	    return rules
  	}
@@ -592,8 +595,9 @@ class DomainCodeUtilities {
 
 	def static void runScript(String packageName) {
 		//JC: Se modifica temporalmente porque el valor obtenido aquí no funciona
-		//var basePath = System.getProperty("user.dir")
-		var basePath = ResourcesPlugin.workspace.root.location.toString+"/../workspace/co.edu.icesi.shift.generator"
+		//var basePath = System.getProperty("user.home")
+		//var basePath = ResourcesPlugin.workspace.root.location.toString+"/../workspace/co.edu.icesi.shift.generator"
+		//basePath = "/Users/daviddurangiraldo/Desarrollo/SHIFT/../GitRepo/ToolSupport/co.edu.icesi.shift.generator"
 		System.err.println("workspace: "+basePath)
 		//VaadinProject Generation
 		var BufferedWriter rootProjectWriter = new BufferedWriter(new FileWriter(new File(basePath+"/files/rootProject.sh")))

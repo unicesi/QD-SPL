@@ -16,7 +16,6 @@ import domainmetamodel.Create
 import domainmetamodel.Update
 import domainmetamodel.Delete
 import org.eclipse.xtext.generator.IFileSystemAccess
-import co.shift.generators.domain.DomainCodeUtilities
 import domainmetamodel.Multiple
 import co.shift.generators.domain.DomainParams
 
@@ -346,9 +345,9 @@ class BoundaryImplTemplate {
 
 
 					«IF DomainCodeUtilities.isQASelected("_r_2_11_15_17")»
-««« Jcifuentes: Comentado
+««« Jcifuentes: Comentado. La siguiente linea es una variable inicializada arriba
 «««					«authContribution»
-					«DomainCodeUtilities.contribute2Template(3, be.name.toLowerCase+""+DomainCodeUtilities.getID(be).name.toFirstUpper, be)»
+					«DomainCodeUtilities.contribute2Template(4, be.name.toLowerCase+""+DomainCodeUtilities.getID(be).name.toFirstUpper, be)»
 «««			JCifuentes: Comentar porque es redundante (ya está siendo ejecutado en DomainCodeGenerator)
 «««					«DomainCodeUtilities.extendContribution("_r_2_11_15_17", DomainCodeUtilities.CONTRIBUTE_TO_GENERATION, fsa, packageName, be)»
 «««			JCifuentes: Fin Comentar

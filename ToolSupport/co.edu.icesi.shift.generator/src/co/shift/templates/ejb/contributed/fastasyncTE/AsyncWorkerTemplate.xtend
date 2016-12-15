@@ -3,10 +3,15 @@ package co.shift.templates.ejb.contributed.fastasyncTE
 import domainmetamodel.BusinessEntity
 import domainmetamodel.ListAll
 import co.shift.generators.domain.DomainCodeUtilities
+import co.shift.generators.domain.DomainParams
 
 class AsyncWorkerTemplate {
 	
+	private static String className = new Object(){}.class.enclosingClass.simpleName
+
 	def static generate (BusinessEntity be, String packageName) '''
+		««« Establece la plantilla actual para contribución.
+		«DomainCodeUtilities.beginTemplate(className)»
 		package co.shift.«packageName.toLowerCase()».«be.name.toLowerCase».control;
 		
 		import java.sql.Connection;
@@ -26,7 +31,11 @@ class AsyncWorkerTemplate {
 		import javax.sql.DataSource;
 		
 		import co.shift.«packageName.toLowerCase()».to.«be.name.toFirstUpper»TO;
-		«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName, be.name)»
+««« Jcifuentes: Comentado
+«««		«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName, be.name)»
+		«DomainCodeUtilities.beginSection(DomainParams.SECT_IMPORTS)»
+		«DomainCodeUtilities.contribute2Template(1, packageName, be.name)»
+		«DomainCodeUtilities.endSection»
 		
 		@Stateless
 		public class «be.name.toFirstUpper»AsyncWorker {
@@ -34,11 +43,16 @@ class AsyncWorkerTemplate {
 		@Resource(name = "«packageName.toLowerCase()»")
 		private DataSource ds;
 		
-		«val attribute2 = DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE)»
-		«IF (attribute2 != null && !attribute2.equals(""))»
-			«attribute2»
-		«ENDIF»
+««« Jcifuentes: Comentado
+«««		«val attribute2 = DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE)»
+«««		«IF (attribute2 != null && !attribute2.equals(""))»
+«««			«attribute2»
+«««		«ENDIF»
+		«DomainCodeUtilities.beginSection(DomainParams.SECT_ATTRIBUTES)»
+		«DomainCodeUtilities.contribute2Template(1)»
+		«DomainCodeUtilities.endSection»
 		
+		«DomainCodeUtilities.beginSection(DomainParams.SECT_METHODS)»
 		«FOR contract : be.contracts»
 			«IF (contract instanceof ListAll)»
 				@Asynchronous
@@ -62,7 +76,9 @@ class AsyncWorkerTemplate {
 								«DomainCodeUtilities.getType(attribute)» t«attribute.name.toFirstUpper» = resultSet.get«DomainCodeUtilities.getType(attribute).toFirstUpper»(«i»);
 								«var c = i++»
 							«ENDFOR»
-							«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, 2)»
+««« Jcifuentes: Comentado
+«««							«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, 2)»
+							«DomainCodeUtilities.contribute2Template(1, null, be, null, null, null, null, null, 2)»
 							«FOR attribute : be.attributes»
 								p.set«attribute.name.toFirstUpper»(t«attribute.name.toFirstUpper»);
 							«ENDFOR»
@@ -77,5 +93,7 @@ class AsyncWorkerTemplate {
 			«ENDIF»
 		«ENDFOR»
 		}
+		«DomainCodeUtilities.endSection»
+		«DomainCodeUtilities.endTemplate»
 	'''
 }

@@ -4,10 +4,14 @@ import domainmetamodel.BusinessEntity
 import java.util.List
 import domainmetamodel.Association
 import co.shift.generators.domain.DomainCodeUtilities
+import co.shift.generators.domain.DomainParams
 
 class DAOImplTemplate {
-	
+	private static String className = new Object(){}.class.enclosingClass.simpleName
+
 	def static generate (BusinessEntity be, String packageName, List<Association> associations) '''
+		««« Establece la plantilla actual para contribución.
+		«DomainCodeUtilities.beginTemplate(className)»
 		package co.shift.«packageName.toLowerCase()».«be.name.toLowerCase».control;
 		
 		import java.util.ArrayList;
@@ -23,7 +27,17 @@ class DAOImplTemplate {
 		
 		import co.shift.«packageName.toLowerCase()».to.«be.name.toFirstUpper»TO;
 «««		«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_IMPORT, packageName, be.name)»
-		«val attribute2 = DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE)»
+
+««« Jcifuentes: Comentado. 
+««« Aquí en lugar de esta validacion, deberia un contribuyente retornar estos imports
+««« por ahora se deja con la misma logica que tenia, solo se usa el nuevo modelo. Esto
+««« es desafortunado porque esta seccion es realmente IMPORTS y no ATTRIBUTES.
+««« NOTA: Esto siempre está generando el codigo para Encriptamiento, independientemente
+««« de la configuracion. Se debe revisar en una mejora posterior.
+«««		«val attribute2 = DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BUSINESS_ATTRIBUTE)»
+		«DomainCodeUtilities.beginSection(DomainParams.SECT_ATTRIBUTES)»
+		«val attribute2 = DomainCodeUtilities.contribute2Template(1)»
+		«DomainCodeUtilities.endSection»
 		«IF (attribute2 != null && !attribute2.equals(""))»
 		import java.io.UnsupportedEncodingException;
 		import java.security.InvalidAlgorithmParameterException;
@@ -51,6 +65,7 @@ class DAOImplTemplate {
 «««				«attribute2»
 «««			«ENDIF»
 		
+		«DomainCodeUtilities.beginSection(DomainParams.SECT_METHODS)»
 			«FOR association : DomainCodeUtilities.getDetailSimpleAssociations(be, associations)»
 				«val container = association.eContainer as BusinessEntity»
 				«val type = DomainCodeUtilities.getID(container).dataType.literal»
@@ -68,7 +83,9 @@ class DAOImplTemplate {
 							«DomainCodeUtilities.getType(attribute)» t«attribute.name.toFirstUpper» = («DomainCodeUtilities.getType(attribute)») «association.name.toLowerCase»[«i»];
 							«var c = i++»
 						«ENDFOR»
-						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, 3)»
+««« Jcifuentes: Comentado
+«««						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, 3)»
+						«DomainCodeUtilities.contribute2Template(1, null, be, null, null, null, null, null, 3)»
 						«FOR attribute : be.attributes»
 						u.set«attribute.name.toFirstUpper»(t«attribute.name.toFirstUpper»);
 						«ENDFOR»
@@ -108,7 +125,9 @@ class DAOImplTemplate {
 							«DomainCodeUtilities.getType(attribute)» t«attribute.name.toFirstUpper» = («DomainCodeUtilities.getType(attribute)») «be.name.toLowerCase»[«i»];
 							«var c = i++»
 						«ENDFOR»
-						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, 3)»
+««« Jcifuentes: Comentado
+«««						«DomainCodeUtilities.extendContribution("_r_2_10", DomainCodeUtilities.CONTRIBUTE_TO_BIMPL, null, be, null, null, null, null, null, 3)»
+						«DomainCodeUtilities.contribute2Template(1, null, be, null, null, null, null, null, 3)»
 						«FOR attribute : be.attributes»
 						u.set«attribute.name.toFirstUpper»(t«attribute.name.toFirstUpper»);
 						«ENDFOR»
@@ -188,5 +207,7 @@ class DAOImplTemplate {
 				}
 			}
 			«ENDIF»
+		«DomainCodeUtilities.endSection»
+		«DomainCodeUtilities.endTemplate»
 	'''
 }

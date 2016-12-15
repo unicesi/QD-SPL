@@ -81,7 +81,8 @@ public class WorkflowHandler implements IHandler {
     @Override
     public Object execute(ExecutionEvent event) throws ExecutionException {
  	 try{
-    	String basePath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString();
+     	String basePath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString();
+    	String projectPath = ResourcesPlugin.getWorkspace().getRoot().getLocation().toOSString()+"/../GitRepo/ToolSupport/co.edu.icesi.shift.generator";
    
     	//Obtiene el project
     	ISelection s = HandlerUtil.getCurrentSelection(event);
@@ -97,6 +98,7 @@ public class WorkflowHandler implements IHandler {
         IFolder srcGenFolder = project.getFolder("src-gen");
         DomainCodeUtilities.GENERATION_DIR = "/Users/daviddurangiraldo/Desktop/";
         DomainCodeUtilities.SRC_DIR = basePath+srcGenFolder.getFullPath().toString();
+        DomainCodeUtilities.basePath = projectPath;
 //        IFile file = project.getFile("models/ConfiguredModel.xmi");
         IFile file = project.getFile("models/ProjectsModel.domainmetamodel");
         
@@ -136,11 +138,13 @@ System.err.println("EJECUTADO EL WF!!");
         return null;
   	  }
 	  catch(FileNotFoundException e){
-		  System.err.println("Error intentando borrar el directorio: "+e.getMessage());
+		  System.err.println("Error ruta/archivo no encontrado: "+e.toString());
+		  e.printStackTrace();
+		  System.err.println("FIN StackTrace error ruta/archivo");
 		  return null;
 	  }
 	  catch(Exception e){
-		  System.err.println("Error no controlado: "+e.getMessage());
+		  System.err.println("Error no controlado: "+e.toString());
 		  e.printStackTrace();
 		  System.err.println("FIN StackTrace Error no controlado");
 		  return null;

@@ -23,3 +23,4 @@ Bundle-ActivationPolicy: lazy
 Export-Package: co.shift.generators.workflows
 Bundle-ClassPath: lib/mysql-connector-java-5.0.8-bin.jar,
  .
+Import-Package: org.eclipse.jdt.core
